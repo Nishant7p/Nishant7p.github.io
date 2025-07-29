@@ -63,8 +63,18 @@
             animation: gradient-animation 6s ease infinite;
         }
         @keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .section.visible { opacity: 1; transform: translateY(0); }
+        
+        /* NEW ANIMATION STYLE: Content is visible by default */
+        .section-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .section-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .modal { transition: opacity 0.3s ease-in-out; }
         .modal-content { transition: all 0.3s ease-in-out; }
         .btn-gradient { background-image: linear-gradient(to right, #a78bfa 0%, #f472b6 51%, #a78bfa 100%); background-size: 200% auto; transition: 0.5s; }
@@ -84,10 +94,9 @@
             background: linear-gradient(90deg, #a78bfa, #f472b6);
             transition: width .4s ease;
         }
-        .section.visible .section-title::after {
+        .section-animate.visible .section-title::after {
             width: 100%;
             left: 0;
-            background: linear-gradient(90deg, #a78bfa, #f472b6);
         }
     </style>
 </head>
@@ -113,8 +122,8 @@
             </nav>
 
             <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <!-- Header / About Me -->
-                <header id="about" class="section text-center mb-24 pt-16">
+                <!-- Header / About Me (No animation class, appears instantly) -->
+                <header id="about" class="text-center mb-24 pt-16">
                     <img id="profile-pic" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-slate-700 shadow-2xl" src="" alt="Profile Picture">
                     <h1 id="user-name" class="text-5xl md:text-6xl font-extrabold text-white mb-2"></h1>
                     <p id="user-title" class="text-2xl md:text-3xl animated-gradient-text font-semibold mb-8"></p>
@@ -134,31 +143,34 @@
                 </header>
 
                 <!-- Projects Section -->
-                <section id="projects" class="section mb-24 pt-16">
+                <section id="projects" class="section-animate mb-24 pt-16">
                     <h2 class="section-title text-4xl font-bold text-white text-center mb-12">My Projects</h2>
-                    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                    <div id="projects-grid-preview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                     <div class="text-center mt-12">
+                        <button id="view-all-projects-btn" class="btn-gradient text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-lg">View All Projects</button>
+                    </div>
                 </section>
                 
                 <!-- Career Highlights Section -->
-                <section id="highlights" class="section mb-24 pt-16">
+                <section id="highlights" class="section-animate mb-24 pt-16">
                     <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Career Highlights</h2>
                     <div id="highlights-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"></div>
                 </section>
 
                 <!-- Achievements Section -->
-                <section id="achievements" class="section mb-24 pt-16">
+                <section id="achievements" class="section-animate mb-24 pt-16">
                     <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Key Achievements</h2>
                     <ul id="achievements-list" class="list-none space-y-4 max-w-3xl mx-auto"></ul>
                 </section>
 
                 <!-- Participations Section -->
-                <section id="participations" class="section mb-24 pt-16">
+                <section id="participations" class="section-animate mb-24 pt-16">
                     <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Positions of Responsibility</h2>
                     <ul id="participations-list" class="list-none space-y-4 max-w-3xl mx-auto"></ul>
                 </section>
 
                 <!-- Certificates Preview Section -->
-                <section id="certificates" class="section mb-24 pt-16">
+                <section id="certificates" class="section-animate mb-24 pt-16">
                     <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Certificates</h2>
                     <div id="certificates-grid-preview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                     <div class="text-center mt-12">
@@ -168,12 +180,23 @@
             </div>
         </div>
 
+        <!-- Projects Page Container -->
+        <div id="projects-page" class="hidden">
+            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="flex justify-between items-center mb-12 pt-16">
+                    <h2 class="text-4xl font-bold text-white">All Projects</h2>
+                    <button id="back-to-home-btn-from-projects" class="bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-slate-700/70 hover:text-white font-semibold py-2 px-5 rounded-full transition-all duration-300">&larr; Back to Home</button>
+                </div>
+                <div id="projects-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+            </div>
+        </div>
+
         <!-- Certificates Page Container -->
         <div id="certificates-page" class="hidden">
             <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div class="flex justify-between items-center mb-12 pt-16">
                     <h2 class="text-4xl font-bold text-white">All Certificates</h2>
-                    <button id="back-to-home-btn" class="bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-slate-700/70 hover:text-white font-semibold py-2 px-5 rounded-full transition-all duration-300">&larr; Back to Home</button>
+                    <button id="back-to-home-btn-from-certs" class="bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-slate-700/70 hover:text-white font-semibold py-2 px-5 rounded-full transition-all duration-300">&larr; Back to Home</button>
                 </div>
                 <div id="certificates-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
             </div>
@@ -209,9 +232,17 @@
                     experienceLetterLink: "https://i.postimg.cc/MTLHMSV5/Experience-Letter-Nishant-Tomer.png", 
                     recommendationLetterLink: "https://i.postimg.cc/FHxjfYRx/Letter-of-Recommendation-Nishant-Tomer.png",
                     galleryImages: ["https://i.postimg.cc/gjM8YY3D/Screenshot-2025-07-24-at-10-00-16-AM.png", "https://i.postimg.cc/zXtFNkjr/Screenshot-2025-07-24-at-10-00-23-AM.png", "https://i.postimg.cc/ZnJxb72T/Screenshot-2025-07-24-at-10-00-52-AM.png", "https://i.postimg.cc/rm19LXhn/Screenshot-2025-07-24-at-10-01-49-AM.png", "https://i.postimg.cc/XqxcpK69/Screenshot-2025-07-24-at-9-55-43-AM.png", "https://i.postimg.cc/7L73gryH/Screenshot-2025-07-24-at-9-55-52-AM.png", "https://i.postimg.cc/W1d61JWJ/Screenshot-2025-07-24-at-9-56-18-AM.png", "https://i.postimg.cc/4dgzP2Jz/Screenshot-2025-07-24-at-9-56-39-AM.png", "https://i.postimg.cc/FRV0BbRw/Screenshot-2025-07-24-at-9-58-35-AM.png", "https://i.postimg.cc/0220h47n/Screenshot-2025-07-24-at-9-58-40-AM.png", "https://i.postimg.cc/h400ynQh/Screenshot-2025-07-24-at-9-58-50-AM.png", "https://i.postimg.cc/JzS3D4vY/Screenshot-2025-07-24-at-9-59-08-AM.png", "https://i.postimg.cc/4y4pkKHy/Screenshot-2025-07-24-at-9-59-25-AM.png"]
-                }, 
-                { title: "AI & ML Intern Project", image: "https://placehold.co/800x600/374151/e5e7eb?text=ML+Project", description: "Developed and optimized machine learning models for real-world use cases under industry mentorship.", details: ["Applied supervised learning and data preprocessing techniques.", "Worked on the full ML pipeline: data collection, training, and testing.", "Gained experience with model evaluation and tuning."], technologies: ["Python", "PyTorch", "NumPy", "Supervised Learning"], liveLink: "#", sourceLink: "#" }, 
-                { title: "Escape Room Puzzle Game", image: "https://placehold.co/800x600/374151/e5e7eb?text=Unreal+Game", description: "Built a 3D single-level escape game in Unreal Engine involving puzzle solving and item discovery.", details: ["Designed an interactive environment with light-based hints.", "Created a custom UI for inventory management.", "Focused on immersive gameplay using lighting and animations."], technologies: ["Unreal Engine", "C++", "Game Design"], liveLink: "#", sourceLink: "#" }, 
+                },
+                { 
+                    title: "GeoGuesser & Flag Guesser Game",
+                    image: "https://i.postimg.cc/VNBS75YG/Screenshot-2025-07-29-at-7-22-52-PM.png",
+                    description: "A multi-mode geography guessing game built with a clean UI, featuring various challenges like flag identification and location guessing.",
+                    details: ["Includes 6+ game modes such as Deathmatch, Informative, and classic guessing challenges.", "Built with a responsive and user-friendly interface using Tkinter.", "Demonstrates strong Python programming and UI design skills."],
+                    technologies: ["Python", "Tkinter", "Game Design"],
+                    liveLink: "#",
+                    sourceLink: "#",
+                    galleryImages: ["https://i.postimg.cc/QCMWKsZ6/n.png", "https://i.postimg.cc/W4PF60Pq/Screenshot-2025-07-29-at-7-23-17-PM.png", "https://i.postimg.cc/3JdvKKBN/Screenshot-2025-07-29-at-7-23-58-PM.png", "https://i.postimg.cc/BnFPKMRG/Screenshot-2025-07-29-at-7-24-36-PM.png"]
+                },
                 { 
                     title: "Angry Birds Clone", 
                     image: "https://i.postimg.cc/SR1BGYM8/Screenshot-2025-07-24-at-9-25-21-AM.png", 
@@ -232,11 +263,40 @@
                     liveLink: "#", 
                     sourceLink: "#",
                     galleryImages: ["https://i.postimg.cc/SsCLrBYG/Screenshot-2025-07-24-at-9-46-25-AM.png", "https://i.postimg.cc/PqLQLpt9/Screenshot-2025-07-24-at-9-46-30-AM.png", "https://i.postimg.cc/qvvLTDWk/Screenshot-2025-07-24-at-9-48-05-AM.png", "https://i.postimg.cc/7h43QKgr/Screenshot-2025-07-24-at-9-48-20-AM.png"]
-                } 
+                },
+                { title: "AI & ML Intern Project", image: "https://placehold.co/800x600/374151/e5e7eb?text=ML+Project", description: "Developed and optimized machine learning models for real-world use cases under industry mentorship.", details: ["Applied supervised learning and data preprocessing techniques.", "Worked on the full ML pipeline: data collection, training, and testing.", "Gained experience with model evaluation and tuning."], technologies: ["Python", "PyTorch", "NumPy", "Supervised Learning"], liveLink: "#", sourceLink: "#" }, 
+                { 
+                    title: "Code Editor Clone",
+                    image: "https://placehold.co/800x600/374151/e5e7eb?text=Code+Editor",
+                    description: "A functional code editor built with PyQt5, featuring custom themes, syntax highlighting, and auto-completion.",
+                    details: ["Implemented a text editing area with line numbers and syntax highlighting for various languages.", "Added features for auto-completion suggestions and a small code preview pane.", "Designed custom themes to enhance the user experience."],
+                    technologies: ["Python", "PyQt5", "GUI Development"],
+                    liveLink: "#",
+                    sourceLink: "#"
+                },
+                { 
+                    title: "Weather App",
+                    image: "https://placehold.co/800x600/374151/e5e7eb?text=Weather+App",
+                    description: "A clean and simple weather application that fetches and displays real-time weather data using API calls.",
+                    details: ["Built with a user-friendly interface using Tkinter.", "Integrates with a third-party weather API to get current weather conditions, temperature, and forecasts.", "Handles API requests and JSON data parsing efficiently."],
+                    technologies: ["Python", "Tkinter", "APIs", "JSON"],
+                    liveLink: "#",
+                    sourceLink: "#"
+                },
+                { title: "Escape Room Puzzle Game", image: "https://placehold.co/800x600/374151/e5e7eb?text=Unreal+Game", description: "Built a 3D single-level escape game in Unreal Engine involving puzzle solving and item discovery.", details: ["Designed an interactive environment with light-based hints.", "Created a custom UI for inventory management.", "Focused on immersive gameplay using lighting and animations."], technologies: ["Unreal Engine", "C++", "Game Design"], liveLink: "#", sourceLink: "#" }, 
+                { 
+                    title: "Assembler & Simulator",
+                    image: "https://placehold.co/800x600/374151/e5e7eb?text=Assembler",
+                    description: "A two-pass assembler and simulator for a custom assembly language, built entirely in Python.",
+                    details: ["The assembler converts assembly language code into machine code.", "The simulator executes the generated machine code, showing register values and memory states.", "Demonstrates a deep understanding of computer architecture and low-level programming concepts."],
+                    technologies: ["Python", "Computer Architecture"],
+                    liveLink: "#",
+                    sourceLink: "#"
+                }
             ],
-            achievements: ["Achieved a 1500+ rating in LeetCode contests and solved 300+ DSA problems.", "Completed various Coursera courses by Microsoft and Google in DBMS, Data Analytics, etc."],
+            achievements: ["Achieved a 1500+ rating in LeetCode contests and solved 300+ DSA problems.", "Earned 5-star badges on HackerRank in Python, Java, and Data Structures.", "Completed various Coursera courses by Microsoft and Google in DBMS, Data Analytics, etc."],
             participations: ["Instructor for AI Summer Camp at IIIT-Delhi, teaching 100+ students.", "Organizer for Odyssey, the IIIT-Delhi Cultural Fest.", "Member of CyFuse, the Robotics & Electronics Club at IIIT-Delhi."],
-            certificates: [ { name: "Google Database Professional", issuingBody: "Coursera", image: "https://i.postimg.cc/g0NnpR0f/database.png", description: "Completed professional certificate on Database Management Systems offered by Google.", verifyLink: "#" }, { name: "Game Development with Java", issuingBody: "Coding Ninjas", image: "https://i.postimg.cc/G24h15Vy/CWcompletion.png", description: "Completed an extensive course on game development principles using Java.", verifyLink: "#" }, { name: "1 Stop Internship", issuingBody: "1 Stop", image: "https://i.postimg.cc/rwTmtg0B/1stop.png", description: "Certificate of participation for a valuable internship experience.", verifyLink: "#" }, { name: "AI Summer Camp Instructor", issuingBody: "IIIT-Delhi", image: "https://i.postimg.cc/90tfxqs8/2023355.jpg", description: "Certificate of appreciation for instructing over 100 students in an AI summer camp.", verifyLink: "#", posterImageLink: "https://i.postimg.cc/JhnBGKS1/PHOTO-2025-07-20-00-05-40.jpg" } ]
+            certificates: [ { name: "Python (Basic) Certificate", issuingBody: "HackerRank", image: "https://placehold.co/800x600/4b5563/e5e7eb?text=HackerRank", description: "Verified proficiency in fundamental Python concepts and problem-solving.", verifyLink: "https://www.hackerrank.com/certificates/bec82207543c" }, { name: "Google Database Professional", issuingBody: "Coursera", image: "https://i.postimg.cc/g0NnpR0f/database.png", description: "Completed professional certificate on Database Management Systems offered by Google.", verifyLink: "#" }, { name: "Game Development with Java", issuingBody: "Coding Ninjas", image: "https://i.postimg.cc/G24h15Vy/CWcompletion.png", description: "Completed an extensive course on game development principles using Java.", verifyLink: "#" }, { name: "1 Stop Internship", issuingBody: "1 Stop", image: "https://i.postimg.cc/rwTmtg0B/1stop.png", description: "Certificate of participation for a valuable internship experience.", verifyLink: "#" }, { name: "AI Summer Camp Instructor", issuingBody: "IIIT-Delhi", image: "https://i.postimg.cc/90tfxqs8/2023355.jpg", description: "Certificate of appreciation for instructing over 100 students in an AI summer camp.", verifyLink: "#", posterImageLink: "https://i.postimg.cc/JhnBGKS1/PHOTO-2025-07-20-00-05-40.jpg" } ]
         };
         
         // ===================================================================================
@@ -343,7 +403,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             initBackground();
             const mainContent = document.getElementById('main-content');
+            const projectsPage = document.getElementById('projects-page');
             const certificatesPage = document.getElementById('certificates-page');
+            
             document.getElementById('nav-name').textContent = portfolioData.about.name;
             document.getElementById('profile-pic').src = portfolioData.about.profilePic;
             document.getElementById('user-name').textContent = portfolioData.about.name;
@@ -354,15 +416,19 @@
             const socialLinksContainer = document.getElementById('social-links');
             const socialIcons = { github: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`, linkedin: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>`, email: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>` };
             portfolioData.about.socials.forEach(social => { const link = document.createElement('a'); link.href = social.url; link.target = "_blank"; link.rel = "noopener noreferrer"; link.className = "text-slate-400 hover:text-indigo-400 transition-colors duration-300"; link.innerHTML = socialIcons[social.type] || ''; socialLinksContainer.appendChild(link); });
-            const projectsGrid = document.getElementById('projects-grid');
-            portfolioData.projects.forEach((project, index) => { projectsGrid.innerHTML += createCard('project', project.title, project.description, project.image, index); });
+            
+            const projectsGridPreview = document.getElementById('projects-grid-preview');
+            const projectsGridFull = document.getElementById('projects-grid-full');
+            portfolioData.projects.slice(0, 6).forEach((project, index) => { projectsGridPreview.innerHTML += createCard('project', project.title, project.description, project.image, portfolioData.projects.indexOf(project)); });
+            portfolioData.projects.forEach((project, index) => { projectsGridFull.innerHTML += createCard('project', project.title, project.description, project.image, index); });
+
             const highlightsGrid = document.getElementById('highlights-grid');
             portfolioData.keyDocuments.forEach(doc => { highlightsGrid.innerHTML += `<a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex items-center text-left space-x-5"><div class="flex-shrink-0 text-indigo-400"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div><div><h3 class="text-xl font-bold text-white mb-1">${doc.title}</h3><p class="text-slate-400">${doc.description}</p></div></a>`; });
             const certificatesGridPreview = document.getElementById('certificates-grid-preview');
             const certificatesGridFull = document.getElementById('certificates-grid-full');
             portfolioData.certificates.slice(0, 3).forEach((cert) => { certificatesGridPreview.innerHTML += createCard('certificate', cert.name, cert.issuingBody, cert.image, portfolioData.certificates.indexOf(cert)); });
             portfolioData.certificates.forEach((cert, index) => { certificatesGridFull.innerHTML += createCard('certificate', cert.name, cert.issuingBody, cert.image, index); });
-            function createCard(type, title, subtitle, image, index) { return `<div class="glass-card rounded-lg overflow-hidden cursor-pointer flex flex-col" data-type="${type}" data-index="${index}"><div class="h-52 bg-slate-900/30 flex items-center justify-center p-2"><img src="${image}" alt="${title}" class="w-full h-full object-contain"></div><div class="p-5 flex-grow flex flex-col"><h3 class="text-lg font-bold text-white mb-2">${title}</h3><p class="text-slate-400 text-sm mb-4 flex-grow">${subtitle}</p><span class="text-indigo-400 font-semibold mt-auto">View Details &rarr;</span></div></div>`; }
+            function createCard(type, title, subtitle, image, index) { return `<div class="glass-card rounded-lg overflow-hidden cursor-pointer flex flex-col" data-type="${type}" data-index="${index}"><div class="h-52 bg-slate-900/30 flex items-center justify-center p-2"><img src="${image}" alt="${title}" class="max-w-full max-h-full object-contain"></div><div class="p-5 flex-grow flex flex-col"><h3 class="text-lg font-bold text-white mb-2">${title}</h3><p class="text-slate-400 text-sm mb-4 flex-grow">${subtitle}</p><span class="text-indigo-400 font-semibold mt-auto">View Details &rarr;</span></div></div>`; }
             const achievementsList = document.getElementById('achievements-list');
             const achievementIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`;
             portfolioData.achievements.forEach(item => achievementsList.innerHTML += createListItem(item, achievementIcon));
@@ -370,8 +436,12 @@
             const participationIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`;
             portfolioData.participations.forEach(item => participationsList.innerHTML += createListItem(item, participationIcon));
             function createListItem(text, iconSVG) { return `<li class="glass-card p-4 rounded-lg flex items-center space-x-4"><span class="text-indigo-400 flex-shrink-0">${iconSVG}</span><p class="text-slate-300">${text}</p></li>`; }
+            
+            document.getElementById('view-all-projects-btn').addEventListener('click', () => { mainContent.classList.add('hidden'); projectsPage.classList.remove('hidden'); window.scrollTo(0, 0); });
+            document.getElementById('back-to-home-btn-from-projects').addEventListener('click', () => { projectsPage.classList.add('hidden'); mainContent.classList.remove('hidden'); window.scrollTo(0, 0); });
             document.getElementById('view-all-certs-btn').addEventListener('click', () => { mainContent.classList.add('hidden'); certificatesPage.classList.remove('hidden'); window.scrollTo(0, 0); });
-            document.getElementById('back-to-home-btn').addEventListener('click', () => { certificatesPage.classList.add('hidden'); mainContent.classList.remove('hidden'); window.scrollTo(0, 0); });
+            document.getElementById('back-to-home-btn-from-certs').addEventListener('click', () => { certificatesPage.classList.add('hidden'); mainContent.classList.remove('hidden'); window.scrollTo(0, 0); });
+
             const modal = document.getElementById('modal');
             const modalContent = document.getElementById('modal-content');
             function openModal(type, index) {
@@ -397,7 +467,7 @@
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
             document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('pointer-events-none')) closeModal(); });
             const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
-            document.querySelectorAll('.section').forEach(el => observer.observe(el));
+            document.querySelectorAll('.section-animate').forEach(el => observer.observe(el));
         });
     </script>
 </body>
