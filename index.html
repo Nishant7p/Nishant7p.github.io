@@ -300,15 +300,14 @@
                 {
                     name: "Introduction to GPU Programming",
                     issuingBody: "Johns Hopkins University",
-                    // NOTE: Since these are ibb.co page links, the image might not load directly in <img> tags.
-                    image: "https://ibb.co/3yWDMZwH", 
+                    image: "https://i.ibb.co/pvZtRFgp/Coursera-YMHWXFVFZPSB.png", 
                     description: "Specialization covering the fundamentals of GPU programming, including CUDA, parallel computing patterns, and performance optimization.",
                     verifyLink: "https://ibb.co/3yWDMZwH",
                     subCertificates: [
-                        "https://ibb.co/vvsW7vBS",
-                        "https://ibb.co/hRfRKCy8",
-                        "https://ibb.co/N6SQJBJ7",
-                        "https://ibb.co/s9xwTDb5"
+                        "https://i.ibb.co/0VBLgVXx/Coursera-9-DSMIA2-P1-V6-P.png",
+                        "https://i.ibb.co/8DcDjX08/Coursera-JABH9-NS3-I5-BY.png",
+                        "https://i.ibb.co/Z6mtFDFN/Coursera-LBLDYS0-KAWMY.png",
+                        "https://i.ibb.co/5hp8QzGY/Coursera-VSJHAZ2-WA9-UX.png"
                     ]
                 },
                 { name: "Python (Basic) Certificate", issuingBody: "HackerRank", image: "https://placehold.co/800x600/4b5563/e5e7eb?text=HackerRank", description: "Verified proficiency in fundamental Python concepts and problem-solving.", verifyLink: "https://www.hackerrank.com/certificates/bec82207543c" }, { name: "Google Database Professional", issuingBody: "Coursera", image: "https://i.postimg.cc/g0NnpR0f/database.png", description: "Completed professional certificate on Database Management Systems offered by Google.", verifyLink: "#" }, { name: "Game Development with Java", issuingBody: "Coding Ninjas", image: "https://i.postimg.cc/G24h15Vy/CWcompletion.png", description: "Completed an extensive course on game development principles using Java.", verifyLink: "#" }, { name: "1 Stop Internship", issuingBody: "1 Stop", image: "https://i.postimg.cc/rwTmtg0B/1stop.png", description: "Certificate of participation for a valuable internship experience.", verifyLink: "#" }, { name: "AI Summer Camp Instructor", issuingBody: "IIIT-Delhi", image: "https://i.postimg.cc/90tfxqs8/2023355.jpg", description: "Certificate of appreciation for instructing over 100 students in an AI summer camp.", verifyLink: "#", posterImageLink: "https://i.postimg.cc/JhnBGKS1/PHOTO-2025-07-20-00-05-40.jpg" } ]
@@ -467,9 +466,35 @@
                 if (type === 'project') {
                     contentHTML += `<div class="p-6 md:p-8"><div class="h-72 bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center p-2"><img src="${item.image}" alt="${item.title}" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Project+Image'"></div><h2 class="text-3xl font-bold text-white mb-2">${item.title}</h2><p class="text-slate-400 mb-6">${item.description}</p><h3 class="text-xl font-semibold text-white mb-3">Key Features</h3><ul class="list-disc list-inside space-y-2 mb-6 text-slate-300">${item.details.map(detail => `<li>${detail}</li>`).join('')}</ul><h3 class="text-xl font-semibold text-white mb-3">Technologies Used</h3><div class="flex flex-wrap gap-2 mb-6">${item.technologies.map(tech => `<span class="bg-slate-700 text-indigo-300 text-sm font-medium px-3 py-1 rounded-full">${tech}</span>`).join('')}</div>${(item.galleryImages && item.galleryImages.length > 0) ? `<div><h3 class="text-xl font-semibold text-white mb-3">Project Gallery</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">${item.galleryImages.map(imgUrl => `<a href="${imgUrl}" target="_blank" rel="noopener noreferrer" class="aspect-video block bg-slate-900/30 rounded-lg overflow-hidden"><img src="${imgUrl}" class="w-full h-full object-contain hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Gallery+Image'"></a>`).join('')}</div></div>` : ''}<div class="border-t border-slate-700 my-6"></div><div class="space-y-6"><div><h3 class="text-xl font-semibold text-white mb-3">Project Links</h3><div class="flex flex-wrap gap-4">${(item.videoLink) ? `<a href="${item.videoLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Watch Gameplay</a>` : ''}${item.liveLink !== '#' ? `<a href="${item.liveLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">View Live</a>` : ''}${item.sourceLink !== '#' ? `<a href="${item.sourceLink}" target="_blank" rel="noopener noreferrer" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Source Code</a>` : ''}</div></div>${ (item.experienceLetterLink || item.recommendationLetterLink) ? `<div><h3 class="text-xl font-semibold text-white mb-3">Related Documents</h3><div class="flex flex-wrap gap-4">${item.experienceLetterLink ? `<a href="${item.experienceLetterLink}" target="_blank" rel="noopener noreferrer" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Experience Letter</a>` : ''}${item.recommendationLetterLink ? `<a href="${item.recommendationLetterLink}" target="_blank" rel="noopener noreferrer" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Recommendation</a>` : ''}</div></div>` : '' }</div></div>`;
                 } else if (type === 'certificate') {
-                    contentHTML += `<div class="p-6 md:p-8"><h2 class="text-3xl font-bold text-white mb-2">${item.name}</h2><p class="text-slate-500 mb-4">Issued by: ${item.issuingBody}</p><p class="text-slate-300 mb-6">${item.description}</p>${item.posterImageLink ? `<h3 class="text-xl font-semibold text-white mb-3">Event Poster</h3><div class="bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center"><img src="${item.posterImageLink}" alt="Event Poster" class="max-w-full max-h-full object-contain p-2"></div>` : `<div class="h-72 bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center"><img src="${item.image}" alt="${item.name}" class="max-w-full max-h-full object-contain p-2" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Certificate'"></div>`}
-                    ${item.subCertificates ? `<h3 class="text-xl font-semibold text-white mb-3">Specialization Modules</h3><div class="grid grid-cols-2 gap-4 mb-6">${item.subCertificates.map((img, idx) => `<a href="${img}" target="_blank" class="block bg-slate-800/50 rounded-lg overflow-hidden border border-slate-700 h-24 flex items-center justify-center relative group"><span class="absolute z-0 text-slate-500 font-bold text-xs">Module ${idx+1}</span><img src="${img}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity z-10" onerror="this.style.opacity='0'"></a>`).join('')}</div>` : ''}
-                    <div class="flex flex-wrap gap-4 mt-6">${item.verifyLink !== '#' ? `<a href="${item.verifyLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors inline-block">Verify Certificate</a>` : ''}</div></div>`;
+                    // Removed onerror logic for main image so it shows browser broken icon if link is invalid
+                    // Removed opacity/onerror logic for sub-certificates so they display as intended
+                    contentHTML += `<div class="p-6 md:p-8">
+                        <h2 class="text-3xl font-bold text-white mb-2">${item.name}</h2>
+                        <p class="text-slate-500 mb-4">Issued by: ${item.issuingBody}</p>
+                        <p class="text-slate-300 mb-6">${item.description}</p>
+                        
+                        ${item.posterImageLink ? `<h3 class="text-xl font-semibold text-white mb-3">Event Poster</h3><div class="bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center"><img src="${item.posterImageLink}" alt="Event Poster" class="max-w-full max-h-full object-contain p-2"></div>` : 
+                        `<div class="h-72 bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center"><img src="${item.image}" alt="${item.name}" class="max-w-full max-h-full object-contain p-2"></div>`}
+                        
+                        ${item.subCertificates ? `
+                            <h3 class="text-xl font-semibold text-white mb-3">Specialization Modules</h3>
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                ${item.subCertificates.map((img, idx) => `
+                                    <a href="${img}" target="_blank" class="block bg-slate-800/50 rounded-lg overflow-hidden border border-slate-700 h-32 flex items-center justify-center relative group hover:border-indigo-500 transition-colors">
+                                        <div class="absolute inset-0 flex flex-col items-center justify-center z-0">
+                                            <span class="text-slate-500 font-bold text-xs uppercase">Module</span>
+                                            <span class="text-slate-400 font-bold text-lg">${idx+1}</span>
+                                        </div>
+                                        <img src="${img}" class="absolute inset-0 w-full h-full object-cover z-10 transition-opacity" alt="Module ${idx+1}">
+                                    </a>
+                                `).join('')}
+                            </div>` 
+                        : ''}
+                        
+                        <div class="flex flex-wrap gap-4 mt-6">
+                            ${item.verifyLink !== '#' ? `<a href="${item.verifyLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors inline-block">Verify Certificate</a>` : ''}
+                        </div>
+                    </div>`;
                 }
                 modalContent.innerHTML = contentHTML;
                 modal.classList.remove('opacity-0', 'pointer-events-none');
