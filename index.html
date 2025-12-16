@@ -3,287 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Nishant Tomer | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* slate-900 */
-            color: #e2e8f0; /* slate-200 */
+            background-color: #0f172a; /* bg-slate-900 */
+            color: #e2e8f0; /* text-slate-200 */
         }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
-        }
-
-        /* Glassmorphism Cards */
         .glass-card {
-            background: rgba(30, 41, 59, 0.4); /* slate-800 with opacity */
+            background: rgba(30, 41, 59, 0.5); /* bg-slate-800 with opacity */
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden; /* For shine effect */
         }
         .glass-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            border-color: rgba(99, 102, 241, 0.5); /* indigo-500 */
-            background: rgba(30, 41, 59, 0.6);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.3), 0 0 50px rgba(236, 72, 153, 0.2);
+            border-color: rgba(99, 102, 241, 0.6);
         }
-
-        /* Animated Text */
+        /* Shine Effect */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: left 0.6s ease;
+        }
+        .glass-card:hover::before {
+            left: 100%;
+        }
         .animated-gradient-text {
-            background: linear-gradient(135deg, #f472b6, #a78bfa, #60a5fa); /* pink-400, violet-400, blue-400 */
+            background: linear-gradient(90deg, #f472b6, #a78bfa, #60a5fa);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradient-flow 6s ease infinite;
+            animation: gradient-animation 6s ease infinite;
         }
-        @keyframes gradient-flow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Section Entry Animations */
-        .section {
+        @keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        /* NEW ANIMATION STYLE: Content is visible by default */
+        .section-animate {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        .section.visible {
+        .section-animate.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Modal Transitions */
-        .modal {
-            transition: opacity 0.3s ease-in-out;
-        }
-        .modal-content {
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-        }
-
-        /* Buttons */
-        .btn-gradient {
-            background: linear-gradient(90deg, #6366f1 0%, #ec4899 100%);
+        .modal { transition: opacity 0.3s ease-in-out; }
+        .modal-content { transition: all 0.3s ease-in-out; }
+        .btn-gradient { background-image: linear-gradient(to right, #a78bfa 0%, #f472b6 51%, #a78bfa 100%); background-size: 200% auto; transition: 0.5s; }
+        .btn-gradient:hover { background-position: right center; }
+        .section-title {
             position: relative;
-            z-index: 1;
-            overflow: hidden;
+            display: inline-block;
         }
-        .btn-gradient::before {
-            content: "";
+        .section-title::after {
+            content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(90deg, #ec4899 0%, #6366f1 100%);
-            opacity: 0;
-            z-index: -1;
-            transition: opacity 0.3s ease;
+            width: 0%;
+            height: 3px;
+            display: block;
+            margin-top: 8px;
+            right: 0;
+            background: linear-gradient(90deg, #a78bfa, #f472b6);
+            transition: width .4s ease;
         }
-        .btn-gradient:hover::before {
-            opacity: 1;
-        }
-
-        /* Background Animation Blobs */
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: blob-bounce 10s infinite alternate;
-        }
-        @keyframes blob-bounce {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(20px, -20px) scale(1.1); }
+        .section-animate.visible .section-title::after {
+            width: 100%;
+            left: 0;
         }
     </style>
 </head>
-<body class="antialiased overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+<body class="antialiased">
 
-    <!-- Background Decoration -->
-    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div class="blob bg-indigo-600 w-96 h-96 top-0 left-0 -translate-x-1/2 -translate-y-1/2"></div>
-        <div class="blob bg-pink-600 w-96 h-96 bottom-0 right-0 translate-x-1/3 translate-y-1/3 animation-delay-2000"></div>
-        <div class="blob bg-blue-600 w-80 h-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20"></div>
-    </div>
+    <canvas id="bg-canvas"></canvas>
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-40 glass-card border-b-0 border-l-0 border-r-0 rounded-none bg-opacity-80">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div id="nav-name" class="text-xl font-bold text-white tracking-tight"></div>
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex md:items-center md:space-x-8">
-                    <a href="#about" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">About</a>
-                    <a href="#projects" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Projects</a>
-                    <a href="#achievements" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Achievements</a>
-                    <a href="#participations" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Participations</a>
-                    <a href="#certificates" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Certificates</a>
+    <div class="content-wrapper">
+        <!-- Main Content Container -->
+        <div id="main-content">
+            <!-- Navigation -->
+            <nav class="sticky top-0 z-40 glass-card">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center justify-between h-16">
+                        <div id="nav-name" class="text-xl font-bold text-white"></div>
+                        <div class="hidden md:flex md:items-center md:space-x-8">
+                            <a href="#about" class="text-slate-300 hover:text-white transition-colors">About</a>
+                            <a href="#projects" class="text-slate-300 hover:text-white transition-colors">Projects</a>
+                            <a href="#certificates" class="text-slate-300 hover:text-white transition-colors">Certificates</a>
+                        </div>
+                    </div>
                 </div>
-                <!-- Mobile Menu Button (Simple) -->
-                <button class="md:hidden text-slate-300 hover:text-white" onclick="document.querySelector('.mobile-menu').classList.toggle('hidden')">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-            </div>
-            <!-- Mobile Menu Dropdown -->
-            <div class="mobile-menu hidden md:hidden pb-4">
-                <a href="#about" class="block py-2 text-slate-300 hover:text-white">About</a>
-                <a href="#projects" class="block py-2 text-slate-300 hover:text-white">Projects</a>
-                <a href="#achievements" class="block py-2 text-slate-300 hover:text-white">Achievements</a>
-                <a href="#participations" class="block py-2 text-slate-300 hover:text-white">Participations</a>
-                <a href="#certificates" class="block py-2 text-slate-300 hover:text-white">Certificates</a>
+            </nav>
+
+            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <!-- Header / About Me (No animation class, appears instantly) -->
+                <header id="about" class="text-center mb-24 pt-16">
+                    <img id="profile-pic" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-slate-700 shadow-2xl" src="" alt="Profile Picture">
+                    <h1 id="user-name" class="text-5xl md:text-6xl font-extrabold text-white mb-2"></h1>
+                    <p id="user-title" class="text-2xl md:text-3xl animated-gradient-text font-semibold mb-8"></p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto text-left">
+                        <div class="glass-card p-6 rounded-lg">
+                            <h3 class="text-2xl font-bold text-white mb-3">About Me</h3>
+                            <p id="user-bio" class="text-slate-300 leading-relaxed"></p>
+                        </div>
+                        <div class="glass-card p-6 rounded-lg">
+                            <h3 class="text-2xl font-bold text-white mb-3">Education</h3>
+                            <div id="education-info"></div>
+                        </div>
+                    </div>
+
+                    <div id="social-links" class="mt-10 flex justify-center space-x-6 mb-8"></div>
+                </header>
+
+                <!-- Projects Section -->
+                <section id="projects" class="section-animate mb-24 pt-16">
+                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">My Projects</h2>
+                    <div id="projects-grid-preview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                     <div class="text-center mt-12">
+                        <button id="view-all-projects-btn" class="btn-gradient text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-lg">View All Projects</button>
+                    </div>
+                </section>
+                
+                <!-- Career Highlights Section -->
+                <section id="highlights" class="section-animate mb-24 pt-16">
+                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Career Highlights</h2>
+                    <div id="highlights-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"></div>
+                </section>
+
+                <!-- Achievements Section -->
+                <section id="achievements" class="section-animate mb-24 pt-16">
+                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Key Achievements</h2>
+                    <ul id="achievements-list" class="list-none space-y-4 max-w-3xl mx-auto"></ul>
+                </section>
+
+                <!-- Participations Section -->
+                <section id="participations" class="section-animate mb-24 pt-16">
+                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Positions of Responsibility</h2>
+                    <ul id="participations-list" class="list-none space-y-4 max-w-3xl mx-auto"></ul>
+                </section>
+
+                <!-- Certificates Preview Section -->
+                <section id="certificates" class="section-animate mb-24 pt-16">
+                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Certificates</h2>
+                    <div id="certificates-grid-preview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                    <div class="text-center mt-12">
+                        <button id="view-all-certs-btn" class="btn-gradient text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-lg">View All Certificates</button>
+                    </div>
+                </section>
             </div>
         </div>
-    </nav>
 
-    <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
-
-        <!-- Header / About Me -->
-        <header id="about" class="section text-center mb-32 pt-12">
-            <div class="relative inline-block group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-pink-600 to-violet-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-                <img id="profile-pic" class="relative w-40 h-40 rounded-full mx-auto border-4 border-slate-800 object-cover shadow-2xl" src="" alt="Profile Picture">
+        <!-- Projects Page Container -->
+        <div id="projects-page" class="hidden">
+            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="flex justify-between items-center mb-12 pt-16">
+                    <h2 class="text-4xl font-bold text-white">All Projects</h2>
+                    <button id="back-to-home-btn-from-projects" class="bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-slate-700/70 hover:text-white font-semibold py-2 px-5 rounded-full transition-all duration-300">&larr; Back to Home</button>
+                </div>
+                <div id="projects-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
             </div>
-            
-            <h1 id="user-name" class="mt-8 text-5xl md:text-7xl font-bold text-white tracking-tight mb-4"></h1>
-            <p id="user-title" class="text-xl md:text-3xl animated-gradient-text font-semibold mb-6"></p>
-            <p id="user-bio" class="max-w-2xl mx-auto text-lg text-slate-400 mb-8 leading-relaxed"></p>
-            
-            <div id="social-links" class="flex justify-center space-x-6 mb-10">
-                <!-- Injected via JS -->
-            </div>
-            
-            <div id="quick-links" class="flex flex-wrap justify-center gap-4 animate-fade-in-up">
-                <!-- Injected via JS -->
-            </div>
-        </header>
-
-        <!-- Projects Section -->
-        <section id="projects" class="section mb-32 scroll-mt-24">
-            <div class="flex items-center justify-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-white">Featured Projects</h2>
-                <div class="h-1 w-20 bg-indigo-500 ml-6 rounded-full hidden sm:block"></div>
-            </div>
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Injected via JS -->
-            </div>
-        </section>
-
-        <!-- Achievements Section -->
-        <section id="achievements" class="section mb-32 scroll-mt-24">
-            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12">Key Achievements</h2>
-            <div class="max-w-3xl mx-auto">
-                <ul id="achievements-list" class="space-y-4">
-                    <!-- Injected via JS -->
-                </ul>
-            </div>
-        </section>
-
-        <!-- Participations Section -->
-        <section id="participations" class="section mb-32 scroll-mt-24">
-            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12">Participation & Volunteering</h2>
-            <div class="max-w-3xl mx-auto">
-                <ul id="participations-list" class="space-y-4">
-                    <!-- Injected via JS -->
-                </ul>
-            </div>
-        </section>
-
-        <!-- Certificates Section -->
-        <section id="certificates" class="section mb-24 scroll-mt-24">
-            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12">Certifications</h2>
-            <div id="certificates-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Injected via JS -->
-            </div>
-        </section>
-
-    </div>
-
-    <!-- Modal Overlay -->
-    <div id="modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none">
-        <div id="modal-content" class="modal-content relative glass-card rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 shadow-2xl bg-[#1e293b]">
-            <!-- Modal Content Injected via JS -->
         </div>
-    </div>
 
-    <footer class="text-center py-12 border-t border-slate-800/50 bg-[#0f172a]">
-        <p class="text-slate-500 text-sm">© 2024 Portfolio. Built with <span class="text-pink-500">♥</span> and Code.</p>
-    </footer>
+        <!-- Certificates Page Container -->
+        <div id="certificates-page" class="hidden">
+            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="flex justify-between items-center mb-12 pt-16">
+                    <h2 class="text-4xl font-bold text-white">All Certificates</h2>
+                    <button id="back-to-home-btn-from-certs" class="bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-slate-700/70 hover:text-white font-semibold py-2 px-5 rounded-full transition-all duration-300">&larr; Back to Home</button>
+                </div>
+                <div id="certificates-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80 opacity-0 pointer-events-none">
+            <div id="modal-content" class="modal-content relative glass-card rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto transform scale-95 opacity-0"></div>
+        </div>
+
+        <footer class="text-center py-8 border-t border-slate-800">
+            <p class="text-slate-500">Built with ❤️. All rights reserved.</p>
+        </footer>
+    </div>
 
     <script>
         // ===================================================================================
-        // === USER DATA CONFIGURATION ===
+        // === PORTFOLIO DATA CONFIGURATION ===
         // ===================================================================================
         const portfolioData = {
-            about: {
-                name: "Nishant Tomer",
-                title: "Software Engineer & GPU Enthusiast",
-                bio: "Passionate about building scalable systems and exploring the depths of parallel computing. I turn complex problems into elegant, efficient code.",
-                profilePic: "https://placehold.co/400x400/1e293b/cbd5e1?text=NT",
-                socials: [
-                    { type: 'github', url: '#' },
-                    { type: 'linkedin', url: '#' },
-                    { type: 'email', url: 'mailto:nishant@example.com' }
-                ]
-            },
-            projects: [
-                {
-                    title: "AI-Powered Task Manager",
-                    image: "https://placehold.co/800x600/1e293b/cbd5e1?text=AI+Task+Manager",
-                    description: "A smart productivity tool that uses NLP to categorize tasks and suggest priorities based on deadlines and complexity.",
-                    details: [
-                        "Backend built with Node.js and Express.",
-                        "Integrated OpenAI API for task analysis.",
-                        "Responsive React frontend with Tailwind CSS.",
-                        "MongoDB for persistent data storage."
-                    ],
-                    technologies: ["React", "Node.js", "OpenAI", "MongoDB"],
+            about: { name: "Nishant Tomer", title: "Software Developer & AI/ML Enthusiast", bio: "A passionate B.Tech student at IIIT Delhi, specializing in building robust applications and exploring the frontiers of AI. Experienced in game development, mobile app creation, and machine learning, with a strong foundation in data structures and algorithms.", profilePic: "https://i.postimg.cc/bJjXJVFM/IMG-0752.jpg", socials: [ { type: 'email', url: 'mailto:nishant23355@iiitd.ac.in' }, { type: 'github', url: 'https://github.com/Nishant7p' }, { type: 'linkedin', url: '#' }, ] },
+            education: { institution: "Indraprastha Institute of Information Technology, Delhi (IIIT-D)", degree: "Bachelor of Technology (B.Tech)", branch: "Computer Science and Applied Mathematics (CSAM)", timeline: "2023 - 2027" },
+            keyDocuments: [ { title: "Letter of Recommendation", description: "From ModularityLabs, highlighting my skills in iOS development and teamwork.", link: "https://i.postimg.cc/FHxjfYRx/Letter-of-Recommendation-Nishant-Tomer.png" }, { title: "Letter of Experience", description: "Official document confirming my app development internship.", link: "https://i.postimg.cc/MTLHMSV5/Experience-Letter-Nishant-Tomer.png" } ],
+            projects: [ 
+                { 
+                    title: "iOS Productivity App (ModularityLabs)", 
+                    image: "https://i.postimg.cc/XqxcpK69/Screenshot-2025-07-24-at-9-55-43-AM.png", 
+                    description: "Developed a modular iOS productivity app with multiple integrated sub-apps like meditation and habit tracking.", 
+                    details: ["Architected using MVVM for maintainability.", "Integrated Firebase for real-time cloud sync.", "Utilised Core Data for offline persistence.", "Focused on creating an industrial-grade, scalable application."], 
+                    technologies: ["SwiftUI", "Firebase", "Core Data", "Combine", "MVVM"], 
+                    liveLink: "#", 
+                    sourceLink: "#", 
+                    experienceLetterLink: "https://i.postimg.cc/MTLHMSV5/Experience-Letter-Nishant-Tomer.png", 
+                    recommendationLetterLink: "https://i.postimg.cc/FHxjfYRx/Letter-of-Recommendation-Nishant-Tomer.png",
+                    galleryImages: ["https://i.postimg.cc/gjM8YY3D/Screenshot-2025-07-24-at-10-00-16-AM.png", "https://i.postimg.cc/zXtFNkjr/Screenshot-2025-07-24-at-10-00-23-AM.png", "https://i.postimg.cc/ZnJxb72T/Screenshot-2025-07-24-at-10-00-52-AM.png", "https://i.postimg.cc/rm19LXhn/Screenshot-2025-07-24-at-10-01-49-AM.png", "https://i.postimg.cc/XqxcpK69/Screenshot-2025-07-24-at-9-55-43-AM.png", "https://i.postimg.cc/7L73gryH/Screenshot-2025-07-24-at-9-55-52-AM.png", "https://i.postimg.cc/W1d61JWJ/Screenshot-2025-07-24-at-9-56-18-AM.png", "https://i.postimg.cc/4dgzP2Jz/Screenshot-2025-07-24-at-9-56-39-AM.png", "https://i.postimg.cc/FRV0BbRw/Screenshot-2025-07-24-at-9-58-35-AM.png", "https://i.postimg.cc/0220h47n/Screenshot-2025-07-24-at-9-58-40-AM.png", "https://i.postimg.cc/h400ynQh/Screenshot-2025-07-24-at-9-58-50-AM.png", "https://i.postimg.cc/JzS3D4vY/Screenshot-2025-07-24-at-9-59-08-AM.png", "https://i.postimg.cc/4y4pkKHy/Screenshot-2025-07-24-at-9-59-25-AM.png"]
+                },
+                { 
+                    title: "GeoGuesser & Flag Guesser Game",
+                    image: "https://i.postimg.cc/VNBS75YG/Screenshot-2025-07-29-at-7-22-52-PM.png",
+                    description: "A multi-mode geography guessing game built with a clean UI, featuring various challenges like flag identification and location guessing.",
+                    details: ["Includes 6+ game modes such as Deathmatch, Informative, and classic guessing challenges.", "Built with a responsive and user-friendly interface using Tkinter.", "Demonstrates strong Python programming and UI design skills."],
+                    technologies: ["Python", "Tkinter", "Game Design"],
+                    liveLink: "#",
+                    sourceLink: "#",
+                    galleryImages: ["https://i.postimg.cc/QCMWKsZ6/n.png", "https://i.postimg.cc/W4PF60Pq/Screenshot-2025-07-29-at-7-23-17-PM.png", "https://i.postimg.cc/3JdvKKBN/Screenshot-2025-07-29-at-7-23-58-PM.png", "https://i.postimg.cc/BnFPKMRG/Screenshot-2025-07-29-at-7-24-36-PM.png"]
+                },
+                { 
+                    title: "Angry Birds Clone", 
+                    image: "https://i.postimg.cc/SR1BGYM8/Screenshot-2025-07-24-at-9-25-21-AM.png", 
+                    description: "A feature-rich 2D physics game with a custom horror theme, featuring various birds with unique abilities, diverse enemies, and complex obstacles.", 
+                    details: ["Implemented birds with unique abilities, different enemy types, and environmental obstacles.", "Features serializable levels, allowing players to continue from where they left off.", "Includes a full UI with a start menu and pause functionality.", "Designed all UI components and game assets from scratch."], 
+                    technologies: ["Java", "libGDX", "Game Physics", "Canva"], 
+                    liveLink: "#", 
+                    sourceLink: "#",
+                    videoLink: "https://youtu.be/1h-ZgEZ_d2w",
+                    galleryImages: ["https://i.postimg.cc/bJgcsBYm/Screenshot-2025-07-24-at-9-25-52-AM.png", "https://i.postimg.cc/SskbQh4X/Screenshot-2025-07-24-at-9-27-11-AM.png", "https://i.postimg.cc/kG5r8vBq/Screenshot-2025-07-24-at-9-28-08-AM.png", "https://i.postimg.cc/dQWcFpx1/Screenshot-2025-07-24-at-9-28-33-AM.png"]
+                }, 
+                { 
+                    title: "Browser Clone", 
+                    image: "https://i.postimg.cc/GpZJvLt2/Screenshot-2025-07-24-at-9-45-53-AM.png", 
+                    description: "Developed a Python-based desktop browser with a custom GUI and multi-engine search.", 
+                    details: ["Built with Python and GUI libraries like PyQT5/tkinter.", "Added features for theme switching and dynamic content loading."], 
+                    technologies: ["Python", "PyQT5", "tkinter", "GUI Development"], 
+                    liveLink: "#", 
+                    sourceLink: "#",
+                    galleryImages: ["https://i.postimg.cc/SsCLrBYG/Screenshot-2025-07-24-at-9-46-25-AM.png", "https://i.postimg.cc/PqLQLpt9/Screenshot-2025-07-24-at-9-46-30-AM.png", "https://i.postimg.cc/qvvLTDWk/Screenshot-2025-07-24-at-9-48-05-AM.png", "https://i.postimg.cc/7h43QKgr/Screenshot-2025-07-24-at-9-48-20-AM.png"]
+                },
+                { title: "AI & ML Intern Project", image: "https://placehold.co/800x600/374151/e5e7eb?text=ML+Project", description: "Developed and optimized machine learning models for real-world use cases under industry mentorship.", details: ["Applied supervised learning and data preprocessing techniques.", "Worked on the full ML pipeline: data collection, training, and testing.", "Gained experience with model evaluation and tuning."], technologies: ["Python", "PyTorch", "NumPy", "Supervised Learning"], liveLink: "#", sourceLink: "#" }, 
+                { 
+                    title: "Code Editor Clone",
+                    image: "https://placehold.co/800x600/374151/e5e7eb?text=Code+Editor",
+                    description: "A functional code editor built with PyQt5, featuring custom themes, syntax highlighting, and auto-completion.",
+                    details: ["Implemented a text editing area with line numbers and syntax highlighting for various languages.", "Added features for auto-completion suggestions and a small code preview pane.", "Designed custom themes to enhance the user experience."],
+                    technologies: ["Python", "PyQt5", "GUI Development"],
                     liveLink: "#",
                     sourceLink: "#"
                 },
-                {
-                    title: "E-commerce Dashboard",
-                    image: "https://placehold.co/800x600/1e293b/cbd5e1?text=Dashboard",
-                    description: "Real-time analytics dashboard for tracking sales, inventory, and user engagement metrics.",
-                    details: [
-                        "Implemented WebSocket for real-time data updates.",
-                        "Data visualization using D3.js and Chart.js.",
-                        "Secure authentication using JWT.",
-                        "Optimized for high-volume data processing."
-                    ],
-                    technologies: ["Vue.js", "Firebase", "D3.js", "Tailwind"],
+                { 
+                    title: "Weather App",
+                    image: "https://placehold.co/800x600/374151/e5e7eb?text=Weather+App",
+                    description: "A clean and simple weather application that fetches and displays real-time weather data using API calls.",
+                    details: ["Built with a user-friendly interface using Tkinter.", "Integrates with a third-party weather API to get current weather conditions, temperature, and forecasts.", "Handles API requests and JSON data parsing efficiently."],
+                    technologies: ["Python", "Tkinter", "APIs", "JSON"],
+                    liveLink: "#",
+                    sourceLink: "#"
+                },
+                { title: "Escape Room Puzzle Game", image: "https://placehold.co/800x600/374151/e5e7eb?text=Unreal+Game", description: "Built a 3D single-level escape game in Unreal Engine involving puzzle solving and item discovery.", details: ["Designed an interactive environment with light-based hints.", "Created a custom UI for inventory management.", "Focused on immersive gameplay using lighting and animations."], technologies: ["Unreal Engine", "C++", "Game Design"], liveLink: "#", sourceLink: "#" }, 
+                { 
+                    title: "Assembler & Simulator",
+                    image: "https://placehold.co/800x600/374151/e5e7eb?text=Assembler",
+                    description: "A two-pass assembler and simulator for a custom assembly language, built entirely in Python.",
+                    details: ["The assembler converts assembly language code into machine code.", "The simulator executes the generated machine code, showing register values and memory states.", "Demonstrates a deep understanding of computer architecture and low-level programming concepts."],
+                    technologies: ["Python", "Computer Architecture"],
                     liveLink: "#",
                     sourceLink: "#"
                 }
             ],
-            achievements: [
-                "Achieved a 1500+ rating in LeetCode contests and solved 300+ DSA problems.",
-                "Earned 5-star badges on HackerRank in Python, Java, and Data Structures.",
-                "Completed various Coursera courses by Microsoft and Google in DBMS and Data Analytics."
-            ],
-            participations: [
-                "Instructor for AI Summer Camp at IIIT-Delhi, teaching 100+ students.",
-                "Organizer for Odyssey, the IIIT-Delhi Cultural Fest.",
-                "Member of CyFuse, the Robotics & Electronics Club at IIIT-Delhi."
-            ],
-            certificates: [
+            achievements: ["Achieved a 1500+ rating in LeetCode contests and solved 300+ DSA problems.", "Earned 5-star badges on HackerRank in Python, Java, and Data Structures.", "Completed various Coursera courses by Microsoft and Google in DBMS, Data Analytics, etc."],
+            participations: ["Instructor for AI Summer Camp at IIIT-Delhi, teaching 100+ students.", "Organizer for Odyssey, the IIIT-Delhi Cultural Fest.", "Member of CyFuse, the Robotics & Electronics Club at IIIT-Delhi."],
+            certificates: [ 
                 {
                     name: "Introduction to GPU Programming",
                     issuingBody: "Johns Hopkins University",
                     // NOTE: Since these are ibb.co page links, the image might not load directly in <img> tags.
-                    // The error handler will fallback to a placeholder, but clicking opens the link.
                     image: "https://ibb.co/3yWDMZwH", 
                     description: "Specialization covering the fundamentals of GPU programming, including CUDA, parallel computing patterns, and performance optimization.",
                     verifyLink: "https://ibb.co/3yWDMZwH",
@@ -294,303 +311,184 @@
                         "https://ibb.co/s9xwTDb5"
                     ]
                 },
-                {
-                    name: "Python (Basic) Certificate",
-                    issuingBody: "HackerRank",
-                    image: "https://placehold.co/800x600/1e293b/cbd5e1?text=Python+Cert",
-                    description: "Verified proficiency in fundamental Python concepts and problem-solving.",
-                    verifyLink: "https://www.hackerrank.com/certificates/bec82207543c"
-                },
-                {
-                    name: "Google Database Professional",
-                    issuingBody: "Coursera",
-                    image: "https://placehold.co/800x600/1e293b/cbd5e1?text=Google+DB",
-                    description: "Completed professional certificate on Database Management Systems offered by Google.",
-                    verifyLink: "#"
-                },
-                {
-                    name: "Game Development with Java",
-                    issuingBody: "Coding Ninjas",
-                    image: "https://placehold.co/800x600/1e293b/cbd5e1?text=Java+Game+Dev",
-                    description: "Completed an extensive course on game development principles using Java.",
-                    verifyLink: "#"
-                },
-                {
-                    name: "1 Stop Internship",
-                    issuingBody: "1 Stop",
-                    image: "https://placehold.co/800x600/1e293b/cbd5e1?text=Internship",
-                    description: "Certificate of participation for a valuable internship experience.",
-                    verifyLink: "#"
-                },
-                {
-                    name: "AI Summer Camp Instructor",
-                    issuingBody: "IIIT-Delhi",
-                    image: "https://placehold.co/800x600/1e293b/cbd5e1?text=Instructor+Cert",
-                    description: "Certificate of appreciation for instructing over 100 students in an AI summer camp.",
-                    verifyLink: "#",
-                    posterImageLink: "https://placehold.co/800x600/1e293b/cbd5e1?text=Event+Poster"
-                }
-            ]
+                { name: "Python (Basic) Certificate", issuingBody: "HackerRank", image: "https://placehold.co/800x600/4b5563/e5e7eb?text=HackerRank", description: "Verified proficiency in fundamental Python concepts and problem-solving.", verifyLink: "https://www.hackerrank.com/certificates/bec82207543c" }, { name: "Google Database Professional", issuingBody: "Coursera", image: "https://i.postimg.cc/g0NnpR0f/database.png", description: "Completed professional certificate on Database Management Systems offered by Google.", verifyLink: "#" }, { name: "Game Development with Java", issuingBody: "Coding Ninjas", image: "https://i.postimg.cc/G24h15Vy/CWcompletion.png", description: "Completed an extensive course on game development principles using Java.", verifyLink: "#" }, { name: "1 Stop Internship", issuingBody: "1 Stop", image: "https://i.postimg.cc/rwTmtg0B/1stop.png", description: "Certificate of participation for a valuable internship experience.", verifyLink: "#" }, { name: "AI Summer Camp Instructor", issuingBody: "IIIT-Delhi", image: "https://i.postimg.cc/90tfxqs8/2023355.jpg", description: "Certificate of appreciation for instructing over 100 students in an AI summer camp.", verifyLink: "#", posterImageLink: "https://i.postimg.cc/JhnBGKS1/PHOTO-2025-07-20-00-05-40.jpg" } ]
         };
+        
+        // ===================================================================================
+        // === INTERACTIVE BACKGROUND LOGIC (THREE.JS) ===
+        // ===================================================================================
+        let scene, camera, renderer, particles, lines;
+        const mouse = new THREE.Vector2(-100, -100);
+        let particleSystem;
+
+        class Particle {
+            constructor() {
+                this.pos = new THREE.Vector3( (Math.random() - 0.5) * 800, (Math.random() - 0.5) * 800, (Math.random() - 0.5) * 400 );
+                this.vel = new THREE.Vector3( (Math.random() - 0.5) * 0.2, (Math.random() - 0.5) * 0.2, (Math.random() - 0.5) * 0.2 );
+                this.baseColor = new THREE.Color(0xa78bfa);
+                this.color = this.baseColor.clone();
+            }
+            update(mouse) {
+                this.pos.add(this.vel);
+                if (this.pos.x < -400 || this.pos.x > 400) this.vel.x *= -1;
+                if (this.pos.y < -400 || this.pos.y > 400) this.vel.y *= -1;
+                if (this.pos.z < -200 || this.pos.z > 200) this.vel.z *= -1;
+                const mouse3D = new THREE.Vector3(mouse.x * (window.innerWidth / 2), mouse.y * (window.innerHeight / 2), 0);
+                const dist = this.pos.distanceTo(mouse3D);
+                if (dist < 150) {
+                    const force = (150 - dist) * 0.01;
+                    const repulsion = new THREE.Vector3().subVectors(this.pos, mouse3D).normalize().multiplyScalar(force);
+                    this.pos.add(repulsion);
+                }
+            }
+        }
+
+        function initBackground() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 300;
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            const particleCount = 200;
+            particleSystem = Array.from({ length: particleCount }, () => new Particle());
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const particleGeometry = new THREE.BufferGeometry();
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            const particleMaterial = new THREE.PointsMaterial({ size: 2, vertexColors: true, sizeAttenuation: true });
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+            const lineMaterial = new THREE.LineBasicMaterial({ vertexColors: true, blending: THREE.AdditiveBlending, transparent: true });
+            const lineGeometry = new THREE.BufferGeometry();
+            const linePositions = new Float32Array(particleCount * particleCount * 3);
+            const lineColors = new Float32Array(particleCount * particleCount * 3);
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+            lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+            lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            scene.add(lines);
+            window.addEventListener('resize', onWindowResize);
+            window.addEventListener('mousemove', onMouseMove);
+            animateBackground();
+        }
+
+        function onWindowResize() { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); }
+        function onMouseMove(event) { mouse.x = (event.clientX / window.innerWidth) * 2 - 1; mouse.y = -(event.clientY / window.innerHeight) * 2 + 1; }
+
+        function animateBackground() {
+            requestAnimationFrame(animateBackground);
+            const positions = particles.geometry.attributes.position.array;
+            const colors = particles.geometry.attributes.color.array;
+            const linePositions = lines.geometry.attributes.position.array;
+            const lineColors = lines.geometry.attributes.color.array;
+            let lineIndex = 0;
+            const time = Date.now() * 0.0005;
+            particleSystem.forEach((p, i) => {
+                p.update(mouse);
+                positions[i * 3] = p.pos.x; positions[i * 3 + 1] = p.pos.y; positions[i * 3 + 2] = p.pos.z;
+                const pulse = Math.sin(time + i * 0.1) * 0.5 + 0.5;
+                p.color.setHSL(0.65 + pulse * 0.1, 0.7, 0.6);
+                colors[i * 3] = p.color.r; colors[i * 3 + 1] = p.color.g; colors[i * 3 + 2] = p.color.b;
+            });
+            for (let i = 0; i < particleSystem.length; i++) {
+                for (let j = i + 1; j < particleSystem.length; j++) {
+                    const p1 = particleSystem[i]; const p2 = particleSystem[j]; const dist = p1.pos.distanceTo(p2.pos);
+                    if (dist < 100) {
+                        const alpha = 1.0 - (dist / 100);
+                        linePositions[lineIndex * 3] = p1.pos.x; linePositions[lineIndex * 3 + 1] = p1.pos.y; linePositions[lineIndex * 3 + 2] = p1.pos.z;
+                        lineColors[lineIndex * 3] = p1.color.r * alpha; lineColors[lineIndex * 3 + 1] = p1.color.g * alpha; lineColors[lineIndex * 3 + 2] = p1.color.b * alpha;
+                        lineIndex++;
+                        linePositions[lineIndex * 3] = p2.pos.x; linePositions[lineIndex * 3 + 1] = p2.pos.y; linePositions[lineIndex * 3 + 2] = p2.pos.z;
+                        lineColors[lineIndex * 3] = p2.color.r * alpha; lineColors[lineIndex * 3 + 1] = p2.color.g * alpha; lineColors[lineIndex * 3 + 2] = p2.color.b * alpha;
+                        lineIndex++;
+                    }
+                }
+            }
+            lines.geometry.setDrawRange(0, lineIndex);
+            particles.geometry.attributes.position.needsUpdate = true; particles.geometry.attributes.color.needsUpdate = true;
+            lines.geometry.attributes.position.needsUpdate = true; lines.geometry.attributes.color.needsUpdate = true;
+            camera.lookAt(scene.position);
+            renderer.render(scene, camera);
+        }
 
         // ===================================================================================
-        // === APP LOGIC ===
+        // === DOM & UI LOGIC ===
         // ===================================================================================
-
         document.addEventListener('DOMContentLoaded', () => {
-            initializePortfolio();
-            setupIntersectionObserver();
-            setupModalListeners();
-        });
-
-        function initializePortfolio() {
-            // About
+            initBackground();
+            const mainContent = document.getElementById('main-content');
+            const projectsPage = document.getElementById('projects-page');
+            const certificatesPage = document.getElementById('certificates-page');
+            
             document.getElementById('nav-name').textContent = portfolioData.about.name;
             document.getElementById('profile-pic').src = portfolioData.about.profilePic;
             document.getElementById('user-name').textContent = portfolioData.about.name;
             document.getElementById('user-title').textContent = portfolioData.about.title;
             document.getElementById('user-bio').textContent = portfolioData.about.bio;
-
-            // Socials
-            const socialIcons = {
-                github: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>',
-                linkedin: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>',
-                twitter: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>',
-                email: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>'
-            };
+            const edu = portfolioData.education;
+            document.getElementById('education-info').innerHTML = `<p class="text-lg text-slate-200 font-semibold">${edu.degree}</p><p class="text-indigo-400">${edu.branch}</p><p class="text-slate-400 mt-2">${edu.institution}</p><p class="text-slate-500 text-sm">${edu.timeline}</p>`;
+            const socialLinksContainer = document.getElementById('social-links');
+            const socialIcons = { github: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`, linkedin: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>`, email: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>` };
+            portfolioData.about.socials.forEach(social => { const link = document.createElement('a'); link.href = social.url; link.target = "_blank"; link.rel = "noopener noreferrer"; link.className = "text-slate-400 hover:text-indigo-400 transition-colors duration-300"; link.innerHTML = socialIcons[social.type] || ''; socialLinksContainer.appendChild(link); });
             
-            const socialContainer = document.getElementById('social-links');
-            portfolioData.about.socials.forEach(social => {
-                const a = document.createElement('a');
-                a.href = social.url;
-                a.className = "text-slate-400 hover:text-white transition-colors transform hover:scale-110";
-                a.target = "_blank";
-                a.innerHTML = socialIcons[social.type] || '';
-                socialContainer.appendChild(a);
-            });
+            const projectsGridPreview = document.getElementById('projects-grid-preview');
+            const projectsGridFull = document.getElementById('projects-grid-full');
+            portfolioData.projects.slice(0, 6).forEach((project, index) => { projectsGridPreview.innerHTML += createCard('project', project.title, project.description, project.image, portfolioData.projects.indexOf(project)); });
+            portfolioData.projects.forEach((project, index) => { projectsGridFull.innerHTML += createCard('project', project.title, project.description, project.image, index); });
 
-            // Quick Links
-            const quickLinks = [
-                { name: 'My Projects', href: '#projects' },
-                { name: 'Achievements', href: '#achievements' },
-                { name: 'Participations', href: '#participations' }
-            ];
-            const quickLinksContainer = document.getElementById('quick-links');
-            quickLinks.forEach(link => {
-                const a = document.createElement('a');
-                a.href = link.href;
-                a.className = "bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-indigo-600 hover:text-white hover:border-indigo-500 font-medium py-2 px-6 rounded-full transition-all duration-300 transform hover:-translate-y-1";
-                a.textContent = link.name;
-                quickLinksContainer.appendChild(a);
-            });
-
-            // Render Grids
-            renderGrid('projects-grid', portfolioData.projects, 'project');
-            renderGrid('certificates-grid', portfolioData.certificates, 'certificate');
-
-            // Render Lists
-            renderList('achievements-list', portfolioData.achievements, 'achievement');
-            renderList('participations-list', portfolioData.participations, 'participation');
-        }
-
-        function renderGrid(elementId, data, type) {
-            const container = document.getElementById(elementId);
-            data.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = "glass-card rounded-xl overflow-hidden cursor-pointer group h-full flex flex-col";
-                card.onclick = () => openModal(type, index);
-
-                // Image handling with fallback
-                const imgSrc = item.image;
-                const fallbackImg = `https://placehold.co/800x600/1e293b/cbd5e1?text=${encodeURIComponent(item.title || item.name)}`;
-
-                card.innerHTML = `
-                    <div class="relative h-48 overflow-hidden bg-slate-800">
-                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
-                        <img src="${imgSrc}" 
-                             onerror="this.src='${fallbackImg}'" 
-                             alt="${item.title || item.name}" 
-                             class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">${item.title || item.name}</h3>
-                        <p class="text-slate-400 text-sm mb-4 line-clamp-3 flex-1">${item.description || item.issuingBody}</p>
-                        <div class="flex items-center text-indigo-400 font-semibold text-sm mt-auto">
-                            <span>View Details</span>
-                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function renderList(elementId, data, type) {
-            const container = document.getElementById(elementId);
-            const icons = {
-                achievement: '<svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
-                participation: '<svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>'
-            };
-
-            data.forEach(text => {
-                const li = document.createElement('li');
-                li.className = "glass-card p-5 rounded-lg flex items-start space-x-4 group hover:bg-slate-800/80 transition-colors";
-                li.innerHTML = `
-                    <div class="flex-shrink-0 mt-1 transform group-hover:scale-110 transition-transform">${icons[type]}</div>
-                    <p class="text-slate-300 group-hover:text-white transition-colors leading-relaxed">${text}</p>
-                `;
-                container.appendChild(li);
-            });
-        }
-
-        // --- INTERSECTION OBSERVER ---
-        function setupIntersectionObserver() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
-            document.querySelectorAll('.section').forEach(el => observer.observe(el));
-        }
-
-        // --- MODAL LOGIC ---
-        const modal = document.getElementById('modal');
-        const modalContent = document.getElementById('modal-content');
-
-        function openModal(type, index) {
-            const data = type === 'project' ? portfolioData.projects[index] : portfolioData.certificates[index];
-            let html = `
-                <button onclick="closeModal()" class="absolute top-4 right-4 p-2 bg-black/50 rounded-full text-slate-400 hover:text-white transition-colors z-20">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            `;
-
-            if (type === 'project') {
-                html += `
-                    <div class="flex flex-col md:flex-row h-full">
-                         <div class="md:w-1/2 bg-slate-900 h-64 md:h-auto relative group">
-                            <img src="${data.image}" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Project'" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
-                        </div>
-                        <div class="p-8 md:w-1/2 flex flex-col overflow-y-auto">
-                            <h2 class="text-3xl font-bold text-white mb-2">${data.title}</h2>
-                            <p class="text-slate-400 mb-6">${data.description}</p>
-                            
-                            <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
-                                <span class="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span> Key Features
-                            </h3>
-                            <ul class="space-y-2 mb-8 text-slate-300 text-sm">
-                                ${data.details.map(d => `<li class="flex items-start"><span class="mr-2 opacity-50">•</span>${d}</li>`).join('')}
-                            </ul>
-
-                            <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
-                                <span class="w-2 h-2 bg-pink-500 rounded-full mr-2"></span> Tech Stack
-                            </h3>
-                            <div class="flex flex-wrap gap-2 mb-8">
-                                ${data.technologies.map(t => `<span class="bg-slate-700/50 text-indigo-300 text-xs font-bold px-3 py-1 rounded-full border border-slate-600">${t}</span>`).join('')}
-                            </div>
-
-                            <div class="flex gap-4 mt-auto">
-                                ${data.liveLink !== '#' ? `<a href="${data.liveLink}" target="_blank" class="flex-1 btn-gradient text-white text-center py-3 rounded-lg font-semibold shadow-lg hover:shadow-indigo-500/30 transition-shadow">View Live</a>` : ''}
-                                ${data.sourceLink !== '#' ? `<a href="${data.sourceLink}" target="_blank" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-center py-3 rounded-lg font-semibold transition-colors">Source Code</a>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                // Certificate Modal
-                html += `
-                    <div class="p-8 md:p-10">
-                        <div class="flex flex-col md:flex-row gap-8 mb-8">
-                            <div class="w-full md:w-1/3 flex-shrink-0">
-                                <div class="relative rounded-lg overflow-hidden border border-slate-700 shadow-2xl bg-slate-900 aspect-[4/3] group cursor-pointer" onclick="window.open('${data.verifyLink}', '_blank')">
-                                    <img src="${data.image}" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Certificate'" class="w-full h-full object-contain p-2 opacity-90 group-hover:opacity-100 transition-opacity">
-                                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
-                                        <span class="text-white font-semibold bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm">View Full</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h2 class="text-3xl font-bold text-white mb-1">${data.name}</h2>
-                                <p class="text-indigo-400 font-medium text-lg mb-4">${data.issuingBody}</p>
-                                <p class="text-slate-300 leading-relaxed mb-6">${data.description}</p>
-                                <a href="${data.verifyLink}" target="_blank" class="inline-flex items-center text-white bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-lg transition-colors font-medium text-sm">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                                    Verify Credential
-                                </a>
-                            </div>
-                        </div>
-
-                        ${data.subCertificates ? `
-                            <div class="border-t border-slate-700 pt-8">
-                                <h3 class="text-xl font-bold text-white mb-6 flex items-center">
-                                    <svg class="w-5 h-5 mr-2 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                                    Specialization Modules
-                                </h3>
-                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    ${data.subCertificates.map((img, idx) => `
-                                        <a href="${img}" target="_blank" class="group relative aspect-video bg-slate-800 rounded-lg overflow-hidden border border-slate-700 hover:border-indigo-500 transition-all">
-                                            <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 z-0">
-                                                <span class="text-xs font-bold uppercase tracking-wider">Module</span>
-                                                <span class="text-2xl font-bold text-slate-600 group-hover:text-indigo-500 transition-colors">${idx + 1}</span>
-                                            </div>
-                                            <!-- Attempt to load image, if fail (due to ibb.co html page), hide and show placeholder text -->
-                                            <img src="${img}" 
-                                                 onerror="this.style.opacity=0" 
-                                                 class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-40 transition-opacity z-10"
-                                            >
-                                            <div class="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[10px] text-center py-1 opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                                                Click to View
-                                            </div>
-                                        </a>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        ` : ''}
-                        
-                        ${data.posterImageLink ? `
-                             <div class="border-t border-slate-700 pt-8 mt-6">
-                                <h3 class="text-xl font-bold text-white mb-6">Event Poster</h3>
-                                <div class="bg-slate-900 rounded-lg p-2 border border-slate-700 inline-block">
-                                    <img src="${data.posterImageLink}" class="max-h-64 rounded" onerror="this.style.display='none'">
-                                </div>
-                             </div>
-                        ` : ''}
-                    </div>
-                `;
+            const highlightsGrid = document.getElementById('highlights-grid');
+            portfolioData.keyDocuments.forEach(doc => { highlightsGrid.innerHTML += `<a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex items-center text-left space-x-5"><div class="flex-shrink-0 text-indigo-400"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div><div><h3 class="text-xl font-bold text-white mb-1">${doc.title}</h3><p class="text-slate-400">${doc.description}</p></div></a>`; });
+            const certificatesGridPreview = document.getElementById('certificates-grid-preview');
+            const certificatesGridFull = document.getElementById('certificates-grid-full');
+            portfolioData.certificates.slice(0, 3).forEach((cert) => { certificatesGridPreview.innerHTML += createCard('certificate', cert.name, cert.issuingBody, cert.image, portfolioData.certificates.indexOf(cert)); });
+            portfolioData.certificates.forEach((cert, index) => { certificatesGridFull.innerHTML += createCard('certificate', cert.name, cert.issuingBody, cert.image, index); });
+            function createCard(type, title, subtitle, image, index) { 
+                return `<div class="glass-card rounded-lg overflow-hidden cursor-pointer flex flex-col" data-type="${type}" data-index="${index}"><div class="h-52 bg-slate-900/30 flex items-center justify-center p-2"><img src="${image}" alt="${title}" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Image'"></div><div class="p-5 flex-grow flex flex-col"><h3 class="text-lg font-bold text-white mb-2">${title}</h3><p class="text-slate-400 text-sm mb-4 flex-grow line-clamp-3">${subtitle}</p><span class="text-indigo-400 font-semibold mt-auto">View Details &rarr;</span></div></div>`; 
             }
+            const achievementsList = document.getElementById('achievements-list');
+            const achievementIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`;
+            portfolioData.achievements.forEach(item => achievementsList.innerHTML += createListItem(item, achievementIcon));
+            const participationsList = document.getElementById('participations-list');
+            const participationIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`;
+            portfolioData.participations.forEach(item => participationsList.innerHTML += createListItem(item, participationIcon));
+            function createListItem(text, iconSVG) { return `<li class="glass-card p-4 rounded-lg flex items-center space-x-4"><span class="text-indigo-400 flex-shrink-0">${iconSVG}</span><p class="text-slate-300">${text}</p></li>`; }
+            
+            document.getElementById('view-all-projects-btn').addEventListener('click', () => { mainContent.classList.add('hidden'); projectsPage.classList.remove('hidden'); window.scrollTo(0, 0); });
+            document.getElementById('back-to-home-btn-from-projects').addEventListener('click', () => { projectsPage.classList.add('hidden'); mainContent.classList.remove('hidden'); window.scrollTo(0, 0); });
+            document.getElementById('view-all-certs-btn').addEventListener('click', () => { mainContent.classList.add('hidden'); certificatesPage.classList.remove('hidden'); window.scrollTo(0, 0); });
+            document.getElementById('back-to-home-btn-from-certs').addEventListener('click', () => { certificatesPage.classList.add('hidden'); mainContent.classList.remove('hidden'); window.scrollTo(0, 0); });
 
-            modalContent.innerHTML = html;
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            modalContent.classList.remove('scale-95', 'opacity-0');
-            document.body.style.overflow = 'hidden'; // Prevent scroll
-        }
-
-        function closeModal() {
-            modal.classList.add('opacity-0');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('pointer-events-none');
-                document.body.style.overflow = '';
-            }, 300);
-        }
-
-        // Close on clicking outside
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modal-content');
+            function openModal(type, index) {
+                const item = portfolioData[type + 's'][index];
+                let contentHTML = `<button id="close-modal" class="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors z-10"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>`;
+                if (type === 'project') {
+                    contentHTML += `<div class="p-6 md:p-8"><div class="h-72 bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center p-2"><img src="${item.image}" alt="${item.title}" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Project+Image'"></div><h2 class="text-3xl font-bold text-white mb-2">${item.title}</h2><p class="text-slate-400 mb-6">${item.description}</p><h3 class="text-xl font-semibold text-white mb-3">Key Features</h3><ul class="list-disc list-inside space-y-2 mb-6 text-slate-300">${item.details.map(detail => `<li>${detail}</li>`).join('')}</ul><h3 class="text-xl font-semibold text-white mb-3">Technologies Used</h3><div class="flex flex-wrap gap-2 mb-6">${item.technologies.map(tech => `<span class="bg-slate-700 text-indigo-300 text-sm font-medium px-3 py-1 rounded-full">${tech}</span>`).join('')}</div>${(item.galleryImages && item.galleryImages.length > 0) ? `<div><h3 class="text-xl font-semibold text-white mb-3">Project Gallery</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">${item.galleryImages.map(imgUrl => `<a href="${imgUrl}" target="_blank" rel="noopener noreferrer" class="aspect-video block bg-slate-900/30 rounded-lg overflow-hidden"><img src="${imgUrl}" class="w-full h-full object-contain hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Gallery+Image'"></a>`).join('')}</div></div>` : ''}<div class="border-t border-slate-700 my-6"></div><div class="space-y-6"><div><h3 class="text-xl font-semibold text-white mb-3">Project Links</h3><div class="flex flex-wrap gap-4">${(item.videoLink) ? `<a href="${item.videoLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Watch Gameplay</a>` : ''}${item.liveLink !== '#' ? `<a href="${item.liveLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">View Live</a>` : ''}${item.sourceLink !== '#' ? `<a href="${item.sourceLink}" target="_blank" rel="noopener noreferrer" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Source Code</a>` : ''}</div></div>${ (item.experienceLetterLink || item.recommendationLetterLink) ? `<div><h3 class="text-xl font-semibold text-white mb-3">Related Documents</h3><div class="flex flex-wrap gap-4">${item.experienceLetterLink ? `<a href="${item.experienceLetterLink}" target="_blank" rel="noopener noreferrer" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Experience Letter</a>` : ''}${item.recommendationLetterLink ? `<a href="${item.recommendationLetterLink}" target="_blank" rel="noopener noreferrer" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Recommendation</a>` : ''}</div></div>` : '' }</div></div>`;
+                } else if (type === 'certificate') {
+                    contentHTML += `<div class="p-6 md:p-8"><h2 class="text-3xl font-bold text-white mb-2">${item.name}</h2><p class="text-slate-500 mb-4">Issued by: ${item.issuingBody}</p><p class="text-slate-300 mb-6">${item.description}</p>${item.posterImageLink ? `<h3 class="text-xl font-semibold text-white mb-3">Event Poster</h3><div class="bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center"><img src="${item.posterImageLink}" alt="Event Poster" class="max-w-full max-h-full object-contain p-2"></div>` : `<div class="h-72 bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center"><img src="${item.image}" alt="${item.name}" class="max-w-full max-h-full object-contain p-2" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Certificate'"></div>`}
+                    ${item.subCertificates ? `<h3 class="text-xl font-semibold text-white mb-3">Specialization Modules</h3><div class="grid grid-cols-2 gap-4 mb-6">${item.subCertificates.map((img, idx) => `<a href="${img}" target="_blank" class="block bg-slate-800/50 rounded-lg overflow-hidden border border-slate-700 h-24 flex items-center justify-center relative group"><span class="absolute z-0 text-slate-500 font-bold text-xs">Module ${idx+1}</span><img src="${img}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity z-10" onerror="this.style.opacity='0'"></a>`).join('')}</div>` : ''}
+                    <div class="flex flex-wrap gap-4 mt-6">${item.verifyLink !== '#' ? `<a href="${item.verifyLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors inline-block">Verify Certificate</a>` : ''}</div></div>`;
+                }
+                modalContent.innerHTML = contentHTML;
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                document.body.style.overflow = 'hidden';
+                document.getElementById('close-modal').addEventListener('click', closeModal);
+            }
+            function closeModal() {
+                modal.classList.add('opacity-0');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => { modal.classList.add('pointer-events-none'); document.body.style.overflow = 'auto'; }, 300);
+            }
+            document.querySelectorAll('[data-type="project"], [data-type="certificate"]').forEach(card => { card.addEventListener('click', () => openModal(card.dataset.type, card.dataset.index)); });
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('pointer-events-none')) closeModal(); });
+            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
+            document.querySelectorAll('.section-animate').forEach(el => observer.observe(el));
         });
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        function setupModalListeners() {
-            // Already handled by onclick in render functions
-        }
     </script>
 </body>
 </html>
+```eof
