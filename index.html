@@ -1,521 +1,1388 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nishant Tomer | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* bg-slate-900 */
-            color: #e2e8f0; /* text-slate-200 */
-        }
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
-        }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.5); /* bg-slate-800 with opacity */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            overflow: hidden; /* For shine effect */
-        }
-        .glass-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 0 25px rgba(99, 102, 241, 0.3), 0 0 50px rgba(236, 72, 153, 0.2);
-            border-color: rgba(99, 102, 241, 0.6);
-        }
-        /* Shine Effect */
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            transition: left 0.6s ease;
-        }
-        .glass-card:hover::before {
-            left: 100%;
-        }
-        .animated-gradient-text {
-            background: linear-gradient(90deg, #f472b6, #a78bfa, #60a5fa);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-animation 6s ease infinite;
-        }
-        @keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        /* NEW ANIMATION STYLE: Content is visible by default */
-        .section-animate {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .section-animate.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NT / Nishant Tomer — Personal OS</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070707;--bg2:#0d0d0d;--bg3:#131313;--bg4:#1a1a1a;
+  --border:#1c1c1c;--b2:#252525;--b3:#303030;
+  --text:#ebebeb;--dim:#6a6a6a;--muted:#303030;
+  --acc:#00ff88;--acc-bg:rgba(0,255,136,0.06);--acc-b:rgba(0,255,136,0.2);
+  --blue:#4488ff;--amber:#ffaa00;--purple:#aa66ff;--red:#ff5566;--cyan:#00ccff;
+  --mono:'JetBrains Mono',monospace;--sans:'Syne',sans-serif;
+  --ease:all 0.18s ease;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:12.5px;line-height:1.6;overflow-x:hidden;cursor:none;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 4px);pointer-events:none;z-index:9999;}
+a,button{cursor:none;}
 
-        .modal { transition: opacity 0.3s ease-in-out; }
-        .modal-content { transition: all 0.3s ease-in-out; }
-        .btn-gradient { background-image: linear-gradient(to right, #a78bfa 0%, #f472b6 51%, #a78bfa 100%); background-size: 200% auto; transition: 0.5s; }
-        .btn-gradient:hover { background-position: right center; }
-        .section-title {
-            position: relative;
-            display: inline-block;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            width: 0%;
-            height: 3px;
-            display: block;
-            margin-top: 8px;
-            right: 0;
-            background: linear-gradient(90deg, #a78bfa, #f472b6);
-            transition: width .4s ease;
-        }
-        .section-animate.visible .section-title::after {
-            width: 100%;
-            left: 0;
-        }
-    </style>
+/* CURSOR */
+#cur,#cring{position:fixed;pointer-events:none;z-index:99999;border-radius:50%;}
+#cur{width:5px;height:5px;background:var(--acc);transform:translate(-50%,-50%);}
+#cring{width:26px;height:26px;border:1px solid rgba(0,255,136,0.3);transform:translate(-50%,-50%);transition:width .15s,height .15s,border-color .15s;}
+body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
+
+/* SHELL */
+.shell{display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+.sb{width:214px;min-width:214px;height:100vh;position:fixed;top:0;left:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:300;transition:left .28s ease;}
+.sb-head{padding:20px 16px 16px;border-bottom:1px solid var(--border);}
+.sb-logo{font-family:var(--sans);font-size:19px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.1;}
+.sb-logo em{color:var(--acc);font-style:normal;}
+.sb-sub{font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-top:3px;}
+.online{display:flex;align-items:center;gap:5px;margin-top:8px;}
+.od{width:5px;height:5px;background:var(--acc);border-radius:50%;animation:pls 2s ease infinite;}
+@keyframes pls{0%,100%{opacity:1;}50%{opacity:.2;}}
+.ot{font-size:9px;color:var(--dim);}
+.sb-nav{flex:1;padding:8px 0;overflow-y:auto;}
+.ng{margin-bottom:2px;}
+.ng-label{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:8px 16px 3px;}
+.na{display:flex;align-items:center;gap:9px;padding:6px 16px;color:var(--dim);font-family:var(--mono);font-size:10.5px;text-decoration:none;border:none;background:none;width:100%;text-align:left;cursor:none;border-left:2px solid transparent;transition:var(--ease);}
+.na svg{width:12px;height:12px;flex-shrink:0;opacity:.55;}
+.na:hover,.na.on{color:var(--text);background:rgba(255,255,255,.025);border-left-color:var(--acc);}
+.na.on{color:var(--acc);}
+.na.on svg,.na:hover svg{opacity:1;}
+.nb{font-size:8px;margin-left:auto;padding:1px 5px;border:1px solid var(--border);color:var(--muted);border-radius:2px;}
+.na.on .nb{border-color:var(--acc-b);color:var(--acc);}
+.sb-foot{padding:12px 16px;border-top:1px solid var(--border);}
+.sb-foot-links{display:flex;gap:10px;}
+.sb-foot-links a{font-size:9.5px;color:var(--dim);text-decoration:none;transition:color .15s;}
+.sb-foot-links a:hover{color:var(--acc);}
+.sb-foot-id{font-size:8.5px;color:var(--muted);margin-top:3px;}
+
+/* MAIN */
+.main{margin-left:214px;flex:1;min-height:100vh;}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:100;height:38px;background:rgba(7,7,7,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
+.tp-path{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--dim);}
+.tp-seg{color:var(--text);}
+.tp-r{display:flex;align-items:center;gap:14px;}
+.tp-tag{font-size:9px;padding:2px 7px;border:1px solid var(--acc-b);color:var(--acc);background:var(--acc-bg);}
+.tp-info{font-size:9.5px;color:var(--dim);}
+.tp-time{font-size:9.5px;color:var(--muted);font-family:var(--mono);}
+
+/* PAGES */
+.page{display:none;animation:fadeUp .3s ease;}
+.page.on{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* SECTIONS */
+.sec{padding:44px 36px;border-bottom:1px solid var(--border);}
+.sec:last-child{border-bottom:none;}
+.stag-line{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:7px;margin-bottom:7px;}
+.stag-line::before{content:'';width:12px;height:1px;background:var(--acc);}
+.sh{font-family:var(--sans);font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.7px;line-height:1.05;margin-bottom:3px;}
+.ss{font-size:10.5px;color:var(--dim);margin-bottom:28px;}
+.srow{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;}
+.scount{font-size:9.5px;color:var(--muted);}
+
+/* GRID */
+.g{display:grid;gap:1px;background:var(--border);}
+.g.bord{border:1px solid var(--border);}
+.g2{grid-template-columns:1fr 1fr;}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+.gauto{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}
+.card{background:var(--bg);padding:20px;transition:background .15s;}
+.card:hover{background:var(--bg3);}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-family:var(--mono);font-size:10.5px;text-decoration:none;border:1px solid;transition:var(--ease);cursor:none;letter-spacing:.03em;}
+.btn-p{background:var(--acc);border-color:var(--acc);color:var(--bg);font-weight:700;}
+.btn-p:hover{background:transparent;color:var(--acc);}
+.btn-g{background:transparent;border-color:var(--b2);color:var(--dim);}
+.btn-g:hover{border-color:var(--acc);color:var(--acc);}
+.bsm{padding:5px 11px;font-size:9.5px;}
+.btns{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* TAGS */
+.chip{font-size:9px;padding:3px 8px;border:1px solid var(--b2);color:var(--dim);transition:var(--ease);}
+.chip:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);}
+.chip.hi{border-color:var(--acc-b);color:var(--acc);background:var(--acc-bg);}
+.chip.blue{border-color:rgba(68,136,255,.3);color:var(--blue);}
+.chip.amber{border-color:rgba(255,170,0,.3);color:var(--amber);}
+.chip.purple{border-color:rgba(170,102,255,.3);color:var(--purple);}
+.chips{display:flex;flex-wrap:wrap;gap:4px;}
+
+/* TERM */
+.term{background:var(--bg3);border:1px solid var(--b2);}
+.term-bar{display:flex;align-items:center;gap:5px;padding:7px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
+.td{width:7px;height:7px;border-radius:50%;}
+.tr{background:#ff5f57;}.ty{background:#febc2e;}.tg{background:#28c840;}
+.tl{font-size:9px;color:var(--muted);margin-left:6px;}
+.term-body{padding:14px 16px;font-size:11px;line-height:1.9;}
+.tp_c{color:var(--acc);}
+.tc_c{color:var(--text);}
+.ts_c{color:var(--amber);}
+.to_c{color:var(--dim);}
+.tm_c{color:var(--muted);}
+.tcur{display:inline-block;width:6px;height:11px;background:var(--acc);vertical-align:middle;animation:bl 1.1s step-end infinite;}
+@keyframes bl{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* TIMELINE */
+.tline{position:relative;padding-left:22px;}
+.tline::before{content:'';position:absolute;left:0;top:7px;bottom:0;width:1px;background:var(--border);}
+.tli{position:relative;margin-bottom:40px;}
+.tli-dot{position:absolute;left:-26px;top:5px;width:8px;height:8px;background:var(--bg);border:1px solid var(--acc);transform:rotate(45deg);}
+.tli-dot.f{background:var(--acc);}
+.tli-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:5px;}
+.tli-role{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.2px;}
+.tli-period{font-size:9.5px;color:var(--dim);white-space:nowrap;padding-top:2px;flex-shrink:0;}
+.tli-org{font-size:10px;color:var(--acc);margin-bottom:9px;display:flex;align-items:center;gap:5px;}
+.tli-org::before{content:'@';opacity:.4;}
+.tli-pts{list-style:none;}
+.tli-pts li{font-size:11px;color:var(--dim);padding-left:14px;position:relative;margin-bottom:7px;line-height:1.75;}
+.tli-pts li::before{content:'→';position:absolute;left:0;color:var(--acc);opacity:.45;}
+
+/* MODAL */
+.moverlay{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s;}
+.moverlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--bg2);border:1px solid var(--b2);max-width:820px;width:100%;max-height:92vh;overflow-y:auto;position:relative;transform:scale(.97);transition:transform .2s;}
+.moverlay.open .modal{transform:scale(1);}
+.modal-top{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:var(--bg2);border-bottom:1px solid var(--border);z-index:10;}
+.modal-top-title{font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);}
+.modal-close-btn{background:none;border:1px solid var(--b2);color:var(--dim);padding:3px 9px;font-family:var(--mono);font-size:9.5px;cursor:none;transition:var(--ease);}
+.modal-close-btn:hover{border-color:var(--acc);color:var(--acc);}
+.mbody{padding:22px;}
+.msect{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:18px 0 8px;display:flex;align-items:center;gap:7px;}
+.msect::after{content:'';flex:1;height:1px;background:var(--border);}
+.mpts{list-style:none;}
+.mpts li{font-size:11px;color:var(--dim);padding-left:14px;position:relative;margin-bottom:7px;line-height:1.75;}
+.mpts li::before{content:'→';position:absolute;left:0;color:var(--acc);opacity:.45;}
+
+/* ========== OVERVIEW PAGE ========== */
+.hero{padding:52px 36px 60px;position:relative;overflow:hidden;min-height:calc(100vh - 38px);display:flex;align-items:center;}
+.hgrid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;opacity:.2;pointer-events:none;}
+.hglow{position:absolute;top:-60px;right:-40px;width:360px;height:360px;background:radial-gradient(circle,rgba(0,255,136,.04) 0%,transparent 68%);pointer-events:none;}
+.hinner{position:relative;z-index:1;width:100%;}
+.hlabel{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+.hlabel::after{content:'';width:60px;height:1px;background:var(--acc);opacity:.4;}
+.hname{font-family:var(--sans);font-size:clamp(44px,6vw,80px);font-weight:800;color:var(--text);letter-spacing:-3px;line-height:.9;margin-bottom:10px;}
+.hname em{color:var(--acc);font-style:normal;}
+.hrole{font-family:var(--sans);font-size:clamp(13px,1.8vw,18px);color:var(--dim);letter-spacing:-.2px;margin-bottom:22px;line-height:1.4;}
+
+/* STATS ROW */
+.stats{display:flex;border:1px solid var(--border);margin-bottom:22px;width:fit-content;}
+.stat{padding:12px 20px;border-right:1px solid var(--border);}
+.stat:last-child{border-right:none;}
+.sv{font-family:var(--sans);font-size:21px;font-weight:800;color:var(--text);display:block;letter-spacing:-.4px;}
+.sl{font-size:8.5px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-top:1px;}
+
+/* OVERVIEW DENSE GRID */
+.ov-layout{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
+.ov-layout .full{grid-column:1/-1;}
+
+/* HIGHLIGHTS STRIP */
+.hl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.hl-item{background:var(--bg);padding:16px;position:relative;}
+.hl-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.hl-item:hover::before{transform:scaleX(1);}
+.hl-item:hover{background:var(--bg3);}
+.hl-val{font-family:var(--sans);font-size:24px;font-weight:800;letter-spacing:-.5px;line-height:1;margin-bottom:4px;}
+.hl-label{font-size:9px;color:var(--dim);letter-spacing:.05em;line-height:1.4;}
+.hl-sub{font-size:8.5px;color:var(--muted);margin-top:2px;}
+
+/* QUICK NAV CARDS */
+.qnav{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.qcard{background:var(--bg);padding:16px 18px;cursor:none;position:relative;overflow:hidden;transition:background .15s;}
+.qcard::after{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--acc);transition:width .28s;}
+.qcard:hover{background:var(--bg3);}
+.qcard:hover::after{width:100%;}
+.qnum{font-size:8.5px;color:var(--muted);margin-bottom:6px;}
+.qtitle{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.qsub{font-size:9.5px;color:var(--dim);line-height:1.5;}
+.qarr{position:absolute;bottom:12px;right:14px;font-size:14px;color:var(--muted);transition:var(--ease);}
+.qcard:hover .qarr{color:var(--acc);transform:translate(2px,-2px);}
+
+/* FEATURED PROJECT MINI CARDS */
+.feat-proj{display:flex;flex-direction:column;gap:0;}
+.fp{display:flex;align-items:stretch;border-bottom:1px solid var(--border);cursor:none;transition:background .15s;}
+.fp:last-child{border-bottom:none;}
+.fp:hover{background:var(--bg3);}
+.fp-img{width:80px;min-height:64px;overflow:hidden;flex-shrink:0;border-right:1px solid var(--border);}
+.fp-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:filter .2s;}
+.fp:hover .fp-img img{filter:grayscale(0%);}
+.fp-img-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);font-size:8.5px;color:var(--muted);}
+.fp-body{padding:10px 14px;flex:1;}
+.fp-num{font-size:8.5px;color:var(--muted);margin-bottom:2px;}
+.fp-title{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.fp-tags-row{display:flex;gap:3px;flex-wrap:wrap;}
+.fp-tag{font-size:8px;padding:1px 5px;border:1px solid var(--border);color:var(--muted);}
+.fp-type{font-size:8px;padding:1px 5px;border:1px solid;}
+
+/* KNOWLEDGE GRAPH */
+.kg-wrap{position:relative;background:var(--bg2);border:1px solid var(--border);overflow:hidden;}
+.kg-canvas{position:relative;width:100%;height:320px;}
+#kgsvg{position:absolute;inset:0;width:100%;height:100%;}
+.kn{position:absolute;font-size:9.5px;padding:4px 9px;border:1px solid;background:var(--bg);transform:translate(-50%,-50%);transition:var(--ease);cursor:none;white-space:nowrap;}
+.kn:hover{z-index:10;}
+.kn.core{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);font-size:10.5px;font-weight:700;}
+.kn.dom{border-color:rgba(68,136,255,.4);color:var(--blue);}
+.kn.dom:hover{background:rgba(68,136,255,.08);}
+.kn.tech{border-color:var(--border);color:var(--dim);}
+.kn.tech:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);}
+.kn.proj{border-color:rgba(255,170,0,.3);color:var(--amber);}
+.kn.proj:hover{background:rgba(255,170,0,.07);}
+
+/* ACTIVITY HEATMAP-STYLE */
+.act-grid{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;padding:16px;}
+.act-cell{aspect-ratio:1;border-radius:1px;}
+
+/* ========== ACADEMIC PAGE ========== */
+.sem-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);overflow-x:auto;}
+.sem-tab{font-family:var(--mono);font-size:10px;padding:10px 18px;background:none;border:none;color:var(--dim);cursor:none;border-bottom:2px solid transparent;transition:var(--ease);white-space:nowrap;flex-shrink:0;}
+.sem-tab:hover{color:var(--text);}
+.sem-tab.on{color:var(--acc);border-bottom-color:var(--acc);}
+.sem-panel{display:none;padding:28px 36px;}
+.sem-panel.on{display:block;}
+.sem-header{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:24px;}
+.sem-stat{background:var(--bg);padding:14px 16px;}
+.sem-stat-v{font-family:var(--sans);font-size:20px;font-weight:800;color:var(--acc);}
+.sem-stat-l{font-size:8.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}
+
+.course-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);}
+.course-item{background:var(--bg);overflow:hidden;}
+.course-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:none;transition:background .15s;}
+.course-head:hover{background:var(--bg3);}
+.course-head-l{display:flex;align-items:center;gap:14px;}
+.course-code{font-size:9.5px;color:var(--acc);letter-spacing:.06em;width:72px;flex-shrink:0;}
+.course-name{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);}
+.course-head-r{display:flex;align-items:center;gap:12px;}
+.course-grade{font-size:10px;padding:2px 8px;border:1px solid var(--b2);color:var(--dim);}
+.course-grade.a{border-color:var(--acc-b);color:var(--acc);}
+.course-grade.b{border-color:rgba(68,136,255,.3);color:var(--blue);}
+.course-toggle{font-size:12px;color:var(--muted);transition:transform .2s;}
+.course-toggle.open{transform:rotate(180deg);}
+.course-body{display:none;padding:0 18px 18px;}
+.course-body.open{display:block;}
+.course-desc{font-size:11px;color:var(--dim);line-height:1.75;margin-bottom:14px;padding:12px;background:var(--bg2);border:1px solid var(--border);}
+.course-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.course-section{background:var(--bg2);border:1px solid var(--border);padding:14px;}
+.course-section-title{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.course-pts{list-style:none;}
+.course-pts li{font-size:10.5px;color:var(--dim);padding-left:12px;position:relative;margin-bottom:6px;line-height:1.6;}
+.course-pts li::before{content:'·';position:absolute;left:2px;color:var(--acc);}
+
+/* ========== PROJECTS PAGE ========== */
+.filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:22px;}
+.fbtn{font-family:var(--mono);font-size:9.5px;padding:4px 10px;background:none;border:1px solid var(--b2);color:var(--dim);cursor:none;transition:var(--ease);}
+.fbtn:hover,.fbtn.on{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.pcard{background:var(--bg);cursor:none;position:relative;overflow:hidden;display:flex;flex-direction:column;transition:background .15s;}
+.pcard:hover{background:var(--bg3);}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform .28s;z-index:1;}
+.pcard:hover::before{transform:scaleX(1);}
+.pcard-thumb{width:100%;height:150px;overflow:hidden;border-bottom:1px solid var(--border);position:relative;background:var(--bg3);flex-shrink:0;}
+.pcard-thumb img{width:100%;height:100%;object-fit:cover;filter:grayscale(25%);transition:filter .25s,transform .25s;display:block;}
+.pcard:hover .pcard-thumb img{filter:grayscale(0%);transform:scale(1.03);}
+.pcard-no-img{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.pcard-no-img-id{font-family:var(--sans);font-size:28px;font-weight:800;color:var(--muted);}
+.pcard-no-img-label{font-size:8.5px;color:var(--muted);letter-spacing:.06em;}
+.pcard-body{padding:16px;flex:1;display:flex;flex-direction:column;}
+.pcard-num{font-size:8.5px;color:var(--muted);margin-bottom:6px;}
+.pcard-title{font-family:var(--sans);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px;letter-spacing:-.2px;line-height:1.3;}
+.pcard-desc{font-size:10.5px;color:var(--dim);line-height:1.65;flex:1;margin-bottom:12px;}
+.pcard-stack{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px;}
+.stk{font-size:8px;padding:2px 6px;border:1px solid var(--b2);color:var(--muted);}
+.pcard-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);font-size:9px;}
+.ptype{padding:2px 7px;border:1px solid;font-size:8px;letter-spacing:.04em;}
+.pt-int{border-color:#ffaa0044;color:var(--amber);}
+.pt-res{border-color:#4488ff44;color:var(--blue);}
+.pt-aca{border-color:#aa66ff44;color:var(--purple);}
+.pt-per{border-color:#333;color:var(--dim);}
+.plink-row{display:flex;gap:8px;}
+.plink{color:var(--muted);text-decoration:none;font-size:9.5px;transition:color .15s;}
+.plink:hover{color:var(--acc);}
+
+/* GALLERY */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:4px;margin:12px 0;}
+.gthumb{width:100%;height:72px;object-fit:cover;border:1px solid var(--border);cursor:none;transition:opacity .15s;display:block;}
+.gthumb:hover{opacity:.75;}
+
+/* CERT GRID */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.ccard{background:var(--bg);cursor:none;overflow:hidden;transition:background .15s;display:flex;flex-direction:column;}
+.ccard:hover{background:var(--bg3);}
+.ccard-thumb{width:100%;height:130px;overflow:hidden;border-bottom:1px solid var(--border);position:relative;background:var(--bg3);flex-shrink:0;}
+.ccard-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;filter:grayscale(15%);transition:transform .25s,filter .25s;display:block;}
+.ccard:hover .ccard-thumb img{transform:scale(1.04);filter:grayscale(0%);}
+.ccard-no-img{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+.ccard-no-img-icon{font-size:28px;opacity:.2;}
+.ccard-no-img-label{font-size:8.5px;color:var(--muted);letter-spacing:.06em;text-align:center;padding:0 8px;}
+.ccard-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.ccard:hover .ccard-overlay{opacity:1;}
+.ccard-overlay-txt{font-size:8.5px;letter-spacing:.1em;color:var(--acc);text-transform:uppercase;}
+.ccard-info{padding:14px;flex:1;}
+.ccard-issuer{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.ccard-name{font-family:var(--sans);font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:5px;letter-spacing:-.2px;line-height:1.3;}
+.ccard-desc{font-size:9.5px;color:var(--dim);line-height:1.55;margin-bottom:10px;}
+.ccard-link{font-size:9px;color:var(--acc);text-decoration:none;transition:opacity .15s;}
+.ccard-link:hover{opacity:.7;}
+
+/* SKILLS */
+.skills-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
+.sg{background:var(--bg);padding:20px;}
+.sg-label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;display:flex;align-items:center;gap:7px;}
+.sg-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.cp-bar{display:flex;align-items:stretch;border:1px solid var(--border);margin-top:1px;}
+.cp-seg{padding:16px 20px;border-right:1px solid var(--border);flex:1;}
+.cp-seg:last-child{border-right:none;}
+.cp-v{font-family:var(--sans);font-size:24px;font-weight:800;color:var(--acc);letter-spacing:-1px;display:block;}
+.cp-l{font-size:8.5px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-top:2px;}
+.cp-prog{margin-top:8px;height:1px;background:var(--border);}
+.cp-prog-fill{height:100%;background:var(--acc);}
+.prof-row{display:flex;flex-direction:column;gap:8px;}
+.prow{display:grid;grid-template-columns:160px 1fr 36px;align-items:center;gap:12px;font-size:10.5px;}
+.prow-label{color:var(--dim);}
+.prow-bar{height:2px;background:var(--border);}
+.prow-fill{height:100%;background:var(--acc);}
+.prow-pct{font-size:9.5px;color:var(--acc);text-align:right;}
+
+/* ACHIEVEMENTS */
+.ach-item{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--border);}
+.ach-item:last-child{border-bottom:none;}
+.ach-left{width:72px;flex-shrink:0;}
+.ach-yr{font-size:9.5px;color:var(--acc);}
+.ach-mon{font-size:8.5px;color:var(--muted);}
+.ach-icon{width:32px;height:32px;border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;}
+.ach-right{}
+.ach-title{font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.ach-detail{font-size:10.5px;color:var(--dim);line-height:1.65;}
+.ach-chip{display:inline-block;margin-top:7px;padding:2px 8px;border:1px solid var(--b2);font-size:8.5px;color:var(--muted);}
+
+/* CONTACT */
+.cont-wrap{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;}
+.cont-head{font-family:var(--sans);font-size:38px;font-weight:800;color:var(--text);letter-spacing:-2px;line-height:1;margin-bottom:10px;}
+.cont-head em{color:var(--acc);font-style:normal;}
+.cont-txt{font-size:11px;color:var(--dim);line-height:1.8;margin-bottom:22px;}
+.clinks{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);}
+.clink{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:var(--bg);text-decoration:none;transition:background .15s;}
+.clink:hover{background:var(--bg3);}
+.clink-label{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
+.clink-val{font-size:10.5px;color:var(--text);}
+.clink:hover .clink-val{color:var(--acc);}
+.clink-arr{color:var(--muted);font-size:14px;transition:var(--ease);}
+.clink:hover .clink-arr{transform:translateX(3px);color:var(--acc);}
+.ci-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:14px;}
+.ci-block{background:var(--bg);padding:13px 14px;}
+.ci-label{font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;}
+.ci-val{font-size:11px;color:var(--text);}
+
+/* MOBILE */
+.mob-toggle{display:none;position:fixed;bottom:14px;right:14px;z-index:400;width:42px;height:42px;background:var(--acc);border:none;cursor:pointer;align-items:center;justify-content:center;font-size:17px;color:var(--bg);}
+@media(max-width:840px){
+  .sb{left:-214px;}
+  .sb.open{left:0;}
+  .main{margin-left:0;}
+  .mob-toggle{display:flex;}
+  .sec{padding:28px 16px;}
+  .hero{padding:36px 16px 52px;}
+  .g2,.g3,.g4,.ov-layout,.cont-wrap,.skills-wrap,.course-grid,.ci-grid{grid-template-columns:1fr;}
+  .qnav{grid-template-columns:1fr 1fr;}
+  .topbar{padding:0 14px;}
+  .sem-panel{padding:20px 16px;}
+  .hname{letter-spacing:-2px;}
+  .stats{flex-wrap:wrap;}
+  .stat{border-right:none;border-bottom:1px solid var(--border);}
+  .stats .stat:last-child{border-bottom:none;}
+  .hl-grid{grid-template-columns:repeat(3,1fr);}
+  .cp-bar{flex-wrap:wrap;}
+  .cp-seg{border-right:none;border-bottom:1px solid var(--border);}
+}
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--b2);}
+</style>
 </head>
-<body class="antialiased">
+<body>
 
-    <canvas id="bg-canvas"></canvas>
+<div id="cur"></div>
+<div id="cring"></div>
+<button class="mob-toggle" id="mobBtn">☰</button>
 
-    <div class="content-wrapper">
-        <!-- Main Content Container -->
-        <div id="main-content">
-            <!-- Navigation -->
-            <nav class="sticky top-0 z-40 glass-card">
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex items-center justify-between h-16">
-                        <div id="nav-name" class="text-xl font-bold text-white"></div>
-                        <div class="hidden md:flex md:items-center md:space-x-8">
-                            <a href="#about" class="text-slate-300 hover:text-white transition-colors">About</a>
-                            <a href="#projects" class="text-slate-300 hover:text-white transition-colors">Projects</a>
-                            <a href="#certificates" class="text-slate-300 hover:text-white transition-colors">Certificates</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+<!-- MODALS -->
+<div class="moverlay" id="pModal" onclick="closeModal('pModal',event)">
+  <div class="modal"><div class="modal-top"><span class="modal-top-title" id="pModalTitle"></span><button class="modal-close-btn" onclick="closeModal('pModal',null,true)">✕ Close</button></div><div class="mbody" id="pModalBody"></div></div>
+</div>
+<div class="moverlay" id="cModal" onclick="closeModal('cModal',event)">
+  <div class="modal"><div class="modal-top"><span class="modal-top-title" id="cModalTitle"></span><button class="modal-close-btn" onclick="closeModal('cModal',null,true)">✕ Close</button></div><div class="mbody" id="cModalBody"></div></div>
+</div>
 
-            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <!-- Header / About Me (No animation class, appears instantly) -->
-                <header id="about" class="text-center mb-24 pt-16">
-                    <img id="profile-pic" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-slate-700 shadow-2xl" src="" alt="Profile Picture">
-                    <h1 id="user-name" class="text-5xl md:text-6xl font-extrabold text-white mb-2"></h1>
-                    <p id="user-title" class="text-2xl md:text-3xl animated-gradient-text font-semibold mb-8"></p>
-                    
-                    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto text-left">
-                        <div class="glass-card p-6 rounded-lg">
-                            <h3 class="text-2xl font-bold text-white mb-3">About Me</h3>
-                            <p id="user-bio" class="text-slate-300 leading-relaxed"></p>
-                        </div>
-                        <div class="glass-card p-6 rounded-lg">
-                            <h3 class="text-2xl font-bold text-white mb-3">Education</h3>
-                            <div id="education-info"></div>
-                        </div>
-                    </div>
+<div class="shell">
+<!-- SIDEBAR -->
+<aside class="sb" id="sb">
+  <div class="sb-head">
+    <div class="sb-logo">NT<em>.</em> Nishant<br>Tomer</div>
+    <div class="sb-sub">Personal OS · v3.0</div>
+    <div class="online"><div class="od"></div><span class="ot">Available · New Delhi</span></div>
+  </div>
+  <nav class="sb-nav">
+    <div class="ng"><div class="ng-label">// System</div>
+      <button class="na on" data-p="home" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>Overview</button>
+      <button class="na" data-p="education" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-4 6 4-6 4-6-4z"/><path d="M14 9v4"/><path d="M4 9.5v3c0 1 1.8 2 4 2s4-1 4-2v-3"/></svg>Education</button>
+      <button class="na" data-p="academic" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1" width="12" height="14" rx=".5"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="11" y2="8"/><line x1="5" y1="11" x2="9" y2="11"/></svg>Academic Log <span class="nb">NEW</span></button>
+      <button class="na" data-p="experience" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="12" height="9" rx=".5"/><path d="M5 5V4a2 2 0 0 1 6 0v1"/></svg>Experience <span class="nb">2</span></button>
+    </div>
+    <div class="ng"><div class="ng-label">// Work</div>
+      <button class="na" data-p="projects" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15,2 9,8 15,14"/><polyline points="1,2 7,8 1,14"/></svg>Projects <span class="nb">8</span></button>
+      <button class="na" data-p="skills" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="4"/><line x1="8" y1="12" x2="8" y2="15"/><line x1="1" y1="8" x2="4" y2="8"/><line x1="12" y1="8" x2="15" y2="8"/></svg>Skills</button>
+    </div>
+    <div class="ng"><div class="ng-label">// Archive</div>
+      <button class="na" data-p="certifications" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="11" rx=".5"/><polyline points="4,9 6,11 10,7"/></svg>Certifications <span class="nb">6</span></button>
+      <button class="na" data-p="achievements" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="8,1 10,6 15,6 11,9 13,14 8,11 3,14 5,9 1,6 6,6"/></svg>Achievements</button>
+      <button class="na" data-p="thoughts" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1H4a1 1 0 0 0-1 1v10l3-2h6a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/></svg>Thoughts</button>
+      <button class="na" data-p="responsibility" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>Leadership</button>
+    </div>
+    <div class="ng"><div class="ng-label">// Connect</div>
+      <button class="na" data-p="contact" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="10" rx=".5"/><polyline points="1,3 8,9 15,3"/></svg>Contact</button>
+    </div>
+  </nav>
+  <div class="sb-foot">
+    <div class="sb-foot-links"><a href="https://github.com/Nishant7p" target="_blank">GitHub</a><a href="mailto:nishant23355@iiitd.ac.in">Email</a><a href="https://www.linkedin.com/in/nishant-tomer" target="_blank">LinkedIn</a></div>
+    <div class="sb-foot-id">2023355 · IIIT-Delhi · CSAM</div>
+  </div>
+</aside>
 
-                    <div id="social-links" class="mt-10 flex justify-center space-x-6 mb-8"></div>
-                </header>
+<main class="main" id="main">
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tp-path"><span>~/nishant/</span><span class="tp-seg" id="tpSeg">overview</span></div>
+  <div class="tp-r"><span class="tp-info">CGPA 7.33 · Sem V</span><span class="tp-tag">OPEN TO WORK</span><span class="tp-time" id="tpTime"></span></div>
+</div>
 
-                <!-- Projects Section -->
-                <section id="projects" class="section-animate mb-24 pt-16">
-                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">My Projects</h2>
-                    <div id="projects-grid-preview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-                     <div class="text-center mt-12">
-                        <button id="view-all-projects-btn" class="btn-gradient text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-lg">View All Projects</button>
-                    </div>
-                </section>
-                
-                <!-- Career Highlights Section -->
-                <section id="highlights" class="section-animate mb-24 pt-16">
-                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Career Highlights</h2>
-                    <div id="highlights-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"></div>
-                </section>
+<!-- ======================== PAGE: HOME / OVERVIEW ======================== -->
+<div class="page on" id="page-home">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hgrid"></div><div class="hglow"></div>
+    <div class="hinner">
+      <div class="hlabel">Personal Operating System · IIIT-Delhi · 2023–2027</div>
+      <h1 class="hname">Nishant<br><em>Tomer.</em></h1>
+      <p class="hrole">Software Developer · AI/ML Researcher · iOS · Backend · Game Dev</p>
+      <div class="stats" style="margin-bottom:20px;">
+        <div class="stat"><span class="sv">350+</span><span class="sl">DSA Solved</span></div>
+        <div class="stat"><span class="sv">1700+</span><span class="sl">LeetCode Peak</span></div>
+        <div class="stat"><span class="sv">8+</span><span class="sl">Projects</span></div>
+        <div class="stat"><span class="sv">2</span><span class="sl">Internships</span></div>
+        <div class="stat"><span class="sv">5★</span><span class="sl">HackerRank</span></div>
+        <div class="stat"><span class="sv">V</span><span class="sl">Current Sem</span></div>
+      </div>
+      <div class="btns">
+        <a href="mailto:nishant23355@iiitd.ac.in" class="btn btn-p">↗ Hire Me</a>
+        <button class="btn btn-g" onclick="go(document.querySelector('[data-p=projects]'))">Projects</button>
+        <button class="btn btn-g" onclick="go(document.querySelector('[data-p=experience]'))">Experience</button>
+        <a href="https://github.com/Nishant7p" target="_blank" class="btn btn-g">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/nishant-tomer" target="_blank" class="btn btn-g">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
 
-                <!-- Achievements Section -->
-                <section id="achievements" class="section-animate mb-24 pt-16">
-                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Key Achievements</h2>
-                    <ul id="achievements-list" class="list-none space-y-4 max-w-3xl mx-auto"></ul>
-                </section>
+  <!-- HIGHLIGHTS STRIP -->
+  <div class="sec" style="padding-bottom:28px;">
+    <div class="stag-line">Highlights</div>
+    <div class="hl-grid">
+      <div class="hl-item"><div class="hl-val" style="color:var(--acc);">1700+</div><div class="hl-label">LeetCode Peak Rating</div><div class="hl-sub">Weekly + Biweekly contests</div></div>
+      <div class="hl-item"><div class="hl-val" style="color:var(--acc);">350+</div><div class="hl-label">DSA Problems Solved</div><div class="hl-sub">Across LeetCode & HackerRank</div></div>
+      <div class="hl-item"><div class="hl-val" style="color:var(--blue);">90%+</div><div class="hl-label">AI Clinical SOAP Accuracy</div><div class="hl-sub">Whisper + Pyannote pipeline</div></div>
+      <div class="hl-item"><div class="hl-val" style="color:var(--amber);">6mo</div><div class="hl-label">iOS Internship</div><div class="hl-sub">ModularityLabs · Production app</div></div>
+      <div class="hl-item"><div class="hl-val" style="color:var(--purple);">4</div><div class="hl-label">GPU Modules Completed</div><div class="hl-sub">Johns Hopkins · CUDA + cuDNN</div></div>
+      <div class="hl-item"><div class="hl-val" style="color:var(--acc);">100+</div><div class="hl-label">Students Taught</div><div class="hl-sub">AI Summer Camp · IIIT-D</div></div>
+      <div class="hl-item"><div class="hl-val" style="color:var(--acc);">5</div><div class="hl-label">Programming Languages</div><div class="hl-sub">Java, Python, Swift, C++, JS</div></div>
+      <div class="hl-item"><div class="hl-val" style="color:var(--red);">30-40%</div><div class="hl-label">Physician Load Reduced</div><div class="hl-sub">AI Clinical Scribe project</div></div>
+    </div>
+  </div>
 
-                <!-- Participations Section -->
-                <section id="participations" class="section-animate mb-24 pt-16">
-                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Positions of Responsibility</h2>
-                    <ul id="participations-list" class="list-none space-y-4 max-w-3xl mx-auto"></ul>
-                </section>
+  <!-- MAIN DENSE OVERVIEW LAYOUT -->
+  <div class="sec" style="padding-top:20px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);">
 
-                <!-- Certificates Preview Section -->
-                <section id="certificates" class="section-animate mb-24 pt-16">
-                    <h2 class="section-title text-4xl font-bold text-white text-center mb-12">Certificates</h2>
-                    <div id="certificates-grid-preview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-                    <div class="text-center mt-12">
-                        <button id="view-all-certs-btn" class="btn-gradient text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-lg">View All Certificates</button>
-                    </div>
-                </section>
-            </div>
+      <!-- FEATURED PROJECTS -->
+      <div style="background:var(--bg);padding:0;">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">Featured Projects</span>
+          <button class="btn btn-g bsm" onclick="go(document.querySelector('[data-p=projects]'))">All Projects →</button>
         </div>
+        <div class="feat-proj" id="featProj"></div>
+      </div>
 
-        <!-- Projects Page Container -->
-        <div id="projects-page" class="hidden">
-            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div class="flex justify-between items-center mb-12 pt-16">
-                    <h2 class="text-4xl font-bold text-white">All Projects</h2>
-                    <button id="back-to-home-btn-from-projects" class="bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-slate-700/70 hover:text-white font-semibold py-2 px-5 rounded-full transition-all duration-300">&larr; Back to Home</button>
-                </div>
-                <div id="projects-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
-            </div>
+      <!-- KNOWLEDGE GRAPH -->
+      <div style="background:var(--bg);padding:0;">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">Knowledge Graph</span>
+          <span style="font-size:8.5px;color:var(--muted);">Hover nodes to explore</span>
         </div>
-
-        <!-- Certificates Page Container -->
-        <div id="certificates-page" class="hidden">
-            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div class="flex justify-between items-center mb-12 pt-16">
-                    <h2 class="text-4xl font-bold text-white">All Certificates</h2>
-                    <button id="back-to-home-btn-from-certs" class="bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-slate-700/70 hover:text-white font-semibold py-2 px-5 rounded-full transition-all duration-300">&larr; Back to Home</button>
-                </div>
-                <div id="certificates-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
-            </div>
+        <div class="kg-canvas" id="kgCanvas">
+          <svg id="kgsvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></svg>
         </div>
-
-        <!-- Modal -->
-        <div id="modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80 opacity-0 pointer-events-none">
-            <div id="modal-content" class="modal-content relative glass-card rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto transform scale-95 opacity-0"></div>
-        </div>
-
-        <footer class="text-center py-8 border-t border-slate-800">
-            <p class="text-slate-500">Built with ❤️. All rights reserved.</p>
-        </footer>
+      </div>
     </div>
 
-    <script>
-        // ===================================================================================
-        // === PORTFOLIO DATA CONFIGURATION ===
-        // ===================================================================================
-        const portfolioData = {
-            about: { name: "Nishant Tomer", title: "Software Developer & AI/ML Enthusiast", bio: "A passionate B.Tech student at IIIT Delhi, specializing in building robust applications and exploring the frontiers of AI. Experienced in game development, mobile app creation, and machine learning, with a strong foundation in data structures and algorithms.", profilePic: "https://i.postimg.cc/bJjXJVFM/IMG-0752.jpg", socials: [ { type: 'email', url: 'mailto:nishant23355@iiitd.ac.in' }, { type: 'github', url: 'https://github.com/Nishant7p' }, { type: 'linkedin', url: '#' }, ] },
-            education: { institution: "Indraprastha Institute of Information Technology, Delhi (IIIT-D)", degree: "Bachelor of Technology (B.Tech)", branch: "Computer Science and Applied Mathematics (CSAM)", timeline: "2023 - 2027" },
-            keyDocuments: [ 
-                { title: "Letter of Recommendation", description: "From ModularityLabs, highlighting my skills in iOS development and teamwork.", link: "https://i.ibb.co/ZR4j2GMn/Letter-of-Recommendation-Nishant-Tomer.png" }, 
-                { title: "Letter of Experience", description: "Official document confirming my app development internship.", link: "https://i.ibb.co/sdD27ksT/Experience-Letter-Nishant-Tomer.png" } 
-            ],
-            projects: [ 
-                { 
-                    title: "iOS Productivity App (ModularityLabs)", 
-                    image: "https://i.postimg.cc/XqxcpK69/Screenshot-2025-07-24-at-9-55-43-AM.png", 
-                    description: "Developed a modular iOS productivity app with multiple integrated sub-apps like meditation and habit tracking.", 
-                    details: ["Architected using MVVM for maintainability.", "Integrated Firebase for real-time cloud sync.", "Utilised Core Data for offline persistence.", "Focused on creating an industrial-grade, scalable application."], 
-                    technologies: ["SwiftUI", "Firebase", "Core Data", "Combine", "MVVM"], 
-                    liveLink: "#", 
-                    sourceLink: "#", 
-                    experienceLetterLink: "https://i.ibb.co/sdD27ksT/Experience-Letter-Nishant-Tomer.png", 
-                    recommendationLetterLink: "https://i.ibb.co/ZR4j2GMn/Letter-of-Recommendation-Nishant-Tomer.png",
-                    galleryImages: ["https://i.postimg.cc/gjM8YY3D/Screenshot-2025-07-24-at-10-00-16-AM.png", "https://i.postimg.cc/zXtFNkjr/Screenshot-2025-07-24-at-10-00-23-AM.png", "https://i.postimg.cc/ZnJxb72T/Screenshot-2025-07-24-at-10-00-52-AM.png", "https://i.postimg.cc/rm19LXhn/Screenshot-2025-07-24-at-10-01-49-AM.png", "https://i.postimg.cc/XqxcpK69/Screenshot-2025-07-24-at-9-55-43-AM.png", "https://i.postimg.cc/7L73gryH/Screenshot-2025-07-24-at-9-55-52-AM.png", "https://i.postimg.cc/W1d61JWJ/Screenshot-2025-07-24-at-9-56-18-AM.png", "https://i.postimg.cc/4dgzP2Jz/Screenshot-2025-07-24-at-9-56-39-AM.png", "https://i.postimg.cc/FRV0BbRw/Screenshot-2025-07-24-at-9-58-35-AM.png", "https://i.postimg.cc/0220h47n/Screenshot-2025-07-24-at-9-58-40-AM.png", "https://i.postimg.cc/h400ynQh/Screenshot-2025-07-24-at-9-58-50-AM.png", "https://i.postimg.cc/JzS3D4vY/Screenshot-2025-07-24-at-9-59-08-AM.png", "https://i.postimg.cc/4y4pkKHy/Screenshot-2025-07-24-at-9-59-25-AM.png"]
-                },
-                { 
-                    title: "GeoGuesser & Flag Guesser Game",
-                    image: "https://i.postimg.cc/VNBS75YG/Screenshot-2025-07-29-at-7-22-52-PM.png",
-                    description: "A multi-mode geography guessing game built with a clean UI, featuring various challenges like flag identification and location guessing.",
-                    details: ["Includes 6+ game modes such as Deathmatch, Informative, and classic guessing challenges.", "Built with a responsive and user-friendly interface using Tkinter.", "Demonstrates strong Python programming and UI design skills."],
-                    technologies: ["Python", "Tkinter", "Game Design"],
-                    liveLink: "#",
-                    sourceLink: "#",
-                    galleryImages: ["https://i.postimg.cc/QCMWKsZ6/n.png", "https://i.postimg.cc/W4PF60Pq/Screenshot-2025-07-29-at-7-23-17-PM.png", "https://i.postimg.cc/3JdvKKBN/Screenshot-2025-07-29-at-7-23-58-PM.png", "https://i.postimg.cc/BnFPKMRG/Screenshot-2025-07-29-at-7-24-36-PM.png"]
-                },
-                { 
-                    title: "Angry Birds Clone", 
-                    image: "https://i.postimg.cc/SR1BGYM8/Screenshot-2025-07-24-at-9-25-21-AM.png", 
-                    description: "A feature-rich 2D physics game with a custom horror theme, featuring various birds with unique abilities, diverse enemies, and complex obstacles.", 
-                    details: ["Implemented birds with unique abilities, different enemy types, and environmental obstacles.", "Features serializable levels, allowing players to continue from where they left off.", "Includes a full UI with a start menu and pause functionality.", "Designed all UI components and game assets from scratch."], 
-                    technologies: ["Java", "libGDX", "Game Physics", "Canva"], 
-                    liveLink: "#", 
-                    sourceLink: "#",
-                    videoLink: "https://youtu.be/1h-ZgEZ_d2w",
-                    galleryImages: ["https://i.postimg.cc/bJgcsBYm/Screenshot-2025-07-24-at-9-25-52-AM.png", "https://i.postimg.cc/SskbQh4X/Screenshot-2025-07-24-at-9-27-11-AM.png", "https://i.postimg.cc/kG5r8vBq/Screenshot-2025-07-24-at-9-28-08-AM.png", "https://i.postimg.cc/dQWcFpx1/Screenshot-2025-07-24-at-9-28-33-AM.png"]
-                }, 
-                { 
-                    title: "Browser Clone", 
-                    image: "https://i.postimg.cc/GpZJvLt2/Screenshot-2025-07-24-at-9-45-53-AM.png", 
-                    description: "Developed a Python-based desktop browser with a custom GUI and multi-engine search.", 
-                    details: ["Built with Python and GUI libraries like PyQT5/tkinter.", "Added features for theme switching and dynamic content loading."], 
-                    technologies: ["Python", "PyQT5", "tkinter", "GUI Development"], 
-                    liveLink: "#", 
-                    sourceLink: "#",
-                    galleryImages: ["https://i.postimg.cc/SsCLrBYG/Screenshot-2025-07-24-at-9-46-25-AM.png", "https://i.postimg.cc/PqLQLpt9/Screenshot-2025-07-24-at-9-46-30-AM.png", "https://i.postimg.cc/qvvLTDWk/Screenshot-2025-07-24-at-9-48-05-AM.png", "https://i.postimg.cc/7h43QKgr/Screenshot-2025-07-24-at-9-48-20-AM.png"]
-                },
-                { title: "AI & ML Intern Project", image: "https://placehold.co/800x600/374151/e5e7eb?text=ML+Project", description: "Developed and optimized machine learning models for real-world use cases under industry mentorship.", details: ["Applied supervised learning and data preprocessing techniques.", "Worked on the full ML pipeline: data collection, training, and testing.", "Gained experience with model evaluation and tuning."], technologies: ["Python", "PyTorch", "NumPy", "Supervised Learning"], liveLink: "#", sourceLink: "#" }, 
-                { 
-                    title: "Code Editor Clone",
-                    image: "https://placehold.co/800x600/374151/e5e7eb?text=Code+Editor",
-                    description: "A functional code editor built with PyQt5, featuring custom themes, syntax highlighting, and auto-completion.",
-                    details: ["Implemented a text editing area with line numbers and syntax highlighting for various languages.", "Added features for auto-completion suggestions and a small code preview pane.", "Designed custom themes to enhance the user experience."],
-                    technologies: ["Python", "PyQt5", "GUI Development"],
-                    liveLink: "#",
-                    sourceLink: "#"
-                },
-                { 
-                    title: "Weather App",
-                    image: "https://placehold.co/800x600/374151/e5e7eb?text=Weather+App",
-                    description: "A clean and simple weather application that fetches and displays real-time weather data using API calls.",
-                    details: ["Built with a user-friendly interface using Tkinter.", "Integrates with a third-party weather API to get current weather conditions, temperature, and forecasts.", "Handles API requests and JSON data parsing efficiently."],
-                    technologies: ["Python", "Tkinter", "APIs", "JSON"],
-                    liveLink: "#",
-                    sourceLink: "#"
-                },
-                { title: "Escape Room Puzzle Game", image: "https://placehold.co/800x600/374151/e5e7eb?text=Unreal+Game", description: "Built a 3D single-level escape game in Unreal Engine involving puzzle solving and item discovery.", details: ["Designed an interactive environment with light-based hints.", "Created a custom UI for inventory management.", "Focused on immersive gameplay using lighting and animations."], technologies: ["Unreal Engine", "C++", "Game Design"], liveLink: "#", sourceLink: "#" }, 
-                { 
-                    title: "Assembler & Simulator",
-                    image: "https://placehold.co/800x600/374151/e5e7eb?text=Assembler",
-                    description: "A two-pass assembler and simulator for a custom assembly language, built entirely in Python.",
-                    details: ["The assembler converts assembly language code into machine code.", "The simulator executes the generated machine code, showing register values and memory states.", "Demonstrates a deep understanding of computer architecture and low-level programming concepts."],
-                    technologies: ["Python", "Computer Architecture"],
-                    liveLink: "#",
-                    sourceLink: "#"
-                }
-            ],
-            achievements: ["Achieved a 1500+ rating in LeetCode contests and solved 300+ DSA problems.", "Earned 5-star badges on HackerRank in Python, Java, and Data Structures.", "Completed various Coursera courses by Microsoft and Google in DBMS, Data Analytics, etc."],
-            participations: ["Instructor for AI Summer Camp at IIIT-Delhi, teaching 100+ students.", "Organizer for Odyssey, the IIIT-Delhi Cultural Fest.", "Member of CyFuse, the Robotics & Electronics Club at IIIT-Delhi."],
-            certificates: [ 
-                {
-                    name: "Introduction to GPU Programming",
-                    issuingBody: "Johns Hopkins University",
-                    image: "https://i.ibb.co/pvZtRFgp/Coursera-YMHWXFVFZPSB.png", 
-                    description: "Specialization covering the fundamentals of GPU programming, including CUDA, parallel computing patterns, and performance optimization.",
-                    verifyLink: "https://ibb.co/3yWDMZwH",
-                    subCertificates: [
-                        "https://i.ibb.co/0VBLgVXx/Coursera-9-DSMIA2-P1-V6-P.png",
-                        "https://i.ibb.co/8DcDjX08/Coursera-JABH9-NS3-I5-BY.png",
-                        "https://i.ibb.co/Z6mtFDFN/Coursera-LBLDYS0-KAWMY.png",
-                        "https://i.ibb.co/5hp8QzGY/Coursera-VSJHAZ2-WA9-UX.png"
-                    ]
-                },
-                { name: "Python (Basic) Certificate", issuingBody: "HackerRank", image: "https://placehold.co/800x600/4b5563/e5e7eb?text=HackerRank", description: "Verified proficiency in fundamental Python concepts and problem-solving.", verifyLink: "https://www.hackerrank.com/certificates/bec82207543c" }, { name: "Google Database Professional", issuingBody: "Coursera", image: "https://i.postimg.cc/g0NnpR0f/database.png", description: "Completed professional certificate on Database Management Systems offered by Google.", verifyLink: "#" }, { name: "Game Development with Java", issuingBody: "Coding Ninjas", image: "https://i.postimg.cc/G24h15Vy/CWcompletion.png", description: "Completed an extensive course on game development principles using Java.", verifyLink: "#" }, { name: "1 Stop Internship", issuingBody: "1 Stop", image: "https://i.postimg.cc/rwTmtg0B/1stop.png", description: "Certificate of participation for a valuable internship experience.", verifyLink: "#" }, { name: "AI Summer Camp Instructor", issuingBody: "IIIT-Delhi", image: "https://i.postimg.cc/90tfxqs8/2023355.jpg", description: "Certificate of appreciation for instructing over 100 students in an AI summer camp.", verifyLink: "#", posterImageLink: "https://i.postimg.cc/JhnBGKS1/PHOTO-2025-07-20-00-05-40.jpg" } ]
-        };
-        
-        // ===================================================================================
-        // === INTERACTIVE BACKGROUND LOGIC (THREE.JS) ===
-        // ===================================================================================
-        let scene, camera, renderer, particles, lines;
-        const mouse = new THREE.Vector2(-100, -100);
-        let particleSystem;
+    <!-- SECOND ROW: SKILLS QUICK VIEW + CURRENT FOCUS + ACTIVITY -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-top:1px solid var(--border);margin-top:1px;">
+      <!-- SKILLS QUICK -->
+      <div style="background:var(--bg);padding:16px;">
+        <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;">Top Skills</div>
+        <div class="chips">
+          <span class="chip hi">SwiftUI</span><span class="chip hi">Python</span><span class="chip hi">PyTorch</span>
+          <span class="chip hi">Java</span><span class="chip hi">React</span><span class="chip hi">OpenAI Whisper</span>
+          <span class="chip">Firebase</span><span class="chip">CUDA</span><span class="chip">libGDX</span>
+          <span class="chip">Node.js</span><span class="chip">Supabase</span><span class="chip">Pyannote</span>
+        </div>
+      </div>
+      <!-- CURRENT FOCUS -->
+      <div style="background:var(--bg);padding:16px;">
+        <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;">Currently Working On</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="padding:9px;border:1px solid var(--border);background:var(--bg2);">
+            <div style="font-size:8.5px;color:var(--blue);margin-bottom:3px;">RESEARCH · ACTIVE</div>
+            <div style="font-size:11px;color:var(--text);font-family:var(--sans);font-weight:700;">AI Clinical Scribe</div>
+            <div style="font-size:9.5px;color:var(--dim);">NLP pipeline · SOAP Notes · ICD-10</div>
+          </div>
+          <div style="padding:9px;border:1px solid var(--border);background:var(--bg2);">
+            <div style="font-size:8.5px;color:var(--blue);margin-bottom:3px;">RESEARCH · ACTIVE</div>
+            <div style="font-size:11px;color:var(--text);font-family:var(--sans);font-weight:700;">Personalisation Engine</div>
+            <div style="font-size:9.5px;color:var(--dim);">Collaborative Filtering · Latent Factors</div>
+          </div>
+        </div>
+      </div>
+      <!-- QUICK TOOLS -->
+      <div style="background:var(--bg);padding:16px;">
+        <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;">Competitive Programming</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border:1px solid var(--border);">
+            <span style="font-size:10px;color:var(--dim);">LeetCode Rating</span>
+            <span style="font-family:var(--sans);font-weight:800;color:var(--acc);font-size:13px;">1700+</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border:1px solid var(--border);">
+            <span style="font-size:10px;color:var(--dim);">Problems Solved</span>
+            <span style="font-family:var(--sans);font-weight:800;color:var(--text);font-size:13px;">350+</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border:1px solid var(--border);">
+            <span style="font-size:10px;color:var(--dim);">HackerRank</span>
+            <span style="font-family:var(--sans);font-weight:800;color:var(--amber);font-size:13px;">5★ × 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        class Particle {
-            constructor() {
-                this.pos = new THREE.Vector3( (Math.random() - 0.5) * 800, (Math.random() - 0.5) * 800, (Math.random() - 0.5) * 400 );
-                this.vel = new THREE.Vector3( (Math.random() - 0.5) * 0.2, (Math.random() - 0.5) * 0.2, (Math.random() - 0.5) * 0.2 );
-                this.baseColor = new THREE.Color(0xa78bfa);
-                this.color = this.baseColor.clone();
-            }
-            update(mouse) {
-                this.pos.add(this.vel);
-                if (this.pos.x < -400 || this.pos.x > 400) this.vel.x *= -1;
-                if (this.pos.y < -400 || this.pos.y > 400) this.vel.y *= -1;
-                if (this.pos.z < -200 || this.pos.z > 200) this.vel.z *= -1;
-                const mouse3D = new THREE.Vector3(mouse.x * (window.innerWidth / 2), mouse.y * (window.innerHeight / 2), 0);
-                const dist = this.pos.distanceTo(mouse3D);
-                if (dist < 150) {
-                    const force = (150 - dist) * 0.01;
-                    const repulsion = new THREE.Vector3().subVectors(this.pos, mouse3D).normalize().multiplyScalar(force);
-                    this.pos.add(repulsion);
-                }
-            }
-        }
+  <!-- QUICK NAVIGATE -->
+  <div class="sec" style="padding-top:20px;">
+    <div class="stag-line">Navigate</div>
+    <div class="qnav">
+      <div class="qcard" onclick="go(document.querySelector('[data-p=academic]'))"><div class="qnum">Sem I → V · Courses</div><div class="qtitle">Academic Log</div><div class="qsub">In-depth semester breakdown with course learnings, topics, and notes.</div><div class="qarr">↗</div></div>
+      <div class="qcard" onclick="go(document.querySelector('[data-p=projects]'))"><div class="qnum">P-001 → P-008</div><div class="qtitle">Projects</div><div class="qsub">iOS apps, AI pipelines, game dev, full-stack marketplaces and more.</div><div class="qarr">↗</div></div>
+      <div class="qcard" onclick="go(document.querySelector('[data-p=experience]'))"><div class="qnum">Jan 2025 – Present</div><div class="qtitle">Experience</div><div class="qsub">ModularityLabs iOS internship + AI Clinical Scribe research pipeline.</div><div class="qarr">↗</div></div>
+      <div class="qcard" onclick="go(document.querySelector('[data-p=certifications]'))"><div class="qnum">6 verified certs</div><div class="qtitle">Certifications</div><div class="qsub">GPU Programming (JHU), Google DB, HackerRank, IIIT-D and more.</div><div class="qarr">↗</div></div>
+      <div class="qcard" onclick="go(document.querySelector('[data-p=skills]'))"><div class="qnum">6 domains</div><div class="qtitle">Skills</div><div class="qsub">Java, Python, Swift, CUDA, React, PyTorch, Firebase, libGDX.</div><div class="qarr">↗</div></div>
+      <div class="qcard" onclick="go(document.querySelector('[data-p=contact]'))"><div class="qnum">Response &lt;24h</div><div class="qtitle">Contact</div><div class="qsub">Open to internships, research collaborations, and open source projects.</div><div class="qarr">↗</div></div>
+    </div>
+  </div>
+</div>
 
-        function initBackground() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 300;
-            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            const particleCount = 200;
-            particleSystem = Array.from({ length: particleCount }, () => new Particle());
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-            const particleGeometry = new THREE.BufferGeometry();
-            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            const particleMaterial = new THREE.PointsMaterial({ size: 2, vertexColors: true, sizeAttenuation: true });
-            particles = new THREE.Points(particleGeometry, particleMaterial);
-            scene.add(particles);
-            const lineMaterial = new THREE.LineBasicMaterial({ vertexColors: true, blending: THREE.AdditiveBlending, transparent: true });
-            const lineGeometry = new THREE.BufferGeometry();
-            const linePositions = new Float32Array(particleCount * particleCount * 3);
-            const lineColors = new Float32Array(particleCount * particleCount * 3);
-            lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-            lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-            lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-            scene.add(lines);
-            window.addEventListener('resize', onWindowResize);
-            window.addEventListener('mousemove', onMouseMove);
-            animateBackground();
-        }
+<!-- ======================== PAGE: EDUCATION ======================== -->
+<div class="page" id="page-education">
+  <div class="sec">
+    <div class="stag-line">Academic Background</div>
+    <div class="srow"><div><div class="sh">Education</div><div class="ss">IIIT-Delhi · CBSE · 3 institutions</div></div><div class="scount">2023 → 2027</div></div>
+    <div class="g g2 bord">
+      <div class="card" style="border-left:2px solid var(--acc);padding:24px;">
+        <div style="font-size:9.5px;color:var(--acc);margin-bottom:8px;">2023 — 2027 · Current</div>
+        <div style="font-family:var(--sans);font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">Indraprastha Institute of Information Technology, Delhi</div>
+        <div style="font-size:11px;color:var(--dim);margin-bottom:14px;">B.Tech · Computer Science &amp; Applied Mathematics (CSAM)</div>
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--b2);font-size:11px;color:var(--dim);margin-bottom:16px;">CGPA <span style="color:var(--acc);font-weight:800;font-family:var(--sans);font-size:16px;">7.33</span> <span style="font-size:9.5px;color:var(--muted);">/ 10.0 · V Semesters</span></div>
+        <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Key Coursework</div>
+        <div class="chips"><span class="chip hi">DSA</span><span class="chip hi">Operating Systems</span><span class="chip hi">DBMS</span><span class="chip">OOP Design</span><span class="chip">Computer Architecture</span><span class="chip">Discrete Math</span><span class="chip">ML Foundations</span><span class="chip">Computer Networks</span><span class="chip">Linear Algebra</span><span class="chip">Probability & Statistics</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
+        <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:6px;">2022 — 2023 · XII CBSE</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Sukriti World School, New Delhi</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">Central Board of Secondary Education</div><div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--b2);font-size:10px;color:var(--dim);">Percentage <span style="color:var(--acc);font-weight:700;font-family:var(--sans);">81%</span></div></div>
+        <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:6px;">2020 — 2021 · X CBSE</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Rockfield Public School, New Delhi</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">Central Board of Secondary Education</div><div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--b2);font-size:10px;color:var(--dim);">Percentage <span style="color:var(--acc);font-weight:700;font-family:var(--sans);">81%</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="sec" style="padding-top:20px;">
+    <div class="stag-line">Profile</div>
+    <div class="g g2 bord">
+      <div class="card"><div style="font-size:8.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">Personal Details</div><div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;border-bottom:1px solid var(--border);padding-bottom:7px;"><span style="color:var(--dim);">Full Name</span><span>Nishant Tomer</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;border-bottom:1px solid var(--border);padding-bottom:7px;"><span style="color:var(--dim);">Roll Number</span><span>2023355</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;border-bottom:1px solid var(--border);padding-bottom:7px;"><span style="color:var(--dim);">Date of Birth</span><span>June 25, 2005</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;border-bottom:1px solid var(--border);padding-bottom:7px;"><span style="color:var(--dim);">Address</span><span>66 Madangir, New Delhi</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;"><span style="color:var(--dim);">Email</span><span style="color:var(--acc);">nishant23355@iiitd.ac.in</span></div>
+      </div></div>
+      <div class="card"><div style="font-size:8.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">Academic Stats</div><div class="g g2" style="gap:1px;background:var(--border);border:1px solid var(--border);">
+        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--acc);">7.33</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">CGPA</div></div>
+        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">V</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Semester</div></div>
+        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">2027</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Graduation</div></div>
+        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">CSAM</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Branch</div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
 
-        function onWindowResize() { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); }
-        function onMouseMove(event) { mouse.x = (event.clientX / window.innerWidth) * 2 - 1; mouse.y = -(event.clientY / window.innerHeight) * 2 + 1; }
+<!-- ======================== PAGE: ACADEMIC LOG ======================== -->
+<div class="page" id="page-academic">
+  <div class="sec">
+    <div class="stag-line">Semester-wise Knowledge Archive</div>
+    <div class="srow"><div><div class="sh">Academic Log</div><div class="ss">In-depth course breakdown — what I learned, key topics, and insights each semester</div></div></div>
+  </div>
+  <div class="sem-tabs" id="semTabs">
+    <button class="sem-tab on" data-sem="1" onclick="switchSem(this)">Semester I</button>
+    <button class="sem-tab" data-sem="2" onclick="switchSem(this)">Semester II</button>
+    <button class="sem-tab" data-sem="3" onclick="switchSem(this)">Semester III</button>
+    <button class="sem-tab" data-sem="4" onclick="switchSem(this)">Semester IV</button>
+    <button class="sem-tab" data-sem="5" onclick="switchSem(this)">Semester V</button>
+  </div>
+  <div id="semPanels"></div>
+</div>
 
-        function animateBackground() {
-            requestAnimationFrame(animateBackground);
-            const positions = particles.geometry.attributes.position.array;
-            const colors = particles.geometry.attributes.color.array;
-            const linePositions = lines.geometry.attributes.position.array;
-            const lineColors = lines.geometry.attributes.color.array;
-            let lineIndex = 0;
-            const time = Date.now() * 0.0005;
-            particleSystem.forEach((p, i) => {
-                p.update(mouse);
-                positions[i * 3] = p.pos.x; positions[i * 3 + 1] = p.pos.y; positions[i * 3 + 2] = p.pos.z;
-                const pulse = Math.sin(time + i * 0.1) * 0.5 + 0.5;
-                p.color.setHSL(0.65 + pulse * 0.1, 0.7, 0.6);
-                colors[i * 3] = p.color.r; colors[i * 3 + 1] = p.color.g; colors[i * 3 + 2] = p.color.b;
-            });
-            for (let i = 0; i < particleSystem.length; i++) {
-                for (let j = i + 1; j < particleSystem.length; j++) {
-                    const p1 = particleSystem[i]; const p2 = particleSystem[j]; const dist = p1.pos.distanceTo(p2.pos);
-                    if (dist < 100) {
-                        const alpha = 1.0 - (dist / 100);
-                        linePositions[lineIndex * 3] = p1.pos.x; linePositions[lineIndex * 3 + 1] = p1.pos.y; linePositions[lineIndex * 3 + 2] = p1.pos.z;
-                        lineColors[lineIndex * 3] = p1.color.r * alpha; lineColors[lineIndex * 3 + 1] = p1.color.g * alpha; lineColors[lineIndex * 3 + 2] = p1.color.b * alpha;
-                        lineIndex++;
-                        linePositions[lineIndex * 3] = p2.pos.x; linePositions[lineIndex * 3 + 1] = p2.pos.y; linePositions[lineIndex * 3 + 2] = p2.pos.z;
-                        lineColors[lineIndex * 3] = p2.color.r * alpha; lineColors[lineIndex * 3 + 1] = p2.color.g * alpha; lineColors[lineIndex * 3 + 2] = p2.color.b * alpha;
-                        lineIndex++;
-                    }
-                }
-            }
-            lines.geometry.setDrawRange(0, lineIndex);
-            particles.geometry.attributes.position.needsUpdate = true; particles.geometry.attributes.color.needsUpdate = true;
-            lines.geometry.attributes.position.needsUpdate = true; lines.geometry.attributes.color.needsUpdate = true;
-            camera.lookAt(scene.position);
-            renderer.render(scene, camera);
-        }
+<!-- ======================== PAGE: EXPERIENCE ======================== -->
+<div class="page" id="page-experience">
+  <div class="sec">
+    <div class="stag-line">Work & Research</div>
+    <div class="srow"><div><div class="sh">Experience</div><div class="ss">Internships and ongoing research projects</div></div><div class="scount">2 positions · 2025–Present</div></div>
+    <div class="tline">
+      <div class="tli">
+        <div class="tli-dot f"></div>
+        <div class="tli-head"><div class="tli-role">iOS App Developer — Industrial Intern</div><div class="tli-period">Jan 2025 — Jun 2025</div></div>
+        <div class="tli-org">ModularityLabs · Team of 3</div>
+        <ul class="tli-pts">
+          <li>Engineered a reactive iOS productivity system using <strong style="color:var(--text);">SwiftUI</strong> and <strong style="color:var(--text);">Combine</strong>, implementing <code style="color:var(--acc);">NSPersistentContainer</code> for robust offline data management and high-performance state synchronisation across concurrent threads.</li>
+          <li>Architected a secure backend layer with <strong style="color:var(--text);">Firebase Auth & Firestore</strong>, achieving real-time cross-platform data parity and secure user authentication for industrial-grade deployment.</li>
+          <li>Designed modular sub-applications — meditation timer, habit tracker, focus mode — each independently maintained under MVVM with shared service layers.</li>
+          <li>Implemented offline-first architecture ensuring seamless experience with full data integrity during network interruptions, syncing on reconnection.</li>
+          <li>Collaborated in agile team of 3, participated in code reviews, maintained internal documentation, and delivered features in 2-week sprint cycles.</li>
+          <li>Received official Letter of Experience and Letter of Recommendation from the organisation upon successful internship completion.</li>
+        </ul>
+        <div class="chips" style="margin-top:10px;"><span class="chip hi">SwiftUI</span><span class="chip hi">Firebase</span><span class="chip hi">Core Data</span><span class="chip">Combine</span><span class="chip">MVVM</span><span class="chip">NSPersistentContainer</span><span class="chip">Firestore</span><span class="chip">Agile</span></div>
+        <div class="btns" style="margin-top:12px;">
+          <a href="https://i.ibb.co/sdD27ksT/Experience-Letter-Nishant-Tomer.png" target="_blank" class="btn btn-g bsm">Experience Letter ↗</a>
+          <a href="https://i.ibb.co/ZR4j2GMn/Letter-of-Recommendation-Nishant-Tomer.png" target="_blank" class="btn btn-g bsm">Recommendation ↗</a>
+        </div>
+      </div>
+      <div class="tli">
+        <div class="tli-dot"></div>
+        <div class="tli-head"><div class="tli-role">AI Clinical Scribe — Research Project</div><div class="tli-period">Jan 2026 — Present</div></div>
+        <div class="tli-org">Multi-modal Speech & NLP Pipeline · Ongoing Research</div>
+        <ul class="tli-pts">
+          <li>Architected a multi-modal AI pipeline using <strong style="color:var(--text);">OpenAI Whisper</strong> and <strong style="color:var(--text);">Pyannote.audio</strong> for automatic speech recognition and speaker diarization, transforming clinical dialogue into structured SOAP notes with <strong style="color:var(--acc);">90%+ accuracy</strong>.</li>
+          <li>Engineered an automated <strong style="color:var(--text);">ICD-10 mapping module</strong> using NLP-based named entity recognition and classification to assign standardised diagnostic codes, ensuring regulatory medical compliance.</li>
+          <li>Built preprocessing pipeline for noisy clinical audio — noise reduction, speaker separation, and transcription formatting — handling multi-speaker conversations in real clinical environments.</li>
+          <li>Estimated physician administrative load reduction of <strong style="color:var(--acc);">30–40%</strong> through automated note generation and structured documentation workflows.</li>
+          <li>Designed evaluation framework using word error rate (WER), SOAP note completeness scoring, and ICD-10 mapping accuracy as primary metrics.</li>
+        </ul>
+        <div class="chips" style="margin-top:10px;"><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip hi">NLP</span><span class="chip">ICD-10</span><span class="chip">SOAP Notes</span><span class="chip">Python</span><span class="chip">Speaker Diarization</span><span class="chip">NER</span></div>
+        <div style="margin-top:14px;padding:12px;border:1px solid rgba(68,136,255,.2);background:rgba(68,136,255,.03);">
+          <div style="font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:3px;">Status</div>
+          <div style="font-size:10.5px;color:var(--dim);">Active development — architecture complete, clinical validation in progress. Target: academic publication.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sec" style="padding-top:20px;">
+    <div class="stag-line">Official Documents</div>
+    <div class="sh" style="margin-bottom:20px;">Letters from ModularityLabs</div>
+    <div class="g g2 bord">
+      <div onclick="window.open('https://i.ibb.co/sdD27ksT/Experience-Letter-Nishant-Tomer.png','_blank')" style="cursor:none;background:var(--bg);transition:background .15s;" class="card">
+        <div style="height:160px;overflow:hidden;margin:-20px -20px 14px;border-bottom:1px solid var(--border);position:relative;background:var(--bg3);">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);">
+            <div style="text-align:center;"><div style="font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Experience Letter</div><div style="font-size:9px;color:var(--muted);margin-top:4px;">Click to view full document</div></div>
+          </div>
+        </div>
+        <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;">ModularityLabs · Jan–Jun 2025</div>
+        <div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;">Letter of Experience</div>
+        <div style="font-size:10px;color:var(--dim);">Official confirmation of iOS development internship completion.</div>
+        <div style="margin-top:10px;font-size:9.5px;color:var(--acc);">→ Click to open document</div>
+      </div>
+      <div onclick="window.open('https://i.ibb.co/ZR4j2GMn/Letter-of-Recommendation-Nishant-Tomer.png','_blank')" style="cursor:none;background:var(--bg);transition:background .15s;" class="card">
+        <div style="height:160px;overflow:hidden;margin:-20px -20px 14px;border-bottom:1px solid var(--border);position:relative;background:var(--bg3);">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);">
+            <div style="text-align:center;"><div style="font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Recommendation</div><div style="font-size:9px;color:var(--muted);margin-top:4px;">Click to view full document</div></div>
+          </div>
+        </div>
+        <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;">ModularityLabs · Jun 2025</div>
+        <div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;">Letter of Recommendation</div>
+        <div style="font-size:10px;color:var(--dim);">Highlighting iOS expertise, teamwork, and engineering quality.</div>
+        <div style="margin-top:10px;font-size:9.5px;color:var(--acc);">→ Click to open document</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        // ===================================================================================
-        // === DOM & UI LOGIC ===
-        // ===================================================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            initBackground();
-            const mainContent = document.getElementById('main-content');
-            const projectsPage = document.getElementById('projects-page');
-            const certificatesPage = document.getElementById('certificates-page');
-            
-            document.getElementById('nav-name').textContent = portfolioData.about.name;
-            document.getElementById('profile-pic').src = portfolioData.about.profilePic;
-            document.getElementById('user-name').textContent = portfolioData.about.name;
-            document.getElementById('user-title').textContent = portfolioData.about.title;
-            document.getElementById('user-bio').textContent = portfolioData.about.bio;
-            const edu = portfolioData.education;
-            document.getElementById('education-info').innerHTML = `<p class="text-lg text-slate-200 font-semibold">${edu.degree}</p><p class="text-indigo-400">${edu.branch}</p><p class="text-slate-400 mt-2">${edu.institution}</p><p class="text-slate-500 text-sm">${edu.timeline}</p>`;
-            const socialLinksContainer = document.getElementById('social-links');
-            const socialIcons = { github: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`, linkedin: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>`, email: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>` };
-            portfolioData.about.socials.forEach(social => { const link = document.createElement('a'); link.href = social.url; link.target = "_blank"; link.rel = "noopener noreferrer"; link.className = "text-slate-400 hover:text-indigo-400 transition-colors duration-300"; link.innerHTML = socialIcons[social.type] || ''; socialLinksContainer.appendChild(link); });
-            
-            const projectsGridPreview = document.getElementById('projects-grid-preview');
-            const projectsGridFull = document.getElementById('projects-grid-full');
-            portfolioData.projects.slice(0, 6).forEach((project, index) => { projectsGridPreview.innerHTML += createCard('project', project.title, project.description, project.image, portfolioData.projects.indexOf(project)); });
-            portfolioData.projects.forEach((project, index) => { projectsGridFull.innerHTML += createCard('project', project.title, project.description, project.image, index); });
+<!-- ======================== PAGE: PROJECTS ======================== -->
+<div class="page" id="page-projects">
+  <div class="sec">
+    <div class="stag-line">Engineering Work</div>
+    <div class="srow"><div><div class="sh">Projects</div><div class="ss">Click any card for full details, gallery & links</div></div><div class="scount">8 projects</div></div>
+    <div class="filter-row" id="filterRow">
+      <button class="fbtn on" data-f="all">All (8)</button>
+      <button class="fbtn" data-f="internship">Internship</button>
+      <button class="fbtn" data-f="research">Research</button>
+      <button class="fbtn" data-f="academic">Academic</button>
+      <button class="fbtn" data-f="personal">Personal</button>
+      <button class="fbtn" data-f="ios">iOS</button>
+      <button class="fbtn" data-f="ai">AI / ML</button>
+      <button class="fbtn" data-f="game">Game Dev</button>
+      <button class="fbtn" data-f="fullstack">Full-Stack</button>
+    </div>
+    <div class="proj-grid" id="projGrid"></div>
+  </div>
+</div>
 
-            const highlightsGrid = document.getElementById('highlights-grid');
-            portfolioData.keyDocuments.forEach(doc => { highlightsGrid.innerHTML += `<a href="${doc.link}" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex items-center text-left space-x-5"><div class="flex-shrink-0 text-indigo-400"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div><div><h3 class="text-xl font-bold text-white mb-1">${doc.title}</h3><p class="text-slate-400">${doc.description}</p></div></a>`; });
-            const certificatesGridPreview = document.getElementById('certificates-grid-preview');
-            const certificatesGridFull = document.getElementById('certificates-grid-full');
-            portfolioData.certificates.slice(0, 3).forEach((cert) => { certificatesGridPreview.innerHTML += createCard('certificate', cert.name, cert.issuingBody, cert.image, portfolioData.certificates.indexOf(cert)); });
-            portfolioData.certificates.forEach((cert, index) => { certificatesGridFull.innerHTML += createCard('certificate', cert.name, cert.issuingBody, cert.image, index); });
-            function createCard(type, title, subtitle, image, index) { 
-                return `<div class="glass-card rounded-lg overflow-hidden cursor-pointer flex flex-col" data-type="${type}" data-index="${index}"><div class="h-52 bg-slate-900/30 flex items-center justify-center p-2"><img src="${image}" alt="${title}" class="max-w-full max-h-full object-contain" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Image'"></div><div class="p-5 flex-grow flex flex-col"><h3 class="text-lg font-bold text-white mb-2">${title}</h3><p class="text-slate-400 text-sm mb-4 flex-grow line-clamp-3">${subtitle}</p><span class="text-indigo-400 font-semibold mt-auto">View Details &rarr;</span></div></div>`; 
-            }
-            const achievementsList = document.getElementById('achievements-list');
-            const achievementIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`;
-            portfolioData.achievements.forEach(item => achievementsList.innerHTML += createListItem(item, achievementIcon));
-            const participationsList = document.getElementById('participations-list');
-            const participationIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`;
-            portfolioData.participations.forEach(item => participationsList.innerHTML += createListItem(item, participationIcon));
-            function createListItem(text, iconSVG) { return `<li class="glass-card p-4 rounded-lg flex items-center space-x-4"><span class="text-indigo-400 flex-shrink-0">${iconSVG}</span><p class="text-slate-300">${text}</p></li>`; }
-            
-            document.getElementById('view-all-projects-btn').addEventListener('click', () => { mainContent.classList.add('hidden'); projectsPage.classList.remove('hidden'); window.scrollTo(0, 0); });
-            document.getElementById('back-to-home-btn-from-projects').addEventListener('click', () => { projectsPage.classList.add('hidden'); mainContent.classList.remove('hidden'); window.scrollTo(0, 0); });
-            document.getElementById('view-all-certs-btn').addEventListener('click', () => { mainContent.classList.add('hidden'); certificatesPage.classList.remove('hidden'); window.scrollTo(0, 0); });
-            document.getElementById('back-to-home-btn-from-certs').addEventListener('click', () => { certificatesPage.classList.add('hidden'); mainContent.classList.remove('hidden'); window.scrollTo(0, 0); });
+<!-- ======================== PAGE: SKILLS ======================== -->
+<div class="page" id="page-skills">
+  <div class="sec">
+    <div class="stag-line">Technical Stack</div>
+    <div class="srow"><div><div class="sh">Skills</div><div class="ss">Technologies, tools, languages, and domain expertise</div></div></div>
+    <div class="skills-wrap">
+      <div class="sg"><div class="sg-label">Expertise Domains</div><div class="chips"><span class="chip hi">Generative AI & NLP</span><span class="chip hi">iOS Development</span><span class="chip hi">Full-Stack Web</span><span class="chip hi">Game Development</span><span class="chip">DSA & Competitive Prog.</span><span class="chip">Operating Systems</span><span class="chip">Database Management</span><span class="chip">OOP Design Patterns</span><span class="chip">Computer Architecture</span><span class="chip">Parallel Computing</span></div></div>
+      <div class="sg"><div class="sg-label">Programming Languages</div><div class="chips"><span class="chip hi">Java</span><span class="chip hi">Python</span><span class="chip hi">Swift</span><span class="chip hi">JavaScript</span><span class="chip">C++</span><span class="chip">SQL</span></div></div>
+      <div class="sg"><div class="sg-label">AI & Data Science</div><div class="chips"><span class="chip hi">PyTorch</span><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip">TensorFlow</span><span class="chip">NumPy</span><span class="chip">CUDA</span><span class="chip">Collaborative Filtering</span><span class="chip">Matrix Factorisation</span><span class="chip">Speaker Diarization</span><span class="chip">NER / NLP</span></div></div>
+      <div class="sg"><div class="sg-label">iOS / Mobile</div><div class="chips"><span class="chip hi">SwiftUI</span><span class="chip hi">Combine</span><span class="chip hi">Core Data</span><span class="chip">NSPersistentContainer</span><span class="chip">Firebase Auth</span><span class="chip">Firestore</span><span class="chip">MVVM</span><span class="chip">Offline-first</span></div></div>
+      <div class="sg"><div class="sg-label">Web & Databases</div><div class="chips"><span class="chip hi">React</span><span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">PostgreSQL</span><span class="chip">Supabase</span><span class="chip">TanStack Query</span><span class="chip">JWT</span><span class="chip">FastAPI</span><span class="chip">REST APIs</span></div></div>
+      <div class="sg"><div class="sg-label">Tools & Platforms</div><div class="chips"><span class="chip hi">Git</span><span class="chip">Docker</span><span class="chip">libGDX</span><span class="chip">Unreal Engine</span><span class="chip">PyQT5</span><span class="chip">Tkinter</span><span class="chip">Xcode</span><span class="chip">IntelliJ</span></div></div>
+    </div>
+    <div class="cp-bar" style="margin-top:1px;">
+      <div class="cp-seg"><span class="cp-v">1700+</span><span class="cp-l">LeetCode Peak</span><div class="cp-prog"><div class="cp-prog-fill" style="width:85%;"></div></div></div>
+      <div class="cp-seg"><span class="cp-v">350+</span><span class="cp-l">Problems Solved</span><div class="cp-prog"><div class="cp-prog-fill" style="width:70%;"></div></div></div>
+      <div class="cp-seg"><span class="cp-v" style="font-size:20px;">5★ × 3</span><span class="cp-l">HackerRank</span><div class="cp-prog"><div class="cp-prog-fill" style="width:100%;"></div></div></div>
+      <div class="cp-seg"><span class="cp-v">6</span><span class="cp-l">Certifications</span><div class="cp-prog"><div class="cp-prog-fill" style="width:60%;"></div></div></div>
+    </div>
+    <div style="margin-top:20px;padding:20px;border:1px solid var(--border);background:var(--bg2);">
+      <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Proficiency Map</div>
+      <div class="prof-row" id="profBars"></div>
+    </div>
+  </div>
+</div>
 
-            const modal = document.getElementById('modal');
-            const modalContent = document.getElementById('modal-content');
-            function openModal(type, index) {
-                const item = portfolioData[type + 's'][index];
-                let contentHTML = `<button id="close-modal" class="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors z-10"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>`;
-                if (type === 'project') {
-                    contentHTML += `<div class="p-6 md:p-8"><div class="h-72 bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center p-2"><img src="${item.image}" alt="${item.title}" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Project+Image'"></div><h2 class="text-3xl font-bold text-white mb-2">${item.title}</h2><p class="text-slate-400 mb-6">${item.description}</p><h3 class="text-xl font-semibold text-white mb-3">Key Features</h3><ul class="list-disc list-inside space-y-2 mb-6 text-slate-300">${item.details.map(detail => `<li>${detail}</li>`).join('')}</ul><h3 class="text-xl font-semibold text-white mb-3">Technologies Used</h3><div class="flex flex-wrap gap-2 mb-6">${item.technologies.map(tech => `<span class="bg-slate-700 text-indigo-300 text-sm font-medium px-3 py-1 rounded-full">${tech}</span>`).join('')}</div>${(item.galleryImages && item.galleryImages.length > 0) ? `<div><h3 class="text-xl font-semibold text-white mb-3">Project Gallery</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">${item.galleryImages.map(imgUrl => `<a href="${imgUrl}" target="_blank" rel="noopener noreferrer" class="aspect-video block bg-slate-900/30 rounded-lg overflow-hidden"><img src="${imgUrl}" class="w-full h-full object-contain hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/800x600/1e293b/cbd5e1?text=Gallery+Image'"></a>`).join('')}</div></div>` : ''}<div class="border-t border-slate-700 my-6"></div><div class="space-y-6"><div><h3 class="text-xl font-semibold text-white mb-3">Project Links</h3><div class="flex flex-wrap gap-4">${(item.videoLink) ? `<a href="${item.videoLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Watch Gameplay</a>` : ''}${item.liveLink !== '#' ? `<a href="${item.liveLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">View Live</a>` : ''}${item.sourceLink !== '#' ? `<a href="${item.sourceLink}" target="_blank" rel="noopener noreferrer" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Source Code</a>` : ''}</div></div>${ (item.experienceLetterLink || item.recommendationLetterLink) ? `<div><h3 class="text-xl font-semibold text-white mb-3">Related Documents</h3><div class="flex flex-wrap gap-4">${item.experienceLetterLink ? `<a href="${item.experienceLetterLink}" target="_blank" rel="noopener noreferrer" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Experience Letter</a>` : ''}${item.recommendationLetterLink ? `<a href="${item.recommendationLetterLink}" target="_blank" rel="noopener noreferrer" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-lg transition-colors text-center">Recommendation</a>` : ''}</div></div>` : '' }</div></div>`;
-                } else if (type === 'certificate') {
-                    // Removed onerror logic for main image so it shows browser broken icon if link is invalid
-                    // Removed opacity/onerror logic for sub-certificates so they display as intended
-                    contentHTML += `<div class="p-6 md:p-8">
-                        <h2 class="text-3xl font-bold text-white mb-2">${item.name}</h2>
-                        <p class="text-slate-500 mb-4">Issued by: ${item.issuingBody}</p>
-                        <p class="text-slate-300 mb-6">${item.description}</p>
-                        
-                        ${item.posterImageLink ? `<h3 class="text-xl font-semibold text-white mb-3">Event Poster</h3><div class="bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center"><img src="${item.posterImageLink}" alt="Event Poster" class="max-w-full max-h-full object-contain p-2"></div>` : 
-                        `<div class="h-72 bg-slate-900/30 rounded-lg mb-6 flex items-center justify-center"><img src="${item.image}" alt="${item.name}" class="max-w-full max-h-full object-contain p-2"></div>`}
-                        
-                        ${item.subCertificates ? `
-                            <h3 class="text-xl font-semibold text-white mb-3">Specialization Modules</h3>
-                            <div class="grid grid-cols-2 gap-4 mb-6">
-                                ${item.subCertificates.map((img, idx) => `
-                                    <a href="${img}" target="_blank" class="block bg-slate-800/50 rounded-lg overflow-hidden border border-slate-700 h-32 flex items-center justify-center relative group hover:border-indigo-500 transition-colors">
-                                        <div class="absolute inset-0 flex flex-col items-center justify-center z-0">
-                                            <span class="text-slate-500 font-bold text-xs uppercase">Module</span>
-                                            <span class="text-slate-400 font-bold text-lg">${idx+1}</span>
-                                        </div>
-                                        <img src="${img}" class="absolute inset-0 w-full h-full object-cover z-10 transition-opacity" alt="Module ${idx+1}">
-                                    </a>
-                                `).join('')}
-                            </div>` 
-                        : ''}
-                        
-                        <div class="flex flex-wrap gap-4 mt-6">
-                            ${item.verifyLink !== '#' ? `<a href="${item.verifyLink}" target="_blank" rel="noopener noreferrer" class="btn-gradient text-white font-bold py-2 px-6 rounded-lg transition-colors inline-block">Verify Certificate</a>` : ''}
-                        </div>
-                    </div>`;
-                }
-                modalContent.innerHTML = contentHTML;
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                modalContent.classList.remove('scale-95', 'opacity-0');
-                document.body.style.overflow = 'hidden';
-                document.getElementById('close-modal').addEventListener('click', closeModal);
-            }
-            function closeModal() {
-                modal.classList.add('opacity-0');
-                modalContent.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => { modal.classList.add('pointer-events-none'); document.body.style.overflow = 'auto'; }, 300);
-            }
-            document.querySelectorAll('[data-type="project"], [data-type="certificate"]').forEach(card => { card.addEventListener('click', () => openModal(card.dataset.type, card.dataset.index)); });
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('pointer-events-none')) closeModal(); });
-            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.1 });
-            document.querySelectorAll('.section-animate').forEach(el => observer.observe(el));
-        });
-    </script>
+<!-- ======================== PAGE: CERTIFICATIONS ======================== -->
+<div class="page" id="page-certifications">
+  <div class="sec">
+    <div class="stag-line">Verified Credentials</div>
+    <div class="srow"><div><div class="sh">Certifications</div><div class="ss">Click any certificate to view full image and verify</div></div><div class="scount">6 certificates</div></div>
+    <div class="cert-grid" id="certGrid"></div>
+  </div>
+</div>
+
+<!-- ======================== PAGE: ACHIEVEMENTS ======================== -->
+<div class="page" id="page-achievements">
+  <div class="sec">
+    <div class="stag-line">Milestones & Recognition</div>
+    <div class="srow"><div><div class="sh">Achievements</div><div class="ss">Growth timeline — from student to engineer</div></div></div>
+    <div id="achList"></div>
+  </div>
+</div>
+
+<!-- ======================== PAGE: THOUGHTS ======================== -->
+<div class="page" id="page-thoughts">
+  <div class="sec">
+    <div class="stag-line">Writing & Reflections</div>
+    <div class="srow"><div><div class="sh">Thoughts</div><div class="ss">Technical explorations, learning logs, and system design notes</div></div></div>
+    <div class="term" style="margin-bottom:18px;">
+      <div class="term-bar"><div class="td tr"></div><div class="td ty"></div><div class="td tg"></div><span class="tl">~/thoughts/README.md</span></div>
+      <div class="term-body"><div><span class="tp_c">→ </span><span class="tc_c">ls ./entries/ | wc -l</span></div><div class="to_c">5 entries (more in progress...)</div><div style="margin-top:5px;"><span class="tp_c">→ </span><span class="tcur"></span></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);" id="thoughtsList"></div>
+  </div>
+</div>
+
+<!-- ======================== PAGE: RESPONSIBILITY ======================== -->
+<div class="page" id="page-responsibility">
+  <div class="sec">
+    <div class="stag-line">Positions & Leadership</div>
+    <div class="srow"><div><div class="sh">Leadership</div><div class="ss">Responsibilities held at IIIT-Delhi</div></div></div>
+    <div class="g g2 bord">
+      <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:7px;">Jun 2025</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">AI Summer Camp Instructor</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">IIIT-Delhi · Certificate of Appreciation</div><div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:12px;">Taught 100+ students AI fundamentals using Python. Designed hands-on curriculum covering supervised learning, neural network basics, and practical exercises. Received official certificate of appreciation from IIIT-Delhi.</div><div class="chips"><span class="chip">100+ Students</span><span class="chip">AI / ML</span><span class="chip">Python</span><span class="chip">Curriculum Design</span></div><div style="margin-top:12px;"><a href="https://i.postimg.cc/90tfxqs8/2023355.jpg" target="_blank" class="btn btn-g bsm">View Certificate ↗</a></div></div>
+      <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:7px;">Nov 2023</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Organiser — Odyssey Cultural Fest</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">IIIT-Delhi Annual Cultural Festival</div><div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:12px;">Managed logistics and technical infrastructure for the large-scale IIIT-Delhi cultural festival. Coordinated AV setup, scheduling, and coordination across 20+ events for 1000+ attendees.</div><div class="chips"><span class="chip">Event Management</span><span class="chip">Technical Support</span><span class="chip">Logistics</span></div></div>
+      <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:7px;">Sep 2023 — Dec 2023</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Member — CyFuse Club</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">Robotics & Electronics Club · IIIT-Delhi</div><div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:12px;">Contributed to hardware-software integration projects for sensor-based communication modules. Worked on embedded systems and microcontroller programming for club robotics projects.</div><div class="chips"><span class="chip">Robotics</span><span class="chip">Embedded Systems</span><span class="chip">Hardware-Software</span></div></div>
+      <div class="card" style="background:var(--bg2);border:1px dashed var(--border);"><div style="font-size:9.5px;color:var(--muted);margin-bottom:7px;">Ongoing · Future</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--dim);margin-bottom:3px;">More Roles Incoming</div><div style="font-size:11px;color:var(--muted);line-height:1.7;">Designed to scale — student → engineer → senior → founder. Each role documents increasing scope and responsibility over time.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE: CONTACT ======================== -->
+<div class="page" id="page-contact">
+  <div class="sec">
+    <div class="stag-line">Connect</div>
+    <div class="srow"><div><div class="sh">Contact</div><div class="ss">Open to meaningful work and collaboration</div></div></div>
+    <div class="cont-wrap">
+      <div>
+        <div class="cont-head">Let's<br><em>Build</em><br>Together.</div>
+        <p class="cont-txt">Open to internships, research collaborations, freelance projects, and open source work. I respond to every message within 24 hours.</p>
+        <div class="clinks">
+          <a href="mailto:nishant23355@iiitd.ac.in" class="clink"><div><div class="clink-label">Email</div><div class="clink-val">nishant23355@iiitd.ac.in</div></div><div class="clink-arr">→</div></a>
+          <a href="https://github.com/Nishant7p" target="_blank" class="clink"><div><div class="clink-label">GitHub</div><div class="clink-val">github.com/Nishant7p</div></div><div class="clink-arr">→</div></a>
+          <a href="https://www.linkedin.com/in/nishant-tomer" target="_blank" class="clink"><div><div class="clink-label">LinkedIn</div><div class="clink-val">linkedin.com/in/nishant-tomer</div></div><div class="clink-arr">→</div></a>
+          <a href="https://leetcode.com" target="_blank" class="clink"><div><div class="clink-label">LeetCode</div><div class="clink-val">Peak 1700+ · 350+ Problems</div></div><div class="clink-arr">→</div></a>
+        </div>
+        <div class="ci-grid">
+          <div class="ci-block"><div class="ci-label">Response</div><div class="ci-val">&lt;24h</div></div>
+          <div class="ci-block"><div class="ci-label">Location</div><div class="ci-val">New Delhi, India</div></div>
+          <div class="ci-block"><div class="ci-label">Status</div><div class="ci-val" style="color:var(--acc);">Open to Work</div></div>
+          <div class="ci-block"><div class="ci-label">Timezone</div><div class="ci-val">IST (UTC+5:30)</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="term">
+          <div class="term-bar"><div class="td tr"></div><div class="td ty"></div><div class="td tg"></div><span class="tl">cat availability.json</span></div>
+          <div class="term-body">
+            <div><span class="tp_c">→ </span><span class="tc_c">cat availability.json</span></div>
+            <div style="margin-top:6px;line-height:2;"><span style="color:var(--blue);">{</span></div>
+            <div>&nbsp;&nbsp;<span class="ts_c">"internship"</span>: <span style="color:var(--acc);">true</span>,</div>
+            <div>&nbsp;&nbsp;<span class="ts_c">"research"</span>: <span style="color:var(--acc);">true</span>,</div>
+            <div>&nbsp;&nbsp;<span class="ts_c">"freelance"</span>: <span style="color:var(--acc);">true</span>,</div>
+            <div>&nbsp;&nbsp;<span class="ts_c">"open_source"</span>: <span style="color:var(--acc);">true</span>,</div>
+            <div>&nbsp;&nbsp;<span class="ts_c">"notice_period"</span>: <span style="color:#aaffcc;">"immediate"</span>,</div>
+            <div>&nbsp;&nbsp;<span class="ts_c">"preferred_stack"</span>: [<span style="color:#aaffcc;">"iOS"</span>, <span style="color:#aaffcc;">"AI/ML"</span>, <span style="color:#aaffcc;">"Full-Stack"</span>]</div>
+            <div><span style="color:var(--blue);">}</span></div>
+            <div style="margin-top:7px;"><span class="tp_c">→ </span><span class="tcur"></span></div>
+          </div>
+        </div>
+        <div style="margin-top:12px;border:1px solid var(--border);padding:18px;background:var(--bg2);">
+          <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Looking For</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:start;gap:10px;padding:9px;border:1px solid var(--border);background:var(--bg);"><span style="color:var(--acc);font-size:12px;flex-shrink:0;">◈</span><div><div style="font-size:11.5px;font-family:var(--sans);font-weight:700;color:var(--text);margin-bottom:2px;">iOS / Mobile Engineering</div><div style="font-size:9.5px;color:var(--dim);">SwiftUI · complex architectures · production systems</div></div></div>
+            <div style="display:flex;align-items:start;gap:10px;padding:9px;border:1px solid var(--border);background:var(--bg);"><span style="color:var(--blue);font-size:12px;flex-shrink:0;">◈</span><div><div style="font-size:11.5px;font-family:var(--sans);font-weight:700;color:var(--text);margin-bottom:2px;">AI/ML Research</div><div style="font-size:9.5px;color:var(--dim);">NLP · speech systems · recommender systems</div></div></div>
+            <div style="display:flex;align-items:start;gap:10px;padding:9px;border:1px solid var(--border);background:var(--bg);"><span style="color:var(--purple);font-size:12px;flex-shrink:0;">◈</span><div><div style="font-size:11.5px;font-family:var(--sans);font-weight:700;color:var(--text);margin-bottom:2px;">Full-Stack Engineering</div><div style="font-size:9.5px;color:var(--dim);">React · Node.js · scalable backend systems</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="padding:16px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:9.5px;color:var(--muted);">
+  <span><em style="color:var(--acc);font-style:normal;">NT.</em> Nishant Tomer · Personal OS v3.0</span>
+  <span>2023355 · IIIT-Delhi · CSAM · 2023–2027</span>
+</footer>
+</main>
+</div>
+
+<script>
+// =================== DATA ===================
+const PROJECTS = [
+  {id:'P-001',year:'2025',title:'iOS Productivity System',
+   img:'https://i.postimg.cc/XqxcpK69/Screenshot-2025-07-24-at-9-55-43-AM.png',
+   gallery:['https://i.postimg.cc/gjM8YY3D/Screenshot-2025-07-24-at-10-00-16-AM.png','https://i.postimg.cc/zXtFNkjr/Screenshot-2025-07-24-at-10-00-23-AM.png','https://i.postimg.cc/ZnJxb72T/Screenshot-2025-07-24-at-10-00-52-AM.png','https://i.postimg.cc/rm19LXhn/Screenshot-2025-07-24-at-10-01-49-AM.png','https://i.postimg.cc/7L73gryH/Screenshot-2025-07-24-at-9-55-52-AM.png','https://i.postimg.cc/W1d61JWJ/Screenshot-2025-07-24-at-9-56-18-AM.png','https://i.postimg.cc/4dgzP2Jz/Screenshot-2025-07-24-at-9-56-39-AM.png','https://i.postimg.cc/FRV0BbRw/Screenshot-2025-07-24-at-9-58-35-AM.png','https://i.postimg.cc/h400ynQh/Screenshot-2025-07-24-at-9-58-50-AM.png'],
+   desc:'Industrial-grade modular iOS productivity app with sub-applications for meditation, habit tracking, and focus management. Deployed at ModularityLabs.',
+   points:['Engineered reactive UI using SwiftUI + Combine with NSPersistentContainer for offline data management across concurrent threads.','Architected secure Firebase Auth & Firestore backend for real-time cross-platform data parity and user authentication.','Built modular MVVM sub-apps (meditation, habit tracker, focus) with shared service layers and independent state management.','Implemented offline-first architecture ensuring full data integrity during network interruptions with automatic sync on reconnection.','Designed custom UI components, animations, and interaction patterns aligned with iOS HIG principles.','Collaborated in agile team of 3 — participated in code reviews, sprint planning, and documentation.','Received Letter of Experience and Letter of Recommendation upon completion.'],
+   stack:['SwiftUI','Firebase','Core Data','Combine','MVVM','NSPersistentContainer','Firestore','Agile'],
+   type:'internship',typeLabel:'Internship',tags:'internship ios',
+   links:[{l:'Experience Letter',u:'https://i.ibb.co/sdD27ksT/Experience-Letter-Nishant-Tomer.png'},{l:'Recommendation',u:'https://i.ibb.co/ZR4j2GMn/Letter-of-Recommendation-Nishant-Tomer.png'}]},
+  {id:'P-002',year:'2026',title:'AI Clinical Scribe',
+   img:'',gallery:[],
+   desc:'Multi-modal AI pipeline using OpenAI Whisper + Pyannote for Speaker Diarization — converts clinical dialogue to structured SOAP notes with 90%+ accuracy.',
+   points:['Architected multi-modal ASR + speaker diarization pipeline achieving 90%+ SOAP note generation accuracy.','Engineered automated ICD-10 mapping module via NLP-based Named Entity Recognition for regulatory compliance.','Built audio preprocessing pipeline: noise reduction, speaker separation, and multi-speaker transcription formatting.','Designed SOAP note template engine mapping clinical conversation segments to appropriate note sections.','Evaluated system using WER, SOAP completeness score, and ICD-10 mapping accuracy metrics.','Estimated 30–40% reduction in physician administrative workload through automated documentation.','Active research — targeting academic publication upon clinical validation completion.'],
+   stack:['OpenAI Whisper','Pyannote','NLP','ICD-10','Python','SOAP Notes','Speaker Diarization','NER'],
+   type:'research',typeLabel:'Research',tags:'research ai',links:[]},
+  {id:'P-003',year:'2026',title:'Personalisation Engine',
+   img:'',gallery:[],
+   desc:'End-to-end recommender system using Latent Factor Models and Matrix Completion for predicting user preferences from sparse interaction data.',
+   points:['Implemented Latent Factor Models and Matrix Completion for sparse user-item interaction datasets.','Engineered hybrid filtering combining neighbourhood-based collaborative and content-based methods.','Minimised bias prediction errors using regularised gradient descent optimisation on latent embeddings.','Evaluated using Precision@K, NDCG, and Recall@K as primary recommendation quality metrics.','Benchmarked against baseline popularity-based and item-item CF models showing measurable improvement.','Built data preprocessing pipeline handling missing values, cold-start users, and long-tail distributions.'],
+   stack:['PyTorch','Collaborative Filtering','NumPy','Matrix Factorisation','Hybrid Filtering','Python'],
+   type:'research',typeLabel:'Research',tags:'research ai',links:[]},
+  {id:'P-004',year:'2025',title:'AgriLink Marketplace',
+   img:'',gallery:[],
+   desc:'Full-stack agricultural marketplace enabling direct farmer-to-buyer transactions with real-time analytics, secure auth, and inventory management.',
+   points:['Built full-stack marketplace with React frontend + Node.js/Express backend enabling direct farmer-to-buyer commerce.','Designed relational PostgreSQL schema for efficient inventory, order, and transaction management.','Built real-time analytics dashboard for farmers using TanStack Query for optimised data fetching and caching.','Integrated JWT + Supabase authentication with role-based access control for distinct buyer/farmer portals.','Implemented RESTful API with input validation, error handling, and rate limiting.','Removed agricultural supply chain intermediaries — directly connecting farmers with buyers, increasing farmer margins.','Deployed to production with environment-based config management and database migrations.'],
+   stack:['React','Node.js','Express.js','Supabase','PostgreSQL','JWT','TanStack Query','REST API'],
+   type:'personal',typeLabel:'Personal',tags:'personal fullstack',links:[]},
+  {id:'P-005',year:'2024',title:'Angry Birds Clone — Horror',
+   img:'https://i.postimg.cc/SR1BGYM8/Screenshot-2025-07-24-at-9-25-21-AM.png',
+   gallery:['https://i.postimg.cc/bJgcsBYm/Screenshot-2025-07-24-at-9-25-52-AM.png','https://i.postimg.cc/SskbQh4X/Screenshot-2025-07-24-at-9-27-11-AM.png','https://i.postimg.cc/kG5r8vBq/Screenshot-2025-07-24-at-9-28-08-AM.png','https://i.postimg.cc/dQWcFpx1/Screenshot-2025-07-24-at-9-28-33-AM.png'],
+   desc:'Feature-rich 2D physics game with custom horror aesthetic. Unique bird abilities, diverse enemies, serialisable levels, and full UI system.',
+   points:['Architected custom 2D physics engine in Java using libGDX with rigid-body dynamics, impulse-based collision resolution, and projectile motion.','Designed diverse birds with unique abilities and enemy types with varied structural configurations and resistances.','Implemented serialisable level system using Java object serialisation — players resume from last checkpoint.','Built full UI system: animated start menu, in-game HUD, pause screen, level selector, and score display.','Created all game assets from scratch using Canva — custom horror-themed sprites, backgrounds, and UI elements.','Developed randomised level generation system for replayability with difficulty scaling.','Applied OOP principles — inheritance, polymorphism, interfaces — for clean game object hierarchy.'],
+   stack:['Java','libGDX','Physics Engine','OOP','Game Design','Serialisation','Canva'],
+   type:'academic',typeLabel:'Academic',tags:'academic game',
+   links:[{l:'Watch Gameplay ↗',u:'https://youtu.be/1h-ZgEZ_d2w'}]},
+  {id:'P-006',year:'2025',title:'GeoGuesser & Flag Game',
+   img:'https://i.postimg.cc/VNBS75YG/Screenshot-2025-07-29-at-7-22-52-PM.png',
+   gallery:['https://i.postimg.cc/QCMWKsZ6/n.png','https://i.postimg.cc/W4PF60Pq/Screenshot-2025-07-29-at-7-23-17-PM.png','https://i.postimg.cc/3JdvKKBN/Screenshot-2025-07-29-at-7-23-58-PM.png','https://i.postimg.cc/BnFPKMRG/Screenshot-2025-07-29-at-7-24-36-PM.png'],
+   desc:'Multi-mode geography guessing game with 6+ modes including Deathmatch, Informative, Flag Guesser, Capital Quiz, and location challenges.',
+   points:['Designed 6+ distinct game modes: Deathmatch, Informative, Flag Guesser, Capital Quiz, Country Outline, and Continent Sorter.','Built with Tkinter — responsive UI with smooth screen transitions, difficulty progression, and score tracking.','Populated geography database covering 195 countries with flags (SVG), capitals, coordinates, and continent metadata.','Implemented timer system, lives/health mechanics, and high-score persistence using local file storage.','Designed custom pixel-art flag renderer and country outline silhouette system.','Applied event-driven programming with clean MVC separation for game state management.'],
+   stack:['Python','Tkinter','OOP','Game Design','CSV','File I/O'],
+   type:'personal',typeLabel:'Personal',tags:'personal game',links:[]},
+  {id:'P-007',year:'2024',title:'3D Escape Room (Unreal)',
+   img:'',gallery:[],
+   desc:'3D single-level escape puzzle game built in Unreal Engine. Interactive light-based puzzle hints, custom inventory UI, and immersive 3D environment.',
+   points:['Designed interactive 3D environment with light-based puzzle mechanics, hidden objects, and environmental storytelling.','Built custom C++ inventory system with Blueprint UI — drag-and-drop item management and item combination logic.','Implemented dynamic lighting system where light changes hint at puzzle solutions and guide player exploration.','Created audio-visual atmosphere using ambient sound design, particle effects, and post-processing for horror aesthetic.','Designed complete game loop: spawn, explore, gather items, solve puzzles, combine items, and trigger escape sequence.','Managed performance with LOD system and occlusion culling for smooth framerate in complex 3D environment.'],
+   stack:['Unreal Engine','C++','Blueprints','3D Level Design','Game Design','Audio Design'],
+   type:'academic',typeLabel:'Academic',tags:'academic game',links:[]},
+  {id:'P-008',year:'2024',title:'Assembler & Simulator',
+   img:'',gallery:[],
+   desc:'Two-pass assembler converting custom ISA assembly language into binary machine code, paired with a simulator executing code and displaying system state.',
+   points:['Designed custom Instruction Set Architecture (ISA) with arithmetic, logical, memory, and branch instruction categories.','Implemented two-pass assembler: Pass 1 builds symbol table and resolves labels; Pass 2 generates binary machine code.','Built simulator that executes generated machine code, displaying register values, memory state, and instruction pipeline.','Supported labels, directives (.data, .text), pseudo-instructions, and relative branch addressing.','Added debugging mode with step-by-step execution, breakpoints, and register/memory watchpoints.','Visualised register file, memory map, and instruction decode pipeline in the terminal output.'],
+   stack:['Python','Computer Architecture','ISA Design','Assembler Design','Systems Programming'],
+   type:'academic',typeLabel:'Academic',tags:'academic',links:[]}
+];
+
+const CERTS = [
+  {name:'GPU Programming Specialisation',issuer:'Johns Hopkins University',
+   img:'https://i.postimg.cc/9MFdZ5d0/Coursera-YMHWXFVFZPSB.png',
+   fallback:'GPU Programming · JHU',
+   desc:'4-course specialisation covering CUDA parallel computing, cuDNN for deep learning, memory optimisation, and GPU performance tuning.',
+   verify:'https://ibb.co/3yWDMZwH',
+   subs:[
+    {img:'https://i.postimg.cc/0VBLgVXx/Coursera-9-DSMIA2-P1-V6-P.png',label:'Module 1: Introduction to CUDA'},
+    {img:'https://i.postimg.cc/8DcDjX08/Coursera-JABH9-NS3-I5-BY.png',label:'Module 2: Memory Patterns'},
+    {img:'https://i.postimg.cc/Z6mtFDFN/Coursera-LBLDYS0-KAWMY.png',label:'Module 3: cuDNN & Deep Learning'},
+    {img:'https://i.postimg.cc/5hp8QzGY/Coursera-VSJHAZ2-WA9-UX.png',label:'Module 4: Performance Tuning'},
+   ]},
+  {name:'Google Database Professional',issuer:'Google · Coursera',
+   img:'https://i.postimg.cc/g0NnpR0f/database.png',fallback:'Google DB Professional',
+   desc:'Professional certificate in DBMS, relational modelling, SQL query optimisation, indexing strategies, and database administration.',
+   verify:'#',subs:[]},
+  {name:'Python (Basic) Certificate',issuer:'HackerRank',
+   img:'',fallback:'HackerRank Python',
+   desc:'Verified proficiency in Python fundamentals, data structures, algorithms, and problem-solving. Global top percentile.',
+   verify:'https://www.hackerrank.com/certificates/bec82207543c',subs:[]},
+  {name:'Game Development with Java',issuer:'Coding Ninjas',
+   img:'https://i.postimg.cc/G24h15Vy/CWcompletion.png',fallback:'Game Dev · Java',
+   desc:'Comprehensive course on game development using Java — game loops, physics simulation, rendering, and state management patterns.',
+   verify:'#',subs:[]},
+  {name:'AI Summer Camp Instructor',issuer:'IIIT-Delhi',
+   img:'https://i.postimg.cc/90tfxqs8/2023355.jpg',fallback:'AI Camp · IIIT-D',
+   desc:'Certificate of appreciation for teaching 100+ students AI fundamentals using Python — supervised learning, neural networks, practical applications.',
+   verify:'#',extra:'https://i.postimg.cc/JhnBGKS1/PHOTO-2025-07-20-00-05-40.jpg',subs:[]},
+  {name:'1 Stop Internship Certificate',issuer:'1 Stop',
+   img:'https://i.postimg.cc/rwTmtg0B/1stop.png',fallback:'1 Stop Internship',
+   desc:'Certificate of participation confirming completion of an industry-oriented internship program focused on professional development.',
+   verify:'#',subs:[]}
+];
+
+const SEMESTERS = [
+  {n:1,period:'Aug 2023 – Dec 2023',credits:20,courses:[
+    {code:'CSE101',name:'Introduction to Programming',grade:'B',
+     desc:'Foundation course in programming using C and Python. Covered fundamental concepts including variables, control flow, functions, arrays, pointers, and basic data structures.',
+     topics:['Variables, data types, operators','Control flow: if/else, loops','Functions and recursion','Arrays and pointers','Basic file I/O','Introduction to Python'],
+     learnings:['Built first programs from scratch in C','Understood memory allocation and pointer arithmetic','Learned algorithmic thinking and problem decomposition','Solved 50+ practice problems on HackerRank during this period'],
+     outcomes:['Wrote a text-based banking system in C','Built simple Python scripts for data processing']},
+    {code:'MTH100',name:'Discrete Mathematics',grade:'B+',
+     desc:'Mathematical foundations for computer science: logic, sets, relations, functions, graph theory, and combinatorics.',
+     topics:['Propositional and predicate logic','Set theory and relations','Mathematical induction','Graph theory basics','Combinatorics and probability','Number theory'],
+     learnings:['Understood formal proof techniques and mathematical reasoning','Saw how graph theory directly maps to CS problems','Built intuition for combinatorial problem solving'],
+     outcomes:['Applied combinatorics to algorithm analysis','Used graph theory foundations in later DSA course']},
+    {code:'PHY101',name:'Physics for Engineers',grade:'B',
+     desc:'Classical mechanics, waves, and thermodynamics fundamentals essential for understanding hardware and system behaviour.',
+     topics:['Classical mechanics','Waves and oscillations','Thermodynamics','Electrostatics basics'],
+     learnings:['Physical intuition that later helped in game physics implementation','Understanding of hardware constraints from first principles'],
+     outcomes:['Applied physics concepts while building Angry Birds physics engine in Semester III']},
+    {code:'HUM101',name:'Communication Skills',grade:'A',
+     desc:'Technical and professional communication, writing reports, presentations, and effective documentation.',
+     topics:['Technical report writing','Presentation skills','Professional email communication','Documentation best practices'],
+     learnings:['Improved ability to document code and projects professionally','Learned to write clear technical reports — directly used in internship documentation'],
+     outcomes:['Applied skills to write technical documentation at ModularityLabs']}
+  ]},
+  {n:2,period:'Jan 2024 – May 2024',credits:22,courses:[
+    {code:'CSE201',name:'Data Structures & Algorithms',grade:'B+',
+     desc:'Core data structures (arrays, linked lists, trees, graphs, heaps) and fundamental algorithms (sorting, searching, dynamic programming, greedy).',
+     topics:['Arrays, linked lists, stacks, queues','Trees: BST, AVL, segment trees','Graph algorithms: BFS, DFS, Dijkstra, MST','Sorting: mergesort, quicksort, heapsort','Dynamic programming','Greedy algorithms','Complexity analysis: Big-O, Big-Ω'],
+     learnings:['This course fundamentally changed how I think about problem solving — everything is a graph or a DP','Understood trade-offs between time and space complexity','Started competitive programming on LeetCode during this semester — crossed 100 problems'],
+     outcomes:['LeetCode rating grew to 1400+ during this period','Applied graph algorithms in AI project for building knowledge graphs','Used DP in game level generation algorithms']},
+    {code:'CSE202',name:'Object-Oriented Programming',grade:'B+',
+     desc:'Deep dive into OOP paradigm using Java: classes, inheritance, polymorphism, interfaces, abstract classes, design patterns.',
+     topics:['Classes, objects, constructors','Inheritance and polymorphism','Abstract classes and interfaces','Java Collections Framework','Exception handling','Basic design patterns: Factory, Singleton, Observer','Generics and lambdas'],
+     learnings:['Java became my primary language after this course','Design patterns directly applied in libGDX game development','Collections framework used extensively in all subsequent projects'],
+     outcomes:['Built class hierarchy for Angry Birds game using OOP principles','Applied Factory pattern for game object creation','Used Observer pattern for event handling in UI']},
+    {code:'MTH201',name:'Linear Algebra',grade:'B',
+     desc:'Vectors, matrices, linear transformations, eigenvalues, and their applications in CS — particularly ML and graphics.',
+     topics:['Vectors and vector spaces','Matrix operations','Linear transformations','Eigenvalues and eigenvectors','SVD and PCA','Applications in ML and graphics'],
+     learnings:['Eigendecomposition is the mathematical backbone of PCA and many ML algorithms','Matrix transformations directly apply to 3D game graphics and neural networks','SVD is the foundation of my Collaborative Filtering recommender system'],
+     outcomes:['Used SVD understanding in matrix factorisation for personalisation engine','Applied transformation matrices in Unreal Engine 3D game project']},
+    {code:'CSE203',name:'Computer Organisation & Architecture',grade:'B',
+     desc:'How computers work at the hardware level: ALU, memory hierarchy, instruction set architecture, pipelining.',
+     topics:['ALU design and binary arithmetic','Memory hierarchy: cache, RAM, virtual memory','Instruction Set Architecture (ISA)','Pipelining and hazards','I/O systems','Assembly language basics'],
+     learnings:['Finally understood why cache misses matter for performance','ISA knowledge directly motivated the Assembler & Simulator project','Pipelining understanding essential for CUDA GPU programming later'],
+     outcomes:['Built the Assembler & Simulator project based on this course','Applied memory hierarchy knowledge in CUDA performance optimisation']}
+  ]},
+  {n:3,period:'Aug 2024 – Dec 2024',credits:22,courses:[
+    {code:'CSE301',name:'Operating Systems',grade:'B+',
+     desc:'Process management, memory management, file systems, concurrency, synchronisation, and OS design principles.',
+     topics:['Process lifecycle and scheduling','Threads and concurrency','Mutex, semaphores, monitors','Memory management: paging, segmentation','Virtual memory and page replacement','File system design','Deadlock detection and prevention'],
+     learnings:['Concurrency bugs are some of the hardest to debug — understood race conditions deeply','Process scheduling algorithms directly apply to understanding system performance','NSPersistentContainer thread management at ModularityLabs required solid OS concurrency knowledge'],
+     outcomes:['Applied concurrency knowledge when managing Core Data contexts in iOS internship','Used scheduling concepts to optimise background sync in productivity app']},
+    {code:'CSE302',name:'Game Development (Java + libGDX)',grade:'A',
+     desc:'Applied game development course using Java and libGDX framework — physics, graphics, game architecture.',
+     topics:['Game loops and delta time','2D physics: rigid bodies, collision detection','Sprite animation and rendering','Audio system design','Level design and serialisation','Input handling','Performance profiling'],
+     learnings:['Implementing physics from scratch is incredibly instructive — no black boxes','Game state management patterns (GameScreen, GameState) translate directly to mobile app architecture','libGDX is a real professional framework — learned industry-grade game development'],
+     outcomes:['Delivered Angry Birds Clone with custom physics engine and serialisable levels','Gained confidence in complex Java project architecture with 10,000+ lines of code']},
+    {code:'MTH301',name:'Probability & Statistics',grade:'B',
+     desc:'Probability theory, distributions, statistical inference, hypothesis testing — foundations for ML and data science.',
+     topics:['Probability theory and Bayes theorem','Random variables and distributions','Central Limit Theorem','Hypothesis testing','Regression analysis','MLE and MAP estimation'],
+     learnings:['Bayesian thinking is essential for ML — prior, likelihood, posterior','Statistical intuition needed for evaluating ML models properly','Hypothesis testing framework used to evaluate clinical AI pipeline performance metrics'],
+     outcomes:['Applied statistical evaluation for AI Clinical Scribe accuracy measurement','Used regression foundations in personalisation engine baseline models']},
+    {code:'CSE303',name:'Database Management Systems',grade:'B+',
+     desc:'Relational model, SQL, query optimisation, transaction management, ACID properties, normalisation.',
+     topics:['Relational model and SQL','ER diagrams and schema design','Joins, aggregations, subqueries','Indexing and query optimisation','Transaction management and ACID','Normalisation (1NF, 2NF, 3NF, BCNF)','NoSQL concepts'],
+     learnings:['Normalisation prevents data anomalies — critical for the AgriLink marketplace schema design','Index selection dramatically impacts query performance','Supabase and PostgreSQL clicked much faster having taken this course'],
+     outcomes:['Designed normalised PostgreSQL schema for AgriLink agricultural marketplace','Applied query optimisation knowledge for efficient TanStack Query cache strategies']}
+  ]},
+  {n:4,period:'Jan 2025 – May 2025',credits:22,courses:[
+    {code:'CSE401',name:'iOS App Development (SwiftUI)',grade:'A',
+     desc:'Swift programming language, SwiftUI framework, iOS architecture patterns, data persistence, and production app development.',
+     topics:['Swift language fundamentals','SwiftUI declarative UI','Combine reactive framework','Core Data & NSPersistentContainer','Firebase integration','MVVM architecture pattern','App Store deployment process'],
+     learnings:['SwiftUI\'s declarative paradigm is fundamentally different from imperative UI — required mental model shift','Combine reactive streams are powerful once understood — similar to RxJava but more native','MVVM + Combine is the gold standard for iOS architecture — applied directly at ModularityLabs'],
+     outcomes:['Built iOS Productivity App during concurrent internship at ModularityLabs','Received Letter of Recommendation citing SwiftUI expertise'],starNote:'Concurrent with ModularityLabs internship — theory and practice perfectly aligned'},
+    {code:'CSE402',name:'Machine Learning Foundations',grade:'B+',
+     desc:'Supervised and unsupervised learning, model evaluation, neural networks, and practical ML engineering.',
+     topics:['Linear/logistic regression','Decision trees and ensemble methods','K-means and hierarchical clustering','Neural network basics and backpropagation','Gradient descent and optimisers','Overfitting, regularisation, cross-validation','Feature engineering and selection'],
+     learnings:['Gradient descent is everywhere — once you understand it, all of ML makes sense','Regularisation (L1/L2) is essential for preventing overfitting in sparse data settings like recommendation systems','Neural network backpropagation clicked — the math finally made sense'],
+     outcomes:['Applied supervised learning to build baseline models for personalisation engine','Used gradient descent optimisation in matrix factorisation recommender system']},
+    {code:'CSE403',name:'Computer Networks',grade:'B',
+     desc:'Network architecture, protocols, TCP/IP stack, security, and distributed systems fundamentals.',
+     topics:['OSI and TCP/IP models','DNS, HTTP/HTTPS','Transport layer: TCP, UDP','Network security basics','REST API design principles','WebSocket and real-time communication'],
+     learnings:['HTTP is the backbone of everything we build — understanding it deeply demystified API design','TCP vs UDP trade-offs directly apply to real-time features like Firebase Firestore sync','REST API design principles applied in AgriLink marketplace backend'],
+     outcomes:['Designed RESTful API for AgriLink with proper HTTP semantics','Applied networking knowledge to optimise Firebase real-time sync in iOS app']},
+    {code:'CSE404',name:'Software Engineering',grade:'B+',
+     desc:'Software development lifecycle, design patterns, testing, version control, agile methodology, and professional engineering practices.',
+     topics:['SDLC and agile methodology','UML diagrams and system design','Design patterns: Factory, Observer, Strategy, Decorator','Unit testing and TDD','Git workflows and CI/CD basics','Code review practices','Technical documentation'],
+     learnings:['Design patterns are solutions to recurring problems — having a vocabulary for them makes team communication much cleaner','TDD builds confidence in refactoring — used at ModularityLabs for service layer testing','Agile sprints mirrored exactly what I experienced at the internship'],
+     outcomes:['Applied agile sprint methodology at ModularityLabs internship','Used Git branching strategies for collaborative iOS development']}
+  ]},
+  {n:5,period:'Aug 2025 – Dec 2025',credits:20,courses:[
+    {code:'CSE501',name:'Artificial Intelligence & NLP',grade:'A',
+     desc:'Deep dive into AI techniques: search, knowledge representation, NLP, speech processing, and neural architectures for language.',
+     topics:['Search algorithms and heuristics','Knowledge graphs and ontologies','NLP: tokenisation, POS tagging, NER','Transformers and attention mechanism','Speech recognition: ASR systems','Speaker diarization techniques','Large Language Models overview'],
+     learnings:['Transformer attention mechanism is the core breakthrough of modern AI — understanding it properly unlocked reading modern ML papers','Speaker diarization is a hard unsolved problem — Pyannote is the state of the art but still imperfect in noisy environments','NER is central to extracting medical entities from clinical text — applied directly in AI Clinical Scribe'],
+     outcomes:['Built AI Clinical Scribe pipeline using Whisper + Pyannote as concurrent research project','Implemented ICD-10 entity extraction using NER fine-tuning'],starNote:'Directly informed AI Clinical Scribe research project'},
+    {code:'CSE502',name:'Parallel & Distributed Computing',grade:'B+',
+     desc:'Parallel programming paradigms, GPU computing, CUDA, distributed systems fundamentals, and performance optimisation.',
+     topics:['Parallel programming models','CUDA programming: threads, blocks, grids','Memory hierarchy: global, shared, register','Warp divergence and coalescing','cuDNN for deep learning','Distributed systems: CAP theorem','MapReduce and Spark overview'],
+     learnings:['CUDA mental model (threads → warps → blocks → grids) took time to build but is now intuitive','Memory coalescing is the #1 CUDA performance tip — misaligned access can kill throughput','GPU programming complemented the Johns Hopkins GPU specialisation I was doing concurrently'],
+     outcomes:['GPU Programming specialisation completion directly complemented coursework','Applied CUDA memory optimisation techniques to ML model inference pipeline']},
+    {code:'CSE503',name:'Advanced Data Structures',grade:'B+',
+     desc:'Advanced algorithmic techniques: segment trees, Fenwick trees, tries, suffix arrays, persistent data structures.',
+     topics:['Segment trees with lazy propagation','Fenwick (Binary Indexed) trees','Trie and suffix trie','Suffix arrays and LCP arrays','Persistent data structures','Randomised algorithms','Approximation algorithms'],
+     learnings:['Segment trees solve range query problems that seemed impossible before','Persistent data structures are the functional programming equivalent of mutable structures — elegant','LeetCode rating jumped from 1500+ to 1700+ during this semester after internalising these structures'],
+     outcomes:['LeetCode peak of 1700+ achieved during this semester','Applied advanced tree structures in algorithm design problems'],starNote:'LeetCode peak 1700+ reached this semester'},
+    {code:'MTH501',name:'Numerical Methods',grade:'B',
+     desc:'Numerical solutions to mathematical problems: root finding, interpolation, numerical integration, ODEs, and linear systems.',
+     topics:['Root finding: Newton-Raphson, bisection','Interpolation: Lagrange, splines','Numerical integration: Trapezoidal, Simpson','Solving ODEs: Euler, Runge-Kutta','Numerical linear algebra','Floating-point arithmetic and errors'],
+     learnings:['Floating-point precision issues are real in physics simulations — relevant to game development','Newton-Raphson convergence rate is quadratic — the math behind fast optimisation','Runge-Kutta is used in real physics engines for time integration — connected to Angry Birds project'],
+     outcomes:['Numerical intuition applied to gradient descent convergence analysis','Physics integration understanding deepened from Euler method study']}
+  ]}
+];
+
+const THOUGHTS = [
+  {date:'Jan 2026',title:'Building a Clinical AI Pipeline with Whisper + Pyannote',excerpt:'Lessons from architecting a real-time speaker diarization and SOAP note generation system. Covers ASR accuracy challenges, multi-speaker diarization edge cases, and ICD-10 NER mapping strategies.',tags:['AI','NLP','Medical','Research']},
+  {date:'Dec 2024',title:'Rigid-Body Physics from Scratch in Java + libGDX',excerpt:'Deep dive into implementing impulse-based collision resolution, projectile motion, and restitution coefficients for a 2D game engine. No physics library — just Newton\'s laws and Java.',tags:['Game Dev','Physics','Java']},
+  {date:'Jun 2025',title:'SwiftUI MVVM at Scale: Production Lessons',excerpt:'NSPersistentContainer threading gotchas, Combine backpressure handling, and Firebase Firestore offline sync patterns from building an industrial iOS modular app at ModularityLabs.',tags:['iOS','SwiftUI','Architecture']},
+  {date:'Jan 2026',title:'Matrix Factorisation for Recommender Systems',excerpt:'Latent Factor Models vs neighbourhood methods, sparse matrix completion with gradient descent, and why Precision@K matters more than RMSE for real-world recommendations.',tags:['ML','RecSys','Math']},
+  {date:'Oct 2025',title:'GPU Parallelism & CUDA: Notes from JHU Specialisation',excerpt:'Warp divergence, memory coalescing, shared memory bank conflicts, and cuDNN primitives. The mental model shift from CPU sequential to GPU massively parallel thinking.',tags:['CUDA','GPU','Parallel']},
+];
+
+const ACHIEVEMENTS = [
+  {year:'2026',mon:'Jan',icon:'⬟',title:'AI Clinical Research — 90%+ Accuracy Milestone',detail:'Architected production-quality multi-modal AI clinical scribe pipeline. ASR + diarization + SOAP note generation + ICD-10 mapping achieved 90%+ accuracy target.',chip:'Research'},
+  {year:'2025',mon:'Oct',icon:'★',title:'LeetCode Peak: 1700+ Rating',detail:'Crossed 1700 LeetCode peak rating while solving 350+ DSA problems. Consistent top-percentile performance in weekly and biweekly contests, especially in advanced tree and graph problems.',chip:'Competitive Prog.'},
+  {year:'2025',mon:'Jun',icon:'▲',title:'ModularityLabs iOS Internship — Completed',detail:'Delivered production iOS modular productivity app over 6-month industrial internship. Received Letter of Experience and Letter of Recommendation. MVVM + Firebase + Core Data architecture.',chip:'Internship'},
+  {year:'2025',mon:'Jun',icon:'◈',title:'AI Summer Camp — 100+ Students Taught',detail:'Instructed 100+ students in AI fundamentals at IIIT-Delhi. Designed Python-based curriculum covering supervised learning, neural networks, and hands-on exercises. Received certificate of appreciation.',chip:'Teaching'},
+  {year:'2025',mon:'Ongoing',icon:'✦',title:'HackerRank 5-Star Badges — Python, Java, DSA',detail:'Earned 5-star ratings in Python, Java, and Data Structures on HackerRank — global top percentile in all three domains with verified certificates.',chip:'Competitive'},
+];
+
+// =================== KNOWLEDGE GRAPH ===================
+const KG_NODES = [
+  {id:'nt',label:'Nishant Tomer',cls:'core',x:50,y:48},
+  {id:'ai',label:'AI / NLP',cls:'dom',x:74,y:18},
+  {id:'ios',label:'iOS Dev',cls:'dom',x:20,y:20},
+  {id:'game',label:'Game Dev',cls:'dom',x:12,y:62},
+  {id:'web',label:'Full-Stack',cls:'dom',x:82,y:72},
+  {id:'cp',label:'Comp. Prog.',cls:'dom',x:50,y:85},
+  {id:'whisper',label:'Whisper',cls:'tech',x:90,y:10},
+  {id:'pyannote',label:'Pyannote',cls:'tech',x:78,y:7},
+  {id:'pytorch',label:'PyTorch',cls:'tech',x:64,y:10},
+  {id:'swift',label:'SwiftUI',cls:'tech',x:6,y:30},
+  {id:'firebase',label:'Firebase',cls:'tech',x:22,y:8},
+  {id:'combine',label:'Combine',cls:'tech',x:10,y:46},
+  {id:'libgdx',label:'libGDX',cls:'tech',x:5,y:76},
+  {id:'unreal',label:'Unreal Engine',cls:'tech',x:20,y:80},
+  {id:'react',label:'React',cls:'tech',x:93,y:60},
+  {id:'node',label:'Node.js',cls:'tech',x:88,y:84},
+  {id:'cuda',label:'CUDA',cls:'tech',x:68,y:82},
+  {id:'leet',label:'LeetCode 1700+',cls:'proj',x:36,y:90},
+  {id:'clinical',label:'Clinical Scribe',cls:'proj',x:88,y:30},
+  {id:'agrilink',label:'AgriLink',cls:'proj',x:94,y:46},
+  {id:'ios_proj',label:'iOS App',cls:'proj',x:8,y:14},
+  {id:'java',label:'Java',cls:'tech',x:36,y:72},
+  {id:'python',label:'Python',cls:'tech',x:55,y:68},
+];
+
+const KG_EDGES = [
+  ['nt','ai'],['nt','ios'],['nt','game'],['nt','web'],['nt','cp'],
+  ['ai','whisper'],['ai','pyannote'],['ai','pytorch'],['ai','cuda'],['ai','python'],
+  ['ios','swift'],['ios','firebase'],['ios','combine'],['ios','ios_proj'],
+  ['game','libgdx'],['game','unreal'],['game','java'],
+  ['web','react'],['web','node'],['web','firebase'],
+  ['cp','leet'],['cp','java'],['cp','python'],
+  ['clinical','ai'],['clinical','whisper'],['clinical','pyannote'],
+  ['agrilink','web'],['agrilink','react'],['agrilink','node'],
+  ['ios_proj','ios'],['ios_proj','swift'],['ios_proj','firebase'],
+];
+
+function buildKG() {
+  const canvas = document.getElementById('kgCanvas');
+  const svg = document.getElementById('kgsvg');
+  if(!canvas || !svg) return;
+  const W = canvas.offsetWidth, H = canvas.offsetHeight || 320;
+  let lines = '';
+  KG_EDGES.forEach(([a,b]) => {
+    const na = KG_NODES.find(n=>n.id===a), nb = KG_NODES.find(n=>n.id===b);
+    if(!na||!nb) return;
+    const x1=na.x/100*W, y1=na.y/100*H, x2=nb.x/100*W, y2=nb.y/100*H;
+    const isDomain = na.cls==='core'||na.cls==='dom'||nb.cls==='core'||nb.cls==='dom';
+    lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${isDomain?'rgba(0,255,136,0.12)':'rgba(255,255,255,0.04)'}" stroke-width="${isDomain?'1':'0.5'}"/>`;
+  });
+  svg.innerHTML = lines;
+  canvas.querySelectorAll('.kn').forEach(n=>n.remove());
+  KG_NODES.forEach(node => {
+    const div = document.createElement('div');
+    div.className = `kn ${node.cls}`;
+    div.textContent = node.label;
+    div.style.left = node.x+'%';
+    div.style.top = node.y+'%';
+    div.onmouseenter = () => highlightNode(node.id);
+    div.onmouseleave = () => resetHighlight();
+    canvas.appendChild(div);
+  });
+}
+
+function highlightNode(id) {
+  document.querySelectorAll('.kn').forEach(n=>n.style.opacity='0.25');
+  const connected = new Set([id]);
+  KG_EDGES.forEach(([a,b])=>{if(a===id)connected.add(b);if(b===id)connected.add(a);});
+  KG_NODES.forEach(n=>{if(connected.has(n.id)){const el=document.querySelector(`.kn[style*="left: ${n.x}%"]`);if(el)el.style.opacity='1';}});
+}
+function resetHighlight(){document.querySelectorAll('.kn').forEach(n=>n.style.opacity='');}
+
+// =================== FEATURED PROJECTS (OVERVIEW) ===================
+function buildFeatProj() {
+  const container = document.getElementById('featProj');
+  if(!container) return;
+  PROJECTS.slice(0,5).forEach(p => {
+    const fp = document.createElement('div');
+    fp.className = 'fp';
+    fp.onclick = () => {go(document.querySelector('[data-p=projects]'));setTimeout(()=>openProjModal(PROJECTS.indexOf(p)),350);};
+    const imgHtml = p.img
+      ? `<div class="fp-img"><img src="${p.img}" alt="${p.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;filter:grayscale(30%);" onerror="this.parentElement.innerHTML='<div class=fp-img-ph>${p.id}</div>'"></div>`
+      : `<div class="fp-img"><div class="fp-img-ph">${p.id}</div></div>`;
+    const typeColors = {internship:'var(--amber)',research:'var(--blue)',academic:'var(--purple)',personal:'var(--dim)'};
+    fp.innerHTML = `${imgHtml}<div class="fp-body"><div class="fp-num">${p.id}</div><div class="fp-title">${p.title}</div><div class="fp-tags-row">${p.stack.slice(0,3).map(s=>`<span class="fp-tag">${s}</span>`).join('')}<span class="fp-type" style="border-color:${typeColors[p.type]}44;color:${typeColors[p.type]};font-size:8px;padding:1px 5px;border:1px solid;">${p.typeLabel}</span></div></div>`;
+    container.appendChild(fp);
+  });
+}
+
+// =================== PROJECTS PAGE ===================
+function renderProjects() {
+  const grid = document.getElementById('projGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  PROJECTS.forEach((p,i) => {
+    const el = document.createElement('div');
+    el.className = 'pcard';
+    el.setAttribute('data-tags', p.tags);
+    el.onclick = () => openProjModal(i);
+    const imgHtml = p.img
+      ? `<div class="pcard-thumb"><img src="${p.img}" alt="${p.title}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=pcard-no-img><div class=pcard-no-img-id>${p.id}</div><div class=pcard-no-img-label>${p.title}</div></div>'"></div>`
+      : `<div class="pcard-thumb"><div class="pcard-no-img"><div class="pcard-no-img-id">${p.id}</div><div class="pcard-no-img-label">${p.year}</div></div></div>`;
+    const typeClsMap = {internship:'pt-int',research:'pt-res',academic:'pt-aca',personal:'pt-per'};
+    el.innerHTML = `${imgHtml}<div class="pcard-body"><div class="pcard-num">${p.id} · ${p.year}</div><div class="pcard-title">${p.title}</div><div class="pcard-desc">${p.desc}</div><div class="pcard-stack">${p.stack.slice(0,5).map(s=>`<span class="stk">${s}</span>`).join('')}${p.stack.length>5?`<span class="stk">+${p.stack.length-5}</span>`:''}</div><div class="pcard-footer"><span class="ptype ${typeClsMap[p.type]}">${p.typeLabel}</span><div class="plink-row"><span class="plink" style="color:var(--acc)">Details →</span></div></div></div>`;
+    grid.appendChild(el);
+  });
+}
+
+function openProjModal(i) {
+  const p = PROJECTS[i];
+  document.getElementById('pModalTitle').textContent = `${p.id} · ${p.title}`;
+  const imgHtml = p.img ? `<img src="${p.img}" alt="${p.title}" style="width:100%;height:240px;object-fit:cover;border:1px solid var(--border);margin-bottom:16px;display:block;" onerror="this.style.display='none'">` : '';
+  const galleryHtml = p.gallery.length ? `<div class="msect">Gallery (${p.gallery.length} screenshots)</div><div class="gallery">${p.gallery.map(g=>`<img class="gthumb" src="${g}" loading="lazy" onclick="window.open('${g}','_blank')" alt="screenshot" onerror="this.style.display='none'">`).join('')}</div>` : '';
+  const typeClsMap = {internship:'pt-int',research:'pt-res',academic:'pt-aca',personal:'pt-per'};
+  document.getElementById('pModalBody').innerHTML = `${imgHtml}<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span class="ptype ${typeClsMap[p.type]}">${p.typeLabel}</span><span style="font-size:9px;color:var(--muted);">${p.id} · ${p.year}</span></div><p style="font-size:11.5px;color:var(--dim);line-height:1.8;margin-bottom:4px;">${p.desc}</p>${galleryHtml}<div class="msect">Key Contributions (${p.points.length} points)</div><ul class="mpts">${p.points.map(pt=>`<li>${pt}</li>`).join('')}</ul><div class="msect">Technology Stack</div><div class="chips">${p.stack.map(s=>`<span class="chip hi">${s}</span>`).join('')}</div>${p.links.length?`<div class="msect">Links & Documents</div><div class="btns">${p.links.map(l=>`<a href="${l.u}" target="_blank" class="btn btn-g bsm">${l.l}</a>`).join('')}</div>`:''}`;
+  document.getElementById('pModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// =================== FILTER ===================
+document.getElementById('filterRow')?.addEventListener('click', e => {
+  const btn = e.target.closest('.fbtn');
+  if(!btn) return;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const f = btn.dataset.f;
+  document.querySelectorAll('.pcard').forEach(c => {
+    c.style.display = (f==='all'||c.dataset.tags.includes(f)) ? '' : 'none';
+  });
+});
+
+// =================== CERTIFICATIONS ===================
+function renderCerts() {
+  const grid = document.getElementById('certGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  CERTS.forEach((c,i) => {
+    const el = document.createElement('div');
+    el.className = 'ccard';
+    el.onclick = () => openCertModal(i);
+    const imgHtml = c.img
+      ? `<div class="ccard-thumb"><img src="${c.img}" alt="${c.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ccard-no-img><div class=ccard-no-img-icon>▣</div><div class=ccard-no-img-label>${c.fallback}</div></div>'"><div class="ccard-overlay"><span class="ccard-overlay-txt">View Details</span></div></div>`
+      : `<div class="ccard-thumb"><div class="ccard-no-img"><div class="ccard-no-img-icon">▣</div><div class="ccard-no-img-label">${c.fallback}</div></div><div class="ccard-overlay"><span class="ccard-overlay-txt">View Details</span></div></div>`;
+    el.innerHTML = `${imgHtml}<div class="ccard-info"><div class="ccard-issuer">${c.issuer}</div><div class="ccard-name">${c.name}</div><div class="ccard-desc">${c.desc.substring(0,85)}…</div>${c.verify&&c.verify!='#'?`<a href="${c.verify}" target="_blank" class="ccard-link" onclick="event.stopPropagation()">→ Verify Certificate</a>`:''}</div>`;
+    grid.appendChild(el);
+  });
+}
+
+function openCertModal(i) {
+  const c = CERTS[i];
+  document.getElementById('cModalTitle').textContent = c.name;
+  const mainImg = c.img ? `<img src="${c.img}" alt="${c.name}" style="width:100%;max-height:360px;object-fit:contain;background:var(--bg3);border:1px solid var(--border);display:block;margin-bottom:14px;" onerror="this.style.display='none'">` : `<div style="width:100%;height:120px;border:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><span style="font-size:9px;color:var(--muted);letter-spacing:.08em;">${c.fallback}</span></div>`;
+  const subsHtml = c.subs?.length ? `<div class="msect">Specialisation Modules (${c.subs.length})</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;">${c.subs.map(s=>`<div style="border:1px solid var(--border);overflow:hidden;cursor:none;" onclick="window.open('${s.img}','_blank')"><img src="${s.img}" style="width:100%;height:90px;object-fit:cover;display:block;" loading="lazy" onerror="this.style.display='none'"><div style="padding:6px 8px;font-size:8.5px;color:var(--dim);">${s.label}</div></div>`).join('')}</div>` : '';
+  const extraHtml = c.extra ? `<div class="msect">Event Photo</div><img src="${c.extra}" style="width:100%;max-height:300px;object-fit:contain;background:var(--bg3);border:1px solid var(--border);display:block;" onerror="this.style.display='none'">` : '';
+  document.getElementById('cModalBody').innerHTML = `<div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">${c.issuer}</div><p style="font-size:11.5px;color:var(--dim);line-height:1.8;margin-bottom:14px;">${c.desc}</p>${mainImg}${extraHtml}${subsHtml}<div class="msect">Verification</div><div class="btns">${c.verify&&c.verify!='#'?`<a href="${c.verify}" target="_blank" class="btn btn-p bsm">→ Verify Certificate</a>`:'<span style="font-size:10px;color:var(--muted)">Verification link not available.</span>'}</div>`;
+  document.getElementById('cModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// =================== ACADEMIC SEMESTERS ===================
+function renderSemesters() {
+  const panels = document.getElementById('semPanels');
+  if(!panels) return;
+  SEMESTERS.forEach(sem => {
+    const panel = document.createElement('div');
+    panel.className = `sem-panel${sem.n===1?' on':''}`;
+    panel.id = `sem-${sem.n}`;
+    const statsHtml = `<div class="sem-header"><div class="sem-stat"><div class="sem-stat-v">${sem.credits}</div><div class="sem-stat-l">Credits</div></div><div class="sem-stat"><div class="sem-stat-v">${sem.courses.length}</div><div class="sem-stat-l">Courses</div></div><div class="sem-stat"><div class="sem-stat-v">${sem.period.split(' ')[0]} ${sem.period.split(' ')[1]}</div><div class="sem-stat-l">Started</div></div><div class="sem-stat"><div class="sem-stat-v">Sem ${sem.n}</div><div class="sem-stat-l">Semester</div></div></div>`;
+    const coursesHtml = sem.courses.map((c,ci) => {
+      const gradeClass = c.grade.startsWith('A')?'a':c.grade.startsWith('B+')?'b':'';
+      return `<div class="course-item">
+        <div class="course-head" onclick="toggleCourse(this)">
+          <div class="course-head-l"><span class="course-code">${c.code}</span><span class="course-name">${c.name}</span></div>
+          <div class="course-head-r"><span class="course-grade ${gradeClass}">${c.grade}</span><span class="course-toggle">▼</span></div>
+        </div>
+        <div class="course-body">
+          <div class="course-desc">${c.desc}</div>
+          ${c.starNote?`<div style="padding:8px 12px;margin-bottom:12px;border:1px solid var(--acc-b);background:var(--acc-bg);font-size:10px;color:var(--acc);">★ ${c.starNote}</div>`:''}
+          <div class="course-grid">
+            <div class="course-section">
+              <div class="course-section-title">Key Topics Covered</div>
+              <ul class="course-pts">${c.topics.map(t=>`<li>${t}</li>`).join('')}</ul>
+            </div>
+            <div class="course-section">
+              <div class="course-section-title">What I Learned</div>
+              <ul class="course-pts">${c.learnings.map(l=>`<li>${l}</li>`).join('')}</ul>
+            </div>
+          </div>
+          <div class="course-section" style="margin-top:0;">
+            <div class="course-section-title">Real-World Applications & Outcomes</div>
+            <ul class="course-pts">${c.outcomes.map(o=>`<li>${o}</li>`).join('')}</ul>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+    panel.innerHTML = `${statsHtml}<div class="course-list">${coursesHtml}</div>`;
+    panels.appendChild(panel);
+  });
+}
+
+function toggleCourse(head) {
+  const body = head.nextElementSibling;
+  const arrow = head.querySelector('.course-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  arrow.classList.toggle('open', !isOpen);
+}
+
+function switchSem(btn) {
+  document.querySelectorAll('.sem-tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.sem-panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById(`sem-${btn.dataset.sem}`).classList.add('on');
+}
+
+// =================== ACHIEVEMENTS ===================
+function renderAchievements() {
+  const el = document.getElementById('achList');
+  if(!el) return;
+  el.innerHTML = ACHIEVEMENTS.map(a=>`<div class="ach-item"><div class="ach-left"><div class="ach-yr">${a.year}</div><div class="ach-mon">${a.mon}</div></div><div class="ach-icon">${a.icon}</div><div class="ach-right"><div class="ach-title">${a.title}</div><div class="ach-detail">${a.detail}</div><span class="ach-chip">${a.chip}</span></div></div>`).join('');
+}
+
+// =================== THOUGHTS ===================
+function renderThoughts() {
+  const el = document.getElementById('thoughtsList');
+  if(!el) return;
+  el.innerHTML = THOUGHTS.map(t=>`<div style="background:var(--bg);padding:18px 22px;cursor:default;transition:background .15s;display:grid;grid-template-columns:80px 1fr 110px;gap:14px;align-items:start;" onmouseenter="this.style.background='var(--bg3)'" onmouseleave="this.style.background='var(--bg)'"><div style="font-size:9.5px;color:var(--muted);padding-top:2px;">${t.date}</div><div><div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">${t.title}</div><div style="font-size:10.5px;color:var(--dim);line-height:1.65;">${t.excerpt}</div></div><div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:flex-end;">${t.tags.map(tg=>`<span style="font-size:8.5px;padding:2px 6px;border:1px solid var(--b2);color:var(--muted);">${tg}</span>`).join('')}</div></div>`).join('');
+}
+
+// =================== SKILLS PROFICIENCY ===================
+function renderProficiency() {
+  const el = document.getElementById('profBars');
+  if(!el) return;
+  const bars = [
+    {label:'Python',pct:90},{label:'Java',pct:85},{label:'Swift / SwiftUI',pct:82},
+    {label:'PyTorch / AI/ML',pct:78},{label:'React / Node.js',pct:72},
+    {label:'C++ / Systems',pct:68},{label:'CUDA / GPU',pct:62},{label:'Unreal Engine',pct:55},
+  ];
+  el.innerHTML = bars.map(b=>`<div class="prow"><div class="prow-label">${b.label}</div><div class="prow-bar"><div class="prow-fill" style="width:${b.pct}%;"></div></div><div class="prow-pct">${b.pct}%</div></div>`).join('');
+}
+
+// =================== MODAL CLOSE ===================
+function closeModal(id, e, force) {
+  if(force || (e && e.target===document.getElementById(id))) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+// =================== NAVIGATION ===================
+function go(el) {
+  if(!el) return;
+  const p = el.dataset.p;
+  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('on'));
+  document.querySelectorAll('.na').forEach(a=>a.classList.remove('on'));
+  const page = document.getElementById('page-'+p);
+  if(page) page.classList.add('on');
+  el.classList.add('on');
+  document.getElementById('tpSeg').textContent = p.replace('-',' ');
+  window.scrollTo(0,0);
+  if(window.innerWidth<=840) document.getElementById('sb').classList.remove('open');
+  // Rebuild KG after nav to home
+  if(p==='home') setTimeout(buildKG, 50);
+}
+
+// =================== CURSOR ===================
+let mx=0,my=0,rx=0,ry=0;
+const curEl=document.getElementById('cur'), ringEl=document.getElementById('cring');
+document.addEventListener('mousemove', e=>{mx=e.clientX;my=e.clientY;curEl.style.left=mx+'px';curEl.style.top=my+'px';});
+(function tickC(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ringEl.style.left=rx+'px';ringEl.style.top=ry+'px';requestAnimationFrame(tickC);})();
+document.querySelectorAll('a,button,.pcard,.ccard,.qcard,.fp,.clink,.ach-item,.hl-item,.kn,.course-head,.na').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+// =================== MOBILE ===================
+document.getElementById('mobBtn').onclick = () => document.getElementById('sb').classList.toggle('open');
+
+// =================== CLOCK ===================
+function tick(){const n=new Date();document.getElementById('tpTime').textContent=n.toLocaleTimeString('en-GB',{hour12:false})+' IST';}
+tick();setInterval(tick,1000);
+
+// =================== ESCAPE ===================
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('pModal',null,true);closeModal('cModal',null,true);}});
+
+// =================== INIT ===================
+buildFeatProj();
+buildKG();
+renderProjects();
+renderCerts();
+renderAchievements();
+renderThoughts();
+renderSemesters();
+renderProficiency();
+window.addEventListener('resize',buildKG);
+</script>
 </body>
 </html>
