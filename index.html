@@ -158,82 +158,66 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .mpts li::before{content:'→';position:absolute;left:0;color:var(--acc);opacity:.45;}
 
 /* ========== OVERVIEW PAGE ========== */
-.hero{padding:52px 36px 60px;position:relative;overflow:hidden;min-height:calc(100vh - 38px);display:flex;align-items:center;}
-.hgrid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;opacity:.2;pointer-events:none;}
-.hglow{position:absolute;top:-60px;right:-40px;width:360px;height:360px;background:radial-gradient(circle,rgba(0,255,136,.04) 0%,transparent 68%);pointer-events:none;}
-.hinner{position:relative;z-index:1;width:100%;}
-.hlabel{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:8px;margin-bottom:16px;}
-.hlabel::after{content:'';width:60px;height:1px;background:var(--acc);opacity:.4;}
-.hname{font-family:var(--sans);font-size:clamp(44px,6vw,80px);font-weight:800;color:var(--text);letter-spacing:-3px;line-height:.9;margin-bottom:10px;}
-.hname em{color:var(--acc);font-style:normal;}
-.hrole{font-family:var(--sans);font-size:clamp(13px,1.8vw,18px);color:var(--dim);letter-spacing:-.2px;margin-bottom:22px;line-height:1.4;}
+.ov-hero{display:grid;grid-template-columns:200px 1fr;gap:0;min-height:calc(100vh - 38px);border-bottom:1px solid var(--border);}
+.ov-left{border-right:1px solid var(--border);display:flex;flex-direction:column;}
+.ov-photo-wrap{aspect-ratio:1;border-bottom:1px solid var(--border);overflow:hidden;background:var(--bg3);position:relative;}
+.ov-photo-wrap img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%);}
+.ov-photo-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.ov-photo-ph-icon{font-size:32px;opacity:.12;}
+.ov-photo-ph-label{font-size:8px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.ov-left-info{padding:16px;flex:1;}
+.ov-left-name{font-family:var(--sans);font-size:14px;font-weight:800;color:var(--text);letter-spacing:-.3px;margin-bottom:2px;}
+.ov-left-role{font-size:9px;color:var(--dim);line-height:1.5;margin-bottom:12px;}
+.ov-left-links{display:flex;flex-direction:column;gap:2px;}
+.ov-link{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;border:1px solid var(--border);background:var(--bg2);text-decoration:none;font-size:9.5px;color:var(--dim);transition:var(--ease);}
+.ov-link:hover{border-color:var(--acc-b);color:var(--acc);background:var(--acc-bg);}
+.ov-link-badge{font-size:8px;color:var(--acc);}
+.ov-right{display:flex;flex-direction:column;}
+.ov-about{padding:32px 36px 24px;border-bottom:1px solid var(--border);}
+.ov-big-name{font-family:var(--sans);font-size:clamp(38px,5vw,72px);font-weight:800;color:var(--text);letter-spacing:-3px;line-height:.9;margin-bottom:8px;}
+.ov-big-name em{color:var(--acc);font-style:normal;}
+.ov-tagline{font-size:11px;color:var(--dim);line-height:1.75;max-width:520px;margin-bottom:18px;}
+.ov-stats-row{display:flex;gap:0;border:1px solid var(--border);width:fit-content;margin-bottom:18px;}
+.ov-stat{padding:10px 18px;border-right:1px solid var(--border);}
+.ov-stat:last-child{border-right:none;}
+.ov-sv{font-family:var(--sans);font-size:19px;font-weight:800;color:var(--text);display:block;letter-spacing:-.4px;}
+.ov-sl{font-size:8px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-top:1px;}
+.ov-btns{display:flex;gap:6px;flex-wrap:wrap;}
 
-/* STATS ROW */
-.stats{display:flex;border:1px solid var(--border);margin-bottom:22px;width:fit-content;}
-.stat{padding:12px 20px;border-right:1px solid var(--border);}
-.stat:last-child{border-right:none;}
-.sv{font-family:var(--sans);font-size:21px;font-weight:800;color:var(--text);display:block;letter-spacing:-.4px;}
-.sl{font-size:8.5px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-top:1px;}
+/* SKILLS STRIP */
+.ov-skills{padding:20px 36px;border-bottom:1px solid var(--border);}
+.ov-skills-label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
 
-/* OVERVIEW DENSE GRID */
-.ov-layout{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
-.ov-layout .full{grid-column:1/-1;}
+/* NAV CARDS */
+.ov-nav-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-top:none;}
+.ov-ncard{background:var(--bg);padding:18px 20px;cursor:none;position:relative;overflow:hidden;transition:background .15s;}
+.ov-ncard::after{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--acc);transition:width .28s;}
+.ov-ncard:hover{background:var(--bg3);}
+.ov-ncard:hover::after{width:100%;}
+.onc-label{font-size:8px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;}
+.onc-title{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.onc-sub{font-size:9px;color:var(--dim);line-height:1.5;}
+.onc-arr{position:absolute;bottom:12px;right:14px;font-size:13px;color:var(--muted);transition:var(--ease);}
+.ov-ncard:hover .onc-arr{color:var(--acc);transform:translate(2px,-2px);}
 
-/* HIGHLIGHTS STRIP */
-.hl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
-.hl-item{background:var(--bg);padding:16px;position:relative;}
-.hl-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-.hl-item:hover::before{transform:scaleX(1);}
-.hl-item:hover{background:var(--bg3);}
-.hl-val{font-family:var(--sans);font-size:24px;font-weight:800;letter-spacing:-.5px;line-height:1;margin-bottom:4px;}
-.hl-label{font-size:9px;color:var(--dim);letter-spacing:.05em;line-height:1.4;}
-.hl-sub{font-size:8.5px;color:var(--muted);margin-top:2px;}
-
-/* QUICK NAV CARDS */
-.qnav{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
-.qcard{background:var(--bg);padding:16px 18px;cursor:none;position:relative;overflow:hidden;transition:background .15s;}
-.qcard::after{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--acc);transition:width .28s;}
-.qcard:hover{background:var(--bg3);}
-.qcard:hover::after{width:100%;}
-.qnum{font-size:8.5px;color:var(--muted);margin-bottom:6px;}
-.qtitle{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
-.qsub{font-size:9.5px;color:var(--dim);line-height:1.5;}
-.qarr{position:absolute;bottom:12px;right:14px;font-size:14px;color:var(--muted);transition:var(--ease);}
-.qcard:hover .qarr{color:var(--acc);transform:translate(2px,-2px);}
-
-/* FEATURED PROJECT MINI CARDS */
-.feat-proj{display:flex;flex-direction:column;gap:0;}
-.fp{display:flex;align-items:stretch;border-bottom:1px solid var(--border);cursor:none;transition:background .15s;}
-.fp:last-child{border-bottom:none;}
-.fp:hover{background:var(--bg3);}
-.fp-img{width:80px;min-height:64px;overflow:hidden;flex-shrink:0;border-right:1px solid var(--border);}
-.fp-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:filter .2s;}
-.fp:hover .fp-img img{filter:grayscale(0%);}
-.fp-img-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);font-size:8.5px;color:var(--muted);}
-.fp-body{padding:10px 14px;flex:1;}
-.fp-num{font-size:8.5px;color:var(--muted);margin-bottom:2px;}
-.fp-title{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;}
-.fp-tags-row{display:flex;gap:3px;flex-wrap:wrap;}
-.fp-tag{font-size:8px;padding:1px 5px;border:1px solid var(--border);color:var(--muted);}
-.fp-type{font-size:8px;padding:1px 5px;border:1px solid;}
-
-/* KNOWLEDGE GRAPH */
-.kg-wrap{position:relative;background:var(--bg2);border:1px solid var(--border);overflow:hidden;}
-.kg-canvas{position:relative;width:100%;height:320px;}
-#kgsvg{position:absolute;inset:0;width:100%;height:100%;}
-.kn{position:absolute;font-size:9.5px;padding:4px 9px;border:1px solid;background:var(--bg);transform:translate(-50%,-50%);transition:var(--ease);cursor:none;white-space:nowrap;}
+/* KG SECTION */
+.ov-kg{padding:0;}
+.kg-header{padding:14px 18px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.kg-canvas{position:relative;width:100%;height:340px;}
+#kgsvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.kn{position:absolute;font-size:9px;padding:3px 7px;border:1px solid;background:var(--bg);transform:translate(-50%,-50%);transition:var(--ease);cursor:none;white-space:nowrap;}
 .kn:hover{z-index:10;}
-.kn.core{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);font-size:10.5px;font-weight:700;}
+.kn.core{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);font-size:10px;font-weight:700;}
 .kn.dom{border-color:rgba(68,136,255,.4);color:var(--blue);}
 .kn.dom:hover{background:rgba(68,136,255,.08);}
 .kn.tech{border-color:var(--border);color:var(--dim);}
 .kn.tech:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);}
 .kn.proj{border-color:rgba(255,170,0,.3);color:var(--amber);}
 .kn.proj:hover{background:rgba(255,170,0,.07);}
-
-/* ACTIVITY HEATMAP-STYLE */
-.act-grid{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;padding:16px;}
-.act-cell{aspect-ratio:1;border-radius:1px;}
+.kn.course{border-color:rgba(170,102,255,.3);color:var(--purple);}
+.kn.course:hover{background:rgba(170,102,255,.07);}
+.kn.math{border-color:rgba(0,204,255,.3);color:var(--cyan);}
+.kn.math:hover{background:rgba(0,204,255,.06);}
 
 /* ========== ACADEMIC PAGE ========== */
 .sem-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);overflow-x:auto;}
@@ -246,18 +230,19 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .sem-stat{background:var(--bg);padding:14px 16px;}
 .sem-stat-v{font-family:var(--sans);font-size:20px;font-weight:800;color:var(--acc);}
 .sem-stat-l{font-size:8.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}
-
 .course-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);}
 .course-item{background:var(--bg);overflow:hidden;}
 .course-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:none;transition:background .15s;}
 .course-head:hover{background:var(--bg3);}
 .course-head-l{display:flex;align-items:center;gap:14px;}
-.course-code{font-size:9.5px;color:var(--acc);letter-spacing:.06em;width:72px;flex-shrink:0;}
+.course-code{font-size:9.5px;color:var(--acc);letter-spacing:.06em;width:80px;flex-shrink:0;}
 .course-name{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);}
 .course-head-r{display:flex;align-items:center;gap:12px;}
 .course-grade{font-size:10px;padding:2px 8px;border:1px solid var(--b2);color:var(--dim);}
 .course-grade.a{border-color:var(--acc-b);color:var(--acc);}
 .course-grade.b{border-color:rgba(68,136,255,.3);color:var(--blue);}
+.course-grade.c{border-color:rgba(255,170,0,.3);color:var(--amber);}
+.course-grade.f{border-color:rgba(255,85,102,.3);color:var(--red);}
 .course-toggle{font-size:12px;color:var(--muted);transition:transform .2s;}
 .course-toggle.open{transform:rotate(180deg);}
 .course-body{display:none;padding:0 18px 18px;}
@@ -383,16 +368,16 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
   .main{margin-left:0;}
   .mob-toggle{display:flex;}
   .sec{padding:28px 16px;}
-  .hero{padding:36px 16px 52px;}
-  .g2,.g3,.g4,.ov-layout,.cont-wrap,.skills-wrap,.course-grid,.ci-grid{grid-template-columns:1fr;}
-  .qnav{grid-template-columns:1fr 1fr;}
+  .ov-hero{grid-template-columns:1fr;}
+  .ov-left{border-right:none;border-bottom:1px solid var(--border);}
+  .ov-photo-wrap{height:160px;}
+  .g2,.g3,.g4,.cont-wrap,.skills-wrap,.course-grid,.ci-grid{grid-template-columns:1fr;}
+  .ov-nav-cards{grid-template-columns:1fr 1fr;}
   .topbar{padding:0 14px;}
   .sem-panel{padding:20px 16px;}
-  .hname{letter-spacing:-2px;}
-  .stats{flex-wrap:wrap;}
-  .stat{border-right:none;border-bottom:1px solid var(--border);}
-  .stats .stat:last-child{border-bottom:none;}
-  .hl-grid{grid-template-columns:repeat(3,1fr);}
+  .ov-stats-row{flex-wrap:wrap;}
+  .ov-stat{border-right:none;border-bottom:1px solid var(--border);}
+  .ov-stats-row .ov-stat:last-child{border-bottom:none;}
   .cp-bar{flex-wrap:wrap;}
   .cp-seg{border-right:none;border-bottom:1px solid var(--border);}
 }
@@ -427,7 +412,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
     <div class="ng"><div class="ng-label">// System</div>
       <button class="na on" data-p="home" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>Overview</button>
       <button class="na" data-p="education" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-4 6 4-6 4-6-4z"/><path d="M14 9v4"/><path d="M4 9.5v3c0 1 1.8 2 4 2s4-1 4-2v-3"/></svg>Education</button>
-      <button class="na" data-p="academic" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1" width="12" height="14" rx=".5"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="11" y2="8"/><line x1="5" y1="11" x2="9" y2="11"/></svg>Academic Log <span class="nb">NEW</span></button>
+      <button class="na" data-p="academic" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1" width="12" height="14" rx=".5"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="11" y2="8"/><line x1="5" y1="11" x2="9" y2="11"/></svg>Academic Log <span class="nb">6 Sem</span></button>
       <button class="na" data-p="experience" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="12" height="9" rx=".5"/><path d="M5 5V4a2 2 0 0 1 6 0v1"/></svg>Experience <span class="nb">2</span></button>
     </div>
     <div class="ng"><div class="ng-label">// Work</div>
@@ -454,135 +439,96 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="tp-path"><span>~/nishant/</span><span class="tp-seg" id="tpSeg">overview</span></div>
-  <div class="tp-r"><span class="tp-info">CGPA 7.33 · Sem V</span><span class="tp-tag">OPEN TO WORK</span><span class="tp-time" id="tpTime"></span></div>
+  <div class="tp-r"><span class="tp-info">CGPA 7.33 · Sem VI</span><span class="tp-tag">OPEN TO WORK</span><span class="tp-time" id="tpTime"></span></div>
 </div>
 
 <!-- ======================== PAGE: HOME / OVERVIEW ======================== -->
 <div class="page on" id="page-home">
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hgrid"></div><div class="hglow"></div>
-    <div class="hinner">
-      <div class="hlabel">Personal Operating System · IIIT-Delhi · 2023–2027</div>
-      <h1 class="hname">Nishant<br><em>Tomer.</em></h1>
-      <p class="hrole">Software Developer · AI/ML Researcher · iOS · Backend · Game Dev</p>
-      <div class="stats" style="margin-bottom:20px;">
-        <div class="stat"><span class="sv">350+</span><span class="sl">DSA Solved</span></div>
-        <div class="stat"><span class="sv">1700+</span><span class="sl">LeetCode Peak</span></div>
-        <div class="stat"><span class="sv">8+</span><span class="sl">Projects</span></div>
-        <div class="stat"><span class="sv">2</span><span class="sl">Internships</span></div>
-        <div class="stat"><span class="sv">5★</span><span class="sl">HackerRank</span></div>
-        <div class="stat"><span class="sv">V</span><span class="sl">Current Sem</span></div>
+
+  <!-- ABOUT SPLIT -->
+  <div class="ov-hero">
+    <!-- LEFT COLUMN: Photo + Links -->
+    <div class="ov-left">
+      <div class="ov-photo-wrap">
+        <img src="https://i.postimg.cc/PHOTO-placeholder/nishant.jpg" alt="Nishant Tomer"
+          onerror="this.parentElement.innerHTML='<div class=ov-photo-ph><div class=ov-photo-ph-icon>◉</div><div class=ov-photo-ph-label>Photo</div></div>'">
       </div>
-      <div class="btns">
-        <a href="mailto:nishant23355@iiitd.ac.in" class="btn btn-p">↗ Hire Me</a>
-        <button class="btn btn-g" onclick="go(document.querySelector('[data-p=projects]'))">Projects</button>
-        <button class="btn btn-g" onclick="go(document.querySelector('[data-p=experience]'))">Experience</button>
-        <a href="https://github.com/Nishant7p" target="_blank" class="btn btn-g">GitHub ↗</a>
-        <a href="https://www.linkedin.com/in/nishant-tomer" target="_blank" class="btn btn-g">LinkedIn ↗</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- HIGHLIGHTS STRIP -->
-  <div class="sec" style="padding-bottom:28px;">
-    <div class="stag-line">Highlights</div>
-    <div class="hl-grid">
-      <div class="hl-item"><div class="hl-val" style="color:var(--acc);">1700+</div><div class="hl-label">LeetCode Peak Rating</div><div class="hl-sub">Weekly + Biweekly contests</div></div>
-      <div class="hl-item"><div class="hl-val" style="color:var(--acc);">350+</div><div class="hl-label">DSA Problems Solved</div><div class="hl-sub">Across LeetCode & HackerRank</div></div>
-      <div class="hl-item"><div class="hl-val" style="color:var(--blue);">90%+</div><div class="hl-label">AI Clinical SOAP Accuracy</div><div class="hl-sub">Whisper + Pyannote pipeline</div></div>
-      <div class="hl-item"><div class="hl-val" style="color:var(--amber);">6mo</div><div class="hl-label">iOS Internship</div><div class="hl-sub">ModularityLabs · Production app</div></div>
-      <div class="hl-item"><div class="hl-val" style="color:var(--purple);">4</div><div class="hl-label">GPU Modules Completed</div><div class="hl-sub">Johns Hopkins · CUDA + cuDNN</div></div>
-      <div class="hl-item"><div class="hl-val" style="color:var(--acc);">100+</div><div class="hl-label">Students Taught</div><div class="hl-sub">AI Summer Camp · IIIT-D</div></div>
-      <div class="hl-item"><div class="hl-val" style="color:var(--acc);">5</div><div class="hl-label">Programming Languages</div><div class="hl-sub">Java, Python, Swift, C++, JS</div></div>
-      <div class="hl-item"><div class="hl-val" style="color:var(--red);">30-40%</div><div class="hl-label">Physician Load Reduced</div><div class="hl-sub">AI Clinical Scribe project</div></div>
-    </div>
-  </div>
-
-  <!-- MAIN DENSE OVERVIEW LAYOUT -->
-  <div class="sec" style="padding-top:20px;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);">
-
-      <!-- FEATURED PROJECTS -->
-      <div style="background:var(--bg);padding:0;">
-        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">Featured Projects</span>
-          <button class="btn btn-g bsm" onclick="go(document.querySelector('[data-p=projects]'))">All Projects →</button>
-        </div>
-        <div class="feat-proj" id="featProj"></div>
-      </div>
-
-      <!-- KNOWLEDGE GRAPH -->
-      <div style="background:var(--bg);padding:0;">
-        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">Knowledge Graph</span>
-          <span style="font-size:8.5px;color:var(--muted);">Hover nodes to explore</span>
-        </div>
-        <div class="kg-canvas" id="kgCanvas">
-          <svg id="kgsvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></svg>
+      <div class="ov-left-info">
+        <div class="ov-left-name">Nishant Tomer</div>
+        <div class="ov-left-role">IIIT-Delhi · CSAM · 2023–2027<br>Software Dev · AI/ML · iOS · Game Dev</div>
+        <div class="ov-left-links">
+          <a href="https://github.com/Nishant7p" target="_blank" class="ov-link"><span>GitHub</span><span class="ov-link-badge">↗</span></a>
+          <a href="https://www.linkedin.com/in/nishant-tomer" target="_blank" class="ov-link"><span>LinkedIn</span><span class="ov-link-badge">↗</span></a>
+          <a href="mailto:nishant23355@iiitd.ac.in" class="ov-link"><span>Email</span><span class="ov-link-badge">↗</span></a>
+          <div class="ov-link" style="cursor:none;" onclick="go(document.querySelector('[data-p=projects]'))"><span>Projects (8)</span><span class="ov-link-badge">→</span></div>
+          <div class="ov-link" style="cursor:none;" onclick="go(document.querySelector('[data-p=certifications]'))"><span>Certifications (6)</span><span class="ov-link-badge">→</span></div>
+          <div class="ov-link" style="cursor:none;" onclick="go(document.querySelector('[data-p=academic]'))"><span>Academic Log</span><span class="ov-link-badge">→</span></div>
+          <div class="ov-link" style="cursor:none;" onclick="go(document.querySelector('[data-p=experience]'))"><span>Experience (2)</span><span class="ov-link-badge">→</span></div>
+          <div class="ov-link" style="cursor:none;" onclick="go(document.querySelector('[data-p=skills]'))"><span>Skills</span><span class="ov-link-badge">→</span></div>
         </div>
       </div>
     </div>
 
-    <!-- SECOND ROW: SKILLS QUICK VIEW + CURRENT FOCUS + ACTIVITY -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-top:1px solid var(--border);margin-top:1px;">
-      <!-- SKILLS QUICK -->
-      <div style="background:var(--bg);padding:16px;">
-        <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;">Top Skills</div>
+    <!-- RIGHT COLUMN: About + Stats + Buttons -->
+    <div class="ov-right">
+      <div class="ov-about">
+        <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:8px;margin-bottom:14px;">Personal OS · IIIT-Delhi · 2023–2027<span style="flex:1;height:1px;background:var(--acc);opacity:.3;display:block;"></span></div>
+        <div class="ov-big-name">Nishant<br><em>Tomer.</em></div>
+        <p class="ov-tagline">
+          B.Tech student at IIIT-Delhi (CSAM) building at the intersection of iOS development, AI/ML research, and systems programming. Currently researching clinical NLP pipelines, shipped a production iOS app at ModularityLabs, and consistently solving hard DSA problems. Interested in roles that challenge across the full stack.
+        </p>
+        <div class="ov-stats-row">
+          <div class="ov-stat"><span class="ov-sv">7.33</span><span class="ov-sl">CGPA</span></div>
+          <div class="ov-stat"><span class="ov-sv">350+</span><span class="ov-sl">DSA Solved</span></div>
+          <div class="ov-stat"><span class="ov-sv">1700+</span><span class="ov-sv" style="font-size:12px;color:var(--dim);font-family:var(--mono);font-weight:400;"> LeetCode Peak</span></div>
+          <div class="ov-stat"><span class="ov-sv">8</span><span class="ov-sl">Projects</span></div>
+          <div class="ov-stat"><span class="ov-sv">2</span><span class="ov-sl">Internships</span></div>
+        </div>
+        <div class="ov-btns">
+          <a href="mailto:nishant23355@iiitd.ac.in" class="btn btn-p">↗ Hire Me</a>
+          <button class="btn btn-g" onclick="go(document.querySelector('[data-p=projects]'))">Projects →</button>
+          <a href="https://github.com/Nishant7p" target="_blank" class="btn btn-g">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/nishant-tomer" target="_blank" class="btn btn-g">LinkedIn ↗</a>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="ov-skills">
+        <div class="ov-skills-label">Technical Skills</div>
         <div class="chips">
           <span class="chip hi">SwiftUI</span><span class="chip hi">Python</span><span class="chip hi">PyTorch</span>
           <span class="chip hi">Java</span><span class="chip hi">React</span><span class="chip hi">OpenAI Whisper</span>
-          <span class="chip">Firebase</span><span class="chip">CUDA</span><span class="chip">libGDX</span>
-          <span class="chip">Node.js</span><span class="chip">Supabase</span><span class="chip">Pyannote</span>
+          <span class="chip" style="border-color:rgba(68,136,255,.3);color:var(--blue);">Firebase</span>
+          <span class="chip" style="border-color:rgba(68,136,255,.3);color:var(--blue);">CUDA</span>
+          <span class="chip" style="border-color:rgba(68,136,255,.3);color:var(--blue);">Node.js</span>
+          <span class="chip" style="border-color:rgba(170,102,255,.3);color:var(--purple);">libGDX</span>
+          <span class="chip" style="border-color:rgba(170,102,255,.3);color:var(--purple);">Supabase</span>
+          <span class="chip" style="border-color:rgba(170,102,255,.3);color:var(--purple);">Pyannote</span>
+          <span class="chip">C++</span><span class="chip">SQL</span><span class="chip">Swift</span>
+          <span class="chip">Docker</span><span class="chip">FastAPI</span><span class="chip">Unreal Engine</span>
         </div>
       </div>
-      <!-- CURRENT FOCUS -->
-      <div style="background:var(--bg);padding:16px;">
-        <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;">Currently Working On</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="padding:9px;border:1px solid var(--border);background:var(--bg2);">
-            <div style="font-size:8.5px;color:var(--blue);margin-bottom:3px;">RESEARCH · ACTIVE</div>
-            <div style="font-size:11px;color:var(--text);font-family:var(--sans);font-weight:700;">AI Clinical Scribe</div>
-            <div style="font-size:9.5px;color:var(--dim);">NLP pipeline · SOAP Notes · ICD-10</div>
-          </div>
-          <div style="padding:9px;border:1px solid var(--border);background:var(--bg2);">
-            <div style="font-size:8.5px;color:var(--blue);margin-bottom:3px;">RESEARCH · ACTIVE</div>
-            <div style="font-size:11px;color:var(--text);font-family:var(--sans);font-weight:700;">Personalisation Engine</div>
-            <div style="font-size:9.5px;color:var(--dim);">Collaborative Filtering · Latent Factors</div>
-          </div>
-        </div>
-      </div>
-      <!-- QUICK TOOLS -->
-      <div style="background:var(--bg);padding:16px;">
-        <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;">Competitive Programming</div>
-        <div style="display:flex;flex-direction:column;gap:6px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border:1px solid var(--border);">
-            <span style="font-size:10px;color:var(--dim);">LeetCode Rating</span>
-            <span style="font-family:var(--sans);font-weight:800;color:var(--acc);font-size:13px;">1700+</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border:1px solid var(--border);">
-            <span style="font-size:10px;color:var(--dim);">Problems Solved</span>
-            <span style="font-family:var(--sans);font-weight:800;color:var(--text);font-size:13px;">350+</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border:1px solid var(--border);">
-            <span style="font-size:10px;color:var(--dim);">HackerRank</span>
-            <span style="font-family:var(--sans);font-weight:800;color:var(--amber);font-size:13px;">5★ × 3</span>
-          </div>
-        </div>
+
+      <!-- PAGE CARDS -->
+      <div class="ov-nav-cards">
+        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=projects]'))"><div class="onc-label">P-001 → P-008</div><div class="onc-title">Projects</div><div class="onc-sub">iOS apps, AI pipelines, game dev, full-stack marketplaces.</div><div class="onc-arr">↗</div></div>
+        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=academic]'))"><div class="onc-label">Sem I → VI · Courses</div><div class="onc-title">Academic Log</div><div class="onc-sub">Semester breakdown with course learnings and notes.</div><div class="onc-arr">↗</div></div>
+        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=certifications]'))"><div class="onc-label">6 verified certs</div><div class="onc-title">Certifications</div><div class="onc-sub">GPU Programming (JHU), Google DB, HackerRank, IIIT-D.</div><div class="onc-arr">↗</div></div>
+        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=experience]'))"><div class="onc-label">Jan 2025 – Present</div><div class="onc-title">Experience</div><div class="onc-sub">ModularityLabs iOS internship + clinical AI research.</div><div class="onc-arr">↗</div></div>
+        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=skills]'))"><div class="onc-label">6 domains</div><div class="onc-title">Skills</div><div class="onc-sub">Java, Python, Swift, CUDA, React, PyTorch, Firebase.</div><div class="onc-arr">↗</div></div>
+        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=contact]'))"><div class="onc-label">Response &lt;24h</div><div class="onc-title">Contact</div><div class="onc-sub">Open to internships, research, and open source projects.</div><div class="onc-arr">↗</div></div>
       </div>
     </div>
   </div>
 
-  <!-- QUICK NAVIGATE -->
-  <div class="sec" style="padding-top:20px;">
-    <div class="stag-line">Navigate</div>
-    <div class="qnav">
-      <div class="qcard" onclick="go(document.querySelector('[data-p=academic]'))"><div class="qnum">Sem I → V · Courses</div><div class="qtitle">Academic Log</div><div class="qsub">In-depth semester breakdown with course learnings, topics, and notes.</div><div class="qarr">↗</div></div>
-      <div class="qcard" onclick="go(document.querySelector('[data-p=projects]'))"><div class="qnum">P-001 → P-008</div><div class="qtitle">Projects</div><div class="qsub">iOS apps, AI pipelines, game dev, full-stack marketplaces and more.</div><div class="qarr">↗</div></div>
-      <div class="qcard" onclick="go(document.querySelector('[data-p=experience]'))"><div class="qnum">Jan 2025 – Present</div><div class="qtitle">Experience</div><div class="qsub">ModularityLabs iOS internship + AI Clinical Scribe research pipeline.</div><div class="qarr">↗</div></div>
-      <div class="qcard" onclick="go(document.querySelector('[data-p=certifications]'))"><div class="qnum">6 verified certs</div><div class="qtitle">Certifications</div><div class="qsub">GPU Programming (JHU), Google DB, HackerRank, IIIT-D and more.</div><div class="qarr">↗</div></div>
-      <div class="qcard" onclick="go(document.querySelector('[data-p=skills]'))"><div class="qnum">6 domains</div><div class="qtitle">Skills</div><div class="qsub">Java, Python, Swift, CUDA, React, PyTorch, Firebase, libGDX.</div><div class="qarr">↗</div></div>
-      <div class="qcard" onclick="go(document.querySelector('[data-p=contact]'))"><div class="qnum">Response &lt;24h</div><div class="qtitle">Contact</div><div class="qsub">Open to internships, research collaborations, and open source projects.</div><div class="qarr">↗</div></div>
+  <!-- KNOWLEDGE GRAPH -->
+  <div class="ov-kg">
+    <div class="kg-header">
+      <span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">Knowledge Graph</span>
+      <span style="font-size:8.5px;color:var(--muted);">Hover nodes to explore connections · <span style="color:var(--acc);">green</span>=core · <span style="color:var(--blue);">blue</span>=domain · <span style="color:var(--amber);">amber</span>=project · <span style="color:var(--purple);">purple</span>=course · <span style="color:var(--cyan);">cyan</span>=math</span>
+    </div>
+    <div class="kg-canvas" id="kgCanvas">
+      <svg id="kgsvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></svg>
     </div>
   </div>
 </div>
@@ -597,9 +543,9 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
         <div style="font-size:9.5px;color:var(--acc);margin-bottom:8px;">2023 — 2027 · Current</div>
         <div style="font-family:var(--sans);font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">Indraprastha Institute of Information Technology, Delhi</div>
         <div style="font-size:11px;color:var(--dim);margin-bottom:14px;">B.Tech · Computer Science &amp; Applied Mathematics (CSAM)</div>
-        <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--b2);font-size:11px;color:var(--dim);margin-bottom:16px;">CGPA <span style="color:var(--acc);font-weight:800;font-family:var(--sans);font-size:16px;">7.33</span> <span style="font-size:9.5px;color:var(--muted);">/ 10.0 · V Semesters</span></div>
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--b2);font-size:11px;color:var(--dim);margin-bottom:16px;">CGPA <span style="color:var(--acc);font-weight:800;font-family:var(--sans);font-size:16px;">7.33</span> <span style="font-size:9.5px;color:var(--muted);">/ 10.0 · V Semesters completed</span></div>
         <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Key Coursework</div>
-        <div class="chips"><span class="chip hi">DSA</span><span class="chip hi">Operating Systems</span><span class="chip hi">DBMS</span><span class="chip">OOP Design</span><span class="chip">Computer Architecture</span><span class="chip">Discrete Math</span><span class="chip">ML Foundations</span><span class="chip">Computer Networks</span><span class="chip">Linear Algebra</span><span class="chip">Probability & Statistics</span></div>
+        <div class="chips"><span class="chip hi">DSA</span><span class="chip hi">Operating Systems</span><span class="chip hi">DBMS</span><span class="chip">Advanced Programming</span><span class="chip">Computer Organisation</span><span class="chip">Discrete Structures</span><span class="chip">Theory of Computation</span><span class="chip">ADA</span><span class="chip">Real Analysis</span><span class="chip">Probability & Statistics</span><span class="chip">Stochastic Processes</span><span class="chip">Scientific Computing</span><span class="chip">Collaborative Filtering</span><span class="chip">Convex Optimization</span></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
         <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:6px;">2022 — 2023 · XII CBSE</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Sukriti World School, New Delhi</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">Central Board of Secondary Education</div><div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--b2);font-size:10px;color:var(--dim);">Percentage <span style="color:var(--acc);font-weight:700;font-family:var(--sans);">81%</span></div></div>
@@ -619,7 +565,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
       </div></div>
       <div class="card"><div style="font-size:8.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">Academic Stats</div><div class="g g2" style="gap:1px;background:var(--border);border:1px solid var(--border);">
         <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--acc);">7.33</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">CGPA</div></div>
-        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">V</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Semester</div></div>
+        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">VI</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Semester</div></div>
         <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">2027</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Graduation</div></div>
         <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">CSAM</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Branch</div></div>
       </div></div>
@@ -631,7 +577,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 <div class="page" id="page-academic">
   <div class="sec">
     <div class="stag-line">Semester-wise Knowledge Archive</div>
-    <div class="srow"><div><div class="sh">Academic Log</div><div class="ss">In-depth course breakdown — what I learned, key topics, and insights each semester</div></div></div>
+    <div class="srow"><div><div class="sh">Academic Log</div><div class="ss">Real IIIT-Delhi transcript — course breakdown with learnings, key topics, and outcomes each semester</div></div></div>
   </div>
   <div class="sem-tabs" id="semTabs">
     <button class="sem-tab on" data-sem="1" onclick="switchSem(this)">Semester I</button>
@@ -639,6 +585,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
     <button class="sem-tab" data-sem="3" onclick="switchSem(this)">Semester III</button>
     <button class="sem-tab" data-sem="4" onclick="switchSem(this)">Semester IV</button>
     <button class="sem-tab" data-sem="5" onclick="switchSem(this)">Semester V</button>
+    <button class="sem-tab" data-sem="6" onclick="switchSem(this)">Semester VI <span style="font-size:8px;color:var(--acc);">●</span></button>
   </div>
   <div id="semPanels"></div>
 </div>
@@ -669,8 +616,8 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
       </div>
       <div class="tli">
         <div class="tli-dot"></div>
-        <div class="tli-head"><div class="tli-role">AI Clinical Scribe — Research Project</div><div class="tli-period">Jan 2026 — Present</div></div>
-        <div class="tli-org">Multi-modal Speech & NLP Pipeline · Ongoing Research</div>
+        <div class="tli-head"><div class="tli-role">AI Clinical Scribe — BTP Research</div><div class="tli-period">Jan 2026 — Present</div></div>
+        <div class="tli-org">B.Tech Project (BTP499) · IIIT-Delhi · Multi-modal Speech & NLP</div>
         <ul class="tli-pts">
           <li>Architected a multi-modal AI pipeline using <strong style="color:var(--text);">OpenAI Whisper</strong> and <strong style="color:var(--text);">Pyannote.audio</strong> for automatic speech recognition and speaker diarization, transforming clinical dialogue into structured SOAP notes with <strong style="color:var(--acc);">90%+ accuracy</strong>.</li>
           <li>Engineered an automated <strong style="color:var(--text);">ICD-10 mapping module</strong> using NLP-based named entity recognition and classification to assign standardised diagnostic codes, ensuring regulatory medical compliance.</li>
@@ -680,8 +627,8 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
         </ul>
         <div class="chips" style="margin-top:10px;"><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip hi">NLP</span><span class="chip">ICD-10</span><span class="chip">SOAP Notes</span><span class="chip">Python</span><span class="chip">Speaker Diarization</span><span class="chip">NER</span></div>
         <div style="margin-top:14px;padding:12px;border:1px solid rgba(68,136,255,.2);background:rgba(68,136,255,.03);">
-          <div style="font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:3px;">Status</div>
-          <div style="font-size:10.5px;color:var(--dim);">Active development — architecture complete, clinical validation in progress. Target: academic publication.</div>
+          <div style="font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:3px;">Status · BTP499</div>
+          <div style="font-size:10.5px;color:var(--dim);">Active development — registered as BTP499 (B.Tech Project) Sem VI. Architecture complete, clinical validation in progress.</div>
         </div>
       </div>
     </div>
@@ -692,9 +639,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
     <div class="g g2 bord">
       <div onclick="window.open('https://i.ibb.co/sdD27ksT/Experience-Letter-Nishant-Tomer.png','_blank')" style="cursor:none;background:var(--bg);transition:background .15s;" class="card">
         <div style="height:160px;overflow:hidden;margin:-20px -20px 14px;border-bottom:1px solid var(--border);position:relative;background:var(--bg3);">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);">
-            <div style="text-align:center;"><div style="font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Experience Letter</div><div style="font-size:9px;color:var(--muted);margin-top:4px;">Click to view full document</div></div>
-          </div>
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);"><div style="text-align:center;"><div style="font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Experience Letter</div><div style="font-size:9px;color:var(--muted);margin-top:4px;">Click to view full document</div></div></div>
         </div>
         <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;">ModularityLabs · Jan–Jun 2025</div>
         <div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;">Letter of Experience</div>
@@ -703,9 +648,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
       </div>
       <div onclick="window.open('https://i.ibb.co/ZR4j2GMn/Letter-of-Recommendation-Nishant-Tomer.png','_blank')" style="cursor:none;background:var(--bg);transition:background .15s;" class="card">
         <div style="height:160px;overflow:hidden;margin:-20px -20px 14px;border-bottom:1px solid var(--border);position:relative;background:var(--bg3);">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);">
-            <div style="text-align:center;"><div style="font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Recommendation</div><div style="font-size:9px;color:var(--muted);margin-top:4px;">Click to view full document</div></div>
-          </div>
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);"><div style="text-align:center;"><div style="font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Recommendation</div><div style="font-size:9px;color:var(--muted);margin-top:4px;">Click to view full document</div></div></div>
         </div>
         <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;">ModularityLabs · Jun 2025</div>
         <div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;">Letter of Recommendation</div>
@@ -742,9 +685,9 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
     <div class="stag-line">Technical Stack</div>
     <div class="srow"><div><div class="sh">Skills</div><div class="ss">Technologies, tools, languages, and domain expertise</div></div></div>
     <div class="skills-wrap">
-      <div class="sg"><div class="sg-label">Expertise Domains</div><div class="chips"><span class="chip hi">Generative AI & NLP</span><span class="chip hi">iOS Development</span><span class="chip hi">Full-Stack Web</span><span class="chip hi">Game Development</span><span class="chip">DSA & Competitive Prog.</span><span class="chip">Operating Systems</span><span class="chip">Database Management</span><span class="chip">OOP Design Patterns</span><span class="chip">Computer Architecture</span><span class="chip">Parallel Computing</span></div></div>
+      <div class="sg"><div class="sg-label">Expertise Domains</div><div class="chips"><span class="chip hi">Generative AI & NLP</span><span class="chip hi">iOS Development</span><span class="chip hi">Full-Stack Web</span><span class="chip hi">Game Development</span><span class="chip">DSA & Competitive Prog.</span><span class="chip">Operating Systems</span><span class="chip">Database Management</span><span class="chip">OOP Design Patterns</span><span class="chip">Computer Architecture</span><span class="chip">Parallel Computing</span><span class="chip">Stochastic Processes</span><span class="chip">Convex Optimization</span></div></div>
       <div class="sg"><div class="sg-label">Programming Languages</div><div class="chips"><span class="chip hi">Java</span><span class="chip hi">Python</span><span class="chip hi">Swift</span><span class="chip hi">JavaScript</span><span class="chip">C++</span><span class="chip">SQL</span></div></div>
-      <div class="sg"><div class="sg-label">AI & Data Science</div><div class="chips"><span class="chip hi">PyTorch</span><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip">TensorFlow</span><span class="chip">NumPy</span><span class="chip">CUDA</span><span class="chip">Collaborative Filtering</span><span class="chip">Matrix Factorisation</span><span class="chip">Speaker Diarization</span><span class="chip">NER / NLP</span></div></div>
+      <div class="sg"><div class="sg-label">AI & Data Science</div><div class="chips"><span class="chip hi">PyTorch</span><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip">TensorFlow</span><span class="chip">NumPy</span><span class="chip">CUDA</span><span class="chip">Collaborative Filtering</span><span class="chip">Matrix Factorisation</span><span class="chip">Speaker Diarization</span><span class="chip">NER / NLP</span><span class="chip">Latent Factor Models</span></div></div>
       <div class="sg"><div class="sg-label">iOS / Mobile</div><div class="chips"><span class="chip hi">SwiftUI</span><span class="chip hi">Combine</span><span class="chip hi">Core Data</span><span class="chip">NSPersistentContainer</span><span class="chip">Firebase Auth</span><span class="chip">Firestore</span><span class="chip">MVVM</span><span class="chip">Offline-first</span></div></div>
       <div class="sg"><div class="sg-label">Web & Databases</div><div class="chips"><span class="chip hi">React</span><span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">PostgreSQL</span><span class="chip">Supabase</span><span class="chip">TanStack Query</span><span class="chip">JWT</span><span class="chip">FastAPI</span><span class="chip">REST APIs</span></div></div>
       <div class="sg"><div class="sg-label">Tools & Platforms</div><div class="chips"><span class="chip hi">Git</span><span class="chip">Docker</span><span class="chip">libGDX</span><span class="chip">Unreal Engine</span><span class="chip">PyQT5</span><span class="chip">Tkinter</span><span class="chip">Xcode</span><span class="chip">IntelliJ</span></div></div>
@@ -845,14 +788,6 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
             <div style="margin-top:7px;"><span class="tp_c">→ </span><span class="tcur"></span></div>
           </div>
         </div>
-        <div style="margin-top:12px;border:1px solid var(--border);padding:18px;background:var(--bg2);">
-          <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Looking For</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;align-items:start;gap:10px;padding:9px;border:1px solid var(--border);background:var(--bg);"><span style="color:var(--acc);font-size:12px;flex-shrink:0;">◈</span><div><div style="font-size:11.5px;font-family:var(--sans);font-weight:700;color:var(--text);margin-bottom:2px;">iOS / Mobile Engineering</div><div style="font-size:9.5px;color:var(--dim);">SwiftUI · complex architectures · production systems</div></div></div>
-            <div style="display:flex;align-items:start;gap:10px;padding:9px;border:1px solid var(--border);background:var(--bg);"><span style="color:var(--blue);font-size:12px;flex-shrink:0;">◈</span><div><div style="font-size:11.5px;font-family:var(--sans);font-weight:700;color:var(--text);margin-bottom:2px;">AI/ML Research</div><div style="font-size:9.5px;color:var(--dim);">NLP · speech systems · recommender systems</div></div></div>
-            <div style="display:flex;align-items:start;gap:10px;padding:9px;border:1px solid var(--border);background:var(--bg);"><span style="color:var(--purple);font-size:12px;flex-shrink:0;">◈</span><div><div style="font-size:11.5px;font-family:var(--sans);font-weight:700;color:var(--text);margin-bottom:2px;">Full-Stack Engineering</div><div style="font-size:9.5px;color:var(--dim);">React · Node.js · scalable backend systems</div></div></div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -872,33 +807,33 @@ const PROJECTS = [
    img:'https://i.postimg.cc/XqxcpK69/Screenshot-2025-07-24-at-9-55-43-AM.png',
    gallery:['https://i.postimg.cc/gjM8YY3D/Screenshot-2025-07-24-at-10-00-16-AM.png','https://i.postimg.cc/zXtFNkjr/Screenshot-2025-07-24-at-10-00-23-AM.png','https://i.postimg.cc/ZnJxb72T/Screenshot-2025-07-24-at-10-00-52-AM.png','https://i.postimg.cc/rm19LXhn/Screenshot-2025-07-24-at-10-01-49-AM.png','https://i.postimg.cc/7L73gryH/Screenshot-2025-07-24-at-9-55-52-AM.png','https://i.postimg.cc/W1d61JWJ/Screenshot-2025-07-24-at-9-56-18-AM.png','https://i.postimg.cc/4dgzP2Jz/Screenshot-2025-07-24-at-9-56-39-AM.png','https://i.postimg.cc/FRV0BbRw/Screenshot-2025-07-24-at-9-58-35-AM.png','https://i.postimg.cc/h400ynQh/Screenshot-2025-07-24-at-9-58-50-AM.png'],
    desc:'Industrial-grade modular iOS productivity app with sub-applications for meditation, habit tracking, and focus management. Deployed at ModularityLabs.',
-   points:['Engineered reactive UI using SwiftUI + Combine with NSPersistentContainer for offline data management across concurrent threads.','Architected secure Firebase Auth & Firestore backend for real-time cross-platform data parity and user authentication.','Built modular MVVM sub-apps (meditation, habit tracker, focus) with shared service layers and independent state management.','Implemented offline-first architecture ensuring full data integrity during network interruptions with automatic sync on reconnection.','Designed custom UI components, animations, and interaction patterns aligned with iOS HIG principles.','Collaborated in agile team of 3 — participated in code reviews, sprint planning, and documentation.','Received Letter of Experience and Letter of Recommendation upon completion.'],
+   points:['Engineered reactive UI using SwiftUI + Combine with NSPersistentContainer for offline data management across concurrent threads.','Architected secure Firebase Auth & Firestore backend for real-time cross-platform data parity and user authentication.','Built modular MVVM sub-apps (meditation, habit tracker, focus) with shared service layers and independent state management.','Implemented offline-first architecture ensuring full data integrity during network interruptions with automatic sync on reconnection.','Designed custom UI components, animations, and interaction patterns aligned with iOS HIG principles.','Collaborated in agile team of 3 — participated in code reviews, sprint planning, and documentation.'],
    stack:['SwiftUI','Firebase','Core Data','Combine','MVVM','NSPersistentContainer','Firestore','Agile'],
    type:'internship',typeLabel:'Internship',tags:'internship ios',
    links:[{l:'Experience Letter',u:'https://i.ibb.co/sdD27ksT/Experience-Letter-Nishant-Tomer.png'},{l:'Recommendation',u:'https://i.ibb.co/ZR4j2GMn/Letter-of-Recommendation-Nishant-Tomer.png'}]},
   {id:'P-002',year:'2026',title:'AI Clinical Scribe',
    img:'',gallery:[],
-   desc:'Multi-modal AI pipeline using OpenAI Whisper + Pyannote for Speaker Diarization — converts clinical dialogue to structured SOAP notes with 90%+ accuracy.',
-   points:['Architected multi-modal ASR + speaker diarization pipeline achieving 90%+ SOAP note generation accuracy.','Engineered automated ICD-10 mapping module via NLP-based Named Entity Recognition for regulatory compliance.','Built audio preprocessing pipeline: noise reduction, speaker separation, and multi-speaker transcription formatting.','Designed SOAP note template engine mapping clinical conversation segments to appropriate note sections.','Evaluated system using WER, SOAP completeness score, and ICD-10 mapping accuracy metrics.','Estimated 30–40% reduction in physician administrative workload through automated documentation.','Active research — targeting academic publication upon clinical validation completion.'],
+   desc:'Multi-modal AI pipeline (BTP499) using OpenAI Whisper + Pyannote for Speaker Diarization — converts clinical dialogue to structured SOAP notes with 90%+ accuracy.',
+   points:['Architected multi-modal ASR + speaker diarization pipeline achieving 90%+ SOAP note generation accuracy.','Engineered automated ICD-10 mapping module via NLP-based Named Entity Recognition for regulatory compliance.','Built audio preprocessing pipeline: noise reduction, speaker separation, and multi-speaker transcription formatting.','Designed SOAP note template engine mapping clinical conversation segments to appropriate note sections.','Evaluated system using WER, SOAP completeness score, and ICD-10 mapping accuracy metrics.','Estimated 30–40% reduction in physician administrative workload through automated documentation.'],
    stack:['OpenAI Whisper','Pyannote','NLP','ICD-10','Python','SOAP Notes','Speaker Diarization','NER'],
    type:'research',typeLabel:'Research',tags:'research ai',links:[]},
   {id:'P-003',year:'2026',title:'Personalisation Engine',
    img:'',gallery:[],
-   desc:'End-to-end recommender system using Latent Factor Models and Matrix Completion for predicting user preferences from sparse interaction data.',
+   desc:'End-to-end recommender system using Latent Factor Models and Matrix Completion (linked to CSE640 coursework) for predicting user preferences from sparse interaction data.',
    points:['Implemented Latent Factor Models and Matrix Completion for sparse user-item interaction datasets.','Engineered hybrid filtering combining neighbourhood-based collaborative and content-based methods.','Minimised bias prediction errors using regularised gradient descent optimisation on latent embeddings.','Evaluated using Precision@K, NDCG, and Recall@K as primary recommendation quality metrics.','Benchmarked against baseline popularity-based and item-item CF models showing measurable improvement.','Built data preprocessing pipeline handling missing values, cold-start users, and long-tail distributions.'],
    stack:['PyTorch','Collaborative Filtering','NumPy','Matrix Factorisation','Hybrid Filtering','Python'],
    type:'research',typeLabel:'Research',tags:'research ai',links:[]},
   {id:'P-004',year:'2025',title:'AgriLink Marketplace',
    img:'',gallery:[],
    desc:'Full-stack agricultural marketplace enabling direct farmer-to-buyer transactions with real-time analytics, secure auth, and inventory management.',
-   points:['Built full-stack marketplace with React frontend + Node.js/Express backend enabling direct farmer-to-buyer commerce.','Designed relational PostgreSQL schema for efficient inventory, order, and transaction management.','Built real-time analytics dashboard for farmers using TanStack Query for optimised data fetching and caching.','Integrated JWT + Supabase authentication with role-based access control for distinct buyer/farmer portals.','Implemented RESTful API with input validation, error handling, and rate limiting.','Removed agricultural supply chain intermediaries — directly connecting farmers with buyers, increasing farmer margins.','Deployed to production with environment-based config management and database migrations.'],
+   points:['Built full-stack marketplace with React frontend + Node.js/Express backend enabling direct farmer-to-buyer commerce.','Designed relational PostgreSQL schema for efficient inventory, order, and transaction management.','Built real-time analytics dashboard for farmers using TanStack Query for optimised data fetching and caching.','Integrated JWT + Supabase authentication with role-based access control for distinct buyer/farmer portals.','Implemented RESTful API with input validation, error handling, and rate limiting.'],
    stack:['React','Node.js','Express.js','Supabase','PostgreSQL','JWT','TanStack Query','REST API'],
    type:'personal',typeLabel:'Personal',tags:'personal fullstack',links:[]},
   {id:'P-005',year:'2024',title:'Angry Birds Clone — Horror',
    img:'https://i.postimg.cc/SR1BGYM8/Screenshot-2025-07-24-at-9-25-21-AM.png',
    gallery:['https://i.postimg.cc/bJgcsBYm/Screenshot-2025-07-24-at-9-25-52-AM.png','https://i.postimg.cc/SskbQh4X/Screenshot-2025-07-24-at-9-27-11-AM.png','https://i.postimg.cc/kG5r8vBq/Screenshot-2025-07-24-at-9-28-08-AM.png','https://i.postimg.cc/dQWcFpx1/Screenshot-2025-07-24-at-9-28-33-AM.png'],
-   desc:'Feature-rich 2D physics game with custom horror aesthetic. Unique bird abilities, diverse enemies, serialisable levels, and full UI system.',
-   points:['Architected custom 2D physics engine in Java using libGDX with rigid-body dynamics, impulse-based collision resolution, and projectile motion.','Designed diverse birds with unique abilities and enemy types with varied structural configurations and resistances.','Implemented serialisable level system using Java object serialisation — players resume from last checkpoint.','Built full UI system: animated start menu, in-game HUD, pause screen, level selector, and score display.','Created all game assets from scratch using Canva — custom horror-themed sprites, backgrounds, and UI elements.','Developed randomised level generation system for replayability with difficulty scaling.','Applied OOP principles — inheritance, polymorphism, interfaces — for clean game object hierarchy.'],
+   desc:'Feature-rich 2D physics game (CSE201/OOP + Game Dev course project) with custom horror aesthetic. Built in libGDX with unique bird abilities, diverse enemies, serialisable levels, and full UI system.',
+   points:['Architected custom 2D physics engine in Java using libGDX with rigid-body dynamics, impulse-based collision resolution, and projectile motion.','Designed diverse birds with unique abilities and enemy types with varied structural configurations and resistances.','Implemented serialisable level system using Java object serialisation — players resume from last checkpoint.','Built full UI system: animated start menu, in-game HUD, pause screen, level selector, and score display.','Created all game assets from scratch using Canva — custom horror-themed sprites, backgrounds, and UI elements.','Applied OOP principles — inheritance, polymorphism, interfaces — for clean game object hierarchy.'],
    stack:['Java','libGDX','Physics Engine','OOP','Game Design','Serialisation','Canva'],
    type:'academic',typeLabel:'Academic',tags:'academic game',
    links:[{l:'Watch Gameplay ↗',u:'https://youtu.be/1h-ZgEZ_d2w'}]},
@@ -906,27 +841,26 @@ const PROJECTS = [
    img:'https://i.postimg.cc/VNBS75YG/Screenshot-2025-07-29-at-7-22-52-PM.png',
    gallery:['https://i.postimg.cc/QCMWKsZ6/n.png','https://i.postimg.cc/W4PF60Pq/Screenshot-2025-07-29-at-7-23-17-PM.png','https://i.postimg.cc/3JdvKKBN/Screenshot-2025-07-29-at-7-23-58-PM.png','https://i.postimg.cc/BnFPKMRG/Screenshot-2025-07-29-at-7-24-36-PM.png'],
    desc:'Multi-mode geography guessing game with 6+ modes including Deathmatch, Informative, Flag Guesser, Capital Quiz, and location challenges.',
-   points:['Designed 6+ distinct game modes: Deathmatch, Informative, Flag Guesser, Capital Quiz, Country Outline, and Continent Sorter.','Built with Tkinter — responsive UI with smooth screen transitions, difficulty progression, and score tracking.','Populated geography database covering 195 countries with flags (SVG), capitals, coordinates, and continent metadata.','Implemented timer system, lives/health mechanics, and high-score persistence using local file storage.','Designed custom pixel-art flag renderer and country outline silhouette system.','Applied event-driven programming with clean MVC separation for game state management.'],
+   points:['Designed 6+ distinct game modes: Deathmatch, Informative, Flag Guesser, Capital Quiz, Country Outline, and Continent Sorter.','Built with Tkinter — responsive UI with smooth screen transitions, difficulty progression, and score tracking.','Populated geography database covering 195 countries with flags (SVG), capitals, coordinates, and continent metadata.','Implemented timer system, lives/health mechanics, and high-score persistence using local file storage.','Applied event-driven programming with clean MVC separation for game state management.'],
    stack:['Python','Tkinter','OOP','Game Design','CSV','File I/O'],
    type:'personal',typeLabel:'Personal',tags:'personal game',links:[]},
   {id:'P-007',year:'2024',title:'3D Escape Room (Unreal)',
    img:'',gallery:[],
    desc:'3D single-level escape puzzle game built in Unreal Engine. Interactive light-based puzzle hints, custom inventory UI, and immersive 3D environment.',
-   points:['Designed interactive 3D environment with light-based puzzle mechanics, hidden objects, and environmental storytelling.','Built custom C++ inventory system with Blueprint UI — drag-and-drop item management and item combination logic.','Implemented dynamic lighting system where light changes hint at puzzle solutions and guide player exploration.','Created audio-visual atmosphere using ambient sound design, particle effects, and post-processing for horror aesthetic.','Designed complete game loop: spawn, explore, gather items, solve puzzles, combine items, and trigger escape sequence.','Managed performance with LOD system and occlusion culling for smooth framerate in complex 3D environment.'],
+   points:['Designed interactive 3D environment with light-based puzzle mechanics, hidden objects, and environmental storytelling.','Built custom C++ inventory system with Blueprint UI — drag-and-drop item management and item combination logic.','Implemented dynamic lighting system where light changes hint at puzzle solutions and guide player exploration.','Created audio-visual atmosphere using ambient sound design, particle effects, and post-processing for horror aesthetic.','Designed complete game loop: spawn, explore, gather items, solve puzzles, combine items, and trigger escape sequence.'],
    stack:['Unreal Engine','C++','Blueprints','3D Level Design','Game Design','Audio Design'],
    type:'academic',typeLabel:'Academic',tags:'academic game',links:[]},
   {id:'P-008',year:'2024',title:'Assembler & Simulator',
    img:'',gallery:[],
-   desc:'Two-pass assembler converting custom ISA assembly language into binary machine code, paired with a simulator executing code and displaying system state.',
-   points:['Designed custom Instruction Set Architecture (ISA) with arithmetic, logical, memory, and branch instruction categories.','Implemented two-pass assembler: Pass 1 builds symbol table and resolves labels; Pass 2 generates binary machine code.','Built simulator that executes generated machine code, displaying register values, memory state, and instruction pipeline.','Supported labels, directives (.data, .text), pseudo-instructions, and relative branch addressing.','Added debugging mode with step-by-step execution, breakpoints, and register/memory watchpoints.','Visualised register file, memory map, and instruction decode pipeline in the terminal output.'],
+   desc:'Two-pass assembler (CSE112 Computer Organisation project) converting custom ISA assembly language into binary machine code, paired with a simulator executing code and displaying system state.',
+   points:['Designed custom Instruction Set Architecture (ISA) with arithmetic, logical, memory, and branch instruction categories.','Implemented two-pass assembler: Pass 1 builds symbol table and resolves labels; Pass 2 generates binary machine code.','Built simulator that executes generated machine code, displaying register values, memory state, and instruction pipeline.','Supported labels, directives (.data, .text), pseudo-instructions, and relative branch addressing.','Added debugging mode with step-by-step execution, breakpoints, and register/memory watchpoints.'],
    stack:['Python','Computer Architecture','ISA Design','Assembler Design','Systems Programming'],
    type:'academic',typeLabel:'Academic',tags:'academic',links:[]}
 ];
 
 const CERTS = [
   {name:'GPU Programming Specialisation',issuer:'Johns Hopkins University',
-   img:'https://i.postimg.cc/9MFdZ5d0/Coursera-YMHWXFVFZPSB.png',
-   fallback:'GPU Programming · JHU',
+   img:'https://i.postimg.cc/9MFdZ5d0/Coursera-YMHWXFVFZPSB.png',fallback:'GPU Programming · JHU',
    desc:'4-course specialisation covering CUDA parallel computing, cuDNN for deep learning, memory optimisation, and GPU performance tuning.',
    verify:'https://ibb.co/3yWDMZwH',
    subs:[
@@ -957,186 +891,294 @@ const CERTS = [
    verify:'#',subs:[]}
 ];
 
+// =================== REAL SEMESTERS DATA (from Campus Labs transcript) ===================
 const SEMESTERS = [
-  {n:1,period:'Aug 2023 – Dec 2023',credits:20,courses:[
-    {code:'CSE101',name:'Introduction to Programming',grade:'B',
-     desc:'Foundation course in programming using C and Python. Covered fundamental concepts including variables, control flow, functions, arrays, pointers, and basic data structures.',
-     topics:['Variables, data types, operators','Control flow: if/else, loops','Functions and recursion','Arrays and pointers','Basic file I/O','Introduction to Python'],
-     learnings:['Built first programs from scratch in C','Understood memory allocation and pointer arithmetic','Learned algorithmic thinking and problem decomposition','Solved 50+ practice problems on HackerRank during this period'],
-     outcomes:['Wrote a text-based banking system in C','Built simple Python scripts for data processing']},
-    {code:'MTH100',name:'Discrete Mathematics',grade:'B+',
-     desc:'Mathematical foundations for computer science: logic, sets, relations, functions, graph theory, and combinatorics.',
-     topics:['Propositional and predicate logic','Set theory and relations','Mathematical induction','Graph theory basics','Combinatorics and probability','Number theory'],
-     learnings:['Understood formal proof techniques and mathematical reasoning','Saw how graph theory directly maps to CS problems','Built intuition for combinatorial problem solving'],
-     outcomes:['Applied combinatorics to algorithm analysis','Used graph theory foundations in later DSA course']},
-    {code:'PHY101',name:'Physics for Engineers',grade:'B',
-     desc:'Classical mechanics, waves, and thermodynamics fundamentals essential for understanding hardware and system behaviour.',
-     topics:['Classical mechanics','Waves and oscillations','Thermodynamics','Electrostatics basics'],
-     learnings:['Physical intuition that later helped in game physics implementation','Understanding of hardware constraints from first principles'],
-     outcomes:['Applied physics concepts while building Angry Birds physics engine in Semester III']},
-    {code:'HUM101',name:'Communication Skills',grade:'A',
-     desc:'Technical and professional communication, writing reports, presentations, and effective documentation.',
-     topics:['Technical report writing','Presentation skills','Professional email communication','Documentation best practices'],
-     learnings:['Improved ability to document code and projects professionally','Learned to write clear technical reports — directly used in internship documentation'],
-     outcomes:['Applied skills to write technical documentation at ModularityLabs']}
+  {n:1,period:'Aug 2023 – Dec 2023',sgpa:'6.00',cgpa:'6.00',credits:20,courses:[
+    {code:'COM101',name:'Communication Skills',grade:'B-',gp:7,
+     desc:'Technical and professional communication — the first course at IIIT-D. Covered report writing, presentation design, email etiquette, and professional documentation skills.',
+     topics:['Technical report writing','Presentation design and delivery','Professional email and communication','Documentation best practices','Abstract writing','Peer feedback and critique'],
+     learnings:['Writing clearly and concisely became a habit that helped in all later documentation','Presentation confidence built here carried into internship demos at ModularityLabs','Learned to structure technical arguments — still use this for README writing and research writeups'],
+     outcomes:['Applied documentation skills directly at ModularityLabs for internal sprint notes','Structured the AI Clinical Scribe research writeup methodology using report frameworks from this course']},
+    {code:'CSE101',name:'Introduction to Programming',grade:'C',gp:6,
+     desc:'Foundation course introducing programming from scratch using C. Covered imperative programming, memory model, control flow, functions, arrays, and pointers. The starting point for everything.',
+     topics:['Variables, data types, operators','if/else, loops, switch','Functions and recursion','Arrays, strings, 2D arrays','Pointers and pointer arithmetic','Memory allocation (malloc/free)','Basic file I/O in C'],
+     learnings:['Struggled initially but the pointer and memory model in C built a deep systems intuition','Recursion clicked here and became a major tool in DSA later','This is where I first wrote code that actually ran — the moment that sparked everything'],
+     outcomes:['Memory management understanding from C carried into Core Data threading at ModularityLabs','Recursive thinking applied extensively in graph algorithms and dynamic programming later']},
+    {code:'DES102',name:'Introduction to HCI',grade:'C',gp:6,
+     desc:'Human-Computer Interaction fundamentals — user research, usability testing, interface design principles, and the psychology behind good UX.',
+     topics:['User-centered design process','Usability heuristics (Nielsen\'s 10)','Prototyping: low-fi and hi-fi','User research and interviews','Accessibility principles','Information architecture'],
+     learnings:['HCI principles directly shaped how I think about UI in SwiftUI — iOS HIG is basically applied HCI','Understanding cognitive load and affordances made me a better iOS developer','Accessibility awareness from this course shaped how I designed the productivity app at ModularityLabs'],
+     outcomes:['Applied iOS HIG principles (learned here) while building the ModularityLabs productivity app','Designed intuitive onboarding flows in SwiftUI using user-centered design methodology']},
+    {code:'ECE111',name:'Digital Circuits',grade:'A-',gp:9,
+     desc:'Boolean algebra, combinational and sequential circuits, logic gates, flip-flops, registers, and finite state machines. Best grade of Semester 1.',
+     topics:['Boolean algebra and logic gates','Combinational circuits: mux, decoder, adder','Sequential circuits: flip-flops, latches','Registers and counters','Finite State Machines (FSM)','Karnaugh maps and minimisation'],
+     learnings:['FSM design here directly connects to state machine patterns used in game development and iOS app state management','Understanding hardware gates gave physical intuition for what compilers do','The satisfaction of a circuit simulation working perfectly first try is unmatched'],
+     outcomes:['FSM concepts applied to game state machine in Angry Birds Clone','State management in iOS apps (Combine publishers) feels intuitive with this foundation']},
+    {code:'MTH100',name:'Maths I (Calculus)',grade:'F',gp:2,
+     desc:'First IIIT-D Calculus course covering limits, derivatives, integrals, multivariable calculus, and vector calculus. Failed — retook and passed in Semester III.',
+     topics:['Limits and continuity','Derivatives and differentiation rules','Integrals and integration techniques','Multivariable calculus','Partial derivatives','Vector calculus basics'],
+     learnings:['Failing this course was difficult but taught resilience — came back stronger in Semester III and passed with B','The retake built genuine understanding rather than surface-level knowledge','Calculus underpins gradient descent in ML — later courses made the failure feel meaningful'],
+     outcomes:['Retook MTH100 in Sem III, passed with B','Calculus foundation from the retake directly applied to understanding gradient descent in ML and numerical methods']}
   ]},
-  {n:2,period:'Jan 2024 – May 2024',credits:22,courses:[
-    {code:'CSE201',name:'Data Structures & Algorithms',grade:'B+',
-     desc:'Core data structures (arrays, linked lists, trees, graphs, heaps) and fundamental algorithms (sorting, searching, dynamic programming, greedy).',
-     topics:['Arrays, linked lists, stacks, queues','Trees: BST, AVL, segment trees','Graph algorithms: BFS, DFS, Dijkstra, MST','Sorting: mergesort, quicksort, heapsort','Dynamic programming','Greedy algorithms','Complexity analysis: Big-O, Big-Ω'],
-     learnings:['This course fundamentally changed how I think about problem solving — everything is a graph or a DP','Understood trade-offs between time and space complexity','Started competitive programming on LeetCode during this semester — crossed 100 problems'],
-     outcomes:['LeetCode rating grew to 1400+ during this period','Applied graph algorithms in AI project for building knowledge graphs','Used DP in game level generation algorithms']},
-    {code:'CSE202',name:'Object-Oriented Programming',grade:'B+',
-     desc:'Deep dive into OOP paradigm using Java: classes, inheritance, polymorphism, interfaces, abstract classes, design patterns.',
-     topics:['Classes, objects, constructors','Inheritance and polymorphism','Abstract classes and interfaces','Java Collections Framework','Exception handling','Basic design patterns: Factory, Singleton, Observer','Generics and lambdas'],
-     learnings:['Java became my primary language after this course','Design patterns directly applied in libGDX game development','Collections framework used extensively in all subsequent projects'],
-     outcomes:['Built class hierarchy for Angry Birds game using OOP principles','Applied Factory pattern for game object creation','Used Observer pattern for event handling in UI']},
-    {code:'MTH201',name:'Linear Algebra',grade:'B',
-     desc:'Vectors, matrices, linear transformations, eigenvalues, and their applications in CS — particularly ML and graphics.',
-     topics:['Vectors and vector spaces','Matrix operations','Linear transformations','Eigenvalues and eigenvectors','SVD and PCA','Applications in ML and graphics'],
-     learnings:['Eigendecomposition is the mathematical backbone of PCA and many ML algorithms','Matrix transformations directly apply to 3D game graphics and neural networks','SVD is the foundation of my Collaborative Filtering recommender system'],
-     outcomes:['Used SVD understanding in matrix factorisation for personalisation engine','Applied transformation matrices in Unreal Engine 3D game project']},
-    {code:'CSE203',name:'Computer Organisation & Architecture',grade:'B',
-     desc:'How computers work at the hardware level: ALU, memory hierarchy, instruction set architecture, pipelining.',
-     topics:['ALU design and binary arithmetic','Memory hierarchy: cache, RAM, virtual memory','Instruction Set Architecture (ISA)','Pipelining and hazards','I/O systems','Assembly language basics'],
-     learnings:['Finally understood why cache misses matter for performance','ISA knowledge directly motivated the Assembler & Simulator project','Pipelining understanding essential for CUDA GPU programming later'],
-     outcomes:['Built the Assembler & Simulator project based on this course','Applied memory hierarchy knowledge in CUDA performance optimisation']}
+  {n:2,period:'Jan 2024 – May 2024',sgpa:'6.80',cgpa:'6.89',credits:20,courses:[
+    {code:'CSE102',name:'Data Structures & Algorithms',grade:'C',gp:6,
+     desc:'Core DSA course — the backbone of software engineering. Arrays, linked lists, trees, graphs, sorting algorithms, and basic dynamic programming.',
+     topics:['Arrays, linked lists, stacks, queues','Binary trees and BSTs','Graph representation: adjacency list/matrix','BFS and DFS traversal','Sorting: mergesort, quicksort, heapsort','Hash tables and collision resolution','Basic dynamic programming'],
+     learnings:['This course planted the DSA seed that grew into 350+ LeetCode problems and 1700+ rating','BFS/DFS are everywhere — used them in game pathfinding, knowledge graph traversal, and network analysis','Hash tables are underappreciated — O(1) lookups power so many real systems'],
+     outcomes:['Started consistent LeetCode practice during this semester','Graph BFS/DFS applied in AgriLink for recommendation ranking and in the personalisation engine']},
+    {code:'CSE112',name:'Computer Organisation',grade:'B',gp:8,
+     desc:'How computers actually work: ALU design, memory hierarchy, instruction sets, and the fetch-decode-execute cycle. Foundation for the Assembler & Simulator project.',
+     topics:['Binary arithmetic and ALU design','Memory hierarchy: registers, cache, RAM','Instruction Set Architecture (ISA)','Fetch-decode-execute cycle','Basic assembly language','I/O systems and interrupts','Performance metrics: CPI, IPC'],
+     learnings:['Understanding the ISA directly motivated building the Assembler & Simulator project','Cache hierarchy intuition is essential for writing high-performance code — critical for CUDA later','This is where hardware and software stopped feeling separate'],
+     outcomes:['Built the Assembler & Simulator (P-008) directly inspired by ISA design from this course','Applied memory hierarchy knowledge in CUDA GPU programming and cache optimisation techniques'],
+     starNote:'Directly inspired the Assembler & Simulator project (P-008)'},
+    {code:'ECE113',name:'Basic Electronics',grade:'C',gp:6,
+     desc:'Electronic components, circuits, diodes, transistors, op-amps, and signal processing fundamentals. Open elective outside the CS core.',
+     topics:['Passive components: resistors, capacitors, inductors','Diodes and rectification','Transistors: BJT and MOSFET basics','Op-amp circuits','Signal filtering','Basic PCB concepts'],
+     learnings:['Understanding electronics grounded the sensor work done in CyFuse club','Transistors as switches connect directly to logic gate understanding from ECE111','Gave appreciation for the physical layer beneath all software'],
+     outcomes:['Applied electronics knowledge in CyFuse club hardware-software integration projects','Broader appreciation for embedded systems that carries into IoT-adjacent tech understanding']},
+    {code:'ECO223',name:'Money and Banking',grade:'B-',gp:7,
+     desc:'Macroeconomic concepts: monetary policy, banking systems, interest rates, inflation, and central bank functions. Open elective.',
+     topics:['Monetary policy and money supply','Banking system structure','Interest rates and bond pricing','Inflation and deflation','Central bank operations','Financial markets overview'],
+     learnings:['Economic thinking about market design influenced AgriLink — removing intermediaries is a supply chain efficiency problem','Pricing strategy and market clearing concepts useful for marketplace product design'],
+     outcomes:['Economic efficiency principles applied to the AgriLink agricultural marketplace design']},
+    {code:'MTH201',name:'Probability & Statistics',grade:'B-',gp:7,
+     desc:'Probability distributions, statistical inference, hypothesis testing, and regression. Critical foundation for ML and data science — applies across almost every technical project.',
+     topics:['Probability theory and Bayes theorem','Random variables and distributions (Normal, Poisson, Binomial)','Expectation and variance','Central Limit Theorem','Hypothesis testing (t-test, chi-squared)','Confidence intervals','Linear regression'],
+     learnings:['Bayesian thinking is the foundation of ML — prior, likelihood, posterior','The CLT is why neural network weight initialisation works the way it does','Statistical evaluation frameworks used to measure AI Clinical Scribe accuracy'],
+     outcomes:['Applied hypothesis testing to evaluate WER and SOAP completeness metrics in the clinical AI pipeline','Regression foundations used in personalisation engine baseline models','Probability used in randomised level generation in Angry Birds clone']}
   ]},
-  {n:3,period:'Aug 2024 – Dec 2024',credits:22,courses:[
-    {code:'CSE301',name:'Operating Systems',grade:'B+',
-     desc:'Process management, memory management, file systems, concurrency, synchronisation, and OS design principles.',
-     topics:['Process lifecycle and scheduling','Threads and concurrency','Mutex, semaphores, monitors','Memory management: paging, segmentation','Virtual memory and page replacement','File system design','Deadlock detection and prevention'],
-     learnings:['Concurrency bugs are some of the hardest to debug — understood race conditions deeply','Process scheduling algorithms directly apply to understanding system performance','NSPersistentContainer thread management at ModularityLabs required solid OS concurrency knowledge'],
-     outcomes:['Applied concurrency knowledge when managing Core Data contexts in iOS internship','Used scheduling concepts to optimise background sync in productivity app']},
-    {code:'CSE302',name:'Game Development (Java + libGDX)',grade:'A',
-     desc:'Applied game development course using Java and libGDX framework — physics, graphics, game architecture.',
-     topics:['Game loops and delta time','2D physics: rigid bodies, collision detection','Sprite animation and rendering','Audio system design','Level design and serialisation','Input handling','Performance profiling'],
-     learnings:['Implementing physics from scratch is incredibly instructive — no black boxes','Game state management patterns (GameScreen, GameState) translate directly to mobile app architecture','libGDX is a real professional framework — learned industry-grade game development'],
-     outcomes:['Delivered Angry Birds Clone with custom physics engine and serialisable levels','Gained confidence in complex Java project architecture with 10,000+ lines of code']},
-    {code:'MTH301',name:'Probability & Statistics',grade:'B',
-     desc:'Probability theory, distributions, statistical inference, hypothesis testing — foundations for ML and data science.',
-     topics:['Probability theory and Bayes theorem','Random variables and distributions','Central Limit Theorem','Hypothesis testing','Regression analysis','MLE and MAP estimation'],
-     learnings:['Bayesian thinking is essential for ML — prior, likelihood, posterior','Statistical intuition needed for evaluating ML models properly','Hypothesis testing framework used to evaluate clinical AI pipeline performance metrics'],
-     outcomes:['Applied statistical evaluation for AI Clinical Scribe accuracy measurement','Used regression foundations in personalisation engine baseline models']},
-    {code:'CSE303',name:'Database Management Systems',grade:'B+',
-     desc:'Relational model, SQL, query optimisation, transaction management, ACID properties, normalisation.',
-     topics:['Relational model and SQL','ER diagrams and schema design','Joins, aggregations, subqueries','Indexing and query optimisation','Transaction management and ACID','Normalisation (1NF, 2NF, 3NF, BCNF)','NoSQL concepts'],
-     learnings:['Normalisation prevents data anomalies — critical for the AgriLink marketplace schema design','Index selection dramatically impacts query performance','Supabase and PostgreSQL clicked much faster having taken this course'],
-     outcomes:['Designed normalised PostgreSQL schema for AgriLink agricultural marketplace','Applied query optimisation knowledge for efficient TanStack Query cache strategies']}
+  {n:3,period:'Aug 2024 – Dec 2024',sgpa:'7.60',cgpa:'7.14',credits:20,courses:[
+    {code:'CSE201',name:'Advanced Programming (OOP)',grade:'B',gp:8,
+     desc:'Deep dive into Object-Oriented Programming using Java. Classes, inheritance, polymorphism, interfaces, design patterns, and the Java Collections Framework. Semester of the Angry Birds project.',
+     topics:['Classes, objects, constructors, destructors','Inheritance and polymorphism','Abstract classes and interfaces','Java Collections: List, Map, Set, Queue','Exception handling and custom exceptions','Design patterns: Factory, Observer, Singleton, Strategy','Generics and lambdas','Serialisation in Java'],
+     learnings:['Java became my primary language here — the OOP foundation let me write 10,000+ lines cleanly for the Angry Birds game','Factory pattern is everywhere once you see it — used it for game object spawning, then again in iOS factory methods','Serialisation for persistent level state in the game was a practical deep dive into Java object model'],
+     outcomes:['Built Angry Birds Clone (P-005) with custom OOP hierarchy for birds, enemies, physics objects','Applied Observer pattern for game event system and UI state updates','Serialisable level system directly uses Java serialisation from this course'],
+     starNote:'Angry Birds Clone (P-005) built concurrently — OOP theory applied in real time'},
+    {code:'CSE231',name:'Operating Systems',grade:'B-',gp:7,
+     desc:'How the OS manages resources: process scheduling, memory management, file systems, concurrency, and inter-process communication.',
+     topics:['Process lifecycle: creation, scheduling, termination','Threads and multithreading','Synchronisation: mutex, semaphores, monitors','Memory management: paging, segmentation, TLB','Virtual memory and page replacement algorithms','File system design (FAT, ext)','Deadlock: detection, prevention, avoidance'],
+     learnings:['Race conditions and concurrency bugs are the hardest to debug — understanding them deeply changed how I write multi-threaded code','NSPersistentContainer threading at ModularityLabs required solid OS concurrency knowledge to avoid race conditions on Core Data contexts','Page replacement algorithms are the same kind of caching logic used in TanStack Query\'s cache invalidation'],
+     outcomes:['Applied OS concurrency knowledge to Core Data context management on background threads at ModularityLabs','Used scheduling intuition to design background sync architecture in the iOS productivity app']},
+    {code:'MTH100',name:'Maths I — Retake (Calculus)',grade:'B',gp:8,
+     desc:'Retook MTH100 after failing in Semester I. Successfully passed with B. Proper understanding of calculus built this time — derivatives, integrals, multivariable calculus.',
+     topics:['Limits and continuity (revisited)','Derivative rules: chain, product, quotient','Integral techniques: substitution, parts, partial fractions','Improper integrals','Multivariable calculus: partial derivatives, gradient','Taylor series'],
+     learnings:['Second time through, the gradient became deeply intuitive — it\'s the direction of steepest ascent, which is exactly what gradient descent inverts','Taylor series underpins how numerical methods approximate functions — connected well to Numerical Methods in Sem V','The resilience of coming back and passing a course you failed built real academic confidence'],
+     outcomes:['Gradient understanding from here directly feeds into gradient descent in the personalisation engine and ML training','Taylor series applied in Scientific Computing (MTH373 Sem V) and Numerical Methods understanding']},
+    {code:'MTH210',name:'Discrete Structures',grade:'B',gp:8,
+     desc:'Mathematical foundations of computer science: logic, set theory, graph theory, combinatorics, and formal proof techniques.',
+     topics:['Propositional and predicate logic','Set theory, relations, functions','Mathematical induction and strong induction','Graph theory: paths, trees, connectivity','Pigeonhole principle','Combinatorics: permutations, combinations','Recurrence relations'],
+     learnings:['Graph theory from here is the mathematical backbone of algorithms — BFS, DFS, Dijkstra are all just graph problems','Induction proofs are the same structure as recursive algorithms — once you see this, both become clearer','Recurrence relations are how you analyse divide-and-conquer algorithm complexity'],
+     outcomes:['Graph theory directly applied in DSA courses and competitive programming','Formal logic reasoning applied in Theory of Computation (CSE322) and Mathematical Logic (MTH300)']},
+    {code:'MTH240',name:'Real Analysis I',grade:'B-',gp:7,
+     desc:'Rigorous mathematical analysis: sequences, series, continuity, differentiability, and the Riemann integral. The hardest math course in the CSAM curriculum.',
+     topics:['Sequences and series convergence','Cauchy sequences','Limits and continuity (epsilon-delta)','Differentiability and mean value theorem','Riemann integration','Uniform convergence','Metric spaces introduction'],
+     learnings:['Real Analysis built mathematical maturity — learning to write formal proofs rather than just compute','Epsilon-delta definitions are the foundation of numerical precision that shows up in floating-point arithmetic','Uniform convergence connects to convergence of ML optimisation algorithms']}
   ]},
-  {n:4,period:'Jan 2025 – May 2025',credits:22,courses:[
-    {code:'CSE401',name:'iOS App Development (SwiftUI)',grade:'A',
-     desc:'Swift programming language, SwiftUI framework, iOS architecture patterns, data persistence, and production app development.',
-     topics:['Swift language fundamentals','SwiftUI declarative UI','Combine reactive framework','Core Data & NSPersistentContainer','Firebase integration','MVVM architecture pattern','App Store deployment process'],
-     learnings:['SwiftUI\'s declarative paradigm is fundamentally different from imperative UI — required mental model shift','Combine reactive streams are powerful once understood — similar to RxJava but more native','MVVM + Combine is the gold standard for iOS architecture — applied directly at ModularityLabs'],
-     outcomes:['Built iOS Productivity App during concurrent internship at ModularityLabs','Received Letter of Recommendation citing SwiftUI expertise'],starNote:'Concurrent with ModularityLabs internship — theory and practice perfectly aligned'},
-    {code:'CSE402',name:'Machine Learning Foundations',grade:'B+',
-     desc:'Supervised and unsupervised learning, model evaluation, neural networks, and practical ML engineering.',
-     topics:['Linear/logistic regression','Decision trees and ensemble methods','K-means and hierarchical clustering','Neural network basics and backpropagation','Gradient descent and optimisers','Overfitting, regularisation, cross-validation','Feature engineering and selection'],
-     learnings:['Gradient descent is everywhere — once you understand it, all of ML makes sense','Regularisation (L1/L2) is essential for preventing overfitting in sparse data settings like recommendation systems','Neural network backpropagation clicked — the math finally made sense'],
-     outcomes:['Applied supervised learning to build baseline models for personalisation engine','Used gradient descent optimisation in matrix factorisation recommender system']},
-    {code:'CSE403',name:'Computer Networks',grade:'B',
-     desc:'Network architecture, protocols, TCP/IP stack, security, and distributed systems fundamentals.',
-     topics:['OSI and TCP/IP models','DNS, HTTP/HTTPS','Transport layer: TCP, UDP','Network security basics','REST API design principles','WebSocket and real-time communication'],
-     learnings:['HTTP is the backbone of everything we build — understanding it deeply demystified API design','TCP vs UDP trade-offs directly apply to real-time features like Firebase Firestore sync','REST API design principles applied in AgriLink marketplace backend'],
-     outcomes:['Designed RESTful API for AgriLink with proper HTTP semantics','Applied networking knowledge to optimise Firebase real-time sync in iOS app']},
-    {code:'CSE404',name:'Software Engineering',grade:'B+',
-     desc:'Software development lifecycle, design patterns, testing, version control, agile methodology, and professional engineering practices.',
-     topics:['SDLC and agile methodology','UML diagrams and system design','Design patterns: Factory, Observer, Strategy, Decorator','Unit testing and TDD','Git workflows and CI/CD basics','Code review practices','Technical documentation'],
-     learnings:['Design patterns are solutions to recurring problems — having a vocabulary for them makes team communication much cleaner','TDD builds confidence in refactoring — used at ModularityLabs for service layer testing','Agile sprints mirrored exactly what I experienced at the internship'],
-     outcomes:['Applied agile sprint methodology at ModularityLabs internship','Used Git branching strategies for collaborative iOS development']}
+  {n:4,period:'Jan 2025 – May 2025',sgpa:'7.40',cgpa:'7.21',credits:20,courses:[
+    {code:'CSE202',name:'Fundamentals of Database Systems',grade:'B-',gp:7,
+     desc:'Relational model, SQL, ER diagrams, normalisation, ACID transactions, and query optimisation. Directly applied in AgriLink marketplace database design.',
+     topics:['Relational model and SQL (DDL, DML, DCL)','ER diagrams and schema design','Joins, aggregations, subqueries, views','Indexing: B-trees, hash indexes','Transaction management and ACID properties','Normalisation: 1NF, 2NF, 3NF, BCNF','Query optimisation and execution plans','NoSQL concepts overview'],
+     learnings:['Normalisation prevents data anomalies — critical for the AgriLink marketplace schema design with farmers, buyers, orders, products','Index selection dramatically impacts query performance — B-tree indexes on foreign keys sped up AgriLink joins significantly','Supabase and PostgreSQL clicked much faster having taken this course formally'],
+     outcomes:['Designed normalised PostgreSQL schema for AgriLink agricultural marketplace (P-004)','Applied query optimisation knowledge for efficient TanStack Query cache strategies','ACID understanding shapes how I think about Firebase transaction consistency in the iOS app']},
+    {code:'CSE222',name:'Analysis and Design of Algorithms',grade:'B',gp:8,
+     desc:'Algorithm design paradigms: divide-and-conquer, greedy, dynamic programming, graph algorithms, and complexity analysis. Advanced algorithmic thinking.',
+     topics:['Divide and conquer: merge sort, FFT','Greedy algorithms: Huffman, Kruskal, Prim','Dynamic programming: LCS, knapsack, edit distance','Graph algorithms: Dijkstra, Bellman-Ford, Floyd-Warshall','Network flow: Ford-Fulkerson, max-flow min-cut','Amortised analysis','NP-completeness and reductions'],
+     learnings:['DP became deeply intuitive here — every DP problem is a DAG of subproblems waiting to be revealed','Network flow problems appear everywhere once you recognise them — matching problems, scheduling, routing all reduce to flow','NP-completeness makes you think about problem hardness before diving into solutions'],
+     outcomes:['ADA knowledge is the core of competitive programming — LeetCode rating improvement from 1400+ to 1600+ during this period','Algorithmic thinking applied in personalisation engine optimisation'],
+     starNote:'LeetCode rating 1400+ → 1600+ improvement during this semester'},
+    {code:'CSE322',name:'Theory of Computation',grade:'B',gp:8,
+     desc:'Formal languages, automata theory, Turing machines, computability, and complexity theory. The theoretical foundations of computer science.',
+     topics:['Finite automata (DFA, NFA)','Regular expressions and Kleene\'s theorem','Context-free grammars and PDAs','Turing machines and computability','Church-Turing thesis','Decidability and the Halting Problem','P, NP, NP-complete, NP-hard classes'],
+     learnings:['The Halting Problem is a profound result — some problems are fundamentally unsolvable, regardless of computing power','DFA/NFA design is essentially pattern matching which connects to tokenisation in the NLP pipeline','Complexity classes (P vs NP) give a rigorous vocabulary for talking about algorithmic hardness'],
+     outcomes:['Regex/automata thinking applied in NLP tokenisation pipeline for AI Clinical Scribe','Complexity theory shapes which algorithms I consider feasible for real-time clinical transcription']},
+    {code:'MTH204',name:'Maths IV (Linear Algebra)',grade:'B-',gp:7,
+     desc:'Linear algebra — vectors, matrices, linear transformations, eigenvalues, SVD. The mathematical backbone of machine learning, graphics, and data science.',
+     topics:['Vector spaces and subspaces','Matrix operations and determinants','Linear transformations','Eigenvalues and eigenvectors','Singular Value Decomposition (SVD)','PCA and dimensionality reduction','Applications in ML and graphics','Least squares and pseudo-inverse'],
+     learnings:['SVD is the foundation of collaborative filtering and matrix factorisation — the personalisation engine makes this concrete','PCA is just SVD on the covariance matrix — knowing this made implementing it straightforward','Eigendecomposition is everywhere in ML: PCA, spectral clustering, PageRank, graph neural networks'],
+     outcomes:['SVD/matrix factorisation understanding directly powers the Personalisation Engine (P-003)','Used transformation matrices understanding while working on the 3D Escape Room in Unreal','Linear algebra is the mathematical layer beneath PyTorch operations']},
+    {code:'MTH212',name:'Abstract Algebra I',grade:'B-',gp:7,
+     desc:'Groups, rings, fields, homomorphisms, and quotient structures. Pure mathematics that builds algebraic intuition.',
+     topics:['Groups: definition, examples, subgroups','Cyclic groups and generators','Homomorphisms and isomorphisms','Normal subgroups and quotient groups','Rings and ideals','Fields and field extensions','Polynomial rings'],
+     learnings:['Abstract algebra builds mathematical maturity — understanding structures in general rather than specific instances','Group theory connects to cryptography, coding theory, and the symmetry arguments used in neural network design','The abstraction practice from this course helps in software architecture — both are about identifying the right invariants']}
   ]},
-  {n:5,period:'Aug 2025 – Dec 2025',credits:20,courses:[
-    {code:'CSE501',name:'Artificial Intelligence & NLP',grade:'A',
-     desc:'Deep dive into AI techniques: search, knowledge representation, NLP, speech processing, and neural architectures for language.',
-     topics:['Search algorithms and heuristics','Knowledge graphs and ontologies','NLP: tokenisation, POS tagging, NER','Transformers and attention mechanism','Speech recognition: ASR systems','Speaker diarization techniques','Large Language Models overview'],
-     learnings:['Transformer attention mechanism is the core breakthrough of modern AI — understanding it properly unlocked reading modern ML papers','Speaker diarization is a hard unsolved problem — Pyannote is the state of the art but still imperfect in noisy environments','NER is central to extracting medical entities from clinical text — applied directly in AI Clinical Scribe'],
-     outcomes:['Built AI Clinical Scribe pipeline using Whisper + Pyannote as concurrent research project','Implemented ICD-10 entity extraction using NER fine-tuning'],starNote:'Directly informed AI Clinical Scribe research project'},
-    {code:'CSE502',name:'Parallel & Distributed Computing',grade:'B+',
-     desc:'Parallel programming paradigms, GPU computing, CUDA, distributed systems fundamentals, and performance optimisation.',
-     topics:['Parallel programming models','CUDA programming: threads, blocks, grids','Memory hierarchy: global, shared, register','Warp divergence and coalescing','cuDNN for deep learning','Distributed systems: CAP theorem','MapReduce and Spark overview'],
-     learnings:['CUDA mental model (threads → warps → blocks → grids) took time to build but is now intuitive','Memory coalescing is the #1 CUDA performance tip — misaligned access can kill throughput','GPU programming complemented the Johns Hopkins GPU specialisation I was doing concurrently'],
-     outcomes:['GPU Programming specialisation completion directly complemented coursework','Applied CUDA memory optimisation techniques to ML model inference pipeline']},
-    {code:'CSE503',name:'Advanced Data Structures',grade:'B+',
-     desc:'Advanced algorithmic techniques: segment trees, Fenwick trees, tries, suffix arrays, persistent data structures.',
-     topics:['Segment trees with lazy propagation','Fenwick (Binary Indexed) trees','Trie and suffix trie','Suffix arrays and LCP arrays','Persistent data structures','Randomised algorithms','Approximation algorithms'],
-     learnings:['Segment trees solve range query problems that seemed impossible before','Persistent data structures are the functional programming equivalent of mutable structures — elegant','LeetCode rating jumped from 1500+ to 1700+ during this semester after internalising these structures'],
-     outcomes:['LeetCode peak of 1700+ achieved during this semester','Applied advanced tree structures in algorithm design problems'],starNote:'LeetCode peak 1700+ reached this semester'},
-    {code:'MTH501',name:'Numerical Methods',grade:'B',
-     desc:'Numerical solutions to mathematical problems: root finding, interpolation, numerical integration, ODEs, and linear systems.',
-     topics:['Root finding: Newton-Raphson, bisection','Interpolation: Lagrange, splines','Numerical integration: Trapezoidal, Simpson','Solving ODEs: Euler, Runge-Kutta','Numerical linear algebra','Floating-point arithmetic and errors'],
-     learnings:['Floating-point precision issues are real in physics simulations — relevant to game development','Newton-Raphson convergence rate is quadratic — the math behind fast optimisation','Runge-Kutta is used in real physics engines for time integration — connected to Angry Birds project'],
-     outcomes:['Numerical intuition applied to gradient descent convergence analysis','Physics integration understanding deepened from Euler method study']}
+  {n:5,period:'Aug 2025 – Dec 2025',sgpa:'7.80',cgpa:'7.33',credits:20,courses:[
+    {code:'COM301A',name:'Technical Communication',grade:'B',gp:8,
+     desc:'Advanced technical writing, research paper structure, IEEE/ACM formatting, and professional communication for engineering contexts.',
+     topics:['Research paper structure and academic writing','IEEE/ACM citation and formatting','Technical presentations and slides','Abstract and executive summary writing','Technical proposal writing','Peer review process'],
+     learnings:['Research paper structuring directly being applied to the AI Clinical Scribe BTP writeup','Learned to write for different audiences — technical report vs executive summary is a different skill','Abstract writing is harder than it looks — concise, precise, complete in 150 words'],
+     outcomes:['Applying structured paper format to BTP499 clinical AI research writeup','Using proposal writing skills for research grant and publication draft'],
+     starNote:'Directly applied to BTP499 AI Clinical Scribe paper writing'},
+    {code:'MTH371',name:'Stochastic Processes & Applications',grade:'B',gp:8,
+     desc:'Random processes, Markov chains, Poisson processes, Brownian motion, and their applications in engineering, finance, and CS.',
+     topics:['Discrete-time Markov chains','Stationary distributions and ergodicity','Poisson processes','Continuous-time Markov chains','Brownian motion (Wiener process)','Queueing theory: M/M/1, M/M/c','Applications in network traffic and reliability'],
+     learnings:['Markov chains model sequential decisions — connect to reinforcement learning and recommendation sequence modelling','Queueing theory gives analytical tools for latency in the clinical AI pipeline under concurrent requests','Stochastic processes build intuition for uncertainty quantification in AI model outputs'],
+     outcomes:['Markov chain concepts connect to sequence modelling in the SOAP note generation pipeline','Queueing theory applied to think about throughput in clinical audio processing']},
+    {code:'MTH373',name:'Scientific Computing',grade:'A',gp:9,
+     desc:'Best grade of Semester V. Numerical methods implemented computationally: root finding, interpolation, integration, ODE solving, and linear system solvers.',
+     topics:['Floating-point arithmetic and error analysis','Root finding: Newton-Raphson, bisection, secant','Interpolation: Lagrange, Newton, splines','Numerical integration: trapezoidal, Simpson, Gaussian','ODE solvers: Euler, Runge-Kutta 4','Numerical linear algebra: LU, QR, Cholesky','Sparse matrix methods','Python/NumPy implementation'],
+     learnings:['Newton-Raphson quadratic convergence is why second-order optimisers converge faster than gradient descent','Runge-Kutta is used in physics simulations — finally understood why my Angry Birds physics had drift issues','Numerical precision is not trivial — floating-point errors compound in iterative algorithms'],
+     outcomes:['Numerical optimisation intuition applied to gradient descent in the personalisation engine','Physics integration understanding from RK4 study improved appreciation of game physics engine design','NumPy proficiency cemented as primary scientific computing tool'],
+     starNote:'Best grade of Semester V — A (9.0)'},
+    {code:'ECO333',name:'Macroeconomics',grade:'B',gp:7,
+     desc:'GDP, fiscal and monetary policy, inflation, unemployment, IS-LM models, and open economy macroeconomics.',
+     topics:['National income accounting and GDP','IS-LM model','Fiscal policy: government spending and taxes','Monetary policy: interest rates and money supply','Inflation: causes and control','Unemployment: types and Phillips curve','International trade and exchange rates'],
+     learnings:['Macroeconomic thinking about market design influenced product thinking for AgriLink','Policy trade-offs (inflation vs unemployment) mirror engineering trade-offs (latency vs throughput)'],
+     outcomes:['Market efficiency principles applied to intermediary-free AgriLink marketplace design']},
+    {code:'PSY307',name:'Neuroscience of Decision Making',grade:'B',gp:7,
+     desc:'How the brain makes decisions: cognitive biases, dual-process theory, neuroeconomics, and applications in product design.',
+     topics:['Dual-process theory (System 1 / System 2)','Cognitive biases: anchoring, availability, framing','Neuroeconomics and utility theory','Risk and uncertainty in decision making','Attention and working memory','Behavioural nudges','Applications in UX and product design'],
+     learnings:['System 1 vs System 2 thinking maps onto fast and slow software paths — useful frame for optimisation decisions','Cognitive load theory directly feeds into HCI and UX design for the iOS apps','Behavioural nudges are a design tool — applied in the habit tracker sub-app of the productivity system']},
+    {code:'ESC205A',name:'Environmental Sciences',grade:'B',gp:8,
+     desc:'Mandatory core course on environmental systems, sustainability, climate science, and policy.',
+     topics:['Earth systems and climate science','Ecosystems and biodiversity','Environmental pollution and control','Sustainability and green technology','Environmental policy and law','Carbon footprint and lifecycle assessment'],
+     learnings:['Lifecycle assessment methodology applies to software — computational energy costs matter','Climate systems thinking builds systems-level reasoning applicable to complex software architectures']}
+  ]},
+  {n:6,period:'Jan 2026 – May 2026',sgpa:'In Progress',cgpa:'In Progress',credits:20,courses:[
+    {code:'BTP499',name:'B.Tech Project — SOAP Note Generation',grade:'In Progress',gp:null,
+     desc:'Primary B.Tech Project (4 credits). Building an end-to-end voice assistance system for digital SOAP note generation — the AI Clinical Scribe research project formalised as the BTP.',
+     topics:['Automatic Speech Recognition (ASR) with Whisper','Speaker Diarization with Pyannote.audio','Clinical NLP and medical entity extraction','SOAP note template generation','ICD-10 medical coding with NER','Audio preprocessing and noise reduction','Evaluation: WER, BLEU, clinical accuracy metrics'],
+     learnings:['Speaker diarization in real clinical environments is hard — overlapping speech, accents, medical jargon all challenge the pipeline','ICD-10 code space is vast (70,000+ codes) — hierarchical classification needed for practical mapping','Building production AI systems requires much more engineering than prototypes — data pipelines, evaluation harnesses, error analysis'],
+     outcomes:['90%+ SOAP note generation accuracy achieved in controlled clinical dialogue tests','ICD-10 NER module operational with multi-class classification','Targeting academic publication and clinical pilot'],
+     starNote:'Active BTP — targeting publication · AI Clinical Scribe project (P-002)'},
+    {code:'CSE640',name:'Collaborative Filtering',grade:'In Progress',gp:null,
+     desc:'Graduate-level course on recommender systems — matrix factorisation, neighbourhood methods, deep learning for recommendations, and evaluation.',
+     topics:['Neighbourhood-based collaborative filtering (user-user, item-item)','Matrix factorisation: SVD, NMF, ALS','Latent Factor Models and implicit feedback','Neural collaborative filtering','Cold-start problem and handling sparsity','Evaluation metrics: NDCG, MAP, Precision@K, Recall@K','Context-aware and hybrid recommenders'],
+     learnings:['Latent factor models are elegant — they compress the entire user-item relationship into dense low-dimensional embeddings','Implicit feedback (clicks, plays, dwell time) is far more abundant than explicit ratings but noisier — real-world systems mainly use implicit','The cold-start problem is unsolved — content-based hybrid methods are the practical answer'],
+     outcomes:['Personalisation Engine project (P-003) directly applies everything from this course','Matrix factorisation implementation in PyTorch informed by theoretical foundations taught here'],
+     starNote:'Directly feeds into Personalisation Engine project (P-003)'},
+    {code:'MTH300',name:'Introduction to Mathematical Logic',grade:'In Progress',gp:null,
+     desc:'Formal logic, proof theory, model theory, and the foundations of mathematics. Propositional and first-order logic with formal proof systems.',
+     topics:['Propositional logic: syntax and semantics','Natural deduction proof systems','First-order predicate logic','Soundness and completeness theorems','Gödel\'s incompleteness theorems','Model theory basics','Applications in formal verification'],
+     learnings:['Gödel\'s incompleteness theorems are among the most profound results in mathematics — some truths are unprovable from within a system','Formal proof systems connect to type theory and formal verification of software','First-order logic is the language of databases — SQL semantics are grounded in relational algebra which is first-order logic'],
+     outcomes:['Formal logic reasoning sharpens argument structure in algorithm proofs and research writing','Connections to type systems and formal program verification']},
+    {code:'MTH372',name:'Statistical Inference',grade:'In Progress',gp:null,
+     desc:'Advanced statistics: estimation theory, hypothesis testing, Bayesian inference, and statistical learning foundations.',
+     topics:['Point estimation: MLE, UMVUE','Interval estimation and confidence regions','Neyman-Pearson hypothesis testing','Likelihood ratio tests','Bayesian inference and posterior computation','Sufficient statistics','Bootstrap and resampling methods'],
+     learnings:['MLE is what makes most ML training work — you\'re always maximising likelihood of your data under a model','Bayesian inference gives a principled framework for updating beliefs with data — directly applicable in clinical AI for uncertainty quantification','Bootstrap resampling is an elegant non-parametric way to estimate variance when distributions are unknown'],
+     outcomes:['MLE understanding deepens training intuition for PyTorch models in the clinical scribe pipeline','Bayesian inference framework being considered for uncertainty estimation in ICD-10 code predictions']},
+    {code:'MTH377',name:'Convex Optimization',grade:'In Progress',gp:null,
+     desc:'Convex sets and functions, duality theory, optimisation algorithms, and applications in ML — one of the most directly applicable math courses for AI/ML.',
+     topics:['Convex sets and convex functions','Lagrangian and KKT conditions','Duality: weak and strong duality','Gradient descent and convergence rates','Proximal gradient methods','ADMM (Alternating Direction Method of Multipliers)','Applications: LASSO, SVM, portfolio optimisation','Interior point methods'],
+     learnings:['KKT conditions are the foundation of constrained optimisation — they\'re what makes SVMs, LASSO, and many ML algorithms work mathematically','Understanding convergence rates of gradient descent (O(1/t) for convex, linear for strongly convex) demystifies training dynamics','Duality gives alternative views of optimisation problems — the dual of maximum likelihood is minimum description length'],
+     outcomes:['Convex optimisation formalises the gradient descent and regularisation used in the Personalisation Engine (P-003)','Matrix completion for collaborative filtering has a convex relaxation — this course provides the theory behind it'],
+     starNote:'Most directly applicable math course for AI/ML work'}
   ]}
 ];
 
 const THOUGHTS = [
-  {date:'Jan 2026',title:'Building a Clinical AI Pipeline with Whisper + Pyannote',excerpt:'Lessons from architecting a real-time speaker diarization and SOAP note generation system. Covers ASR accuracy challenges, multi-speaker diarization edge cases, and ICD-10 NER mapping strategies.',tags:['AI','NLP','Medical','Research']},
-  {date:'Dec 2024',title:'Rigid-Body Physics from Scratch in Java + libGDX',excerpt:'Deep dive into implementing impulse-based collision resolution, projectile motion, and restitution coefficients for a 2D game engine. No physics library — just Newton\'s laws and Java.',tags:['Game Dev','Physics','Java']},
+  {date:'Jan 2026',title:'Building a Clinical AI Pipeline with Whisper + Pyannote',excerpt:'Lessons from architecting a real-time speaker diarization and SOAP note generation system. Covers ASR accuracy challenges, multi-speaker diarization edge cases, and ICD-10 NER mapping strategies.',tags:['AI','NLP','Medical','BTP']},
+  {date:'Dec 2024',title:'Rigid-Body Physics from Scratch in Java + libGDX',excerpt:'Deep dive into implementing impulse-based collision resolution, projectile motion, and restitution coefficients for a 2D game engine. No physics library — just Newton\'s laws and Java OOP.',tags:['Game Dev','Physics','Java']},
   {date:'Jun 2025',title:'SwiftUI MVVM at Scale: Production Lessons',excerpt:'NSPersistentContainer threading gotchas, Combine backpressure handling, and Firebase Firestore offline sync patterns from building an industrial iOS modular app at ModularityLabs.',tags:['iOS','SwiftUI','Architecture']},
-  {date:'Jan 2026',title:'Matrix Factorisation for Recommender Systems',excerpt:'Latent Factor Models vs neighbourhood methods, sparse matrix completion with gradient descent, and why Precision@K matters more than RMSE for real-world recommendations.',tags:['ML','RecSys','Math']},
+  {date:'Jan 2026',title:'Matrix Factorisation for Recommender Systems',excerpt:'Latent Factor Models vs neighbourhood methods, sparse matrix completion with gradient descent, and why Precision@K matters more than RMSE for real-world recommendations.',tags:['ML','RecSys','CSE640']},
   {date:'Oct 2025',title:'GPU Parallelism & CUDA: Notes from JHU Specialisation',excerpt:'Warp divergence, memory coalescing, shared memory bank conflicts, and cuDNN primitives. The mental model shift from CPU sequential to GPU massively parallel thinking.',tags:['CUDA','GPU','Parallel']},
 ];
 
 const ACHIEVEMENTS = [
-  {year:'2026',mon:'Jan',icon:'⬟',title:'AI Clinical Research — 90%+ Accuracy Milestone',detail:'Architected production-quality multi-modal AI clinical scribe pipeline. ASR + diarization + SOAP note generation + ICD-10 mapping achieved 90%+ accuracy target.',chip:'Research'},
+  {year:'2026',mon:'Jan',icon:'⬟',title:'AI Clinical Research — 90%+ Accuracy Milestone',detail:'Architected production-quality multi-modal AI clinical scribe pipeline (BTP499). ASR + diarization + SOAP note generation + ICD-10 mapping achieved 90%+ accuracy target.',chip:'Research'},
   {year:'2025',mon:'Oct',icon:'★',title:'LeetCode Peak: 1700+ Rating',detail:'Crossed 1700 LeetCode peak rating while solving 350+ DSA problems. Consistent top-percentile performance in weekly and biweekly contests, especially in advanced tree and graph problems.',chip:'Competitive Prog.'},
   {year:'2025',mon:'Jun',icon:'▲',title:'ModularityLabs iOS Internship — Completed',detail:'Delivered production iOS modular productivity app over 6-month industrial internship. Received Letter of Experience and Letter of Recommendation. MVVM + Firebase + Core Data architecture.',chip:'Internship'},
   {year:'2025',mon:'Jun',icon:'◈',title:'AI Summer Camp — 100+ Students Taught',detail:'Instructed 100+ students in AI fundamentals at IIIT-Delhi. Designed Python-based curriculum covering supervised learning, neural networks, and hands-on exercises. Received certificate of appreciation.',chip:'Teaching'},
   {year:'2025',mon:'Ongoing',icon:'✦',title:'HackerRank 5-Star Badges — Python, Java, DSA',detail:'Earned 5-star ratings in Python, Java, and Data Structures on HackerRank — global top percentile in all three domains with verified certificates.',chip:'Competitive'},
+  {year:'2025',mon:'Jun',icon:'◉',title:'GPU Programming Specialisation — JHU Completed',detail:'Completed 4-course GPU Programming specialisation from Johns Hopkins University via Coursera. Covers CUDA, cuDNN, memory optimisation, and performance tuning.',chip:'Certification'},
 ];
 
-// =================== KNOWLEDGE GRAPH ===================
+// =================== KNOWLEDGE GRAPH (Enriched) ===================
 const KG_NODES = [
-  {id:'nt',label:'Nishant Tomer',cls:'core',x:50,y:48},
-  {id:'ai',label:'AI / NLP',cls:'dom',x:74,y:18},
-  {id:'ios',label:'iOS Dev',cls:'dom',x:20,y:20},
-  {id:'game',label:'Game Dev',cls:'dom',x:12,y:62},
-  {id:'web',label:'Full-Stack',cls:'dom',x:82,y:72},
-  {id:'cp',label:'Comp. Prog.',cls:'dom',x:50,y:85},
-  {id:'whisper',label:'Whisper',cls:'tech',x:90,y:10},
-  {id:'pyannote',label:'Pyannote',cls:'tech',x:78,y:7},
-  {id:'pytorch',label:'PyTorch',cls:'tech',x:64,y:10},
-  {id:'swift',label:'SwiftUI',cls:'tech',x:6,y:30},
-  {id:'firebase',label:'Firebase',cls:'tech',x:22,y:8},
-  {id:'combine',label:'Combine',cls:'tech',x:10,y:46},
-  {id:'libgdx',label:'libGDX',cls:'tech',x:5,y:76},
-  {id:'unreal',label:'Unreal Engine',cls:'tech',x:20,y:80},
-  {id:'react',label:'React',cls:'tech',x:93,y:60},
-  {id:'node',label:'Node.js',cls:'tech',x:88,y:84},
-  {id:'cuda',label:'CUDA',cls:'tech',x:68,y:82},
-  {id:'leet',label:'LeetCode 1700+',cls:'proj',x:36,y:90},
-  {id:'clinical',label:'Clinical Scribe',cls:'proj',x:88,y:30},
-  {id:'agrilink',label:'AgriLink',cls:'proj',x:94,y:46},
-  {id:'ios_proj',label:'iOS App',cls:'proj',x:8,y:14},
-  {id:'java',label:'Java',cls:'tech',x:36,y:72},
-  {id:'python',label:'Python',cls:'tech',x:55,y:68},
+  // Core
+  {id:'nt',label:'Nishant',cls:'core',x:50,y:46},
+  // Domains
+  {id:'ai',label:'AI / NLP',cls:'dom',x:76,y:18},
+  {id:'ios',label:'iOS Dev',cls:'dom',x:18,y:18},
+  {id:'game',label:'Game Dev',cls:'dom',x:10,y:58},
+  {id:'web',label:'Full-Stack',cls:'dom',x:84,y:68},
+  {id:'cp',label:'Comp. Prog.',cls:'dom',x:48,y:88},
+  {id:'sys',label:'Systems',cls:'dom',x:24,y:76},
+  // Tech nodes
+  {id:'whisper',label:'Whisper',cls:'tech',x:92,y:10},
+  {id:'pyannote',label:'Pyannote',cls:'tech',x:80,y:7},
+  {id:'pytorch',label:'PyTorch',cls:'tech',x:65,y:10},
+  {id:'swift',label:'SwiftUI',cls:'tech',x:4,y:28},
+  {id:'firebase',label:'Firebase',cls:'tech',x:22,y:6},
+  {id:'combine',label:'Combine',cls:'tech',x:8,y:42},
+  {id:'libgdx',label:'libGDX',cls:'tech',x:4,y:68},
+  {id:'unreal',label:'Unreal Engine',cls:'tech',x:16,y:84},
+  {id:'react',label:'React',cls:'tech',x:96,y:58},
+  {id:'node',label:'Node.js',cls:'tech',x:90,y:80},
+  {id:'cuda',label:'CUDA',cls:'tech',x:64,y:80},
+  {id:'java',label:'Java',cls:'tech',x:34,y:66},
+  {id:'python',label:'Python',cls:'tech',x:56,y:62},
+  {id:'supabase',label:'Supabase',cls:'tech',x:78,y:84},
+  {id:'postgres',label:'PostgreSQL',cls:'tech',x:92,y:90},
+  // Projects
+  {id:'clinical',label:'Clinical Scribe',cls:'proj',x:88,y:28},
+  {id:'ios_proj',label:'iOS App',cls:'proj',x:6,y:10},
+  {id:'agrilink',label:'AgriLink',cls:'proj',x:96,y:44},
+  {id:'asm',label:'Assembler',cls:'proj',x:34,y:90},
+  {id:'personalia',label:'Personalisation Eng.',cls:'proj',x:74,y:56},
+  {id:'leet',label:'LeetCode 1700+',cls:'proj',x:58,y:92},
+  // Courses (purple) — from transcript
+  {id:'cse102',label:'DSA (C)',cls:'course',x:36,y:78},
+  {id:'cse231',label:'OS (B-)',cls:'course',x:18,y:54},
+  {id:'cse202',label:'DBMS (B-)',cls:'course',x:82,y:92},
+  {id:'cse222',label:'ADA (B)',cls:'course',x:44,y:72},
+  {id:'cse640',label:'Collab. Filtering (Cur)',cls:'course',x:68,y:68},
+  {id:'btp499',label:'BTP499 (Cur)',cls:'course',x:80,y:40},
+  // Math nodes (cyan)
+  {id:'mth201',label:'Probability & Stats',cls:'math',x:46,y:22},
+  {id:'mth204',label:'Linear Algebra',cls:'math',x:60,y:30},
+  {id:'mth371',label:'Stochastic Proc.',cls:'math',x:56,y:20},
+  {id:'mth377',label:'Convex Optim.',cls:'math',x:72,y:38},
+  {id:'mth373',label:'Scientific Computing',cls:'math',x:40,y:32},
 ];
 
 const KG_EDGES = [
-  ['nt','ai'],['nt','ios'],['nt','game'],['nt','web'],['nt','cp'],
-  ['ai','whisper'],['ai','pyannote'],['ai','pytorch'],['ai','cuda'],['ai','python'],
+  // Core connections
+  ['nt','ai'],['nt','ios'],['nt','game'],['nt','web'],['nt','cp'],['nt','sys'],
+  // AI domain
+  ['ai','whisper'],['ai','pyannote'],['ai','pytorch'],['ai','cuda'],['ai','python'],['ai','mth204'],['ai','mth377'],
+  // iOS domain
   ['ios','swift'],['ios','firebase'],['ios','combine'],['ios','ios_proj'],
+  // Game domain
   ['game','libgdx'],['game','unreal'],['game','java'],
-  ['web','react'],['web','node'],['web','firebase'],
-  ['cp','leet'],['cp','java'],['cp','python'],
-  ['clinical','ai'],['clinical','whisper'],['clinical','pyannote'],
-  ['agrilink','web'],['agrilink','react'],['agrilink','node'],
+  // Web domain
+  ['web','react'],['web','node'],['web','firebase'],['web','supabase'],['web','postgres'],
+  // Systems
+  ['sys','cse231'],['sys','asm'],['sys','java'],['sys','python'],
+  // CP
+  ['cp','leet'],['cp','java'],['cp','python'],['cp','cse222'],['cp','cse102'],
+  // Projects
+  ['clinical','ai'],['clinical','whisper'],['clinical','pyannote'],['clinical','btp499'],
+  ['agrilink','web'],['agrilink','supabase'],['agrilink','postgres'],
   ['ios_proj','ios'],['ios_proj','swift'],['ios_proj','firebase'],
+  ['asm','sys'],['asm','python'],
+  ['personalia','cse640'],['personalia','pytorch'],['personalia','mth204'],['personalia','mth377'],
+  // Courses
+  ['cse102','cp'],['cse231','sys'],['cse202','web'],['cse222','cp'],
+  ['cse640','ai'],['cse640','personalia'],
+  ['btp499','ai'],['btp499','clinical'],
+  // Math
+  ['mth201','ai'],['mth201','cp'],
+  ['mth204','ai'],['mth204','personalia'],
+  ['mth371','ai'],['mth373','sys'],
+  ['mth377','ai'],['mth377','personalia'],
 ];
 
 function buildKG() {
   const canvas = document.getElementById('kgCanvas');
   const svg = document.getElementById('kgsvg');
   if(!canvas || !svg) return;
-  const W = canvas.offsetWidth, H = canvas.offsetHeight || 320;
+  const W = canvas.offsetWidth, H = canvas.offsetHeight || 340;
   let lines = '';
   KG_EDGES.forEach(([a,b]) => {
     const na = KG_NODES.find(n=>n.id===a), nb = KG_NODES.find(n=>n.id===b);
     if(!na||!nb) return;
     const x1=na.x/100*W, y1=na.y/100*H, x2=nb.x/100*W, y2=nb.y/100*H;
-    const isDomain = na.cls==='core'||na.cls==='dom'||nb.cls==='core'||nb.cls==='dom';
-    lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${isDomain?'rgba(0,255,136,0.12)':'rgba(255,255,255,0.04)'}" stroke-width="${isDomain?'1':'0.5'}"/>`;
+    const isCore = na.cls==='core'||nb.cls==='core';
+    const isDom = na.cls==='dom'||nb.cls==='dom';
+    const col = isCore ? 'rgba(0,255,136,0.18)' : isDom ? 'rgba(0,255,136,0.07)' : 'rgba(255,255,255,0.03)';
+    const w = isCore ? 1.5 : isDom ? 1 : 0.5;
+    lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${w}"/>`;
   });
   svg.innerHTML = lines;
   canvas.querySelectorAll('.kn').forEach(n=>n.remove());
@@ -1146,6 +1188,7 @@ function buildKG() {
     div.textContent = node.label;
     div.style.left = node.x+'%';
     div.style.top = node.y+'%';
+    div.title = node.label;
     div.onmouseenter = () => highlightNode(node.id);
     div.onmouseleave = () => resetHighlight();
     canvas.appendChild(div);
@@ -1153,29 +1196,20 @@ function buildKG() {
 }
 
 function highlightNode(id) {
-  document.querySelectorAll('.kn').forEach(n=>n.style.opacity='0.25');
+  const allNodes = document.querySelectorAll('.kn');
+  allNodes.forEach(n=>n.style.opacity='0.15');
   const connected = new Set([id]);
   KG_EDGES.forEach(([a,b])=>{if(a===id)connected.add(b);if(b===id)connected.add(a);});
-  KG_NODES.forEach(n=>{if(connected.has(n.id)){const el=document.querySelector(`.kn[style*="left: ${n.x}%"]`);if(el)el.style.opacity='1';}});
-}
-function resetHighlight(){document.querySelectorAll('.kn').forEach(n=>n.style.opacity='');}
-
-// =================== FEATURED PROJECTS (OVERVIEW) ===================
-function buildFeatProj() {
-  const container = document.getElementById('featProj');
-  if(!container) return;
-  PROJECTS.slice(0,5).forEach(p => {
-    const fp = document.createElement('div');
-    fp.className = 'fp';
-    fp.onclick = () => {go(document.querySelector('[data-p=projects]'));setTimeout(()=>openProjModal(PROJECTS.indexOf(p)),350);};
-    const imgHtml = p.img
-      ? `<div class="fp-img"><img src="${p.img}" alt="${p.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;filter:grayscale(30%);" onerror="this.parentElement.innerHTML='<div class=fp-img-ph>${p.id}</div>'"></div>`
-      : `<div class="fp-img"><div class="fp-img-ph">${p.id}</div></div>`;
-    const typeColors = {internship:'var(--amber)',research:'var(--blue)',academic:'var(--purple)',personal:'var(--dim)'};
-    fp.innerHTML = `${imgHtml}<div class="fp-body"><div class="fp-num">${p.id}</div><div class="fp-title">${p.title}</div><div class="fp-tags-row">${p.stack.slice(0,3).map(s=>`<span class="fp-tag">${s}</span>`).join('')}<span class="fp-type" style="border-color:${typeColors[p.type]}44;color:${typeColors[p.type]};font-size:8px;padding:1px 5px;border:1px solid;">${p.typeLabel}</span></div></div>`;
-    container.appendChild(fp);
+  KG_NODES.forEach(n=>{
+    if(connected.has(n.id)){
+      const nodes = document.querySelectorAll('.kn');
+      nodes.forEach(el=>{
+        if(el.textContent===n.label) el.style.opacity='1';
+      });
+    }
   });
 }
+function resetHighlight(){document.querySelectorAll('.kn').forEach(n=>n.style.opacity='');}
 
 // =================== PROJECTS PAGE ===================
 function renderProjects() {
@@ -1200,9 +1234,9 @@ function openProjModal(i) {
   const p = PROJECTS[i];
   document.getElementById('pModalTitle').textContent = `${p.id} · ${p.title}`;
   const imgHtml = p.img ? `<img src="${p.img}" alt="${p.title}" style="width:100%;height:240px;object-fit:cover;border:1px solid var(--border);margin-bottom:16px;display:block;" onerror="this.style.display='none'">` : '';
-  const galleryHtml = p.gallery.length ? `<div class="msect">Gallery (${p.gallery.length} screenshots)</div><div class="gallery">${p.gallery.map(g=>`<img class="gthumb" src="${g}" loading="lazy" onclick="window.open('${g}','_blank')" alt="screenshot" onerror="this.style.display='none'">`).join('')}</div>` : '';
+  const galleryHtml = p.gallery&&p.gallery.length ? `<div class="msect">Gallery (${p.gallery.length} screenshots)</div><div class="gallery">${p.gallery.map(g=>`<img class="gthumb" src="${g}" loading="lazy" onclick="window.open('${g}','_blank')" alt="screenshot" onerror="this.style.display='none'">`).join('')}</div>` : '';
   const typeClsMap = {internship:'pt-int',research:'pt-res',academic:'pt-aca',personal:'pt-per'};
-  document.getElementById('pModalBody').innerHTML = `${imgHtml}<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span class="ptype ${typeClsMap[p.type]}">${p.typeLabel}</span><span style="font-size:9px;color:var(--muted);">${p.id} · ${p.year}</span></div><p style="font-size:11.5px;color:var(--dim);line-height:1.8;margin-bottom:4px;">${p.desc}</p>${galleryHtml}<div class="msect">Key Contributions (${p.points.length} points)</div><ul class="mpts">${p.points.map(pt=>`<li>${pt}</li>`).join('')}</ul><div class="msect">Technology Stack</div><div class="chips">${p.stack.map(s=>`<span class="chip hi">${s}</span>`).join('')}</div>${p.links.length?`<div class="msect">Links & Documents</div><div class="btns">${p.links.map(l=>`<a href="${l.u}" target="_blank" class="btn btn-g bsm">${l.l}</a>`).join('')}</div>`:''}`;
+  document.getElementById('pModalBody').innerHTML = `${imgHtml}<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span class="ptype ${typeClsMap[p.type]}">${p.typeLabel}</span><span style="font-size:9px;color:var(--muted);">${p.id} · ${p.year}</span></div><p style="font-size:11.5px;color:var(--dim);line-height:1.8;margin-bottom:4px;">${p.desc}</p>${galleryHtml}<div class="msect">Key Contributions (${p.points.length} points)</div><ul class="mpts">${p.points.map(pt=>`<li>${pt}</li>`).join('')}</ul><div class="msect">Technology Stack</div><div class="chips">${p.stack.map(s=>`<span class="chip hi">${s}</span>`).join('')}</div>${p.links&&p.links.length?`<div class="msect">Links & Documents</div><div class="btns">${p.links.map(l=>`<a href="${l.u}" target="_blank" class="btn btn-g bsm">${l.l}</a>`).join('')}</div>`:''}`;
   document.getElementById('pModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1240,7 +1274,7 @@ function openCertModal(i) {
   const c = CERTS[i];
   document.getElementById('cModalTitle').textContent = c.name;
   const mainImg = c.img ? `<img src="${c.img}" alt="${c.name}" style="width:100%;max-height:360px;object-fit:contain;background:var(--bg3);border:1px solid var(--border);display:block;margin-bottom:14px;" onerror="this.style.display='none'">` : `<div style="width:100%;height:120px;border:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><span style="font-size:9px;color:var(--muted);letter-spacing:.08em;">${c.fallback}</span></div>`;
-  const subsHtml = c.subs?.length ? `<div class="msect">Specialisation Modules (${c.subs.length})</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;">${c.subs.map(s=>`<div style="border:1px solid var(--border);overflow:hidden;cursor:none;" onclick="window.open('${s.img}','_blank')"><img src="${s.img}" style="width:100%;height:90px;object-fit:cover;display:block;" loading="lazy" onerror="this.style.display='none'"><div style="padding:6px 8px;font-size:8.5px;color:var(--dim);">${s.label}</div></div>`).join('')}</div>` : '';
+  const subsHtml = c.subs&&c.subs.length ? `<div class="msect">Specialisation Modules (${c.subs.length})</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;">${c.subs.map(s=>`<div style="border:1px solid var(--border);overflow:hidden;cursor:none;" onclick="window.open('${s.img}','_blank')"><img src="${s.img}" style="width:100%;height:90px;object-fit:cover;display:block;" loading="lazy" onerror="this.style.display='none'"><div style="padding:6px 8px;font-size:8.5px;color:var(--dim);">${s.label}</div></div>`).join('')}</div>` : '';
   const extraHtml = c.extra ? `<div class="msect">Event Photo</div><img src="${c.extra}" style="width:100%;max-height:300px;object-fit:contain;background:var(--bg3);border:1px solid var(--border);display:block;" onerror="this.style.display='none'">` : '';
   document.getElementById('cModalBody').innerHTML = `<div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">${c.issuer}</div><p style="font-size:11.5px;color:var(--dim);line-height:1.8;margin-bottom:14px;">${c.desc}</p>${mainImg}${extraHtml}${subsHtml}<div class="msect">Verification</div><div class="btns">${c.verify&&c.verify!='#'?`<a href="${c.verify}" target="_blank" class="btn btn-p bsm">→ Verify Certificate</a>`:'<span style="font-size:10px;color:var(--muted)">Verification link not available.</span>'}</div>`;
   document.getElementById('cModal').classList.add('open');
@@ -1255,13 +1289,26 @@ function renderSemesters() {
     const panel = document.createElement('div');
     panel.className = `sem-panel${sem.n===1?' on':''}`;
     panel.id = `sem-${sem.n}`;
-    const statsHtml = `<div class="sem-header"><div class="sem-stat"><div class="sem-stat-v">${sem.credits}</div><div class="sem-stat-l">Credits</div></div><div class="sem-stat"><div class="sem-stat-v">${sem.courses.length}</div><div class="sem-stat-l">Courses</div></div><div class="sem-stat"><div class="sem-stat-v">${sem.period.split(' ')[0]} ${sem.period.split(' ')[1]}</div><div class="sem-stat-l">Started</div></div><div class="sem-stat"><div class="sem-stat-v">Sem ${sem.n}</div><div class="sem-stat-l">Semester</div></div></div>`;
-    const coursesHtml = sem.courses.map((c,ci) => {
-      const gradeClass = c.grade.startsWith('A')?'a':c.grade.startsWith('B+')?'b':'';
+    const statsHtml = `<div class="sem-header">
+      <div class="sem-stat"><div class="sem-stat-v">${sem.sgpa}</div><div class="sem-stat-l">SGPA</div></div>
+      <div class="sem-stat"><div class="sem-stat-v">${sem.cgpa}</div><div class="sem-stat-l">CGPA</div></div>
+      <div class="sem-stat"><div class="sem-stat-v">${sem.courses.length}</div><div class="sem-stat-l">Courses</div></div>
+      <div class="sem-stat"><div class="sem-stat-v">${sem.period.split(' ')[0]+' '+sem.period.split(' ')[1]}</div><div class="sem-stat-l">Period</div></div>
+    </div>`;
+    const coursesHtml = sem.courses.map(c => {
+      let gradeClass = '';
+      if(c.grade&&c.grade.startsWith('A')) gradeClass='a';
+      else if(c.grade&&(c.grade==='B'||c.grade==='B+'||c.grade==='B-')) gradeClass='b';
+      else if(c.grade&&(c.grade==='C'||c.grade==='C+')) gradeClass='c';
+      else if(c.grade==='F') gradeClass='f';
       return `<div class="course-item">
         <div class="course-head" onclick="toggleCourse(this)">
           <div class="course-head-l"><span class="course-code">${c.code}</span><span class="course-name">${c.name}</span></div>
-          <div class="course-head-r"><span class="course-grade ${gradeClass}">${c.grade}</span><span class="course-toggle">▼</span></div>
+          <div class="course-head-r">
+            <span class="course-grade ${gradeClass}">${c.grade}</span>
+            ${c.gp?`<span style="font-size:9px;color:var(--muted);">(${c.gp})</span>`:''}
+            <span class="course-toggle">▼</span>
+          </div>
         </div>
         <div class="course-body">
           <div class="course-desc">${c.desc}</div>
@@ -1272,14 +1319,14 @@ function renderSemesters() {
               <ul class="course-pts">${c.topics.map(t=>`<li>${t}</li>`).join('')}</ul>
             </div>
             <div class="course-section">
-              <div class="course-section-title">What I Learned</div>
+              <div class="course-section-title">What I Learned / Insights</div>
               <ul class="course-pts">${c.learnings.map(l=>`<li>${l}</li>`).join('')}</ul>
             </div>
           </div>
-          <div class="course-section" style="margin-top:0;">
+          ${c.outcomes&&c.outcomes.length?`<div class="course-section" style="margin-top:0;">
             <div class="course-section-title">Real-World Applications & Outcomes</div>
             <ul class="course-pts">${c.outcomes.map(o=>`<li>${o}</li>`).join('')}</ul>
-          </div>
+          </div>`:''}
         </div>
       </div>`;
     }).join('');
@@ -1349,7 +1396,6 @@ function go(el) {
   document.getElementById('tpSeg').textContent = p.replace('-',' ');
   window.scrollTo(0,0);
   if(window.innerWidth<=840) document.getElementById('sb').classList.remove('open');
-  // Rebuild KG after nav to home
   if(p==='home') setTimeout(buildKG, 50);
 }
 
@@ -1358,7 +1404,7 @@ let mx=0,my=0,rx=0,ry=0;
 const curEl=document.getElementById('cur'), ringEl=document.getElementById('cring');
 document.addEventListener('mousemove', e=>{mx=e.clientX;my=e.clientY;curEl.style.left=mx+'px';curEl.style.top=my+'px';});
 (function tickC(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ringEl.style.left=rx+'px';ringEl.style.top=ry+'px';requestAnimationFrame(tickC);})();
-document.querySelectorAll('a,button,.pcard,.ccard,.qcard,.fp,.clink,.ach-item,.hl-item,.kn,.course-head,.na').forEach(el=>{
+document.querySelectorAll('a,button,.pcard,.ccard,.qcard,.fp,.clink,.ach-item,.hl-item,.kn,.course-head,.na,.ov-ncard,.ov-link,.ov-ncard').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
 });
@@ -1374,7 +1420,6 @@ tick();setInterval(tick,1000);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('pModal',null,true);closeModal('cModal',null,true);}});
 
 // =================== INIT ===================
-buildFeatProj();
 buildKG();
 renderProjects();
 renderCerts();
