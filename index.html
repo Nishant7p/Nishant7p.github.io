@@ -201,120 +201,106 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .ov-ncard:hover .onc-arr{color:var(--acc);transform:translate(2px,-2px);}
 
 /* KG SECTION */
-.ov-kg { padding: 0; }
-.kg-header {
-  padding: 12px 20px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 8px;
-}
-.kg-canvas {
-  position: relative;
-  width: 100%;
-  background: var(--bg2);
-  overflow: hidden;
-}
-
-/* ── SVG edges always at z=0 — behind every node ── */
-#kgsvg {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── Base node — sits at z=2, always above SVG ── */
-.kn {
-  position: absolute;
-  border: 1px solid;
-  background: rgba(7,7,7,0.93);
-  transform: translate(-50%,-50%);
-  white-space: nowrap;
-  cursor: none;
-  user-select: none;
-  z-index: 2;
-  letter-spacing: .03em;
-  font-size: 7px;
-  padding: 2px 6px;
-  /* only opacity transitions — no transform (avoids browser tooltip-layout bug) */
-  transition: opacity .25s ease, box-shadow .2s ease;
-}
-
-/* ── CORE ── always full, double-pulse ring ── */
-.kn.core {
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .06em;
-  padding: 5px 16px;
-  border-color: var(--acc);
-  color: var(--acc);
-  background: rgba(0,255,136,.07);
-  z-index: 10;
-  box-shadow: 0 0 0 1px rgba(0,255,136,.12), 0 0 16px rgba(0,255,136,.06);
-}
-.kn.core::before {
-  content: '';
-  position: absolute; inset: -7px;
-  border: 1px solid rgba(0,255,136,.2);
-  animation: coreRing 3.5s ease-out infinite;
-  pointer-events: none;
-}
-.kn.core::after {
-  content: '';
-  position: absolute; inset: -18px;
-  border: 1px solid rgba(0,255,136,.07);
-  animation: coreRing 3.5s ease-out 1.5s infinite;
-  pointer-events: none;
-}
-
-/* ── DOMAINS — always full ── */
-.kn.dom {
-  border-color: rgba(68,136,255,.5);
-  color: #88bbff;
-  background: rgba(7,7,7,.95);
-  font-size: 7.5px;
-  font-weight: 600;
-  padding: 2px 8px;
-  z-index: 5;
-}
-
-/* ── Rest: ghosted in default state ── */
-.kn.proj   { border-color: rgba(255,170,0,.3);  color: #886622; opacity: .16; }
-.kn.tech   { border-color: rgba(55,55,55,.9);   color: #4a4a4a; opacity: .14; }
-.kn.course { border-color: rgba(160,80,255,.25);color: #6633aa; opacity: .14; }
-.kn.math   { border-color: rgba(0,180,255,.22); color: #1a5577; opacity: .14; }
-
-/* ── HOVER STATE: canvas.has-hover dims everything not highlighted ── */
-.kg-canvas.has-hover .kn.core   { /* core always at full — override below */ }
-.kg-canvas.has-hover .kn.dom    { opacity: .07; }
-.kg-canvas.has-hover .kn.proj   { opacity: .04; }
-.kg-canvas.has-hover .kn.tech   { opacity: .03; }
-.kg-canvas.has-hover .kn.course { opacity: .03; }
-.kg-canvas.has-hover .kn.math   { opacity: .03; }
-
-/* core is always 1 — the anchor */
-.kg-canvas.has-hover .kn.core { opacity: 1 !important; }
-
-/* highlighted: snap to full with per-type glow */
-.kg-canvas.has-hover .kn.kn-hi          { opacity: 1 !important; z-index: 15; }
-.kg-canvas.has-hover .kn.kn-hi.dom      { box-shadow: 0 0 0 1px rgba(68,136,255,.4), 0 0 10px rgba(68,136,255,.1); }
-.kg-canvas.has-hover .kn.kn-hi.proj     { color: #ddaa33; border-color: rgba(255,170,0,.55); }
-.kg-canvas.has-hover .kn.kn-hi.tech     { color: #aaa;    border-color: rgba(120,120,120,.7); }
-.kg-canvas.has-hover .kn.kn-hi.course   { color: #aa77ff; border-color: rgba(170,90,255,.6); }
-.kg-canvas.has-hover .kn.kn-hi.math     { color: #33aadd; border-color: rgba(0,170,220,.55); }
-
-/* ── Entrance animation ── */
-@keyframes kgNodeIn { from{opacity:0;} to{opacity:1;} }
-@keyframes coreRing { 0%{inset:-6px;opacity:.5;} 100%{inset:-30px;opacity:0;} }
-
-/* edges: CSS transition only (no JS colour changes needed) */
-#kgsvg line { transition: opacity .2s ease; }
+.ov-kg{padding:0;}
+.kg-topbar{padding:10px 20px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;background:var(--bg2);}
+.kg-title-row{display:flex;align-items:center;gap:10px;}
+.kg-title-txt{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text);font-weight:600;}
+.kg-node-count{font-size:8px;color:var(--muted);padding:1px 7px;border:1px solid var(--border);}
+.kg-legend{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.kgl{font-size:8px;letter-spacing:.04em;}
+/* filter bar */
+.kg-filters{padding:7px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:4px;flex-wrap:wrap;background:var(--bg);}
+.kf{font-family:var(--mono);font-size:8.5px;padding:3px 9px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:none;transition:all .14s;letter-spacing:.03em;position:relative;}
+.kf:hover{border-color:var(--b2);color:var(--text);}
+.kf.on{border-color:var(--acc);color:var(--acc);background:rgba(0,255,136,.06);}
+.kf .kf-count{font-size:7px;padding:0 3px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);margin-left:4px;vertical-align:middle;}
+.kf.on .kf-count{background:rgba(0,255,136,.1);border-color:rgba(0,255,136,.3);color:var(--acc);}
+.kf.kf-reset{border-color:transparent;color:var(--muted);margin-left:2px;}
+.kf.kf-reset:hover{color:var(--red);border-color:rgba(255,85,102,.3);}
+.kf.kf-explore{border-color:rgba(180,80,255,.4);color:#bb55ff;margin-left:auto;}
+.kf.kf-explore.running{border-color:rgba(180,80,255,.8);color:#cc77ff;background:rgba(180,80,255,.08);animation:explorePulse 1.2s ease infinite;}
+@keyframes explorePulse{0%,100%{box-shadow:0 0 0 0 rgba(180,80,255,.4);}50%{box-shadow:0 0 0 4px rgba(180,80,255,.0);}}
+.kg-search-wrap{margin-left:6px;}
+.kg-search{font-family:var(--mono);font-size:8.5px;padding:3px 9px;border:1px solid var(--border);background:var(--bg2);color:var(--text);outline:none;width:130px;transition:border-color .15s,width .2s;cursor:none;}
+.kg-search:focus{border-color:var(--acc);width:175px;}
+.kg-search::placeholder{color:var(--muted);}
+/* status */
+.kg-statusbar{padding:5px 20px;border-bottom:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:26px;}
+#kgStatusTxt{font-size:8px;color:var(--muted);letter-spacing:.04em;}
+#kgPinHint{font-size:8px;color:var(--acc);}
+/* canvas */
+.kg-canvas{position:relative;width:100%;background:var(--bg2);overflow:hidden;}
+#kgsvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+/* tooltip */
+.kg-tip{position:absolute;z-index:50;background:var(--bg3);border:1px solid var(--b2);padding:9px 13px;pointer-events:none;max-width:215px;box-shadow:0 4px 24px rgba(0,0,0,.7);animation:tipIn .12s ease;}
+@keyframes tipIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:none;}}
+.kg-tip-name{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.kg-tip-type{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;}
+.kg-tip-stat{font-size:8px;color:var(--dim);line-height:1.5;}
+.kg-tip-pin{font-size:7.5px;color:var(--muted);margin-top:5px;border-top:1px solid var(--border);padding-top:5px;}
+/* floating info panel (for pinned proj/cert nodes) */
+.kg-panel{position:absolute;right:14px;top:14px;width:220px;background:var(--bg3);border:1px solid var(--b2);z-index:30;padding:14px;box-shadow:0 8px 32px rgba(0,0,0,.8);animation:panelIn .2s ease;display:none;}
+@keyframes panelIn{from{opacity:0;transform:translateX(10px);}to{opacity:1;transform:none;}}
+.kg-panel.open{display:block;}
+.kg-panel-close{position:absolute;top:8px;right:10px;font-size:10px;color:var(--muted);cursor:none;background:none;border:none;}
+.kg-panel-close:hover{color:var(--text);}
+.kg-panel-type{font-size:7px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;}
+.kg-panel-title{font-family:var(--sans);font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px;line-height:1.2;}
+.kg-panel-desc{font-size:8.5px;color:var(--dim);line-height:1.6;margin-bottom:8px;}
+.kg-panel-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.kg-panel-tag{font-size:7px;padding:1px 6px;border:1px solid var(--border);color:var(--muted);}
+.kg-panel-stat{font-size:8px;color:var(--muted);padding-top:6px;border-top:1px solid var(--border);}
+/* base node */
+.kn{position:absolute;border:1px solid;background:rgba(7,7,7,0.94);transform:translate(-50%,-50%);white-space:nowrap;cursor:none;user-select:none;z-index:2;letter-spacing:.03em;font-size:7px;padding:2px 6px;transition:opacity .22s ease,box-shadow .18s ease,border-color .18s ease,color .18s ease;}
+/* CORE */
+.kn.core{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.06em;padding:5px 18px;border-color:var(--acc);color:var(--acc);background:rgba(0,255,136,.07);z-index:10;box-shadow:0 0 0 1px rgba(0,255,136,.12),0 0 16px rgba(0,255,136,.06);}
+.kn.core::before{content:'';position:absolute;inset:-7px;border:1px solid rgba(0,255,136,.2);animation:coreRing 3.5s ease-out infinite;pointer-events:none;}
+.kn.core::after{content:'';position:absolute;inset:-18px;border:1px solid rgba(0,255,136,.07);animation:coreRing 3.5s ease-out 1.5s infinite;pointer-events:none;}
+/* DOMAIN */
+.kn.dom{border-color:rgba(68,136,255,.5);color:#88bbff;background:rgba(7,7,7,.95);font-size:7.5px;font-weight:600;padding:2px 9px;z-index:5;}
+/* REST: ghosted */
+.kn.proj  {border-color:rgba(255,170,0,.35);color:#886622;opacity:.16;}
+.kn.tech  {border-color:rgba(55,55,55,.9);  color:#444;   opacity:.12;}
+.kn.course{border-color:rgba(160,80,255,.28);color:#5522aa;opacity:.12;}
+.kn.math  {border-color:rgba(0,170,255,.22);color:#154466;opacity:.12;}
+.kn.cert  {border-color:rgba(255,130,50,.3);color:#883311;opacity:.12;}
+.kn.intern{border-color:rgba(0,220,180,.35);color:#116655;opacity:.14;font-weight:600;}
+.kn.design{border-color:rgba(255,140,200,.35);color:#882255;opacity:.14;font-weight:600;}
+/* PIN */
+.kn.kn-pin{outline:1px solid var(--acc);outline-offset:3px;animation:pinPulse 2s ease infinite;}
+@keyframes pinPulse{0%,100%{outline-color:rgba(0,255,136,.7);}50%{outline-color:rgba(0,255,136,.15);}}
+/* GROUP FLASH — cascade wave when filter clicked */
+@keyframes kgGroupFlash{0%{box-shadow:0 0 0 0 var(--gfc,rgba(255,255,255,.5));opacity:.3;}40%{opacity:1;box-shadow:0 0 0 5px transparent;}100%{opacity:1;box-shadow:none;}}
+.kn.kn-flash{animation:kgGroupFlash .5s ease both;}
+/* HOVER dimming */
+.kg-canvas.has-hover .kn.dom   {opacity:.07;}
+.kg-canvas.has-hover .kn.proj  {opacity:.04;}
+.kg-canvas.has-hover .kn.tech  {opacity:.03;}
+.kg-canvas.has-hover .kn.course{opacity:.03;}
+.kg-canvas.has-hover .kn.math  {opacity:.03;}
+.kg-canvas.has-hover .kn.cert  {opacity:.03;}
+.kg-canvas.has-hover .kn.intern{opacity:.03;}
+.kg-canvas.has-hover .kn.design{opacity:.03;}
+.kg-canvas.has-hover .kn.core  {opacity:1!important;}
+.kg-canvas.has-hover .kn.kn-hi {opacity:1!important;z-index:15;}
+.kg-canvas.has-hover .kn.kn-hi.dom   {box-shadow:0 0 0 1px rgba(68,136,255,.45),0 0 12px rgba(68,136,255,.1);}
+.kg-canvas.has-hover .kn.kn-hi.proj  {color:#ddaa33;border-color:rgba(255,170,0,.65);}
+.kg-canvas.has-hover .kn.kn-hi.tech  {color:#bbb;border-color:rgba(130,130,130,.7);}
+.kg-canvas.has-hover .kn.kn-hi.course{color:#aa77ff;border-color:rgba(170,90,255,.65);}
+.kg-canvas.has-hover .kn.kn-hi.math  {color:#33aadd;border-color:rgba(0,160,220,.6);}
+.kg-canvas.has-hover .kn.kn-hi.cert  {color:#ff9955;border-color:rgba(255,130,50,.65);}
+.kg-canvas.has-hover .kn.kn-hi.intern{color:#00ddbb;border-color:rgba(0,210,170,.65);box-shadow:0 0 0 1px rgba(0,210,170,.25);}
+.kg-canvas.has-hover .kn.kn-hi.design{color:#ff88cc;border-color:rgba(255,130,200,.65);}
+/* filter dim/lit */
+.kn.kn-dim{opacity:.035!important;}
+.kn.kn-lit{opacity:1!important;z-index:15;}
+.kn.core.kn-dim{opacity:1!important;}
+/* animations */
+@keyframes kgNodeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes coreRing{0%{inset:-6px;opacity:.5;}100%{inset:-30px;opacity:0;}}
+#kgsvg line{transition:opacity .18s ease,stroke .22s ease,stroke-width .22s ease;}
 
 
-/* ========== CHARTS ==========
 /* ========== CHARTS ========== */
 .chart-wrap{padding:28px 36px;border-bottom:1px solid var(--border);}
 .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
@@ -822,23 +808,63 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
   <!-- KNOWLEDGE GRAPH -->
   <div class="ov-kg">
-    <div class="kg-header">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text);font-weight:600;">Knowledge Graph</span>
-        <span style="font-size:8px;color:var(--muted);">70+ nodes · full tech DNA</span>
+    <!-- Top bar: title + live stats -->
+    <div class="kg-topbar">
+      <div class="kg-title-row">
+        <span class="kg-title-txt">Knowledge Graph</span>
+        <span class="kg-node-count" id="kgNodeCount">— nodes</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <span style="font-size:8px;color:var(--dim);">Core + domains always visible · hover any node to reveal its cluster</span>
-        <span style="font-size:8px;color:var(--acc);">● Core</span>
-        <span style="font-size:8px;color:#99ccff;">● Domain</span>
-        <span style="font-size:8px;color:#ffcc55;">● Project</span>
-        <span style="font-size:8px;color:#b877ff;">● Course</span>
-        <span style="font-size:8px;color:#33ccff;">● Math</span>
-        <span style="font-size:8px;color:#555;">● Tech</span>
+      <div class="kg-legend">
+        <span class="kgl" style="color:var(--acc);">◆ Core</span>
+        <span class="kgl" style="color:#88bbff;">◆ Domain</span>
+        <span class="kgl" style="color:#00ccaa;">◆ Internship</span>
+        <span class="kgl" style="color:#ffcc44;">◆ Project</span>
+        <span class="kgl" style="color:#aa77ff;">◆ Course</span>
+        <span class="kgl" style="color:#33bbff;">◆ Math</span>
+        <span class="kgl" style="color:#555;">◆ Tech</span>
+        <span class="kgl" style="color:#ff8844;">◆ Cert</span>
       </div>
     </div>
-    <div class="kg-canvas" id="kgCanvas" style="height:500px;">
-      <svg id="kgsvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></svg>
+    <!-- Filter bar -->
+    <div class="kg-filters" id="kgFilters">
+      <button class="kf on" data-filter="all">All</button>
+      <button class="kf" data-filter="proj">Projects</button>
+      <button class="kf" data-filter="intern">Internships</button>
+      <button class="kf" data-filter="ai">AI / NLP</button>
+      <button class="kf" data-filter="ml">ML</button>
+      <button class="kf" data-filter="ios">iOS</button>
+      <button class="kf" data-filter="web">Web</button>
+      <button class="kf" data-filter="game">Game Dev</button>
+      <button class="kf" data-filter="sys">Systems</button>
+      <button class="kf" data-filter="design">Design</button>
+      <button class="kf" data-filter="cp">Competitive</button>
+      <button class="kf" data-filter="course">Courses</button>
+      <button class="kf" data-filter="math">Math</button>
+      <button class="kf" data-filter="cert">Certs</button>
+      <button class="kf kf-reset" id="kgReset">✕ Reset</button>
+      <button class="kf kf-explore" id="kgExplore">▶ Auto-explore</button>
+      <div class="kg-search-wrap">
+        <input class="kg-search" id="kgSearch" placeholder="Search…" autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+    <!-- Status bar -->
+    <div class="kg-statusbar" id="kgStatus">
+      <span id="kgStatusTxt">Hover to explore · click to pin · filters cascade-reveal clusters</span>
+      <span id="kgPinHint" style="display:none;">📌 Pinned — click again or Reset to clear</span>
+    </div>
+    <!-- Canvas -->
+    <div class="kg-canvas" id="kgCanvas" style="height:640px;">
+      <svg id="kgsvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></svg>
+      <div class="kg-tip" id="kgTip" style="display:none;"></div>
+      <!-- Floating project/cert detail panel -->
+      <div class="kg-panel" id="kgPanel">
+        <button class="kg-panel-close" id="kgPanelClose">✕</button>
+        <div class="kg-panel-type" id="kgPanelType"></div>
+        <div class="kg-panel-title" id="kgPanelTitle"></div>
+        <div class="kg-panel-desc" id="kgPanelDesc"></div>
+        <div class="kg-panel-tags" id="kgPanelTags"></div>
+        <div class="kg-panel-stat" id="kgPanelStat"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1430,326 +1456,722 @@ const ACHIEVEMENTS = [
 
 // =================== KNOWLEDGE GRAPH — Dense, Always Visible ===================
 const KG_NODES = [
-  // Core
-  {id:'nt',       label:'Nishant Tomer',       cls:'core',   x:50,  y:48},
+  // ── CORE ──
+  {id:'nt',label:'Nishant Tomer',cls:'core',x:50,y:47},
 
-  // Domains
-  {id:'ai',       label:'AI / NLP',             cls:'dom',    x:76,  y:14},
-  {id:'ios',      label:'iOS Dev',              cls:'dom',    x:16,  y:16},
-  {id:'game',     label:'Game Dev',             cls:'dom',    x:8,   y:58},
-  {id:'web',      label:'Full-Stack',           cls:'dom',    x:86,  y:66},
-  {id:'cp',       label:'Comp. Prog.',          cls:'dom',    x:48,  y:90},
-  {id:'sys',      label:'Systems / OS',         cls:'dom',    x:22,  y:76},
-  {id:'ml',       label:'ML / Deep Learning',   cls:'dom',    x:60,  y:16},
-  {id:'db',       label:'Databases',            cls:'dom',    x:90,  y:84},
+  // ── DOMAINS (9) ──
+  {id:'ai',   label:'AI / NLP',          cls:'dom',x:79,y:11},
+  {id:'ios',  label:'iOS Dev',           cls:'dom',x:12,y:12},
+  {id:'game', label:'Game Dev',          cls:'dom',x:6,  y:58},
+  {id:'web',  label:'Full-Stack Web',    cls:'dom',x:89,y:65},
+  {id:'cp',   label:'Competitive Prog.', cls:'dom',x:48,y:93},
+  {id:'sys',  label:'Systems / OS',      cls:'dom',x:18,y:77},
+  {id:'ml',   label:'ML / Deep Learning',cls:'dom',x:62,y:12},
+  {id:'db',   label:'Databases',         cls:'dom',x:92,y:81},
+  {id:'design',label:'UI/UX & Design',   cls:'dom',x:14,y:41},
 
-  // Languages
-  {id:'java',     label:'Java',                 cls:'tech',   x:30,  y:64},
-  {id:'python',   label:'Python',               cls:'tech',   x:55,  y:60},
-  {id:'swift',    label:'Swift',                cls:'tech',   x:4,   y:24},
-  {id:'js',       label:'JavaScript',           cls:'tech',   x:94,  y:50},
-  {id:'cpp',      label:'C++',                  cls:'tech',   x:18,  y:90},
-  {id:'sql',      label:'SQL',                  cls:'tech',   x:84,  y:90},
+  // ── INTERNSHIPS ──
+  {id:'mod_intern', label:'ModularityLabs Intern',cls:'intern',x:5, y:4},
+  {id:'onstop_intern',label:'1Stop Industrial',   cls:'intern',x:22,y:4},
 
-  // AI / ML tech
-  {id:'whisper',  label:'OpenAI Whisper',       cls:'tech',   x:92,  y:8},
-  {id:'pyannote', label:'Pyannote.audio',       cls:'tech',   x:80,  y:5},
-  {id:'pytorch',  label:'PyTorch',              cls:'tech',   x:66,  y:6},
-  {id:'tensorflow',label:'TensorFlow',          cls:'tech',   x:72,  y:24},
-  {id:'numpy',    label:'NumPy',                cls:'tech',   x:58,  y:28},
-  {id:'cuda',     label:'CUDA',                 cls:'tech',   x:62,  y:80},
-  {id:'cudnn',    label:'cuDNN',                cls:'tech',   x:70,  y:74},
-  {id:'ner',      label:'NER / spaCy',          cls:'tech',   x:88,  y:18},
-  {id:'sklearn',  label:'scikit-learn',         cls:'tech',   x:48,  y:22},
+  // ── LANGUAGES ──
+  {id:'java',  label:'Java',        cls:'tech',x:27,y:62},
+  {id:'python',label:'Python',      cls:'tech',x:54,y:57},
+  {id:'swift', label:'Swift',       cls:'tech',x:3,  y:22},
+  {id:'js',    label:'JavaScript',  cls:'tech',x:95,y:50},
+  {id:'cpp',   label:'C++',         cls:'tech',x:15,y:89},
+  {id:'sql',   label:'SQL',         cls:'tech',x:85,y:89},
+  {id:'c',     label:'C',           cls:'tech',x:22,y:83},
+  {id:'ts',    label:'TypeScript',  cls:'tech',x:89,y:55},
+  {id:'html_css',label:'HTML / CSS',cls:'tech',x:96,y:72},
+  {id:'bash',  label:'Bash / Shell',cls:'tech',x:36,y:76},
 
-  // iOS tech
-  {id:'swiftui',  label:'SwiftUI',              cls:'tech',   x:4,   y:12},
-  {id:'combine',  label:'Combine',              cls:'tech',   x:6,   y:36},
-  {id:'coredata', label:'Core Data',            cls:'tech',   x:14,  y:50},
-  {id:'firebase', label:'Firebase',             cls:'tech',   x:22,  y:8},
-  {id:'firestore',label:'Firestore',            cls:'tech',   x:12,  y:26},
-  {id:'mvvm',     label:'MVVM',                 cls:'tech',   x:4,   y:42},
+  // ── AI / NLP TECH ──
+  {id:'whisper',     label:'OpenAI Whisper',  cls:'tech',x:94,y:5},
+  {id:'pyannote',    label:'Pyannote.audio',  cls:'tech',x:84,y:2},
+  {id:'pytorch',     label:'PyTorch',         cls:'tech',x:68,y:4},
+  {id:'tensorflow',  label:'TensorFlow',      cls:'tech',x:74,y:22},
+  {id:'numpy',       label:'NumPy',           cls:'tech',x:58,y:26},
+  {id:'pandas',      label:'Pandas',          cls:'tech',x:52,y:33},
+  {id:'sklearn',     label:'scikit-learn',    cls:'tech',x:44,y:21},
+  {id:'ner',         label:'NER / spaCy',     cls:'tech',x:90,y:18},
+  {id:'transformers',label:'HuggingFace',     cls:'tech',x:84,y:10},
+  {id:'langchain',   label:'LangChain',       cls:'tech',x:95,y:13},
+  {id:'icd10',       label:'ICD-10 NLP',      cls:'tech',x:97,y:24},
+  {id:'soap',        label:'SOAP Note Gen.',  cls:'tech',x:97,y:32},
+  {id:'wer',         label:'WER Metrics',     cls:'tech',x:97,y:40},
+  {id:'diarize',     label:'Speaker Diariz.', cls:'tech',x:89,y:8},
+  {id:'asr',         label:'ASR Pipeline',    cls:'tech',x:80,y:19},
+  {id:'nltk',        label:'NLTK',            cls:'tech',x:92,y:27},
+  {id:'attention',   label:'Attention / Transformers',cls:'tech',x:76,y:8},
+  {id:'rag',         label:'RAG Pipeline',    cls:'tech',x:97,y:8},
+  {id:'llm',         label:'LLMs / Prompting',cls:'tech',x:91,y:13},
+  {id:'audio_proc',  label:'Audio Processing',cls:'tech',x:81,y:26},
+  {id:'opencv',      label:'OpenCV',          cls:'tech',x:77,y:16},
+  {id:'lora',        label:'LoRA Fine-tuning',cls:'tech',x:71,y:16},
 
-  // Web tech
-  {id:'react',    label:'React',                cls:'tech',   x:96,  y:56},
-  {id:'node',     label:'Node.js',              cls:'tech',   x:92,  y:70},
-  {id:'express',  label:'Express.js',           cls:'tech',   x:84,  y:76},
-  {id:'supabase', label:'Supabase',             cls:'tech',   x:96,  y:80},
-  {id:'postgres', label:'PostgreSQL',           cls:'tech',   x:88,  y:88},
-  {id:'jwt',      label:'JWT',                  cls:'tech',   x:96,  y:64},
-  {id:'tsq',      label:'TanStack Query',       cls:'tech',   x:80,  y:58},
-  {id:'fastapi',  label:'FastAPI',              cls:'tech',   x:74,  y:84},
-  {id:'rest',     label:'REST APIs',            cls:'tech',   x:76,  y:66},
+  // ── ML / DATA SCIENCE ──
+  {id:'cuda',       label:'CUDA',              cls:'tech',x:62,y:80},
+  {id:'cudnn',      label:'cuDNN',             cls:'tech',x:70,y:73},
+  {id:'matrix_f',   label:'Matrix Factorisat.',cls:'tech',x:65,y:56},
+  {id:'collab_f',   label:'Collab. Filtering', cls:'tech',x:74,y:63},
+  {id:'embed',      label:'Embeddings',        cls:'tech',x:57,y:42},
+  {id:'gradDesc',   label:'Gradient Descent',  cls:'tech',x:65,y:30},
+  {id:'svd',        label:'SVD / PCA',         cls:'tech',x:58,y:38},
+  {id:'backprop',   label:'Backpropagation',   cls:'tech',x:73,y:29},
+  {id:'matplotlib', label:'Matplotlib',        cls:'tech',x:56,y:49},
+  {id:'seaborn',    label:'Seaborn',           cls:'tech',x:62,y:48},
+  {id:'regularize', label:'Regularization',    cls:'tech',x:69,y:35},
+  {id:'dropout',    label:'Dropout / BatchNorm',cls:'tech',x:74,y:37},
+  {id:'cnn',        label:'CNN / Vision',      cls:'tech',x:69,y:22},
 
-  // Game / Systems tools
-  {id:'libgdx',   label:'libGDX',              cls:'tech',   x:4,   y:64},
-  {id:'unreal',   label:'Unreal Engine',        cls:'tech',   x:14,  y:80},
-  {id:'tkinter',  label:'Tkinter / PyQT5',      cls:'tech',   x:36,  y:78},
-  {id:'xcode',    label:'Xcode',                cls:'tech',   x:6,   y:50},
-  {id:'git',      label:'Git',                  cls:'tech',   x:30,  y:52},
-  {id:'docker',   label:'Docker',               cls:'tech',   x:40,  y:52},
-  {id:'intellij', label:'IntelliJ',             cls:'tech',   x:24,  y:62},
+  // ── iOS TECH ──
+  {id:'swiftui',    label:'SwiftUI',      cls:'tech',x:3,  y:10},
+  {id:'combine',    label:'Combine',      cls:'tech',x:5,  y:33},
+  {id:'coredata',   label:'Core Data',    cls:'tech',x:14, y:47},
+  {id:'firebase',   label:'Firebase',     cls:'tech',x:23, y:6},
+  {id:'firestore',  label:'Firestore',    cls:'tech',x:12, y:24},
+  {id:'mvvm',       label:'MVVM',         cls:'tech',x:3,  y:40},
+  {id:'xcode',      label:'Xcode',        cls:'tech',x:6,  y:47},
+  {id:'agile',      label:'Agile / Scrum',cls:'tech',x:8,  y:26},
+  {id:'offline',    label:'Offline-First',cls:'tech',x:3,  y:54},
+  {id:'hig',        label:'iOS HIG',      cls:'tech',x:14, y:33},
+  {id:'apns',       label:'APNS / Notifs',cls:'tech',x:22, y:16},
+  {id:'instruments',label:'Instruments',  cls:'tech',x:23, y:25},
 
-  // Projects
-  {id:'clinical', label:'Clinical Scribe',      cls:'proj',   x:88,  y:26},
-  {id:'ios_proj', label:'iOS Productivity',     cls:'proj',   x:6,   y:4},
-  {id:'agrilink', label:'AgriLink',             cls:'proj',   x:96,  y:42},
-  {id:'asm',      label:'Assembler & Sim',      cls:'proj',   x:32,  y:90},
-  {id:'personalia',label:'Personalisation Eng.',cls:'proj',   x:74,  y:52},
-  {id:'leet',     label:'LeetCode 1700+',       cls:'proj',   x:56,  y:92},
-  {id:'angry',    label:'Angry Birds Clone',    cls:'proj',   x:8,   y:72},
-  {id:'geo',      label:'GeoGuesser Game',      cls:'proj',   x:40,  y:88},
-  {id:'escape',   label:'3D Escape Room',       cls:'proj',   x:20,  y:86},
+  // ── WEB TECH ──
+  {id:'react',    label:'React',          cls:'tech',x:97,y:56},
+  {id:'node',     label:'Node.js',        cls:'tech',x:93,y:69},
+  {id:'express',  label:'Express.js',     cls:'tech',x:85,y:74},
+  {id:'supabase', label:'Supabase',       cls:'tech',x:97,y:79},
+  {id:'postgres', label:'PostgreSQL',     cls:'tech',x:89,y:87},
+  {id:'jwt',      label:'JWT Auth',       cls:'tech',x:97,y:64},
+  {id:'tsq',      label:'TanStack Query', cls:'tech',x:79,y:57},
+  {id:'fastapi',  label:'FastAPI',        cls:'tech',x:74,y:83},
+  {id:'rest',     label:'REST APIs',      cls:'tech',x:79,y:67},
+  {id:'postman',  label:'Postman',        cls:'tech',x:84,y:60},
+  {id:'rbac',     label:'RBAC Auth',      cls:'tech',x:91,y:59},
+  {id:'tailwind', label:'Tailwind CSS',   cls:'tech',x:91,y:74},
+  {id:'vite',     label:'Vite / Webpack', cls:'tech',x:85,y:52},
+  {id:'websocket',label:'WebSockets',     cls:'tech',x:97,y:85},
+  {id:'cors',     label:'CORS / HTTP',    cls:'tech',x:93,y:93},
 
-  // Courses
-  {id:'cse102',   label:'DSA',                  cls:'course', x:38,  y:68},
-  {id:'cse201',   label:'OOP / Java',           cls:'course', x:26,  y:68},
-  {id:'cse231',   label:'Operating Systems',    cls:'course', x:20,  y:58},
-  {id:'cse112',   label:'Computer Org.',        cls:'course', x:32,  y:82},
-  {id:'cse202',   label:'DBMS',                 cls:'course', x:82,  y:94},
-  {id:'cse222',   label:'Algorithms (ADA)',     cls:'course', x:44,  y:74},
-  {id:'cse322',   label:'Theory of Computation',cls:'course', x:52,  y:76},
-  {id:'cse640',   label:'Collab. Filtering',   cls:'course', x:68,  y:64},
-  {id:'btp499',   label:'BTP499 — SOAP AI',    cls:'course', x:82,  y:38},
-  {id:'eco111',   label:'Digital Circuits',     cls:'course', x:12,  y:40},
-  {id:'des102',   label:'HCI Design',           cls:'course', x:14,  y:30},
+  // ── DESIGN TOOLS ──
+  {id:'figma',    label:'Figma',          cls:'tech',x:5,  y:63},
+  {id:'canva',    label:'Canva',          cls:'tech',x:14, y:58},
+  {id:'proto',    label:'Prototyping',    cls:'tech',x:8,  y:70},
+  {id:'ux_res',   label:'UX Research',    cls:'tech',x:3,  y:78},
+  {id:'wireframe',label:'Wireframing',    cls:'tech',x:19, y:52},
 
-  // Math
-  {id:'mth201',   label:'Probability & Stats',  cls:'math',   x:46,  y:20},
-  {id:'mth204',   label:'Linear Algebra',       cls:'math',   x:60,  y:34},
-  {id:'mth210',   label:'Discrete Structures',  cls:'math',   x:40,  y:36},
-  {id:'mth371',   label:'Stochastic Processes', cls:'math',   x:52,  y:10},
-  {id:'mth373',   label:'Scientific Computing', cls:'math',   x:36,  y:26},
-  {id:'mth377',   label:'Convex Optimization',  cls:'math',   x:70,  y:42},
-  {id:'mth240',   label:'Real Analysis',        cls:'math',   x:30,  y:36},
-  {id:'mth300',   label:'Math Logic',           cls:'math',   x:48,  y:38},
-  {id:'mth212',   label:'Abstract Algebra',     cls:'math',   x:34,  y:46},
+  // ── GAME / SYSTEMS TOOLS ──
+  {id:'libgdx',      label:'libGDX',          cls:'tech',x:3,  y:64},
+  {id:'unreal',      label:'Unreal Engine',   cls:'tech',x:14, y:80},
+  {id:'blueprint',   label:'UE Blueprints',   cls:'tech',x:22, y:85},
+  {id:'physics_eng', label:'Physics Engine',  cls:'tech',x:11, y:71},
+  {id:'tkinter',     label:'Tkinter / PyQT5', cls:'tech',x:35, y:79},
+  {id:'git',         label:'Git',             cls:'tech',x:30, y:50},
+  {id:'github',      label:'GitHub',          cls:'tech',x:36, y:52},
+  {id:'docker',      label:'Docker',          cls:'tech',x:40, y:50},
+  {id:'intellij',    label:'IntelliJ',        cls:'tech',x:23, y:61},
+  {id:'vscode',      label:'VS Code',         cls:'tech',x:38, y:56},
+  {id:'serialise',   label:'Serialisation',   cls:'tech',x:18, y:73},
+  {id:'oop',         label:'OOP Patterns',    cls:'tech',x:30, y:69},
+  {id:'linux',       label:'Linux',           cls:'tech',x:28, y:77},
+  {id:'regex',       label:'Regex / Parsing', cls:'tech',x:44, y:61},
+
+  // ── CONCEPTS ──
+  {id:'concurrency', label:'Concurrency',     cls:'tech',x:28,y:54},
+  {id:'paging',      label:'Paging / VM',     cls:'tech',x:26,y:76},
+  {id:'scheduling',  label:'CPU Scheduling',  cls:'tech',x:14,y:63},
+  {id:'isa',         label:'ISA Design',      cls:'tech',x:34,y:87},
+  {id:'cache',       label:'Cache / TLB',     cls:'tech',x:22,y:70},
+  {id:'normalise',   label:'DB Normalisation',cls:'tech',x:84,y:94},
+  {id:'indexing',    label:'DB Indexing',     cls:'tech',x:89,y:94},
+  {id:'cicd',        label:'CI / CD',         cls:'tech',x:45,y:45},
+
+  // ── PROJECTS ──
+  {id:'clinical',   label:'Clinical Scribe',    cls:'proj',x:88,y:28},
+  {id:'ios_proj',   label:'iOS Productivity',   cls:'proj',x:6,  y:4},
+  {id:'agrilink',   label:'AgriLink',           cls:'proj',x:97,y:43},
+  {id:'asm',        label:'Assembler & Sim',    cls:'proj',x:32,y:92},
+  {id:'personalia', label:'Personalisation Eng',cls:'proj',x:74,y:50},
+  {id:'leet',       label:'LeetCode 1700+',     cls:'proj',x:55,y:95},
+  {id:'angry',      label:'Angry Birds Clone',  cls:'proj',x:7,  y:73},
+  {id:'geo',        label:'GeoGuesser Game',    cls:'proj',x:40,y:89},
+  {id:'escape',     label:'3D Escape Room',     cls:'proj',x:21,y:88},
+
+  // ── COURSES ──
+  {id:'cse102',label:'DSA',              cls:'course',x:39,y:68},
+  {id:'cse201',label:'OOP / Java',       cls:'course',x:25,y:68},
+  {id:'cse231',label:'Operating Systems',cls:'course',x:19,y:57},
+  {id:'cse112',label:'Computer Org.',    cls:'course',x:31,y:83},
+  {id:'cse202',label:'DBMS',             cls:'course',x:82,y:93},
+  {id:'cse222',label:'Algorithms (ADA)', cls:'course',x:43,y:75},
+  {id:'cse322',label:'Theory of Comp.',  cls:'course',x:51,y:77},
+  {id:'cse640',label:'Collab. Filtering',cls:'course',x:67,y:64},
+  {id:'btp499',label:'BTP499 — SOAP AI', cls:'course',x:82,y:38},
+  {id:'eco111',label:'Digital Circuits', cls:'course',x:11,y:39},
+  {id:'des102',label:'HCI Design',       cls:'course',x:10,y:29},
+  {id:'com301',label:'Tech. Writing',    cls:'course',x:50,y:57},
+  {id:'psy307',label:'Decision Neuro.',  cls:'course',x:40,y:30},
+  {id:'mth100',label:'Calculus',         cls:'course',x:27,y:27},
+  {id:'cse101',label:'Intro to CS',      cls:'course',x:34,y:60},
+  {id:'cse303',label:'Computer Networks',cls:'course',x:47,y:67},
+  {id:'des101',label:'Design Thinking',  cls:'course',x:21,y:46},
+  {id:'cse546',label:'Human-Comp. Interact.',cls:'course',x:8,y:48},
+  {id:'psy101',label:'Cognition & Mind', cls:'course',x:25,y:37},
+
+  // ── MATH ──
+  {id:'mth201',label:'Prob & Stats',       cls:'math',x:44,y:20},
+  {id:'mth204',label:'Linear Algebra',     cls:'math',x:57,y:33},
+  {id:'mth210',label:'Discrete Structures',cls:'math',x:37,y:35},
+  {id:'mth371',label:'Stochastic Proc.',   cls:'math',x:50,y:9},
+  {id:'mth373',label:'Scientific Comp.',   cls:'math',x:33,y:25},
+  {id:'mth377',label:'Convex Optim.',      cls:'math',x:69,y:40},
+  {id:'mth240',label:'Real Analysis',      cls:'math',x:28,y:35},
+  {id:'mth300',label:'Math Logic',         cls:'math',x:46,y:38},
+  {id:'mth212',label:'Abstract Algebra',   cls:'math',x:32,y:45},
+  {id:'mth372',label:'Stat. Inference',    cls:'math',x:55,y:22},
+  {id:'bayes', label:'Bayesian Inference', cls:'math',x:44,y:28},
+  {id:'eigenval',label:'Eigenvalues/SVD',  cls:'math',x:62,y:40},
+  {id:'kkt',   label:'KKT Conditions',     cls:'math',x:74,y:44},
+  {id:'info_theory',label:'Information Theory',cls:'math',x:51,y:15},
+
+  // ── CERTIFICATIONS ──
+  {id:'cert_gpu',  label:'GPU Cert — JHU',    cls:'cert',x:70,y:90},
+  {id:'cert_gdb',  label:'Google DB Cert',    cls:'cert',x:77,y:96},
+  {id:'cert_hr',   label:'HackerRank ★×3',   cls:'cert',x:44,y:97},
+  {id:'cert_ai',   label:'AI Camp — IIITD',  cls:'cert',x:34,y:97},
+  {id:'cert_1stop',label:'1Stop Internship', cls:'cert',x:22,y:97},
+  {id:'cert_java', label:'Game Dev — Ninja', cls:'cert',x:10,y:83},
 ];
 
 const KG_EDGES = [
-  // Core to domains
-  ['nt','ai'],['nt','ios'],['nt','game'],['nt','web'],['nt','cp'],['nt','sys'],['nt','ml'],['nt','db'],
+  // ── Core → All Domains ──
+  ['nt','ai'],['nt','ios'],['nt','game'],['nt','web'],['nt','cp'],['nt','sys'],['nt','ml'],['nt','db'],['nt','design'],
 
-  // AI/ML
+  // ── Core → Internships ──
+  ['nt','mod_intern'],['nt','onstop_intern'],
+
+  // ── Internships → Domains/Skills ──
+  ['mod_intern','ios'],['mod_intern','ios_proj'],['mod_intern','swiftui'],['mod_intern','firebase'],
+  ['mod_intern','mvvm'],['mod_intern','agile'],['mod_intern','swift'],['mod_intern','xcode'],
+  ['mod_intern','coredata'],['mod_intern','offline'],['mod_intern','hig'],['mod_intern','combine'],
+  ['mod_intern','cert_1stop'],['mod_intern','instruments'],['mod_intern','apns'],
+  ['onstop_intern','ios'],['onstop_intern','swift'],['onstop_intern','swiftui'],['onstop_intern','cert_1stop'],
+
+  // ── AI / NLP Cluster ──
   ['ai','whisper'],['ai','pyannote'],['ai','pytorch'],['ai','ner'],['ai','tensorflow'],
-  ['ml','pytorch'],['ml','numpy'],['ml','sklearn'],['ml','cuda'],['ml','cudnn'],['ml','mth204'],['ml','mth377'],
-  ['ai','ml'],['ai','mth201'],['ai','mth371'],
+  ['ai','transformers'],['ai','langchain'],['ai','btp499'],['ai','icd10'],['ai','soap'],
+  ['ai','diarize'],['ai','asr'],['ai','ml'],['ai','mth201'],['ai','mth371'],
+  ['ai','nltk'],['ai','attention'],['ai','rag'],['ai','llm'],['ai','audio_proc'],
+  ['ai','opencv'],['ai','lora'],['ai','info_theory'],
+  ['whisper','pyannote'],['whisper','soap'],['whisper','wer'],['whisper','diarize'],['whisper','audio_proc'],
+  ['pyannote','ner'],['pyannote','diarize'],['pyannote','asr'],['pyannote','audio_proc'],
+  ['langchain','transformers'],['langchain','rag'],['langchain','llm'],['langchain','python'],
+  ['icd10','ner'],['soap','icd10'],['soap','clinical'],
+  ['asr','wer'],['diarize','asr'],['asr','clinical'],['asr','audio_proc'],
+  ['nltk','ner'],['nltk','python'],['nltk','regex'],
+  ['attention','transformers'],['attention','pytorch'],['attention','embed'],
+  ['rag','llm'],['rag','embed'],['rag','langchain'],
+  ['llm','transformers'],['llm','attention'],['llm','lora'],
+  ['lora','pytorch'],['lora','transformers'],
+  ['opencv','python'],['opencv','numpy'],['opencv','cnn'],
+  ['audio_proc','whisper'],['audio_proc','pyannote'],['audio_proc','numpy'],
+  ['cnn','pytorch'],['cnn','tensorflow'],['cnn','attention'],
 
-  // iOS
-  ['ios','swiftui'],['ios','combine'],['ios','coredata'],['ios','firebase'],['ios','mvvm'],['ios','xcode'],
-  ['ios','ios_proj'],['ios','firestore'],['swiftui','combine'],['firebase','firestore'],
+  // ── ML / Deep Learning Cluster ──
+  ['ml','pytorch'],['ml','numpy'],['ml','sklearn'],['ml','cuda'],['ml','cudnn'],
+  ['ml','pandas'],['ml','matrix_f'],['ml','collab_f'],['ml','mth372'],['ml','tensorflow'],
+  ['ml','embed'],['ml','gradDesc'],['ml','backprop'],['ml','matplotlib'],['ml','seaborn'],
+  ['ml','regularize'],['ml','dropout'],['ml','cnn'],
+  ['matrix_f','collab_f'],['matrix_f','svd'],['collab_f','cse640'],
+  ['cuda','cudnn'],['embed','svd'],['gradDesc','backprop'],['svd','mth204'],
+  ['backprop','pytorch'],['gradDesc','mth377'],['gradDesc','regularize'],
+  ['dropout','backprop'],['dropout','regularize'],
+  ['matplotlib','numpy'],['matplotlib','pandas'],['matplotlib','seaborn'],
+  ['seaborn','pandas'],['seaborn','matplotlib'],
 
-  // Game
+  // ── iOS Cluster ──
+  ['ios','swiftui'],['ios','combine'],['ios','coredata'],['ios','firebase'],['ios','mvvm'],
+  ['ios','xcode'],['ios','ios_proj'],['ios','firestore'],['ios','agile'],['ios','des102'],
+  ['ios','offline'],['ios','hig'],['ios','apns'],['ios','instruments'],['ios','design'],
+  ['swiftui','combine'],['firebase','firestore'],['mvvm','combine'],['coredata','firestore'],
+  ['ios_proj','agile'],['xcode','swiftui'],['offline','coredata'],['hig','des102'],
+  ['swiftui','hig'],['mvvm','xcode'],['ios_proj','offline'],['ios_proj','apns'],
+  ['apns','firebase'],['instruments','xcode'],['instruments','swift'],
+  ['swift','swiftui'],['swift','combine'],
+
+  // ── Design Domain Cluster ──
+  ['design','figma'],['design','canva'],['design','proto'],['design','ux_res'],
+  ['design','wireframe'],['design','des102'],['design','des101'],['design','hig'],
+  ['design','psy307'],['design','cse546'],
+  ['figma','proto'],['figma','wireframe'],['figma','ux_res'],
+  ['proto','wireframe'],['ux_res','psy307'],['des101','des102'],
+  ['canva','figma'],['wireframe','des102'],
+  ['cse546','des102'],['cse546','psy307'],['cse546','hig'],
+
+  // ── Game Dev Cluster ──
   ['game','libgdx'],['game','unreal'],['game','java'],['game','cpp'],
-  ['game','angry'],['game','escape'],['game','geo'],
+  ['game','angry'],['game','escape'],['game','geo'],['game','physics_eng'],['game','blueprint'],
+  ['game','serialise'],['game','oop'],
+  ['unreal','blueprint'],['libgdx','physics_eng'],['angry','physics_eng'],
+  ['escape','blueprint'],['geo','tkinter'],['angry','serialise'],['angry','oop'],
+  ['libgdx','java'],['unreal','cpp'],['physics_eng','cpp'],
+  ['geo','python'],['angry','java'],
 
-  // Web
-  ['web','react'],['web','node'],['web','express'],['web','supabase'],['web','jwt'],['web','rest'],['web','tsq'],
-  ['web','fastapi'],['node','express'],['web','agrilink'],
+  // ── Full-Stack Web Cluster ──
+  ['web','react'],['web','node'],['web','express'],['web','supabase'],['web','jwt'],
+  ['web','rest'],['web','tsq'],['web','fastapi'],['web','agrilink'],['web','postman'],
+  ['web','js'],['web','rbac'],['web','tailwind'],['web','vite'],['web','html_css'],
+  ['web','ts'],['web','websocket'],['web','cors'],
+  ['node','express'],['supabase','postgres'],['rest','postman'],['tsq','react'],
+  ['jwt','rbac'],['rbac','agrilink'],
+  ['agrilink','postgres'],['agrilink','supabase'],['agrilink','jwt'],['agrilink','react'],['agrilink','node'],
+  ['tailwind','react'],['tailwind','html_css'],['vite','react'],['vite','ts'],
+  ['ts','react'],['ts','node'],['html_css','react'],
+  ['websocket','node'],['cors','rest'],['cors','fastapi'],
+  ['fastapi','python'],['fastapi','rest'],
 
-  // Systems
+  // ── Systems Cluster ──
   ['sys','cse231'],['sys','asm'],['sys','cse112'],['sys','git'],['sys','docker'],
-  ['sys','cpp'],['sys','java'],
+  ['sys','cpp'],['sys','java'],['sys','concurrency'],['sys','paging'],['sys','scheduling'],
+  ['sys','cache'],['sys','isa'],['sys','linux'],['sys','bash'],['sys','cicd'],
+  ['asm','cse112'],['asm','python'],['asm','isa'],
+  ['git','github'],['docker','git'],['linux','bash'],['linux','docker'],
+  ['concurrency','paging'],['paging','cache'],['scheduling','cache'],
+  ['cse231','concurrency'],['cse231','scheduling'],['cse231','paging'],
+  ['cse112','isa'],['cse112','cache'],['c','cse112'],['c','sys'],
+  ['bash','git'],['bash','docker'],['bash','linux'],
+  ['cicd','git'],['cicd','docker'],['cicd','github'],
 
-  // DB
-  ['db','postgres'],['db','supabase'],['db','sql'],['db','cse202'],['db','firebase'],['db','firestore'],
+  // ── Database Cluster ──
+  ['db','postgres'],['db','supabase'],['db','sql'],['db','cse202'],['db','firebase'],
+  ['db','firestore'],['db','normalise'],['db','indexing'],
+  ['sql','postgres'],['cse202','sql'],['cse202','normalise'],['cse202','indexing'],
+  ['postgres','indexing'],['normalise','indexing'],
 
-  // CP
-  ['cp','leet'],['cp','java'],['cp','python'],['cp','cse222'],['cp','cse102'],['cp','cse322'],['cp','mth210'],
+  // ── Competitive Programming ──
+  ['cp','leet'],['cp','java'],['cp','python'],['cp','cse222'],['cp','cse102'],
+  ['cp','cse322'],['cp','mth210'],
+  ['leet','cse222'],['leet','cse102'],['cse102','cse222'],
 
-  // Language bridges
-  ['python','ai'],['python','ml'],['python','tkinter'],['python','numpy'],['python','fastapi'],
-  ['java','cse201'],['java','libgdx'],['java','cse102'],
-  ['swift','swiftui'],['js','react'],['js','node'],['sql','postgres'],
+  // ── Language Bridges (multi-domain langs) ──
+  ['python','ai'],['python','ml'],['python','numpy'],['python','pandas'],
+  ['python','fastapi'],['python','tkinter'],['python','sklearn'],
+  ['python','matplotlib'],['python','regex'],['python','opencv'],['python','nltk'],
+  ['java','cse201'],['java','libgdx'],['java','cse102'],['java','intellij'],['java','oop'],
+  ['swift','swiftui'],['js','react'],['js','node'],['js','ts'],
+  ['cpp','physics_eng'],['cpp','unreal'],
+  ['ts','react'],['ts','express'],
+  ['html_css','react'],['html_css','tailwind'],
 
-  // Projects → tech
-  ['clinical','whisper'],['clinical','pyannote'],['clinical','ner'],['clinical','python'],['clinical','btp499'],
-  ['ios_proj','swiftui'],['ios_proj','firebase'],['ios_proj','coredata'],['ios_proj','combine'],
-  ['agrilink','react'],['agrilink','node'],['agrilink','postgres'],['agrilink','supabase'],['agrilink','jwt'],
-  ['asm','cse112'],['asm','python'],['asm','sys'],
-  ['personalia','cse640'],['personalia','pytorch'],['personalia','mth204'],['personalia','numpy'],
-  ['leet','cse222'],['leet','cse102'],['leet','java'],['leet','python'],
-  ['angry','libgdx'],['angry','java'],['angry','cse201'],
-  ['geo','tkinter'],['geo','python'],
-  ['escape','unreal'],['escape','cpp'],
+  // ── Projects → Tech Connections ──
+  ['clinical','whisper'],['clinical','pyannote'],['clinical','ner'],['clinical','python'],
+  ['clinical','btp499'],['clinical','icd10'],['clinical','soap'],['clinical','transformers'],
+  ['clinical','wer'],['clinical','diarize'],['clinical','asr'],['clinical','nltk'],
+  ['clinical','audio_proc'],['clinical','attention'],
+  ['ios_proj','swiftui'],['ios_proj','firebase'],['ios_proj','coredata'],
+  ['ios_proj','combine'],['ios_proj','mvvm'],['ios_proj','offline'],['ios_proj','agile'],
+  ['ios_proj','hig'],['ios_proj','instruments'],
+  ['personalia','cse640'],['personalia','pytorch'],['personalia','mth204'],
+  ['personalia','numpy'],['personalia','matrix_f'],['personalia','embed'],
+  ['personalia','gradDesc'],['personalia','svd'],['personalia','sklearn'],
+  ['angry','libgdx'],['angry','java'],['angry','cse201'],['angry','oop'],['angry','serialise'],
+  ['escape','unreal'],['escape','cpp'],['escape','blueprint'],
+  ['asm','sys'],['asm','isa'],['asm','c'],
+  ['geo','python'],['geo','tkinter'],
+  ['leet','java'],['leet','python'],['leet','regex'],
+  ['agrilink','rbac'],['agrilink','tailwind'],['agrilink','ts'],
 
-  // Courses cross-links
-  ['cse102','cse222'],['cse201','cse102'],['cse231','cse112'],['cse202','db'],
-  ['cse640','ml'],['btp499','ai'],['des102','ios'],['eco111','sys'],
+  // ── Course → Domain/Tech Connections ──
+  ['cse201','cse102'],['cse231','cse112'],['cse202','db'],['cse640','ml'],
+  ['btp499','ai'],['eco111','sys'],['des102','ios'],['com301','btp499'],['com301','ai'],
+  ['psy307','des102'],['mth100','mth201'],['mth100','mth204'],
+  ['cse222','cse322'],['cse640','collab_f'],['cse640','matrix_f'],
+  ['cse101','cse102'],['cse101','java'],['cse101','python'],
+  ['cse303','web'],['cse303','rest'],['cse303','websocket'],['cse303','cors'],
+  ['des101','design'],['des101','figma'],['des101','wireframe'],
+  ['cse546','design'],['cse546','hig'],
+  ['psy101','psy307'],['psy101','design'],['psy101','ux_res'],
+  ['mth100','mth210'],['mth100','mth373'],
 
-  // Math links
-  ['mth201','ml'],['mth201','cp'],['mth204','ml'],['mth204','personalia'],
-  ['mth210','cp'],['mth210','cse322'],['mth371','ai'],['mth371','mth201'],
-  ['mth373','ml'],['mth373','numpy'],['mth377','ml'],['mth377','personalia'],
+  // ── Math → Domains/Concepts ──
+  ['mth201','ml'],['mth201','cp'],['mth201','mth371'],['mth201','mth372'],
+  ['mth201','bayes'],['mth201','mth240'],['mth201','info_theory'],
+  ['mth204','ml'],['mth204','personalia'],['mth204','mth240'],['mth204','eigenval'],
+  ['mth210','cp'],['mth210','cse322'],['mth210','mth300'],['mth210','mth212'],
+  ['mth371','ai'],['mth371','mth201'],['mth371','info_theory'],
+  ['mth373','ml'],['mth373','numpy'],['mth373','gradDesc'],
+  ['mth377','ml'],['mth377','personalia'],['mth377','mth204'],['mth377','kkt'],
   ['mth240','mth201'],['mth300','cse322'],['mth300','mth210'],
-  ['mth212','mth210'],['mth204','mth240'],['mth377','mth204'],
+  ['mth212','mth210'],['mth372','mth201'],['mth372','ml'],['mth372','mth377'],
+  ['mth372','bayes'],['bayes','mth201'],['eigenval','mth204'],['eigenval','svd'],['kkt','mth377'],
+  ['info_theory','bayes'],['info_theory','mth371'],
 
-  // Cross-domain
-  ['cuda','ml'],['cudnn','ml'],['cudnn','cuda'],['mvvm','ios'],
-  ['git','web'],['git','ios'],['docker','web'],['intellij','java'],
+  // ── Certifications → Tech ──
+  ['cert_gpu','cuda'],['cert_gpu','cudnn'],['cert_gpu','ml'],['cert_gpu','backprop'],
+  ['cert_gdb','db'],['cert_gdb','sql'],['cert_gdb','cse202'],
+  ['cert_hr','java'],['cert_hr','python'],['cert_hr','cp'],
+  ['cert_ai','ai'],['cert_ai','python'],['cert_ai','btp499'],
+  ['cert_1stop','ios'],['cert_1stop','ios_proj'],['cert_1stop','swift'],
+  ['cert_java','game'],['cert_java','java'],['cert_java','libgdx'],
+
+  // ── Cross-Domain Tools ──
+  ['git','web'],['git','ios'],['git','sys'],['docker','web'],['docker','sys'],
+  ['intellij','java'],['vscode','python'],['vscode','js'],['vscode','ts'],
+  ['postman','web'],['agile','web'],['agile','ios'],
+  ['regex','python'],['regex','nltk'],['regex','ner'],
+
+  // ── Cross-Domain Concept Bridges ──
+  ['embed','attention'],['embed','rag'],['embed','langchain'],
+  ['cicd','web'],['cicd','sys'],
+  ['oop','java'],['oop','cpp'],['oop','python'],['oop','cse201'],
+  ['concurrency','java'],['concurrency','python'],['concurrency','cpp'],
 ];
 
-// ── Default edge colours by tier (stored once, used in reset) ──
-const KG_EDGE_DEFAULTS = {
-  A: { col: 'rgba(0,255,136,0.22)',   w: '1.2' },  // core ↔ dom: subtle green
-  B: { col: 'rgba(255,255,255,0.06)', w: '0.5' },  // dom ↔ *: very faint white
-  C: { col: 'rgba(255,255,255,0.025)',w: '0.3' },  // * ↔ *: barely there
+const KG_META = {
+  nt:       {type:'Core',        tag:'',     desc:'IIIT-Delhi CSAM · B.Tech 2023–27 · CGPA 7.33'},
+  ai:       {type:'Domain',      tag:'AI',   desc:'Clinical ASR, speaker diarization, SOAP generation, LLMs'},
+  ml:       {type:'Domain',      tag:'ML',   desc:'Deep learning, recommenders, GPU compute, CNNs'},
+  ios:      {type:'Domain',      tag:'iOS',  desc:'SwiftUI, Firebase, Core Data, MVVM, offline-first'},
+  web:      {type:'Domain',      tag:'Web',  desc:'React, Node.js, PostgreSQL, Supabase, REST APIs'},
+  game:     {type:'Domain',      tag:'Game', desc:'libGDX, Unreal Engine, custom physics engines'},
+  sys:      {type:'Domain',      tag:'Sys',  desc:'OS internals, assembler, concurrency, ISA design'},
+  cp:       {type:'Domain',      tag:'CP',   desc:'LeetCode 1700+ peak · 350+ problems solved'},
+  db:       {type:'Domain',      tag:'DB',   desc:'Relational, NoSQL, normalisation, indexing'},
+  design:   {type:'Domain',      tag:'UX',   desc:'Figma, HCI, UX research, iOS HIG, design thinking'},
+  mod_intern:{type:'Internship', tag:'Intern',desc:'ModularityLabs · 6-month iOS dev internship · MVVM + Firebase'},
+  onstop_intern:{type:'Internship',tag:'Intern',desc:'1Stop Industrial Training · iOS / Swift development'},
+  clinical: {type:'Project',     tag:'BTP',  desc:'Multi-modal clinical AI · 90%+ SOAP accuracy · BTP499'},
+  ios_proj: {type:'Project',     tag:'iOS',  desc:'Modular productivity iOS app · MVVM + Firebase + Core Data'},
+  agrilink: {type:'Project',     tag:'Web',  desc:'Farmer-to-buyer marketplace · React + Node + Supabase'},
+  personalia:{type:'Project',    tag:'ML',   desc:'Latent factor recommender · SVD + matrix factorisation'},
+  angry:    {type:'Project',     tag:'Game', desc:'Angry Birds clone · Java + libGDX + custom physics'},
+  escape:   {type:'Project',     tag:'Game', desc:'3D escape room · Unreal Engine + C++ + Blueprints'},
+  asm:      {type:'Project',     tag:'Sys',  desc:'Two-pass assembler + ISA simulator · CSE112 project'},
+  geo:      {type:'Project',     tag:'Game', desc:'Multi-mode geography quiz · Tkinter · 195 countries'},
+  leet:     {type:'Project',     tag:'CP',   desc:'LeetCode 1700+ peak rating · 350+ problems solved'},
+  attention:{type:'Tech',        tag:'AI',   desc:'Self-attention, multi-head attention, Transformer architecture'},
+  rag:      {type:'Tech',        tag:'AI',   desc:'Retrieval-Augmented Generation · LLM + vector search'},
+  llm:      {type:'Tech',        tag:'AI',   desc:'Large Language Models · prompt engineering · Anthropic / OpenAI'},
+  lora:     {type:'Tech',        tag:'AI',   desc:'Low-Rank Adaptation for efficient LLM fine-tuning'},
+  opencv:   {type:'Tech',        tag:'ML',   desc:'Computer vision · image processing · used in multimodal AI'},
+  cnn:      {type:'Tech',        tag:'ML',   desc:'Convolutional Neural Networks · image & audio feature extraction'},
+  cert_gpu: {type:'Certification',tag:'GPU', desc:'Johns Hopkins GPU Programming · 4 courses · CUDA + cuDNN'},
+  cert_gdb: {type:'Certification',tag:'DB',  desc:'Google Professional Database Certificate'},
+  cert_hr:  {type:'Certification',tag:'CP',  desc:'HackerRank 5★ Python, Java & Data Structures'},
+  cert_ai:  {type:'Certification',tag:'AI',  desc:'IIIT-Delhi AI Summer Camp Instructor · 100+ students'},
+  cert_1stop:{type:'Certification',tag:'iOS',desc:'1Stop Industrial Internship Certificate — iOS development'},
+  cert_java:{type:'Certification',tag:'Game',desc:'Game Dev with Java · Coding Ninjas'},
 };
 
-// ── Per-domain highlight edge colour (muted, translucent) ──
-const KG_DOM_COLORS = {
-  ai:   'rgba(255,110,80,.35)',
-  ml:   'rgba(255,80,140,.35)',
-  ios:  'rgba(80,170,255,.35)',
-  web:  'rgba(80,220,130,.35)',
-  game: 'rgba(190,90,255,.35)',
-  cp:   'rgba(255,200,50,.35)',
-  sys:  'rgba(160,160,160,.35)',
-  db:   'rgba(50,200,200,.35)',
+const KG_FILTERS = {
+  all:    null,
+  proj:   n => n.cls==='proj',
+  intern: n => n.cls==='intern' || ['mod_intern','onstop_intern','ios_proj','agile','mvvm',
+                'swift','swiftui','firebase','coredata','offline','hig','cert_1stop'].includes(n.id),
+  ai:     n => ['ai','whisper','pyannote','ner','transformers','langchain','icd10','soap',
+                 'clinical','btp499','diarize','asr','wer','mth371','python','nltk','attention',
+                 'rag','llm','lora','audio_proc','opencv','cnn','info_theory'].includes(n.id),
+  ml:     n => ['ml','pytorch','tensorflow','numpy','pandas','sklearn','cuda','cudnn',
+                 'matrix_f','collab_f','embed','gradDesc','backprop','svd','personalia',
+                 'mth204','mth377','mth372','cert_gpu','eigenval','kkt','cse640',
+                 'matplotlib','seaborn','regularize','dropout','cnn','attention'].includes(n.id),
+  ios:    n => ['ios','swiftui','combine','coredata','firebase','firestore','mvvm','xcode',
+                 'swift','ios_proj','agile','offline','hig','cert_1stop','des102','apns',
+                 'instruments','mod_intern','onstop_intern'].includes(n.id),
+  web:    n => ['web','react','node','express','supabase','jwt','rest','tsq','fastapi',
+                 'postman','js','agrilink','rbac','postgres','tailwind','vite','html_css',
+                 'ts','websocket','cors'].includes(n.id),
+  game:   n => ['game','libgdx','unreal','blueprint','physics_eng','angry','escape','geo',
+                 'java','cpp','serialise','oop','tkinter','cert_java'].includes(n.id),
+  sys:    n => ['sys','cse231','cse112','git','github','docker','cpp','java','asm','c',
+                 'concurrency','paging','scheduling','cache','isa','linux','bash','cicd'].includes(n.id),
+  cp:     n => ['cp','leet','cse222','cse102','cse322','mth210','cert_hr','java','python'].includes(n.id),
+  course: n => n.cls==='course',
+  math:   n => n.cls==='math' || ['bayes','eigenval','kkt','info_theory'].includes(n.id),
+  cert:   n => n.cls==='cert',
 };
 
-// ── Per-domain edge/highlight accent colours (kept subtle) ──
 const DOM_ACCENT = {
-  ai:   'rgba(255,100,70,.22)',
-  ml:   'rgba(255,70,130,.22)',
-  ios:  'rgba(60,160,255,.22)',
-  web:  'rgba(70,210,120,.22)',
-  game: 'rgba(180,80,255,.22)',
-  cp:   'rgba(240,190,40,.22)',
-  sys:  'rgba(150,150,150,.22)',
-  db:   'rgba(40,190,190,.22)',
+  ai:    'rgba(255,100,60,.17)',
+  ml:    'rgba(255,60,130,.17)',
+  ios:   'rgba(55,155,255,.17)',
+  web:   'rgba(60,210,110,.17)',
+  game:  'rgba(175,75,255,.17)',
+  cp:    'rgba(235,185,35,.17)',
+  sys:   'rgba(145,145,145,.17)',
+  db:    'rgba(35,185,185,.17)',
+  design:'rgba(255,140,200,.17)',
 };
+
+
+let kgPinnedId = null, kgActiveFilter = 'all', kgHoverTimer = null;
 
 function buildKG() {
   const canvas = document.getElementById('kgCanvas');
   const svg    = document.getElementById('kgsvg');
-  if(!canvas || !svg) return;
+  if(!canvas||!svg) return;
+  const W = canvas.offsetWidth, H = canvas.offsetHeight || 540;
+  if(W < 10){ setTimeout(buildKG,80); return; }
 
-  const W = canvas.offsetWidth;
-  const H = canvas.offsetHeight || 440;
-  if(W < 10) { setTimeout(buildKG, 80); return; }
-
-  // ── Draw edges into SVG (always at z=0, behind all nodes) ──
-  // Three fixed opacities: core↔dom bright, dom↔other faint, other↔other invisible
   let edgesHTML = '';
-  KG_EDGES.forEach(([a, b]) => {
-    const na = KG_NODES.find(n => n.id === a);
-    const nb = KG_NODES.find(n => n.id === b);
-    if(!na || !nb) return;
-
-    const x1 = (na.x / 100 * W).toFixed(1);
-    const y1 = (na.y / 100 * H).toFixed(1);
-    const x2 = (nb.x / 100 * W).toFixed(1);
-    const y2 = (nb.y / 100 * H).toFixed(1);
-
-    const isCore = na.cls === 'core' || nb.cls === 'core';
-    const isDom  = na.cls === 'dom'  || nb.cls === 'dom';
-
-    // Edge visuals — always low opacity so they NEVER obscure text
-    let col, w;
-    if(isCore)      { col = 'rgba(0,255,136,0.20)'; w = '1.2'; }
-    else if(isDom)  { col = 'rgba(255,255,255,0.06)'; w = '0.6'; }
-    else            { col = 'rgba(255,255,255,0.025)'; w = '0.3'; }
-
-    // Store original values as data attrs for reset
-    edgesHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" `
-               + `stroke="${col}" stroke-width="${w}" `
-               + `class="kg-edge" data-a="${a}" data-b="${b}" `
-               + `data-col="${col}" data-w="${w}"/>`;
+  KG_EDGES.forEach(([a,b]) => {
+    const na=KG_NODES.find(n=>n.id===a), nb=KG_NODES.find(n=>n.id===b);
+    if(!na||!nb) return;
+    const x1=(na.x/100*W).toFixed(1),y1=(na.y/100*H).toFixed(1);
+    const x2=(nb.x/100*W).toFixed(1),y2=(nb.y/100*H).toFixed(1);
+    const isCore=na.cls==='core'||nb.cls==='core';
+    const isDom =na.cls==='dom' ||nb.cls==='dom';
+    const col = isCore?'rgba(0,255,136,0.18)':isDom?'rgba(255,255,255,0.05)':'rgba(255,255,255,0.02)';
+    const w   = isCore?'1.2':isDom?'0.5':'0.28';
+    edgesHTML+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${w}" class="kg-edge" data-a="${a}" data-b="${b}" data-col="${col}" data-w="${w}"/>`;
   });
   svg.innerHTML = edgesHTML;
 
-  // ── Resting opacity per class (locked after entrance anim) ──
-  const REST = { core: 1, dom: 1, proj: .16, tech: .14, course: .14, math: .14 };
-
-  // ── Build node divs (z ≥ 2, always above SVG) ──
-  canvas.querySelectorAll('.kn').forEach(n => n.remove());
-
-  KG_NODES.forEach((node, i) => {
-    const div = document.createElement('div');
-    div.className   = `kn ${node.cls}`;
-    div.textContent = node.label;
-    div.style.left  = node.x + '%';
-    div.style.top   = node.y + '%';
-    div.style.opacity = '0';
-    // Staggered fade-in — pure opacity, NO scale/transform (avoids browser tooltip overlap bug)
-    div.style.animation = `kgNodeIn .6s ease ${(i * 0.014).toFixed(3)}s forwards`;
-    div.dataset.nid = node.id;
-    div.dataset.cls = node.cls;
-    // ↓ NO div.title here — that was causing the floating "iOS Dev" tooltip ghost
-    div.addEventListener('mouseenter', () => highlightNode(node.id));
-    div.addEventListener('mouseleave', () => resetHighlight());
+  const REST={core:1,dom:1,proj:.16,tech:.12,course:.12,math:.12,cert:.12};
+  canvas.querySelectorAll('.kn').forEach(n=>n.remove());
+  KG_NODES.forEach((node,i)=>{
+    const div=document.createElement('div');
+    div.className=`kn ${node.cls}`;
+    div.textContent=node.label;
+    div.style.left=node.x+'%'; div.style.top=node.y+'%';
+    div.style.opacity='0';
+    div.style.animation=`kgNodeIn .55s ease ${(i*0.012).toFixed(3)}s forwards`;
+    div.dataset.nid=node.id; div.dataset.cls=node.cls;
+    div.addEventListener('mouseenter', e=>kgOnEnter(node.id,div,e));
+    div.addEventListener('mousemove',  e=>kgMoveTip(e));
+    div.addEventListener('mouseleave', ()=>kgOnLeave());
+    div.addEventListener('click',      ()=>kgTogglePin(node.id,div));
     canvas.appendChild(div);
+    setTimeout(()=>{ div.style.animation='none'; div.style.opacity=String(REST[node.cls]??1); div.style.transform='translate(-50%,-50%)'; },860+i*12);
+  });
+  const c=document.getElementById('kgNodeCount');
+  if(c) c.textContent=`${KG_NODES.length} nodes · ${KG_EDGES.length} edges`;
+}
 
-    // After entrance animation: lock to resting opacity
-    setTimeout(() => {
-      div.style.animation = 'none';
-      div.style.opacity   = String(REST[node.cls] ?? 1);
-      div.style.transform = 'translate(-50%,-50%)';
-    }, 1000 + i * 14);
+function kgShowTip(id,div){
+  const tip=document.getElementById('kgTip'); if(!tip)return;
+  const meta=KG_META[id]||{};
+  const conn=KG_EDGES.filter(([a,b])=>a===id||b===id).length;
+  const col={Core:'#00ff88',Domain:'#88bbff',Project:'#ffcc44',Course:'#aa77ff',Math:'#33bbff',Tech:'#777',Certification:'#ff9955'}[meta.type]||'#666';
+  const tag=meta.tag?`<span style="font-size:7px;padding:1px 5px;border:1px solid ${col}44;color:${col};margin-left:5px;">${meta.tag}</span>`:'';
+  tip.innerHTML=`<div class="kg-tip-name">${div.textContent}${tag}</div><div class="kg-tip-type" style="color:${col}">${meta.type||div.dataset.cls}</div>${meta.desc?`<div class="kg-tip-stat">${meta.desc}</div>`:''}<div class="kg-tip-stat" style="margin-top:4px;color:${col}88;">⬡ ${conn} connection${conn!==1?'s':''}</div><div class="kg-tip-pin">click to pin · hover to explore</div>`;
+  tip.style.display='block';
+}
+function kgMoveTip(e){
+  const tip=document.getElementById('kgTip'),canvas=document.getElementById('kgCanvas');
+  if(!tip||!canvas)return;
+  const rect=canvas.getBoundingClientRect();
+  let x=e.clientX-rect.left+16, y=e.clientY-rect.top-10;
+  if(x+220>rect.width) x=e.clientX-rect.left-225;
+  if(y+120>rect.height) y=e.clientY-rect.top-110;
+  tip.style.left=x+'px'; tip.style.top=y+'px';
+}
+function kgHideTip(){ const t=document.getElementById('kgTip'); if(t)t.style.display='none'; }
+
+function kgOnEnter(id,div,e){
+  if(kgPinnedId&&kgPinnedId!==id)return;
+  clearTimeout(kgHoverTimer);
+  kgShowTip(id,div);
+  highlightNode(id);
+  const conn=KG_EDGES.filter(([a,b])=>a===id||b===id).length;
+  kgSetStatus(`<span style="color:#fff">${div.textContent}</span> &nbsp;·&nbsp; ${conn} connections &nbsp;·&nbsp; click to pin`);
+}
+function kgOnLeave(){
+  if(kgPinnedId)return;
+  kgHideTip();
+  kgHoverTimer=setTimeout(()=>{ resetHighlight(); kgSetStatus('Hover to explore · click to pin · use filters above'); },80);
+}
+
+function kgTogglePin(id,div){
+  const canvas=document.getElementById('kgCanvas');
+  const hint=document.getElementById('kgPinHint');
+  if(kgPinnedId===id){
+    kgPinnedId=null;
+    canvas.querySelectorAll('.kn-pin').forEach(n=>n.classList.remove('kn-pin'));
+    if(hint)hint.style.display='none';
+    resetHighlight(); kgHideTip();
+    kgSetStatus('Hover to explore · click to pin · use filters above');
+  } else {
+    kgPinnedId=id;
+    canvas.querySelectorAll('.kn-pin').forEach(n=>n.classList.remove('kn-pin'));
+    if(div)div.classList.add('kn-pin');
+    if(hint)hint.style.display='';
+    highlightNode(id);
+    const conn=KG_EDGES.filter(([a,b])=>a===id||b===id).length;
+    kgSetStatus(`<span style="color:var(--acc)">📌 Pinned:</span> ${div?.textContent||id} &nbsp;·&nbsp; ${conn} connections`);
+  }
+}
+
+function highlightNode(id){
+  const canvas=document.getElementById('kgCanvas');
+  canvas.classList.add('has-hover');
+  const lit=new Set([id,'nt']);
+  KG_EDGES.forEach(([a,b])=>{ if(a===id)lit.add(b); if(b===id)lit.add(a); });
+  canvas.querySelectorAll('.kn').forEach(el=>el.classList.toggle('kn-hi',lit.has(el.dataset.nid)));
+  const hNode=KG_NODES.find(n=>n.id===id);
+  let accent='rgba(0,255,136,0.15)';
+  if(hNode?.cls==='dom') accent=DOM_ACCENT[id]||accent;
+  else for(const[a,b]of KG_EDGES){ const peer=a===id?b:b===id?a:null; if(peer){const pn=KG_NODES.find(n=>n.id===peer);if(pn?.cls==='dom'){accent=DOM_ACCENT[peer]||accent;break;}} }
+  canvas.querySelectorAll('#kgsvg .kg-edge').forEach(line=>{
+    const a=line.dataset.a,b=line.dataset.b;
+    if(a===id||b===id){ line.style.stroke=accent; line.style.strokeWidth='1.0'; }
+    else              { line.style.stroke='rgba(255,255,255,0.008)'; line.style.strokeWidth='0.2'; }
   });
 }
 
-function highlightNode(id) {
-  const canvas = document.getElementById('kgCanvas');
-  canvas.classList.add('has-hover');
+function resetHighlight(){
+  const canvas=document.getElementById('kgCanvas'); if(!canvas)return;
+  canvas.classList.remove('has-hover');
+  canvas.querySelectorAll('.kn').forEach(n=>n.classList.remove('kn-hi'));
+  canvas.querySelectorAll('#kgsvg .kg-edge').forEach(l=>{ l.style.stroke=l.dataset.col; l.style.strokeWidth=l.dataset.w; });
+}
 
-  // Direct neighbours + always keep core lit
-  const lit = new Set([id, 'nt']);
-  KG_EDGES.forEach(([a, b]) => {
-    if(a === id) lit.add(b);
-    if(b === id) lit.add(a);
+function kgFilter(key){
+  kgActiveFilter=key; kgPinnedId=null;
+  resetHighlight(); kgHideTip();
+  const canvas=document.getElementById('kgCanvas');
+  const hint=document.getElementById('kgPinHint');
+  if(hint)hint.style.display='none';
+  canvas.querySelectorAll('.kn-pin').forEach(n=>n.classList.remove('kn-pin'));
+  const fn=KG_FILTERS[key];
+  if(!fn){
+    canvas.querySelectorAll('.kn').forEach(n=>n.classList.remove('kn-dim','kn-lit'));
+    canvas.querySelectorAll('#kgsvg .kg-edge').forEach(l=>{ l.style.stroke=l.dataset.col; l.style.strokeWidth=l.dataset.w; });
+    kgSetStatus(`All ${KG_NODES.length} nodes visible — hover any node to explore`);
+    return;
+  }
+  const litIds=new Set(KG_NODES.filter(fn).map(n=>n.id));
+  litIds.add('nt');
+  KG_NODES.filter(n=>n.cls==='dom').forEach(dn=>{
+    if(KG_EDGES.some(([a,b])=>(a===dn.id&&litIds.has(b))||(b===dn.id&&litIds.has(a))))litIds.add(dn.id);
   });
-
-  // Apply/remove highlight class on nodes
-  canvas.querySelectorAll('.kn').forEach(el => {
-    el.classList.toggle('kn-hi', lit.has(el.dataset.nid));
+  canvas.querySelectorAll('.kn').forEach(el=>{
+    const inLit=litIds.has(el.dataset.nid);
+    el.classList.toggle('kn-dim',!inLit); el.classList.toggle('kn-lit',inLit);
   });
+  canvas.querySelectorAll('#kgsvg .kg-edge').forEach(line=>{
+    const a=line.dataset.a,b=line.dataset.b;
+    if(litIds.has(a)&&litIds.has(b)){ line.style.stroke='rgba(0,255,136,0.10)'; line.style.strokeWidth='0.6'; }
+    else                            { line.style.stroke='rgba(255,255,255,0.005)'; line.style.strokeWidth='0.2'; }
+  });
+  kgSetStatus(`<span style="color:var(--acc)">${key.toUpperCase()}</span> — ${litIds.size-1} nodes highlighted · hover to explore`);
+}
 
-  // Edge accent — only edges directly touching hovered node get a subtle tint
-  // Accent stays very translucent so text is ALWAYS readable
-  const hNode  = KG_NODES.find(n => n.id === id);
-  let accent   = 'rgba(0,255,136,0.18)';
+function kgSearch(q){
+  const canvas=document.getElementById('kgCanvas');
+  if(!q.trim()){ kgFilter(kgActiveFilter); return; }
+  const lo=q.toLowerCase();
+  const matchIds=new Set(KG_NODES.filter(n=>n.label.toLowerCase().includes(lo)||n.id.includes(lo)||(KG_META[n.id]?.desc||'').toLowerCase().includes(lo)).map(n=>n.id));
+  matchIds.add('nt');
+  canvas.querySelectorAll('.kn').forEach(el=>{ el.classList.toggle('kn-dim',!matchIds.has(el.dataset.nid)); el.classList.toggle('kn-lit',matchIds.has(el.dataset.nid)); });
+  canvas.querySelectorAll('#kgsvg .kg-edge').forEach(l=>{ l.style.stroke=l.dataset.col; l.style.strokeWidth=l.dataset.w; });
+  kgSetStatus(`Search "<b>${q}</b>" — ${matchIds.size-1} match${matchIds.size!==2?'es':''}`);
+}
 
-  if(hNode?.cls === 'dom') {
-    accent = DOM_ACCENT[id] || accent;
-  } else if(hNode?.cls !== 'core') {
-    // Inherit domain colour from the domain this node belongs to
-    for(const [a, b] of KG_EDGES) {
-      const check = a === id ? b : b === id ? a : null;
-      if(check) {
-        const peer = KG_NODES.find(n => n.id === check);
-        if(peer?.cls === 'dom' && DOM_ACCENT[check]) { accent = DOM_ACCENT[check]; break; }
-      }
-    }
+function kgSetStatus(html){
+  const el=document.getElementById('kgStatusTxt'); if(el)el.innerHTML=html;
+}
+
+function initKGFilters(){
+  document.querySelectorAll('.kf[data-filter]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.kf[data-filter]').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+      kgFilter(btn.dataset.filter);
+    });
+  });
+  const reset=document.getElementById('kgReset');
+  if(reset)reset.addEventListener('click',()=>{
+    document.querySelectorAll('.kf[data-filter]').forEach(b=>b.classList.remove('on'));
+    document.querySelector('.kf[data-filter="all"]')?.classList.add('on');
+    const s=document.getElementById('kgSearch'); if(s)s.value='';
+    kgFilter('all');
+  });
+  const s=document.getElementById('kgSearch');
+  if(s){
+    let dbounce;
+    s.addEventListener('input',e=>{ clearTimeout(dbounce); dbounce=setTimeout(()=>kgSearch(e.target.value),120); });
+    s.style.cursor='text';
+    s.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+    s.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
   }
 
-  canvas.querySelectorAll('#kgsvg .kg-edge').forEach(line => {
-    const a = line.dataset.a, b = line.dataset.b;
-    if(a === id || b === id) {
-      // Direct edge: subtle tint, thin — still readable over node text
-      line.style.stroke      = accent;
-      line.style.strokeWidth = '1.0';
-      line.style.opacity     = '1';
-    } else {
-      // Everything else: nearly invisible
-      line.style.stroke      = 'rgba(255,255,255,0.012)';
-      line.style.strokeWidth = '0.25';
-      line.style.opacity     = '1';
-    }
-  });
-}
+  // ── Auto-explore: cycle through nodes highlighting each ──
+  let exploreTimer=null, exploreIdx=0, exploreRunning=false;
+  const exploreBtn=document.getElementById('kgExplore');
+  const EXPLORE_ORDER = KG_NODES.map(n=>n.id)
+    .filter(id=>!['nt'].includes(id))
+    .sort((a,b)=>{
+      const ca=KG_EDGES.filter(([x,y])=>x===a||y===a).length;
+      const cb=KG_EDGES.filter(([x,y])=>x===b||y===b).length;
+      return cb-ca; // most-connected first
+    });
+  function exploreStep(){
+    if(!exploreRunning)return;
+    const id=EXPLORE_ORDER[exploreIdx%EXPLORE_ORDER.length];
+    exploreIdx++;
+    const canvas=document.getElementById('kgCanvas');
+    if(!canvas){stopExplore();return;}
+    const div=canvas.querySelector(`[data-nid="${id}"]`);
+    if(div){ kgShowTip(id,div); highlightNode(id); }
+    const conn=KG_EDGES.filter(([a,b])=>a===id||b===id).length;
+    kgSetStatus(`<span style="color:#bb55ff">▶ Auto-exploring:</span> <b>${div?.textContent||id}</b> &nbsp;·&nbsp; ${conn} connections`);
+    exploreTimer=setTimeout(exploreStep,1600);
+  }
+  function stopExplore(){
+    exploreRunning=false; clearTimeout(exploreTimer);
+    if(exploreBtn)exploreBtn.classList.remove('running');
+    if(exploreBtn)exploreBtn.textContent='▶ Auto-explore';
+    resetHighlight(); kgHideTip();
+    kgSetStatus('Hover to explore · click to pin · use filters above');
+  }
+  if(exploreBtn){
+    exploreBtn.addEventListener('click',()=>{
+      if(exploreRunning){ stopExplore(); return; }
+      exploreRunning=true; kgPinnedId=null;
+      exploreBtn.classList.add('running');
+      exploreBtn.textContent='■ Stop';
+      document.querySelectorAll('.kf[data-filter]').forEach(b=>b.classList.remove('on'));
+      document.querySelector('.kf[data-filter="all"]')?.classList.add('on');
+      kgFilter('all');
+      setTimeout(()=>exploreStep(),200);
+    });
+  }
 
-function resetHighlight() {
-  const canvas = document.getElementById('kgCanvas');
-  if(!canvas) return;
-  canvas.classList.remove('has-hover');
-  canvas.querySelectorAll('.kn').forEach(n => n.classList.remove('kn-hi'));
-  // Restore original edge style using stored data attrs
-  canvas.querySelectorAll('#kgsvg .kg-edge').forEach(l => {
-    l.style.stroke      = l.dataset.col;
-    l.style.strokeWidth = l.dataset.w;
-    l.style.opacity     = '1';
+  // ── Path-finder: double-click two nodes to find connection path ──
+  let pathA=null;
+  document.addEventListener('dblclick',e=>{
+    const el=e.target.closest('.kn');
+    if(!el)return;
+    const id=el.dataset.nid;
+    if(!pathA){ pathA=id; kgSetStatus(`<span style="color:#ffcc44">Path mode:</span> double-click second node to find path from <b>${el.textContent}</b>`); return; }
+    if(pathA===id){ pathA=null; kgSetStatus('Path mode cancelled'); return; }
+    // BFS
+    const prev={[pathA]:null}; const q=[pathA]; let found=false;
+    while(q.length&&!found){
+      const cur=q.shift();
+      for(const[a,b]of KG_EDGES){
+        const nb=a===cur?b:b===cur?a:null;
+        if(nb&&!(nb in prev)){ prev[nb]=cur; q.push(nb); if(nb===id){found=true;break;} }
+      }
+    }
+    if(!found){ pathA=null; kgSetStatus(`No direct path found between those nodes`); return; }
+    const path=[]; let cur=id; while(cur){path.unshift(cur);cur=prev[cur];}
+    const canvas=document.getElementById('kgCanvas');
+    canvas.classList.add('has-hover');
+    const litSet=new Set(path);
+    canvas.querySelectorAll('.kn').forEach(el=>el.classList.toggle('kn-hi',litSet.has(el.dataset.nid)));
+    canvas.querySelectorAll('#kgsvg .kg-edge').forEach(l=>{
+      const a=l.dataset.a,b=l.dataset.b;
+      const onPath=path.some((_,i)=>i<path.length-1&&((path[i]===a&&path[i+1]===b)||(path[i]===b&&path[i+1]===a)));
+      l.style.stroke=onPath?'rgba(255,200,50,0.55)':'rgba(255,255,255,0.008)';
+      l.style.strokeWidth=onPath?'1.5':'0.2';
+    });
+    kgSetStatus(`<span style="color:#ffcc44">Path (${path.length-1} hops):</span> ${path.map(id=>{const n=KG_NODES.find(n=>n.id===id);return n?.label||id;}).join(' → ')}`);
+    pathA=null;
   });
 }
 
@@ -2035,6 +2457,7 @@ function renderAcademicCharts() {
 
 // =================== INIT ===================
 buildKG();
+initKGFilters();
 renderProjects();
 renderCerts();
 renderAchievements();
