@@ -387,12 +387,113 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 ::-webkit-scrollbar{width:3px;height:3px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--b2);}
+
+/* ===================== ANIMATION SYSTEM ===================== */
+
+/* -- SCROLL REVEAL -- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);}
+.reveal.up{transform:translateY(28px);}
+.reveal.left{transform:translateX(-28px);}
+.reveal.right{transform:translateX(28px);}
+.reveal.scale{transform:scale(.94);}
+.reveal.visible{opacity:1;transform:translate(0) scale(1);}
+.d1{transition-delay:.06s}.d2{transition-delay:.12s}.d3{transition-delay:.18s}
+.d4{transition-delay:.24s}.d5{transition-delay:.30s}.d6{transition-delay:.36s}
+
+/* -- GLITCH NAME -- */
+.glitch{position:relative;}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;font-family:inherit;font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;color:inherit;pointer-events:none;}
+.glitch::before{color:var(--cyan);clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);animation:glitch-a 4.5s infinite steps(1);}
+.glitch::after{color:var(--red);clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);animation:glitch-b 4.5s infinite steps(1);}
+@keyframes glitch-a{0%,94%,100%{transform:none;opacity:0;}95%{transform:translate(-3px,1px);opacity:.8;}96%{transform:translate(3px,-1px);opacity:.8;}97%{transform:none;opacity:0;}}
+@keyframes glitch-b{0%,94%,100%{transform:none;opacity:0;}95.5%{transform:translate(3px,2px);opacity:.6;}96.5%{transform:translate(-2px,0);opacity:.6;}97.5%{transform:none;opacity:0;}}
+
+/* -- STAT COUNTER -- */
+.ov-sv{transition:color .3s;}
+.count-up{animation:countPop .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes countPop{0%{transform:scale(1);}50%{transform:scale(1.18);color:var(--acc);}100%{transform:scale(1);}}
+
+/* -- SKILL BAR FILL -- */
+.prow-fill{width:0%;transition:width 1.2s cubic-bezier(.22,1,.36,1);}
+.cp-prog-fill{width:0%;transition:width 1.4s cubic-bezier(.22,1,.36,1) .3s;}
+
+/* -- CARD MAGNETIC TILT -- */
+.pcard,.ccard,.ov-ncard,.card{transform-style:preserve-3d;will-change:transform;}
+.tilt-active{transition:transform .08s ease,box-shadow .08s ease!important;}
+.tilt-reset{transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s ease!important;}
+
+/* -- BORDER GLOW SHIMMER on hover -- */
+.pcard:hover{box-shadow:0 0 0 1px rgba(0,255,136,.15),0 8px 32px rgba(0,0,0,.5);}
+.ccard:hover{box-shadow:0 0 0 1px rgba(0,255,136,.12),0 6px 24px rgba(0,0,0,.4);}
+.ov-ncard:hover{box-shadow:inset 0 0 30px rgba(0,255,136,.03);}
+
+/* -- KG NODE ENTRANCE -- */
+.kn{opacity:0;animation:kgNodeIn .4s cubic-bezier(.22,1,.36,1) forwards;}
+@keyframes kgNodeIn{from{opacity:0;transform:translate(-50%,-50%) scale(.5);}to{transform:translate(-50%,-50%) scale(1);}}
+/* core node pulse ring */
+.kn.core::after{content:'';position:absolute;inset:-4px;border-radius:0;border:1px solid var(--acc);opacity:.0;animation:coreRing 2.8s ease-out infinite;}
+@keyframes coreRing{0%{inset:-4px;opacity:.5;}100%{inset:-18px;opacity:0;}}
+.kn.core{position:absolute;} /* ensure stacking */
+
+/* -- PAGE TRANSITION -- */
+.page.on{display:block;animation:pageIn .45s cubic-bezier(.22,1,.36,1);}
+@keyframes pageIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+/* -- TOPBAR PROGRESS LINE -- */
+#navProgress{position:fixed;top:0;left:214px;right:0;height:1px;background:linear-gradient(90deg,var(--acc),var(--cyan));transform:scaleX(0);transform-origin:left;z-index:9998;transition:transform .3s ease;pointer-events:none;}
+
+/* -- ACHIEVEMENT ITEM ENTRANCE -- */
+.ach-item{opacity:0;transform:translateX(-16px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1);}
+.ach-item.visible{opacity:1;transform:translateX(0);}
+
+/* -- TIMELINE PULSE -- */
+.tli-dot{animation:dotPulse 0s ease;transition:background .3s,box-shadow .3s;}
+.tli-dot.f{box-shadow:0 0 0 3px rgba(0,255,136,.15);}
+.tli-dot.f:hover{box-shadow:0 0 0 6px rgba(0,255,136,.2);}
+@keyframes dotPulse{from{transform:rotate(45deg) scale(0);}to{transform:rotate(45deg) scale(1);}}
+
+/* -- CHIP WAVE on PAGE LOAD -- */
+.chip{opacity:0;transform:translateY(6px);transition:opacity .35s ease,transform .35s ease,border-color .18s,color .18s,background .18s;}
+.chip.chip-shown{opacity:1;transform:translateY(0);}
+
+/* -- TYPEWRITER CURSOR -- */
+.tw-cursor{display:inline-block;width:2px;height:1em;background:var(--acc);vertical-align:middle;margin-left:2px;animation:bl 1s step-end infinite;}
+
+/* -- MODAL ENTRANCE -- */
+.modal{animation:none;}
+.moverlay.open .modal{animation:modalIn .3s cubic-bezier(.34,1.56,.64,1);}
+@keyframes modalIn{from{opacity:0;transform:scale(.93)translateY(16px);}to{opacity:1;transform:scale(1)translateY(0);}}
+
+/* -- SIDEBAR NAV ITEM HOVER EFFECT -- */
+.na::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--acc);transform:scaleY(0);transition:transform .2s cubic-bezier(.22,1,.36,1);}
+.na{position:relative;}
+.na:hover::before,.na.on::before{transform:scaleY(1);}
+
+/* -- SECTION HEADER SCAN LINE -- */
+.sh{position:relative;display:inline-block;}
+.sh::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:linear-gradient(90deg,var(--acc),transparent);animation:scanLine .8s cubic-bezier(.22,1,.36,1) .3s forwards;}
+@keyframes scanLine{from{width:0;}to{width:100%;}}
+
+/* -- STATS ROW HOVER -- */
+.ov-stat{transition:background .2s,transform .2s;}
+.ov-stat:hover{background:var(--bg3);transform:translateY(-2px);}
+
+/* -- NOISE TEXTURE OVERLAY (subtle, atmosphere) -- */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:9998;animation:noiseDrift 8s steps(2) infinite;}
+@keyframes noiseDrift{0%{transform:translate(0,0);}25%{transform:translate(-1px,1px);}50%{transform:translate(1px,0);}75%{transform:translate(0,-1px);}100%{transform:translate(0,0);}}
+
+/* -- CONTACT AVAILABILITY BLINK -- */
+.avail-dot{display:inline-block;width:6px;height:6px;background:var(--acc);border-radius:50%;animation:pls 2s ease infinite;margin-right:5px;vertical-align:middle;}
+
+/* -- KG EDGE ANIMATE on HOVER -- */
+#kgsvg line{transition:stroke-opacity .25s,stroke-width .25s;}
 </style>
 </head>
 <body>
 
 <div id="cur"></div>
 <div id="cring"></div>
+<div id="navProgress"></div>
 <button class="mob-toggle" id="mobBtn">☰</button>
 
 <!-- MODALS -->
@@ -482,16 +583,14 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
     <div class="ov-right">
       <div class="ov-about">
         <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:8px;margin-bottom:14px;">Personal OS · IIIT-Delhi · 2023–2027<span style="flex:1;height:1px;background:var(--acc);opacity:.3;display:block;"></span></div>
-        <div class="ov-big-name">Nishant<br><em>Tomer.</em></div>
-        <p class="ov-tagline">
-          B.Tech student at IIIT-Delhi (CSAM) building at the intersection of iOS development, AI/ML research, and systems programming. Currently researching clinical NLP pipelines, shipped a production iOS app at ModularityLabs, and consistently solving hard DSA problems. Interested in roles that challenge across the full stack.
-        </p>
+        <div class="ov-big-name glitch" data-text="Nishant">Nishant<br><em class="glitch" data-text="Tomer.">Tomer.</em></div>
+        <p class="ov-tagline" id="taglineEl" style="min-height:4em;"></p>
         <div class="ov-stats-row">
-          <div class="ov-stat"><span class="ov-sv">7.33</span><span class="ov-sl">CGPA</span></div>
-          <div class="ov-stat"><span class="ov-sv">350+</span><span class="ov-sl">DSA Solved</span></div>
-          <div class="ov-stat"><span class="ov-sv">1700+</span><span class="ov-sv" style="font-size:12px;color:var(--dim);font-family:var(--mono);font-weight:400;"> LeetCode Peak</span></div>
-          <div class="ov-stat"><span class="ov-sv">8</span><span class="ov-sl">Projects</span></div>
-          <div class="ov-stat"><span class="ov-sv">2</span><span class="ov-sl">Internships</span></div>
+          <div class="ov-stat"><span class="ov-sv" data-count="7.33" data-float="2">7.33</span><span class="ov-sl">CGPA</span></div>
+          <div class="ov-stat"><span class="ov-sv" data-count="350">350+</span><span class="ov-sl">DSA Solved</span></div>
+          <div class="ov-stat"><span class="ov-sv" data-count="1700">1700+</span><span class="ov-sv" style="font-size:12px;color:var(--dim);font-family:var(--mono);font-weight:400;"> LeetCode Peak</span></div>
+          <div class="ov-stat"><span class="ov-sv" data-count="8">8</span><span class="ov-sl">Projects</span></div>
+          <div class="ov-stat"><span class="ov-sv" data-count="2">2</span><span class="ov-sl">Internships</span></div>
         </div>
         <div class="ov-btns">
           <a href="mailto:nishant23355@iiitd.ac.in" class="btn btn-p">↗ Hire Me</a>
@@ -702,10 +801,10 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
       <div class="sg"><div class="sg-label">Tools & Platforms</div><div class="chips"><span class="chip hi">Git</span><span class="chip">Docker</span><span class="chip">libGDX</span><span class="chip">Unreal Engine</span><span class="chip">PyQT5</span><span class="chip">Tkinter</span><span class="chip">Xcode</span><span class="chip">IntelliJ</span></div></div>
     </div>
     <div class="cp-bar" style="margin-top:1px;">
-      <div class="cp-seg"><span class="cp-v">1700+</span><span class="cp-l">LeetCode Peak</span><div class="cp-prog"><div class="cp-prog-fill" style="width:85%;"></div></div></div>
-      <div class="cp-seg"><span class="cp-v">350+</span><span class="cp-l">Problems Solved</span><div class="cp-prog"><div class="cp-prog-fill" style="width:70%;"></div></div></div>
-      <div class="cp-seg"><span class="cp-v" style="font-size:20px;">5★ × 3</span><span class="cp-l">HackerRank</span><div class="cp-prog"><div class="cp-prog-fill" style="width:100%;"></div></div></div>
-      <div class="cp-seg"><span class="cp-v">6</span><span class="cp-l">Certifications</span><div class="cp-prog"><div class="cp-prog-fill" style="width:60%;"></div></div></div>
+      <div class="cp-seg"><span class="cp-v">1700+</span><span class="cp-l">LeetCode Peak</span><div class="cp-prog"><div class="cp-prog-fill" data-w="85%" style="width:0%;"></div></div></div>
+      <div class="cp-seg"><span class="cp-v">350+</span><span class="cp-l">Problems Solved</span><div class="cp-prog"><div class="cp-prog-fill" data-w="70%" style="width:0%;"></div></div></div>
+      <div class="cp-seg"><span class="cp-v" style="font-size:20px;">5★ × 3</span><span class="cp-l">HackerRank</span><div class="cp-prog"><div class="cp-prog-fill" data-w="100%" style="width:0%;"></div></div></div>
+      <div class="cp-seg"><span class="cp-v">6</span><span class="cp-l">Certifications</span><div class="cp-prog"><div class="cp-prog-fill" data-w="60%" style="width:0%;"></div></div></div>
     </div>
     <div style="margin-top:20px;padding:20px;border:1px solid var(--border);background:var(--bg2);">
       <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;">Proficiency Map</div>
@@ -810,6 +909,16 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 </div>
 
 <script>
+// =================== REVEAL OBSERVER (early declaration) ===================
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold: 0.08, rootMargin: '0px 0px -30px 0px'});
+
 // =================== DATA ===================
 const PROJECTS = [
   {id:'P-001',year:'2025',title:'iOS Productivity System',
@@ -1438,7 +1547,11 @@ function switchSem(btn) {
 function renderAchievements() {
   const el = document.getElementById('achList');
   if(!el) return;
-  el.innerHTML = ACHIEVEMENTS.map(a=>`<div class="ach-item"><div class="ach-left"><div class="ach-yr">${a.year}</div><div class="ach-mon">${a.mon}</div></div><div class="ach-icon">${a.icon}</div><div class="ach-right"><div class="ach-title">${a.title}</div><div class="ach-detail">${a.detail}</div><span class="ach-chip">${a.chip}</span></div></div>`).join('');
+  el.innerHTML = ACHIEVEMENTS.map((a,i)=>`<div class="ach-item" style="transition-delay:${i*0.07}s"><div class="ach-left"><div class="ach-yr">${a.year}</div><div class="ach-mon">${a.mon}</div></div><div class="ach-icon">${a.icon}</div><div class="ach-right"><div class="ach-title">${a.title}</div><div class="ach-detail">${a.detail}</div><span class="ach-chip">${a.chip}</span></div></div>`).join('');
+  // trigger reveal after render
+  setTimeout(() => {
+    document.querySelectorAll('.ach-item').forEach(item => revealObserver.observe(item));
+  }, 50);
 }
 
 // =================== THOUGHTS ===================
@@ -1457,7 +1570,7 @@ function renderProficiency() {
     {label:'PyTorch / AI/ML',pct:78},{label:'React / Node.js',pct:72},
     {label:'C++ / Systems',pct:68},{label:'CUDA / GPU',pct:62},{label:'Unreal Engine',pct:55},
   ];
-  el.innerHTML = bars.map(b=>`<div class="prow"><div class="prow-label">${b.label}</div><div class="prow-bar"><div class="prow-fill" style="width:${b.pct}%;"></div></div><div class="prow-pct">${b.pct}%</div></div>`).join('');
+  el.innerHTML = bars.map(b=>`<div class="prow"><div class="prow-label">${b.label}</div><div class="prow-bar"><div class="prow-fill" data-w="${b.pct}%" style="width:0%;"></div></div><div class="prow-pct">${b.pct}%</div></div>`).join('');
 }
 
 // =================== MODAL CLOSE ===================
@@ -1525,6 +1638,224 @@ function goSlide(n) {
 setInterval(()=>goSlide((slideIdx+1)%3), 7000);
 
 window.addEventListener('resize',buildKG);
+
+// ===================== ANIMATION ENGINE =====================
+
+// -- SCROLL REVEAL (IntersectionObserver) --
+function initReveal() {
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  // Achievement items
+  document.querySelectorAll('.ach-item').forEach((el, i) => {
+    if(!el.style.transitionDelay) el.style.transitionDelay = (i * 0.07) + 's';
+    revealObserver.observe(el);
+  });
+}
+
+// -- COUNTER ANIMATION --
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.count);
+  const isFloat = el.dataset.float;
+  const suffix = el.dataset.count === '350' ? '+' : el.dataset.count === '1700' ? '+' : '';
+  const duration = 1200;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const val = eased * target;
+    el.textContent = isFloat ? val.toFixed(2) : Math.floor(val) + suffix;
+    if(progress < 1) requestAnimationFrame(update);
+    else el.classList.add('count-up');
+  }
+  requestAnimationFrame(update);
+}
+
+function initCounters() {
+  const counters = document.querySelectorAll('[data-count]');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !e.target.dataset.counted) {
+        e.target.dataset.counted = '1';
+        animateCounter(e.target);
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.5});
+  counters.forEach(el => obs.observe(el));
+}
+
+// -- SKILL BAR FILL ANIMATION --
+function initSkillBars() {
+  const bars = document.querySelectorAll('.prow-fill, .cp-prog-fill');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        const target = e.target.style.width || e.target.getAttribute('data-w');
+        if(!e.target.getAttribute('data-w')) e.target.setAttribute('data-w', target);
+        setTimeout(() => { e.target.style.width = e.target.getAttribute('data-w'); }, 100);
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.2});
+  bars.forEach(el => obs.observe(el));
+}
+
+// -- CARD MAGNETIC TILT --
+function initTilt() {
+  const cards = document.querySelectorAll('.pcard, .ccard, .ov-ncard');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (rect.width / 2);
+      const dy = (e.clientY - cy) / (rect.height / 2);
+      const tiltX = dy * -5;
+      const tiltY = dx * 5;
+      card.style.transform = `perspective(600px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+      card.classList.add('tilt-active');
+      card.classList.remove('tilt-reset');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)';
+      card.classList.remove('tilt-active');
+      card.classList.add('tilt-reset');
+    });
+  });
+}
+
+// -- TYPEWRITER --
+function typeWriter(el, text, speed = 18, delay = 800) {
+  el.textContent = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'tw-cursor';
+  el.appendChild(cursor);
+  let i = 0;
+  setTimeout(() => {
+    const iv = setInterval(() => {
+      if(i < text.length) {
+        el.insertBefore(document.createTextNode(text[i]), cursor);
+        i++;
+      } else {
+        clearInterval(iv);
+        setTimeout(() => cursor.remove(), 2000);
+      }
+    }, speed);
+  }, delay);
+}
+
+// -- CHIP WAVE ANIMATION --
+function initChipWave(container) {
+  const chips = container ? container.querySelectorAll('.chip') : document.querySelectorAll('.chip');
+  chips.forEach((chip, i) => {
+    chip.style.transitionDelay = (i * 0.04) + 's';
+    setTimeout(() => chip.classList.add('chip-shown'), 200 + i * 40);
+  });
+}
+
+// -- NAV PROGRESS BAR on SCROLL --
+const mainEl = document.getElementById('main');
+const progressBar = document.getElementById('navProgress');
+mainEl && mainEl.addEventListener('scroll', () => {
+  const scrollTop = mainEl.scrollTop;
+  const scrollHeight = mainEl.scrollHeight - mainEl.clientHeight;
+  const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
+  progressBar.style.transform = `scaleX(${progress})`;
+}, {passive: true});
+// Also listen on window scroll for pages that scroll on body
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const scrollHeight = document.body.scrollHeight - window.innerHeight;
+  const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
+  progressBar.style.transform = `scaleX(${progress})`;
+}, {passive: true});
+
+// -- KG NODE STAGGERED ENTRANCE --
+function animateKGEntrance() {
+  const nodes = document.querySelectorAll('.kn');
+  nodes.forEach((node, i) => {
+    node.style.animationDelay = (i * 0.018) + 's';
+  });
+}
+
+// -- STAGGER GRID CHILDREN on PAGE OPEN --
+function staggerReveal(pageId) {
+  const page = document.getElementById('page-' + pageId);
+  if(!page) return;
+  const items = page.querySelectorAll('.card, .tli, .ach-item, .ccard, .pcard, .sg, .cp-seg');
+  items.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1)';
+    el.style.transitionDelay = (i * 0.05) + 's';
+    setTimeout(() => {
+      el.style.opacity = '';
+      el.style.transform = '';
+    }, 60);
+  });
+}
+
+// -- OVERRIDE go() to trigger animations on page change --
+const _origGo = go;
+window.go = function(el) {
+  _origGo(el);
+  const p = el ? el.dataset.p : null;
+  if(!p) return;
+  setTimeout(() => {
+    staggerReveal(p === 'home' ? 'home' : p);
+    initReveal();
+    initTilt();
+    initSkillBars();
+    animateKGEntrance();
+    initChipWave(document.getElementById('page-' + p));
+  }, 80);
+};
+
+// -- HOVER GLOW on SIDEBAR LOGO --
+const sbLogo = document.querySelector('.sb-logo');
+sbLogo && sbLogo.addEventListener('mousemove', e => {
+  const rect = sbLogo.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  sbLogo.style.backgroundImage = `radial-gradient(ellipse at ${x}px 50%, rgba(0,255,136,0.12), transparent 70%)`;
+});
+sbLogo && sbLogo.addEventListener('mouseleave', () => {
+  sbLogo.style.backgroundImage = '';
+});
+
+// -- SECTION HEADER RE-ANIMATE on PAGE OPEN (reset animation) --
+function resetShAnimations(page) {
+  page.querySelectorAll('.sh').forEach(el => {
+    el.classList.remove('sh');
+    void el.offsetWidth;
+    el.classList.add('sh');
+  });
+}
+
+// -- INITIAL BOOT SEQUENCE --
+setTimeout(() => {
+  // Typewriter on tagline
+  const taglineEl = document.getElementById('taglineEl');
+  if(taglineEl) typeWriter(taglineEl, 'B.Tech student at IIIT-Delhi (CSAM) building at the intersection of iOS development, AI/ML research, and systems programming. Currently researching clinical NLP pipelines, shipped a production iOS app at ModularityLabs, and solving 1700+ LeetCode-rated DSA problems.', 14, 400);
+
+  // Counters
+  initCounters();
+
+  // Skill bars
+  initSkillBars();
+
+  // Tilt
+  setTimeout(initTilt, 300);
+
+  // KG node entrance
+  setTimeout(animateKGEntrance, 100);
+
+  // Chip wave on home
+  setTimeout(() => initChipWave(document.getElementById('page-home')), 600);
+
+  // Reveal observer
+  initReveal();
+}, 100);
+
 </script>
 </body>
 </html>
