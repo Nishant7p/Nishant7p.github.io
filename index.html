@@ -201,23 +201,145 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .ov-ncard:hover .onc-arr{color:var(--acc);transform:translate(2px,-2px);}
 
 /* KG SECTION */
-.ov-kg{padding:0;}
-.kg-header{padding:14px 18px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.kg-canvas{position:relative;width:100%;height:340px;}
-#kgsvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
-.kn{position:absolute;font-size:9px;padding:3px 7px;border:1px solid;background:var(--bg);transform:translate(-50%,-50%);transition:var(--ease);cursor:none;white-space:nowrap;}
-.kn:hover{z-index:10;}
-.kn.core{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);font-size:10px;font-weight:700;}
-.kn.dom{border-color:rgba(68,136,255,.4);color:var(--blue);}
-.kn.dom:hover{background:rgba(68,136,255,.08);}
-.kn.tech{border-color:var(--b2);color:var(--dim);}
-.kn.tech:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);}
-.kn.proj{border-color:rgba(255,170,0,.3);color:var(--amber);}
-.kn.proj:hover{background:rgba(255,170,0,.07);}
-.kn.course{border-color:rgba(170,102,255,.3);color:var(--purple);}
-.kn.course:hover{background:rgba(170,102,255,.07);}
-.kn.math{border-color:rgba(0,204,255,.3);color:var(--cyan);}
-.kn.math:hover{background:rgba(0,204,255,.06);}
+.ov-kg { padding: 0; }
+.kg-header {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px;
+}
+.kg-canvas {
+  position: relative;
+  width: 100%;
+  background: var(--bg2);
+  overflow: hidden;
+}
+
+/* ── SVG edges always at z=0 — behind every node ── */
+#kgsvg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Base node — sits at z=2, always above SVG ── */
+.kn {
+  position: absolute;
+  border: 1px solid;
+  background: rgba(7,7,7,0.93);
+  transform: translate(-50%,-50%);
+  white-space: nowrap;
+  cursor: none;
+  user-select: none;
+  z-index: 2;
+  letter-spacing: .03em;
+  font-size: 7px;
+  padding: 2px 6px;
+  /* only opacity transitions — no transform (avoids browser tooltip-layout bug) */
+  transition: opacity .25s ease, box-shadow .2s ease;
+}
+
+/* ── CORE ── always full, double-pulse ring ── */
+.kn.core {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  padding: 5px 16px;
+  border-color: var(--acc);
+  color: var(--acc);
+  background: rgba(0,255,136,.07);
+  z-index: 10;
+  box-shadow: 0 0 0 1px rgba(0,255,136,.12), 0 0 16px rgba(0,255,136,.06);
+}
+.kn.core::before {
+  content: '';
+  position: absolute; inset: -7px;
+  border: 1px solid rgba(0,255,136,.2);
+  animation: coreRing 3.5s ease-out infinite;
+  pointer-events: none;
+}
+.kn.core::after {
+  content: '';
+  position: absolute; inset: -18px;
+  border: 1px solid rgba(0,255,136,.07);
+  animation: coreRing 3.5s ease-out 1.5s infinite;
+  pointer-events: none;
+}
+
+/* ── DOMAINS — always full ── */
+.kn.dom {
+  border-color: rgba(68,136,255,.5);
+  color: #88bbff;
+  background: rgba(7,7,7,.95);
+  font-size: 7.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  z-index: 5;
+}
+
+/* ── Rest: ghosted in default state ── */
+.kn.proj   { border-color: rgba(255,170,0,.3);  color: #886622; opacity: .16; }
+.kn.tech   { border-color: rgba(55,55,55,.9);   color: #4a4a4a; opacity: .14; }
+.kn.course { border-color: rgba(160,80,255,.25);color: #6633aa; opacity: .14; }
+.kn.math   { border-color: rgba(0,180,255,.22); color: #1a5577; opacity: .14; }
+
+/* ── HOVER STATE: canvas.has-hover dims everything not highlighted ── */
+.kg-canvas.has-hover .kn.core   { /* core always at full — override below */ }
+.kg-canvas.has-hover .kn.dom    { opacity: .07; }
+.kg-canvas.has-hover .kn.proj   { opacity: .04; }
+.kg-canvas.has-hover .kn.tech   { opacity: .03; }
+.kg-canvas.has-hover .kn.course { opacity: .03; }
+.kg-canvas.has-hover .kn.math   { opacity: .03; }
+
+/* core is always 1 — the anchor */
+.kg-canvas.has-hover .kn.core { opacity: 1 !important; }
+
+/* highlighted: snap to full with per-type glow */
+.kg-canvas.has-hover .kn.kn-hi          { opacity: 1 !important; z-index: 15; }
+.kg-canvas.has-hover .kn.kn-hi.dom      { box-shadow: 0 0 0 1px rgba(68,136,255,.4), 0 0 10px rgba(68,136,255,.1); }
+.kg-canvas.has-hover .kn.kn-hi.proj     { color: #ddaa33; border-color: rgba(255,170,0,.55); }
+.kg-canvas.has-hover .kn.kn-hi.tech     { color: #aaa;    border-color: rgba(120,120,120,.7); }
+.kg-canvas.has-hover .kn.kn-hi.course   { color: #aa77ff; border-color: rgba(170,90,255,.6); }
+.kg-canvas.has-hover .kn.kn-hi.math     { color: #33aadd; border-color: rgba(0,170,220,.55); }
+
+/* ── Entrance animation ── */
+@keyframes kgNodeIn { from{opacity:0;} to{opacity:1;} }
+@keyframes coreRing { 0%{inset:-6px;opacity:.5;} 100%{inset:-30px;opacity:0;} }
+
+/* edges: CSS transition only (no JS colour changes needed) */
+#kgsvg line { transition: opacity .2s ease; }
+
+
+/* ========== CHARTS ==========
+/* ========== CHARTS ========== */
+.chart-wrap{padding:28px 36px;border-bottom:1px solid var(--border);}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:840px){.chart-row{grid-template-columns:1fr;}}
+.chart-box{background:var(--bg2);border:1px solid var(--border);padding:20px;}
+.chart-title{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.chart-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.chart-svg-wrap{position:relative;}
+
+/* SGPA bar chart */
+.sgpa-bar{fill:var(--bg3);transition:fill .2s;}
+.sgpa-bar:hover{fill:rgba(0,255,136,.15);}
+.sgpa-bar-fill{transform-origin:bottom;animation:barGrow .9s cubic-bezier(.22,1,.36,1) forwards;transform:scaleY(0);}
+@keyframes barGrow{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+
+/* Recruiter highlights panel */
+.rec-panel{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:0 36px 0;border-top:none;}
+.rec-cell{background:var(--bg);padding:16px 18px;position:relative;overflow:hidden;}
+.rec-cell::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:0;transition:opacity .3s;}
+.rec-cell:hover::before{opacity:1;}
+.rec-cell:hover{background:var(--bg3);}
+.rec-label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.rec-val{font-family:var(--sans);font-size:20px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1;}
+.rec-sub{font-size:9px;color:var(--dim);margin-top:3px;}
+@media(max-width:840px){.rec-panel{grid-template-columns:1fr 1fr;}.chart-wrap{padding:20px 16px;}}
 
 /* ========== ACADEMIC PAGE ========== */
 .sem-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);overflow-x:auto;}
@@ -427,14 +549,6 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .ccard:hover{box-shadow:0 0 0 1px rgba(0,255,136,.12),0 6px 24px rgba(0,0,0,.4);}
 .ov-ncard:hover{box-shadow:inset 0 0 30px rgba(0,255,136,.03);}
 
-/* -- KG NODE ENTRANCE -- */
-.kn{opacity:0;animation:kgNodeIn .4s cubic-bezier(.22,1,.36,1) forwards;}
-@keyframes kgNodeIn{from{opacity:0;transform:translate(-50%,-50%) scale(.5);}to{transform:translate(-50%,-50%) scale(1);}}
-/* core node pulse ring */
-.kn.core::after{content:'';position:absolute;inset:-4px;border-radius:0;border:1px solid var(--acc);opacity:.0;animation:coreRing 2.8s ease-out infinite;}
-@keyframes coreRing{0%{inset:-4px;opacity:.5;}100%{inset:-18px;opacity:0;}}
-.kn.core{position:absolute;} /* ensure stacking */
-
 /* -- PAGE TRANSITION -- */
 .page.on{display:block;animation:pageIn .45s cubic-bezier(.22,1,.36,1);}
 @keyframes pageIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
@@ -485,8 +599,29 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 /* -- CONTACT AVAILABILITY BLINK -- */
 .avail-dot{display:inline-block;width:6px;height:6px;background:var(--acc);border-radius:50%;animation:pls 2s ease infinite;margin-right:5px;vertical-align:middle;}
 
-/* -- KG EDGE ANIMATE on HOVER -- */
-#kgsvg line{transition:stroke-opacity .25s,stroke-width .25s;}
+/* -- KG EDGE ANIMATE on HOVER -- (defined in KG section above) */
+
+/* ========== STAR WORK STRIP ========== */
+.star-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-top:none;}
+.star-card{background:var(--bg);padding:18px 20px;position:relative;cursor:none;transition:background .18s;}
+.star-card:hover{background:var(--bg3);}
+.star-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--acc),transparent);opacity:0;transition:opacity .25s;}
+.star-card:hover::before{opacity:1;}
+.sc-badge{display:inline-flex;align-items:center;gap:5px;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);border:1px solid rgba(0,255,136,.25);padding:2px 7px;margin-bottom:9px;}
+.sc-title{font-family:var(--sans);font-size:14px;font-weight:800;color:var(--text);margin-bottom:5px;line-height:1.2;}
+.sc-impact{font-size:9.5px;color:var(--dim);margin-bottom:10px;line-height:1.5;}
+.sc-impact strong{color:var(--acc);}
+.sc-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+.sc-tag{font-size:7.5px;padding:2px 7px;border:1px solid var(--b2);color:var(--muted);}
+.sc-arr{font-size:10px;color:var(--muted);transition:color .18s,transform .18s;}
+.star-card:hover .sc-arr{color:var(--acc);transform:translate(2px,-2px);}
+@media(max-width:840px){.star-strip{grid-template-columns:1fr;}}
+
+/* ========== IMPACT CALLOUT ========== */
+.impact-callout{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid rgba(0,255,136,.12);margin-bottom:24px;}
+.ic-cell{background:var(--bg);padding:14px 16px;text-align:center;}
+.ic-val{font-family:var(--sans);font-size:22px;font-weight:800;color:var(--acc);line-height:1;}
+.ic-label{font-size:8px;color:var(--dim);margin-top:3px;letter-spacing:.08em;text-transform:uppercase;}
 </style>
 </head>
 <body>
@@ -629,13 +764,80 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
   </div>
 
+  <!-- ★ FEATURED WORK — instant recruiter scan -->
+  <div style="padding:0 36px;border-top:1px solid var(--border);padding-top:0;">
+    <div style="padding:14px 0 10px;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:600;">★ Featured Work</span>
+      <span style="flex:1;height:1px;background:var(--border);"></span>
+      <button onclick="go(document.querySelector('[data-p=projects]'))" style="font-size:8px;color:var(--dim);background:none;border:none;cursor:none;letter-spacing:.06em;">View all 8 →</button>
+    </div>
+  </div>
+  <div class="star-strip">
+    <div class="star-card" onclick="go(document.querySelector('[data-p=experience]'))">
+      <div class="sc-badge">★ BTP Research · 2026</div>
+      <div class="sc-title">AI Clinical Scribe</div>
+      <div class="sc-impact">Multi-modal ASR + Speaker Diarization → structured SOAP notes with <strong>90%+ accuracy</strong>. Reduces physician admin load by <strong>30–40%</strong>.</div>
+      <div class="sc-tags"><span class="sc-tag">Whisper</span><span class="sc-tag">Pyannote</span><span class="sc-tag">NLP / NER</span><span class="sc-tag">ICD-10</span><span class="sc-tag">Python</span></div>
+      <div class="sc-arr">↗ View Details</div>
+    </div>
+    <div class="star-card" onclick="go(document.querySelector('[data-p=experience]'))">
+      <div class="sc-badge">★ Internship · Jan–Jun 2025</div>
+      <div class="sc-title">iOS Productivity App</div>
+      <div class="sc-impact">SwiftUI + Firebase + Core Data — offline-first architecture, MVVM, modular sub-apps. <strong>Letter of Recommendation</strong> received.</div>
+      <div class="sc-tags"><span class="sc-tag">SwiftUI</span><span class="sc-tag">Firebase</span><span class="sc-tag">Core Data</span><span class="sc-tag">Combine</span><span class="sc-tag">MVVM</span></div>
+      <div class="sc-arr">↗ View Details</div>
+    </div>
+    <div class="star-card" onclick="go(document.querySelector('[data-p=projects]'))">
+      <div class="sc-badge">★ Personal · 2025</div>
+      <div class="sc-title">AgriLink Marketplace</div>
+      <div class="sc-impact">Full-stack React + Node + PostgreSQL + Supabase platform connecting <strong>farmers to buyers</strong>. JWT auth, real-time updates.</div>
+      <div class="sc-tags"><span class="sc-tag">React</span><span class="sc-tag">Node.js</span><span class="sc-tag">PostgreSQL</span><span class="sc-tag">Supabase</span><span class="sc-tag">JWT</span></div>
+      <div class="sc-arr">↗ View Details</div>
+    </div>
+  </div>
+
+  <!-- RECRUITER QUICK STATS -->
+  <div class="rec-panel">
+    <div class="rec-cell">
+      <div class="rec-label">Current Status</div>
+      <div class="rec-val" style="color:var(--acc);font-size:14px;">Open to Work</div>
+      <div class="rec-sub"><span class="avail-dot"></span>Available Immediately</div>
+    </div>
+    <div class="rec-cell">
+      <div class="rec-label">Best Domain</div>
+      <div class="rec-val" style="font-size:14px;">iOS + AI/ML</div>
+      <div class="rec-sub">Swift · PyTorch · Production Ready</div>
+    </div>
+    <div class="rec-cell">
+      <div class="rec-label">Preferred Roles</div>
+      <div class="rec-val" style="font-size:13px;letter-spacing:-.3px;">SDE · ML Eng.</div>
+      <div class="rec-sub">Internship or Research Role</div>
+    </div>
+    <div class="rec-cell">
+      <div class="rec-label">Notice Period</div>
+      <div class="rec-val" style="color:var(--acc);font-size:14px;">Immediate</div>
+      <div class="rec-sub">New Delhi · IST · Remote OK</div>
+    </div>
+  </div>
+
   <!-- KNOWLEDGE GRAPH -->
   <div class="ov-kg">
     <div class="kg-header">
-      <span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">Knowledge Graph</span>
-      <span style="font-size:8.5px;color:var(--dim);">Hover nodes to explore connections · <span style="color:var(--acc);">green</span>=core · <span style="color:var(--blue);">blue</span>=domain · <span style="color:var(--amber);">amber</span>=project · <span style="color:var(--purple);">purple</span>=course · <span style="color:var(--cyan);">cyan</span>=math</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text);font-weight:600;">Knowledge Graph</span>
+        <span style="font-size:8px;color:var(--muted);">70+ nodes · full tech DNA</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span style="font-size:8px;color:var(--dim);">Core + domains always visible · hover any node to reveal its cluster</span>
+        <span style="font-size:8px;color:var(--acc);">● Core</span>
+        <span style="font-size:8px;color:#99ccff;">● Domain</span>
+        <span style="font-size:8px;color:#ffcc55;">● Project</span>
+        <span style="font-size:8px;color:#b877ff;">● Course</span>
+        <span style="font-size:8px;color:#33ccff;">● Math</span>
+        <span style="font-size:8px;color:#555;">● Tech</span>
+      </div>
     </div>
-    <div class="kg-canvas" id="kgCanvas" style="height:420px;">
+    <div class="kg-canvas" id="kgCanvas" style="height:500px;">
       <svg id="kgsvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></svg>
     </div>
   </div>
@@ -687,6 +889,25 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="stag-line">Semester-wise Knowledge Archive</div>
     <div class="srow"><div><div class="sh">Academic Log</div><div class="ss">Real IIIT-Delhi transcript — course breakdown with learnings, key topics, and outcomes each semester</div></div></div>
   </div>
+  <!-- ACADEMIC CHARTS -->
+  <div class="chart-wrap">
+    <div class="chart-row">
+      <!-- SGPA Line Chart -->
+      <div class="chart-box">
+        <div class="chart-title">SGPA Progression — Semester vs Grade</div>
+        <div class="chart-svg-wrap" id="sgpaChartWrap">
+          <svg id="sgpaChart" width="100%" height="160" viewBox="0 0 400 160" preserveAspectRatio="none"></svg>
+        </div>
+      </div>
+      <!-- CGPA Trend -->
+      <div class="chart-box">
+        <div class="chart-title">CGPA Cumulative Trend</div>
+        <div class="chart-svg-wrap" id="cgpaChartWrap">
+          <svg id="cgpaChart" width="100%" height="160" viewBox="0 0 400 160" preserveAspectRatio="none"></svg>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="sem-tabs" id="semTabs">
     <button class="sem-tab on" data-sem="1" onclick="switchSem(this)">Semester I</button>
     <button class="sem-tab" data-sem="2" onclick="switchSem(this)">Semester II</button>
@@ -703,6 +924,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="sec">
     <div class="stag-line">Work & Research</div>
     <div class="srow"><div><div class="sh">Experience</div><div class="ss">Internships and ongoing research projects</div></div><div class="scount">2 positions · 2025–Present</div></div>
+    <!-- Impact at a glance -->
+    <div class="impact-callout">
+      <div class="ic-cell"><div class="ic-val">90%+</div><div class="ic-label">SOAP Note Accuracy</div></div>
+      <div class="ic-cell"><div class="ic-val">30–40%</div><div class="ic-label">Physician Load Reduced</div></div>
+      <div class="ic-cell"><div class="ic-val">LOR ✓</div><div class="ic-label">Letter of Recommendation</div></div>
+    </div>
     <div class="tline">
       <div class="tli">
         <div class="tli-dot f"></div>
@@ -1201,122 +1428,122 @@ const ACHIEVEMENTS = [
   {year:'2025',mon:'Jun',icon:'◉',title:'GPU Programming Specialisation — JHU Completed',detail:'Completed 4-course GPU Programming specialisation from Johns Hopkins University via Coursera. Covers CUDA, cuDNN, memory optimisation, and performance tuning.',chip:'Certification'},
 ];
 
-// =================== KNOWLEDGE GRAPH (Dense) ===================
+// =================== KNOWLEDGE GRAPH — Dense, Always Visible ===================
 const KG_NODES = [
   // Core
-  {id:'nt',label:'Nishant Tomer',cls:'core',x:50,y:48},
+  {id:'nt',       label:'Nishant Tomer',       cls:'core',   x:50,  y:48},
 
   // Domains
-  {id:'ai',label:'AI / NLP',cls:'dom',x:76,y:14},
-  {id:'ios',label:'iOS Dev',cls:'dom',x:16,y:16},
-  {id:'game',label:'Game Dev',cls:'dom',x:8,y:58},
-  {id:'web',label:'Full-Stack',cls:'dom',x:86,y:66},
-  {id:'cp',label:'Comp. Prog.',cls:'dom',x:48,y:90},
-  {id:'sys',label:'Systems / OS',cls:'dom',x:22,y:76},
-  {id:'ml',label:'ML / Deep Learning',cls:'dom',x:60,y:16},
-  {id:'db',label:'Databases',cls:'dom',x:90,y:84},
+  {id:'ai',       label:'AI / NLP',             cls:'dom',    x:76,  y:14},
+  {id:'ios',      label:'iOS Dev',              cls:'dom',    x:16,  y:16},
+  {id:'game',     label:'Game Dev',             cls:'dom',    x:8,   y:58},
+  {id:'web',      label:'Full-Stack',           cls:'dom',    x:86,  y:66},
+  {id:'cp',       label:'Comp. Prog.',          cls:'dom',    x:48,  y:90},
+  {id:'sys',      label:'Systems / OS',         cls:'dom',    x:22,  y:76},
+  {id:'ml',       label:'ML / Deep Learning',   cls:'dom',    x:60,  y:16},
+  {id:'db',       label:'Databases',            cls:'dom',    x:90,  y:84},
 
   // Languages
-  {id:'java',label:'Java',cls:'tech',x:30,y:64},
-  {id:'python',label:'Python',cls:'tech',x:55,y:60},
-  {id:'swift',label:'Swift',cls:'tech',x:4,y:24},
-  {id:'js',label:'JavaScript',cls:'tech',x:94,y:50},
-  {id:'cpp',label:'C++',cls:'tech',x:18,y:90},
-  {id:'sql',label:'SQL',cls:'tech',x:84,y:90},
+  {id:'java',     label:'Java',                 cls:'tech',   x:30,  y:64},
+  {id:'python',   label:'Python',               cls:'tech',   x:55,  y:60},
+  {id:'swift',    label:'Swift',                cls:'tech',   x:4,   y:24},
+  {id:'js',       label:'JavaScript',           cls:'tech',   x:94,  y:50},
+  {id:'cpp',      label:'C++',                  cls:'tech',   x:18,  y:90},
+  {id:'sql',      label:'SQL',                  cls:'tech',   x:84,  y:90},
 
-  // AI/ML tech
-  {id:'whisper',label:'OpenAI Whisper',cls:'tech',x:92,y:8},
-  {id:'pyannote',label:'Pyannote.audio',cls:'tech',x:80,y:5},
-  {id:'pytorch',label:'PyTorch',cls:'tech',x:66,y:6},
-  {id:'tensorflow',label:'TensorFlow',cls:'tech',x:72,y:24},
-  {id:'numpy',label:'NumPy',cls:'tech',x:58,y:28},
-  {id:'cuda',label:'CUDA',cls:'tech',x:62,y:80},
-  {id:'cudnn',label:'cuDNN',cls:'tech',x:70,y:74},
-  {id:'ner',label:'NER / spaCy',cls:'tech',x:88,y:18},
-  {id:'sklearn',label:'scikit-learn',cls:'tech',x:48,y:22},
+  // AI / ML tech
+  {id:'whisper',  label:'OpenAI Whisper',       cls:'tech',   x:92,  y:8},
+  {id:'pyannote', label:'Pyannote.audio',       cls:'tech',   x:80,  y:5},
+  {id:'pytorch',  label:'PyTorch',              cls:'tech',   x:66,  y:6},
+  {id:'tensorflow',label:'TensorFlow',          cls:'tech',   x:72,  y:24},
+  {id:'numpy',    label:'NumPy',                cls:'tech',   x:58,  y:28},
+  {id:'cuda',     label:'CUDA',                 cls:'tech',   x:62,  y:80},
+  {id:'cudnn',    label:'cuDNN',                cls:'tech',   x:70,  y:74},
+  {id:'ner',      label:'NER / spaCy',          cls:'tech',   x:88,  y:18},
+  {id:'sklearn',  label:'scikit-learn',         cls:'tech',   x:48,  y:22},
 
   // iOS tech
-  {id:'swiftui',label:'SwiftUI',cls:'tech',x:4,y:12},
-  {id:'combine',label:'Combine',cls:'tech',x:6,y:36},
-  {id:'coredata',label:'Core Data',cls:'tech',x:14,y:50},
-  {id:'firebase',label:'Firebase',cls:'tech',x:22,y:8},
-  {id:'firestore',label:'Firestore',cls:'tech',x:12,y:26},
-  {id:'mvvm',label:'MVVM',cls:'tech',x:4,y:42},
+  {id:'swiftui',  label:'SwiftUI',              cls:'tech',   x:4,   y:12},
+  {id:'combine',  label:'Combine',              cls:'tech',   x:6,   y:36},
+  {id:'coredata', label:'Core Data',            cls:'tech',   x:14,  y:50},
+  {id:'firebase', label:'Firebase',             cls:'tech',   x:22,  y:8},
+  {id:'firestore',label:'Firestore',            cls:'tech',   x:12,  y:26},
+  {id:'mvvm',     label:'MVVM',                 cls:'tech',   x:4,   y:42},
 
   // Web tech
-  {id:'react',label:'React',cls:'tech',x:96,y:56},
-  {id:'node',label:'Node.js',cls:'tech',x:92,y:70},
-  {id:'express',label:'Express.js',cls:'tech',x:84,y:76},
-  {id:'supabase',label:'Supabase',cls:'tech',x:96,y:80},
-  {id:'postgres',label:'PostgreSQL',cls:'tech',x:88,y:88},
-  {id:'jwt',label:'JWT',cls:'tech',x:96,y:64},
-  {id:'tsq',label:'TanStack Query',cls:'tech',x:80,y:58},
-  {id:'fastapi',label:'FastAPI',cls:'tech',x:74,y:84},
-  {id:'rest',label:'REST APIs',cls:'tech',x:76,y:66},
+  {id:'react',    label:'React',                cls:'tech',   x:96,  y:56},
+  {id:'node',     label:'Node.js',              cls:'tech',   x:92,  y:70},
+  {id:'express',  label:'Express.js',           cls:'tech',   x:84,  y:76},
+  {id:'supabase', label:'Supabase',             cls:'tech',   x:96,  y:80},
+  {id:'postgres', label:'PostgreSQL',           cls:'tech',   x:88,  y:88},
+  {id:'jwt',      label:'JWT',                  cls:'tech',   x:96,  y:64},
+  {id:'tsq',      label:'TanStack Query',       cls:'tech',   x:80,  y:58},
+  {id:'fastapi',  label:'FastAPI',              cls:'tech',   x:74,  y:84},
+  {id:'rest',     label:'REST APIs',            cls:'tech',   x:76,  y:66},
 
   // Game / Systems tools
-  {id:'libgdx',label:'libGDX',cls:'tech',x:4,y:64},
-  {id:'unreal',label:'Unreal Engine',cls:'tech',x:14,y:80},
-  {id:'tkinter',label:'Tkinter / PyQT5',cls:'tech',x:36,y:78},
-  {id:'xcode',label:'Xcode',cls:'tech',x:6,y:50},
-  {id:'git',label:'Git',cls:'tech',x:30,y:52},
-  {id:'docker',label:'Docker',cls:'tech',x:40,y:52},
-  {id:'intellij',label:'IntelliJ',cls:'tech',x:24,y:62},
+  {id:'libgdx',   label:'libGDX',              cls:'tech',   x:4,   y:64},
+  {id:'unreal',   label:'Unreal Engine',        cls:'tech',   x:14,  y:80},
+  {id:'tkinter',  label:'Tkinter / PyQT5',      cls:'tech',   x:36,  y:78},
+  {id:'xcode',    label:'Xcode',                cls:'tech',   x:6,   y:50},
+  {id:'git',      label:'Git',                  cls:'tech',   x:30,  y:52},
+  {id:'docker',   label:'Docker',               cls:'tech',   x:40,  y:52},
+  {id:'intellij', label:'IntelliJ',             cls:'tech',   x:24,  y:62},
 
   // Projects
-  {id:'clinical',label:'Clinical Scribe',cls:'proj',x:88,y:26},
-  {id:'ios_proj',label:'iOS Productivity',cls:'proj',x:6,y:4},
-  {id:'agrilink',label:'AgriLink',cls:'proj',x:96,y:42},
-  {id:'asm',label:'Assembler & Sim',cls:'proj',x:32,y:90},
-  {id:'personalia',label:'Personalisation Eng.',cls:'proj',x:74,y:52},
-  {id:'leet',label:'LeetCode 1700+',cls:'proj',x:56,y:92},
-  {id:'angry',label:'Angry Birds Clone',cls:'proj',x:8,y:72},
-  {id:'geo',label:'GeoGuesser Game',cls:'proj',x:40,y:88},
-  {id:'escape',label:'3D Escape Room',cls:'proj',x:20,y:86},
+  {id:'clinical', label:'Clinical Scribe',      cls:'proj',   x:88,  y:26},
+  {id:'ios_proj', label:'iOS Productivity',     cls:'proj',   x:6,   y:4},
+  {id:'agrilink', label:'AgriLink',             cls:'proj',   x:96,  y:42},
+  {id:'asm',      label:'Assembler & Sim',      cls:'proj',   x:32,  y:90},
+  {id:'personalia',label:'Personalisation Eng.',cls:'proj',   x:74,  y:52},
+  {id:'leet',     label:'LeetCode 1700+',       cls:'proj',   x:56,  y:92},
+  {id:'angry',    label:'Angry Birds Clone',    cls:'proj',   x:8,   y:72},
+  {id:'geo',      label:'GeoGuesser Game',      cls:'proj',   x:40,  y:88},
+  {id:'escape',   label:'3D Escape Room',       cls:'proj',   x:20,  y:86},
 
   // Courses
-  {id:'cse102',label:'DSA',cls:'course',x:38,y:68},
-  {id:'cse201',label:'OOP / Java',cls:'course',x:26,y:68},
-  {id:'cse231',label:'Operating Systems',cls:'course',x:20,y:58},
-  {id:'cse112',label:'Computer Org.',cls:'course',x:32,y:82},
-  {id:'cse202',label:'DBMS',cls:'course',x:82,y:94},
-  {id:'cse222',label:'Algorithms (ADA)',cls:'course',x:44,y:74},
-  {id:'cse322',label:'Theory of Computation',cls:'course',x:52,y:76},
-  {id:'cse640',label:'Collab. Filtering',cls:'course',x:68,y:64},
-  {id:'btp499',label:'BTP499 — SOAP AI',cls:'course',x:82,y:38},
-  {id:'eco111',label:'Digital Circuits',cls:'course',x:12,y:40},
-  {id:'des102',label:'HCI Design',cls:'course',x:14,y:30},
+  {id:'cse102',   label:'DSA',                  cls:'course', x:38,  y:68},
+  {id:'cse201',   label:'OOP / Java',           cls:'course', x:26,  y:68},
+  {id:'cse231',   label:'Operating Systems',    cls:'course', x:20,  y:58},
+  {id:'cse112',   label:'Computer Org.',        cls:'course', x:32,  y:82},
+  {id:'cse202',   label:'DBMS',                 cls:'course', x:82,  y:94},
+  {id:'cse222',   label:'Algorithms (ADA)',     cls:'course', x:44,  y:74},
+  {id:'cse322',   label:'Theory of Computation',cls:'course', x:52,  y:76},
+  {id:'cse640',   label:'Collab. Filtering',   cls:'course', x:68,  y:64},
+  {id:'btp499',   label:'BTP499 — SOAP AI',    cls:'course', x:82,  y:38},
+  {id:'eco111',   label:'Digital Circuits',     cls:'course', x:12,  y:40},
+  {id:'des102',   label:'HCI Design',           cls:'course', x:14,  y:30},
 
   // Math
-  {id:'mth201',label:'Probability & Stats',cls:'math',x:46,y:20},
-  {id:'mth204',label:'Linear Algebra',cls:'math',x:60,y:34},
-  {id:'mth210',label:'Discrete Structures',cls:'math',x:40,y:36},
-  {id:'mth371',label:'Stochastic Processes',cls:'math',x:52,y:10},
-  {id:'mth373',label:'Scientific Computing',cls:'math',x:36,y:26},
-  {id:'mth377',label:'Convex Optimization',cls:'math',x:70,y:42},
-  {id:'mth240',label:'Real Analysis',cls:'math',x:30,y:36},
-  {id:'mth300',label:'Math Logic',cls:'math',x:48,y:38},
-  {id:'mth212',label:'Abstract Algebra',cls:'math',x:34,y:46},
+  {id:'mth201',   label:'Probability & Stats',  cls:'math',   x:46,  y:20},
+  {id:'mth204',   label:'Linear Algebra',       cls:'math',   x:60,  y:34},
+  {id:'mth210',   label:'Discrete Structures',  cls:'math',   x:40,  y:36},
+  {id:'mth371',   label:'Stochastic Processes', cls:'math',   x:52,  y:10},
+  {id:'mth373',   label:'Scientific Computing', cls:'math',   x:36,  y:26},
+  {id:'mth377',   label:'Convex Optimization',  cls:'math',   x:70,  y:42},
+  {id:'mth240',   label:'Real Analysis',        cls:'math',   x:30,  y:36},
+  {id:'mth300',   label:'Math Logic',           cls:'math',   x:48,  y:38},
+  {id:'mth212',   label:'Abstract Algebra',     cls:'math',   x:34,  y:46},
 ];
 
 const KG_EDGES = [
   // Core to domains
   ['nt','ai'],['nt','ios'],['nt','game'],['nt','web'],['nt','cp'],['nt','sys'],['nt','ml'],['nt','db'],
 
-  // AI/ML domain connectivity
+  // AI/ML
   ['ai','whisper'],['ai','pyannote'],['ai','pytorch'],['ai','ner'],['ai','tensorflow'],
   ['ml','pytorch'],['ml','numpy'],['ml','sklearn'],['ml','cuda'],['ml','cudnn'],['ml','mth204'],['ml','mth377'],
   ['ai','ml'],['ai','mth201'],['ai','mth371'],
 
-  // iOS domain
+  // iOS
   ['ios','swiftui'],['ios','combine'],['ios','coredata'],['ios','firebase'],['ios','mvvm'],['ios','xcode'],
   ['ios','ios_proj'],['ios','firestore'],['swiftui','combine'],['firebase','firestore'],
 
-  // Game domain
+  // Game
   ['game','libgdx'],['game','unreal'],['game','java'],['game','cpp'],
   ['game','angry'],['game','escape'],['game','geo'],
 
-  // Web domain
+  // Web
   ['web','react'],['web','node'],['web','express'],['web','supabase'],['web','jwt'],['web','rest'],['web','tsq'],
   ['web','fastapi'],['node','express'],['web','agrilink'],
 
@@ -1324,19 +1551,18 @@ const KG_EDGES = [
   ['sys','cse231'],['sys','asm'],['sys','cse112'],['sys','git'],['sys','docker'],
   ['sys','cpp'],['sys','java'],
 
-  // DB domain
+  // DB
   ['db','postgres'],['db','supabase'],['db','sql'],['db','cse202'],['db','firebase'],['db','firestore'],
 
-  // CP domain
+  // CP
   ['cp','leet'],['cp','java'],['cp','python'],['cp','cse222'],['cp','cse102'],['cp','cse322'],['cp','mth210'],
 
-  // Languages bridge
+  // Language bridges
   ['python','ai'],['python','ml'],['python','tkinter'],['python','numpy'],['python','fastapi'],
   ['java','cse201'],['java','libgdx'],['java','cse102'],
-  ['swift','swiftui'],['js','react'],['js','node'],
-  ['sql','postgres'],
+  ['swift','swiftui'],['js','react'],['js','node'],['sql','postgres'],
 
-  // Projects to tech
+  // Projects → tech
   ['clinical','whisper'],['clinical','pyannote'],['clinical','ner'],['clinical','python'],['clinical','btp499'],
   ['ios_proj','swiftui'],['ios_proj','firebase'],['ios_proj','coredata'],['ios_proj','combine'],
   ['agrilink','react'],['agrilink','node'],['agrilink','postgres'],['agrilink','supabase'],['agrilink','jwt'],
@@ -1358,52 +1584,175 @@ const KG_EDGES = [
   ['mth240','mth201'],['mth300','cse322'],['mth300','mth210'],
   ['mth212','mth210'],['mth204','mth240'],['mth377','mth204'],
 
-  // Cross-domain connections
+  // Cross-domain
   ['cuda','ml'],['cudnn','ml'],['cudnn','cuda'],['mvvm','ios'],
   ['git','web'],['git','ios'],['docker','web'],['intellij','java'],
 ];
 
+// ── Default edge colours by tier (stored once, used in reset) ──
+const KG_EDGE_DEFAULTS = {
+  A: { col: 'rgba(0,255,136,0.22)',   w: '1.2' },  // core ↔ dom: subtle green
+  B: { col: 'rgba(255,255,255,0.06)', w: '0.5' },  // dom ↔ *: very faint white
+  C: { col: 'rgba(255,255,255,0.025)',w: '0.3' },  // * ↔ *: barely there
+};
+
+// ── Per-domain highlight edge colour (muted, translucent) ──
+const KG_DOM_COLORS = {
+  ai:   'rgba(255,110,80,.35)',
+  ml:   'rgba(255,80,140,.35)',
+  ios:  'rgba(80,170,255,.35)',
+  web:  'rgba(80,220,130,.35)',
+  game: 'rgba(190,90,255,.35)',
+  cp:   'rgba(255,200,50,.35)',
+  sys:  'rgba(160,160,160,.35)',
+  db:   'rgba(50,200,200,.35)',
+};
+
+// ── Per-domain edge/highlight accent colours (kept subtle) ──
+const DOM_ACCENT = {
+  ai:   'rgba(255,100,70,.22)',
+  ml:   'rgba(255,70,130,.22)',
+  ios:  'rgba(60,160,255,.22)',
+  web:  'rgba(70,210,120,.22)',
+  game: 'rgba(180,80,255,.22)',
+  cp:   'rgba(240,190,40,.22)',
+  sys:  'rgba(150,150,150,.22)',
+  db:   'rgba(40,190,190,.22)',
+};
+
 function buildKG() {
   const canvas = document.getElementById('kgCanvas');
-  const svg = document.getElementById('kgsvg');
+  const svg    = document.getElementById('kgsvg');
   if(!canvas || !svg) return;
-  const W = canvas.offsetWidth, H = canvas.offsetHeight || 420;
-  let lines = '';
-  KG_EDGES.forEach(([a,b]) => {
-    const na = KG_NODES.find(n=>n.id===a), nb = KG_NODES.find(n=>n.id===b);
-    if(!na||!nb) return;
-    const x1=na.x/100*W, y1=na.y/100*H, x2=nb.x/100*W, y2=nb.y/100*H;
-    const isCore = na.cls==='core'||nb.cls==='core';
-    const isDom = na.cls==='dom'||nb.cls==='dom';
-    const col = isCore ? 'rgba(0,255,136,0.22)' : isDom ? 'rgba(0,255,136,0.09)' : 'rgba(255,255,255,0.06)';
-    const w = isCore ? 1.5 : isDom ? 1 : 0.5;
-    lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${w}"/>`;
+
+  const W = canvas.offsetWidth;
+  const H = canvas.offsetHeight || 440;
+  if(W < 10) { setTimeout(buildKG, 80); return; }
+
+  // ── Draw edges into SVG (always at z=0, behind all nodes) ──
+  // Three fixed opacities: core↔dom bright, dom↔other faint, other↔other invisible
+  let edgesHTML = '';
+  KG_EDGES.forEach(([a, b]) => {
+    const na = KG_NODES.find(n => n.id === a);
+    const nb = KG_NODES.find(n => n.id === b);
+    if(!na || !nb) return;
+
+    const x1 = (na.x / 100 * W).toFixed(1);
+    const y1 = (na.y / 100 * H).toFixed(1);
+    const x2 = (nb.x / 100 * W).toFixed(1);
+    const y2 = (nb.y / 100 * H).toFixed(1);
+
+    const isCore = na.cls === 'core' || nb.cls === 'core';
+    const isDom  = na.cls === 'dom'  || nb.cls === 'dom';
+
+    // Edge visuals — always low opacity so they NEVER obscure text
+    let col, w;
+    if(isCore)      { col = 'rgba(0,255,136,0.20)'; w = '1.2'; }
+    else if(isDom)  { col = 'rgba(255,255,255,0.06)'; w = '0.6'; }
+    else            { col = 'rgba(255,255,255,0.025)'; w = '0.3'; }
+
+    // Store original values as data attrs for reset
+    edgesHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" `
+               + `stroke="${col}" stroke-width="${w}" `
+               + `class="kg-edge" data-a="${a}" data-b="${b}" `
+               + `data-col="${col}" data-w="${w}"/>`;
   });
-  svg.innerHTML = lines;
-  canvas.querySelectorAll('.kn').forEach(n=>n.remove());
-  KG_NODES.forEach(node => {
+  svg.innerHTML = edgesHTML;
+
+  // ── Resting opacity per class (locked after entrance anim) ──
+  const REST = { core: 1, dom: 1, proj: .16, tech: .14, course: .14, math: .14 };
+
+  // ── Build node divs (z ≥ 2, always above SVG) ──
+  canvas.querySelectorAll('.kn').forEach(n => n.remove());
+
+  KG_NODES.forEach((node, i) => {
     const div = document.createElement('div');
-    div.className = `kn ${node.cls}`;
+    div.className   = `kn ${node.cls}`;
     div.textContent = node.label;
-    div.style.left = node.x+'%';
-    div.style.top = node.y+'%';
+    div.style.left  = node.x + '%';
+    div.style.top   = node.y + '%';
+    div.style.opacity = '0';
+    // Staggered fade-in — pure opacity, NO scale/transform (avoids browser tooltip overlap bug)
+    div.style.animation = `kgNodeIn .6s ease ${(i * 0.014).toFixed(3)}s forwards`;
     div.dataset.nid = node.id;
-    div.title = node.label;
-    div.onmouseenter = () => highlightNode(node.id);
-    div.onmouseleave = () => resetHighlight();
+    div.dataset.cls = node.cls;
+    // ↓ NO div.title here — that was causing the floating "iOS Dev" tooltip ghost
+    div.addEventListener('mouseenter', () => highlightNode(node.id));
+    div.addEventListener('mouseleave', () => resetHighlight());
     canvas.appendChild(div);
+
+    // After entrance animation: lock to resting opacity
+    setTimeout(() => {
+      div.style.animation = 'none';
+      div.style.opacity   = String(REST[node.cls] ?? 1);
+      div.style.transform = 'translate(-50%,-50%)';
+    }, 1000 + i * 14);
   });
 }
 
 function highlightNode(id) {
-  document.querySelectorAll('.kn').forEach(n=>n.style.opacity='0.12');
-  const connected = new Set([id]);
-  KG_EDGES.forEach(([a,b])=>{if(a===id)connected.add(b);if(b===id)connected.add(a);});
-  document.querySelectorAll('.kn').forEach(el=>{
-    if(connected.has(el.dataset.nid)) el.style.opacity='1';
+  const canvas = document.getElementById('kgCanvas');
+  canvas.classList.add('has-hover');
+
+  // Direct neighbours + always keep core lit
+  const lit = new Set([id, 'nt']);
+  KG_EDGES.forEach(([a, b]) => {
+    if(a === id) lit.add(b);
+    if(b === id) lit.add(a);
+  });
+
+  // Apply/remove highlight class on nodes
+  canvas.querySelectorAll('.kn').forEach(el => {
+    el.classList.toggle('kn-hi', lit.has(el.dataset.nid));
+  });
+
+  // Edge accent — only edges directly touching hovered node get a subtle tint
+  // Accent stays very translucent so text is ALWAYS readable
+  const hNode  = KG_NODES.find(n => n.id === id);
+  let accent   = 'rgba(0,255,136,0.18)';
+
+  if(hNode?.cls === 'dom') {
+    accent = DOM_ACCENT[id] || accent;
+  } else if(hNode?.cls !== 'core') {
+    // Inherit domain colour from the domain this node belongs to
+    for(const [a, b] of KG_EDGES) {
+      const check = a === id ? b : b === id ? a : null;
+      if(check) {
+        const peer = KG_NODES.find(n => n.id === check);
+        if(peer?.cls === 'dom' && DOM_ACCENT[check]) { accent = DOM_ACCENT[check]; break; }
+      }
+    }
+  }
+
+  canvas.querySelectorAll('#kgsvg .kg-edge').forEach(line => {
+    const a = line.dataset.a, b = line.dataset.b;
+    if(a === id || b === id) {
+      // Direct edge: subtle tint, thin — still readable over node text
+      line.style.stroke      = accent;
+      line.style.strokeWidth = '1.0';
+      line.style.opacity     = '1';
+    } else {
+      // Everything else: nearly invisible
+      line.style.stroke      = 'rgba(255,255,255,0.012)';
+      line.style.strokeWidth = '0.25';
+      line.style.opacity     = '1';
+    }
   });
 }
-function resetHighlight(){document.querySelectorAll('.kn').forEach(n=>n.style.opacity='');}
+
+function resetHighlight() {
+  const canvas = document.getElementById('kgCanvas');
+  if(!canvas) return;
+  canvas.classList.remove('has-hover');
+  canvas.querySelectorAll('.kn').forEach(n => n.classList.remove('kn-hi'));
+  // Restore original edge style using stored data attrs
+  canvas.querySelectorAll('#kgsvg .kg-edge').forEach(l => {
+    l.style.stroke      = l.dataset.col;
+    l.style.strokeWidth = l.dataset.w;
+    l.style.opacity     = '1';
+  });
+}
+
 
 // =================== PROJECTS PAGE ===================
 function renderProjects() {
@@ -1418,8 +1767,9 @@ function renderProjects() {
     const imgHtml = p.img
       ? `<div class="pcard-thumb"><img src="${p.img}" alt="${p.title}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=pcard-no-img><div class=pcard-no-img-id>${p.id}</div><div class=pcard-no-img-label>${p.title}</div></div>'"></div>`
       : `<div class="pcard-thumb"><div class="pcard-no-img"><div class="pcard-no-img-id">${p.id}</div><div class="pcard-no-img-label">${p.year}</div></div></div>`;
+    const starBadge = (p.id==='P-001'||p.id==='P-002') ? `<div style="position:absolute;top:10px;right:10px;z-index:2;background:var(--acc);color:#000;font-size:7.5px;font-weight:700;letter-spacing:.1em;padding:3px 8px;font-family:var(--mono);">★ FEATURED</div>` : '';
     const typeClsMap = {internship:'pt-int',research:'pt-res',academic:'pt-aca',personal:'pt-per'};
-    el.innerHTML = `${imgHtml}<div class="pcard-body"><div class="pcard-num">${p.id} · ${p.year}</div><div class="pcard-title">${p.title}</div><div class="pcard-desc">${p.desc}</div><div class="pcard-stack">${p.stack.slice(0,5).map(s=>`<span class="stk">${s}</span>`).join('')}${p.stack.length>5?`<span class="stk">+${p.stack.length-5}</span>`:''}</div><div class="pcard-footer"><span class="ptype ${typeClsMap[p.type]}">${p.typeLabel}</span><div class="plink-row"><span class="plink" style="color:var(--acc)">Details →</span></div></div></div>`;
+    el.innerHTML = `${imgHtml}${starBadge}<div class="pcard-body"><div class="pcard-num">${p.id} · ${p.year}</div><div class="pcard-title">${p.title}</div><div class="pcard-desc">${p.desc}</div><div class="pcard-stack">${p.stack.slice(0,5).map(s=>`<span class="stk">${s}</span>`).join('')}${p.stack.length>5?`<span class="stk">+${p.stack.length-5}</span>`:''}</div><div class="pcard-footer"><span class="ptype ${typeClsMap[p.type]}">${p.typeLabel}</span><div class="plink-row"><span class="plink" style="color:var(--acc)">Details →</span></div></div></div>`;
     grid.appendChild(el);
   });
 }
@@ -1616,6 +1966,73 @@ tick();setInterval(tick,1000);
 // =================== ESCAPE ===================
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('pModal',null,true);closeModal('cModal',null,true);}});
 
+// =================== ACADEMIC CHARTS ===================
+function renderAcademicCharts() {
+  const sgpaData = [
+    {sem:'I',   sgpa:6.00, cgpa:6.00},
+    {sem:'II',  sgpa:6.80, cgpa:6.89},
+    {sem:'III', sgpa:7.60, cgpa:7.14},
+    {sem:'IV',  sgpa:7.40, cgpa:7.21},
+    {sem:'V',   sgpa:7.80, cgpa:7.33},
+  ];
+
+  const W=400, H=160, pad={t:16,r:20,b:36,l:36};
+  const plotW = W-pad.l-pad.r, plotH = H-pad.t-pad.b;
+  const minY=5.5, maxY=9.0;
+  const yScale = v => pad.t + plotH - ((v-minY)/(maxY-minY))*plotH;
+  const xScale = i => pad.l + (i/(sgpaData.length-1))*plotW;
+
+  function makeSvgChart(svgId, dataKey, color, gradId) {
+    const svg = document.getElementById(svgId);
+    if(!svg) return;
+
+    // Grid lines + Y labels
+    let content = '';
+    [6,7,8,9].forEach(v => {
+      const y = yScale(v);
+      content += `<line x1="${pad.l}" y1="${y.toFixed(1)}" x2="${W-pad.r}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>`;
+      content += `<text x="${pad.l-5}" y="${(y+3.5).toFixed(1)}" font-size="8" fill="#606060" text-anchor="end" font-family="JetBrains Mono,monospace">${v}.0</text>`;
+    });
+
+    // Area fill
+    const pts = sgpaData.map((d,i) => `${xScale(i).toFixed(1)},${yScale(d[dataKey]).toFixed(1)}`).join(' ');
+    const firstX = xScale(0).toFixed(1), lastX = xScale(sgpaData.length-1).toFixed(1);
+    const baseY = (pad.t+plotH).toFixed(1);
+    content += `<defs><linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity="0.18"/><stop offset="100%" stop-color="${color}" stop-opacity="0.01"/></linearGradient></defs>`;
+    content += `<polygon points="${firstX},${baseY} ${pts} ${lastX},${baseY}" fill="url(#${gradId})"/>`;
+
+    // Line
+    let d = '';
+    sgpaData.forEach((p,i)=>{d+=(i===0?'M':'L')+xScale(i).toFixed(1)+','+yScale(p[dataKey]).toFixed(1)+' ';});
+    content += `<path d="${d}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="stroke-dasharray:600;stroke-dashoffset:600;animation:lineDraw 1.4s cubic-bezier(.22,1,.36,1) .3s forwards;"/>`;
+
+    // Points + labels
+    sgpaData.forEach((p,i) => {
+      const x = xScale(i), y = yScale(p[dataKey]);
+      content += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="${color}" style="opacity:0;animation:dotPop .4s ease ${0.4+i*0.1}s forwards;"/>`;
+      content += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="none" stroke="${color}" stroke-width="1" opacity="0.3"/>`;
+      content += `<text x="${x.toFixed(1)}" y="${(y-9).toFixed(1)}" font-size="9" fill="${color}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" style="opacity:0;animation:dotPop .4s ease ${0.5+i*0.1}s forwards;">${p[dataKey].toFixed(2)}</text>`;
+      content += `<text x="${x.toFixed(1)}" y="${(H-pad.b+14).toFixed(1)}" font-size="9" fill="#777" text-anchor="middle" font-family="JetBrains Mono,monospace">Sem ${p.sem}</text>`;
+    });
+
+    svg.innerHTML = content;
+  }
+
+  makeSvgChart('sgpaChart', 'sgpa', '#00ff88', 'sgpaGrad');
+  makeSvgChart('cgpaChart', 'cgpa', '#5599ff', 'cgpaGrad');
+
+  // Inject keyframes if not present
+  if(!document.getElementById('chartKF')) {
+    const style = document.createElement('style');
+    style.id = 'chartKF';
+    style.textContent = `
+      @keyframes lineDraw{to{stroke-dashoffset:0;}}
+      @keyframes dotPop{from{opacity:0;transform:scale(0);}to{opacity:1;transform:scale(1);}}
+    `;
+    document.head.appendChild(style);
+  }
+}
+
 // =================== INIT ===================
 buildKG();
 renderProjects();
@@ -1624,6 +2041,7 @@ renderAchievements();
 renderThoughts();
 renderSemesters();
 renderProficiency();
+renderAcademicCharts();
 // =================== PHOTO SLIDESHOW ===================
 let slideIdx = 0;
 const slideImgs = document.querySelectorAll('.pslide');
@@ -1808,6 +2226,7 @@ window.go = function(el) {
     initSkillBars();
     animateKGEntrance();
     initChipWave(document.getElementById('page-' + p));
+    if(p === 'academic') renderAcademicCharts();
   }, 80);
 };
 
