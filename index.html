@@ -7,11 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#070707;--bg2:#0d0d0d;--bg3:#131313;--bg4:#1a1a1a;
-  --border:#1c1c1c;--b2:#252525;--b3:#303030;
-  --text:#ebebeb;--dim:#6a6a6a;--muted:#303030;
-  --acc:#00ff88;--acc-bg:rgba(0,255,136,0.06);--acc-b:rgba(0,255,136,0.2);
-  --blue:#4488ff;--amber:#ffaa00;--purple:#aa66ff;--red:#ff5566;--cyan:#00ccff;
+  --bg:#070707;--bg2:#0d0d0d;--bg3:#141414;--bg4:#1c1c1c;
+  --border:#242424;--b2:#303030;--b3:#3c3c3c;
+  --text:#ececec;--dim:#909090;--muted:#5e5e5e;
+  --acc:#00ff88;--acc-bg:rgba(0,255,136,0.07);--acc-b:rgba(0,255,136,0.25);
+  --blue:#5599ff;--amber:#ffaa00;--purple:#bb77ff;--red:#ff5566;--cyan:#00ccff;
   --mono:'JetBrains Mono',monospace;--sans:'Syne',sans-serif;
   --ease:all 0.18s ease;
 }
@@ -42,7 +42,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .ot{font-size:9px;color:var(--dim);}
 .sb-nav{flex:1;padding:8px 0;overflow-y:auto;}
 .ng{margin-bottom:2px;}
-.ng-label{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:8px 16px 3px;}
+.ng-label{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#4e4e4e;padding:8px 16px 3px;}
 .na{display:flex;align-items:center;gap:9px;padding:6px 16px;color:var(--dim);font-family:var(--mono);font-size:10.5px;text-decoration:none;border:none;background:none;width:100%;text-align:left;cursor:none;border-left:2px solid transparent;transition:var(--ease);}
 .na svg{width:12px;height:12px;flex-shrink:0;opacity:.55;}
 .na:hover,.na.on{color:var(--text);background:rgba(255,255,255,.025);border-left-color:var(--acc);}
@@ -66,7 +66,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .tp-r{display:flex;align-items:center;gap:14px;}
 .tp-tag{font-size:9px;padding:2px 7px;border:1px solid var(--acc-b);color:var(--acc);background:var(--acc-bg);}
 .tp-info{font-size:9.5px;color:var(--dim);}
-.tp-time{font-size:9.5px;color:var(--muted);font-family:var(--mono);}
+.tp-time{font-size:9.5px;color:var(--dim);font-family:var(--mono);}
 
 /* PAGES */
 .page{display:none;animation:fadeUp .3s ease;}
@@ -81,7 +81,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .sh{font-family:var(--sans);font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.7px;line-height:1.05;margin-bottom:3px;}
 .ss{font-size:10.5px;color:var(--dim);margin-bottom:28px;}
 .srow{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;}
-.scount{font-size:9.5px;color:var(--muted);}
+.scount{font-size:9.5px;color:var(--dim);}
 
 /* GRID */
 .g{display:grid;gap:1px;background:var(--border);}
@@ -116,7 +116,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .term-bar{display:flex;align-items:center;gap:5px;padding:7px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
 .td{width:7px;height:7px;border-radius:50%;}
 .tr{background:#ff5f57;}.ty{background:#febc2e;}.tg{background:#28c840;}
-.tl{font-size:9px;color:var(--muted);margin-left:6px;}
+.tl{font-size:9px;color:var(--dim);margin-left:6px;}
 .term-body{padding:14px 16px;font-size:11px;line-height:1.9;}
 .tp_c{color:var(--acc);}
 .tc_c{color:var(--text);}
@@ -181,12 +181,12 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .ov-stat{padding:10px 18px;border-right:1px solid var(--border);}
 .ov-stat:last-child{border-right:none;}
 .ov-sv{font-family:var(--sans);font-size:19px;font-weight:800;color:var(--text);display:block;letter-spacing:-.4px;}
-.ov-sl{font-size:8px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-top:1px;}
+.ov-sl{font-size:8px;color:var(--dim);letter-spacing:.07em;text-transform:uppercase;margin-top:1px;}
 .ov-btns{display:flex;gap:6px;flex-wrap:wrap;}
 
 /* SKILLS STRIP */
 .ov-skills{padding:20px 36px;border-bottom:1px solid var(--border);}
-.ov-skills-label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.ov-skills-label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
 
 /* NAV CARDS */
 .ov-nav-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-top:none;}
@@ -194,7 +194,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .ov-ncard::after{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--acc);transition:width .28s;}
 .ov-ncard:hover{background:var(--bg3);}
 .ov-ncard:hover::after{width:100%;}
-.onc-label{font-size:8px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;}
+.onc-label{font-size:8px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;}
 .onc-title{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;}
 .onc-sub{font-size:9px;color:var(--dim);line-height:1.5;}
 .onc-arr{position:absolute;bottom:12px;right:14px;font-size:13px;color:var(--muted);transition:var(--ease);}
@@ -210,7 +210,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .kn.core{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);font-size:10px;font-weight:700;}
 .kn.dom{border-color:rgba(68,136,255,.4);color:var(--blue);}
 .kn.dom:hover{background:rgba(68,136,255,.08);}
-.kn.tech{border-color:var(--border);color:var(--dim);}
+.kn.tech{border-color:var(--b2);color:var(--dim);}
 .kn.tech:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);}
 .kn.proj{border-color:rgba(255,170,0,.3);color:var(--amber);}
 .kn.proj:hover{background:rgba(255,170,0,.07);}
@@ -229,7 +229,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .sem-header{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:24px;}
 .sem-stat{background:var(--bg);padding:14px 16px;}
 .sem-stat-v{font-family:var(--sans);font-size:20px;font-weight:800;color:var(--acc);}
-.sem-stat-l{font-size:8.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}
+.sem-stat-l{font-size:8.5px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}
 .course-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);}
 .course-item{background:var(--bg);overflow:hidden;}
 .course-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:none;transition:background .15s;}
@@ -250,7 +250,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .course-desc{font-size:11px;color:var(--dim);line-height:1.75;margin-bottom:14px;padding:12px;background:var(--bg2);border:1px solid var(--border);}
 .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .course-section{background:var(--bg2);border:1px solid var(--border);padding:14px;}
-.course-section-title{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.course-section-title{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
 .course-pts{list-style:none;}
 .course-pts li{font-size:10.5px;color:var(--dim);padding-left:12px;position:relative;margin-bottom:6px;line-height:1.6;}
 .course-pts li::before{content:'·';position:absolute;left:2px;color:var(--acc);}
@@ -271,11 +271,11 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .pcard-no-img-id{font-family:var(--sans);font-size:28px;font-weight:800;color:var(--muted);}
 .pcard-no-img-label{font-size:8.5px;color:var(--muted);letter-spacing:.06em;}
 .pcard-body{padding:16px;flex:1;display:flex;flex-direction:column;}
-.pcard-num{font-size:8.5px;color:var(--muted);margin-bottom:6px;}
+.pcard-num{font-size:8.5px;color:var(--dim);margin-bottom:6px;}
 .pcard-title{font-family:var(--sans);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px;letter-spacing:-.2px;line-height:1.3;}
 .pcard-desc{font-size:10.5px;color:var(--dim);line-height:1.65;flex:1;margin-bottom:12px;}
 .pcard-stack{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px;}
-.stk{font-size:8px;padding:2px 6px;border:1px solid var(--b2);color:var(--muted);}
+.stk{font-size:8px;padding:2px 6px;border:1px solid var(--b2);color:var(--dim);}
 .pcard-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);font-size:9px;}
 .ptype{padding:2px 7px;border:1px solid;font-size:8px;letter-spacing:.04em;}
 .pt-int{border-color:#ffaa0044;color:var(--amber);}
@@ -283,7 +283,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .pt-aca{border-color:#aa66ff44;color:var(--purple);}
 .pt-per{border-color:#333;color:var(--dim);}
 .plink-row{display:flex;gap:8px;}
-.plink{color:var(--muted);text-decoration:none;font-size:9.5px;transition:color .15s;}
+.plink{color:var(--dim);text-decoration:none;font-size:9.5px;transition:color .15s;}
 .plink:hover{color:var(--acc);}
 
 /* GALLERY */
@@ -305,7 +305,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .ccard:hover .ccard-overlay{opacity:1;}
 .ccard-overlay-txt{font-size:8.5px;letter-spacing:.1em;color:var(--acc);text-transform:uppercase;}
 .ccard-info{padding:14px;flex:1;}
-.ccard-issuer{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.ccard-issuer{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;}
 .ccard-name{font-family:var(--sans);font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:5px;letter-spacing:-.2px;line-height:1.3;}
 .ccard-desc{font-size:9.5px;color:var(--dim);line-height:1.55;margin-bottom:10px;}
 .ccard-link{font-size:9px;color:var(--acc);text-decoration:none;transition:opacity .15s;}
@@ -317,13 +317,13 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 /* SKILLS */
 .skills-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
 .sg{background:var(--bg);padding:20px;}
-.sg-label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;display:flex;align-items:center;gap:7px;}
+.sg-label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:9px;display:flex;align-items:center;gap:7px;}
 .sg-label::after{content:'';flex:1;height:1px;background:var(--border);}
 .cp-bar{display:flex;align-items:stretch;border:1px solid var(--border);margin-top:1px;}
 .cp-seg{padding:16px 20px;border-right:1px solid var(--border);flex:1;}
 .cp-seg:last-child{border-right:none;}
 .cp-v{font-family:var(--sans);font-size:24px;font-weight:800;color:var(--acc);letter-spacing:-1px;display:block;}
-.cp-l{font-size:8.5px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-top:2px;}
+.cp-l{font-size:8.5px;color:var(--dim);letter-spacing:.07em;text-transform:uppercase;margin-top:2px;}
 .cp-prog{margin-top:8px;height:1px;background:var(--border);}
 .cp-prog-fill{height:100%;background:var(--acc);}
 .prof-row{display:flex;flex-direction:column;gap:8px;}
@@ -338,12 +338,12 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .ach-item:last-child{border-bottom:none;}
 .ach-left{width:72px;flex-shrink:0;}
 .ach-yr{font-size:9.5px;color:var(--acc);}
-.ach-mon{font-size:8.5px;color:var(--muted);}
+.ach-mon{font-size:8.5px;color:var(--dim);}
 .ach-icon{width:32px;height:32px;border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;}
 .ach-right{}
 .ach-title{font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;}
 .ach-detail{font-size:10.5px;color:var(--dim);line-height:1.65;}
-.ach-chip{display:inline-block;margin-top:7px;padding:2px 8px;border:1px solid var(--b2);font-size:8.5px;color:var(--muted);}
+.ach-chip{display:inline-block;margin-top:7px;padding:2px 8px;border:1px solid var(--b2);font-size:8.5px;color:var(--dim);}
 
 /* CONTACT */
 .cont-wrap{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;}
@@ -353,14 +353,14 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .clinks{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);}
 .clink{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:var(--bg);text-decoration:none;transition:background .15s;}
 .clink:hover{background:var(--bg3);}
-.clink-label{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
+.clink-label{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2px;}
 .clink-val{font-size:10.5px;color:var(--text);}
 .clink:hover .clink-val{color:var(--acc);}
-.clink-arr{color:var(--muted);font-size:14px;transition:var(--ease);}
+.clink-arr{color:var(--dim);font-size:14px;transition:var(--ease);}
 .clink:hover .clink-arr{transform:translateX(3px);color:var(--acc);}
 .ci-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:14px;}
 .ci-block{background:var(--bg);padding:13px 14px;}
-.ci-label{font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;}
+.ci-label{font-size:8px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;}
 .ci-val{font-size:11px;color:var(--text);}
 
 /* MOBILE */
@@ -534,7 +534,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
   <div class="ov-kg">
     <div class="kg-header">
       <span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">Knowledge Graph</span>
-      <span style="font-size:8.5px;color:var(--muted);">Hover nodes to explore connections · <span style="color:var(--acc);">green</span>=core · <span style="color:var(--blue);">blue</span>=domain · <span style="color:var(--amber);">amber</span>=project · <span style="color:var(--purple);">purple</span>=course · <span style="color:var(--cyan);">cyan</span>=math</span>
+      <span style="font-size:8.5px;color:var(--dim);">Hover nodes to explore connections · <span style="color:var(--acc);">green</span>=core · <span style="color:var(--blue);">blue</span>=domain · <span style="color:var(--amber);">amber</span>=project · <span style="color:var(--purple);">purple</span>=course · <span style="color:var(--cyan);">cyan</span>=math</span>
     </div>
     <div class="kg-canvas" id="kgCanvas" style="height:420px;">
       <svg id="kgsvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></svg>
@@ -552,8 +552,8 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
         <div style="font-size:9.5px;color:var(--acc);margin-bottom:8px;">2023 — 2027 · Current</div>
         <div style="font-family:var(--sans);font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">Indraprastha Institute of Information Technology, Delhi</div>
         <div style="font-size:11px;color:var(--dim);margin-bottom:14px;">B.Tech · Computer Science &amp; Applied Mathematics (CSAM)</div>
-        <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--b2);font-size:11px;color:var(--dim);margin-bottom:16px;">CGPA <span style="color:var(--acc);font-weight:800;font-family:var(--sans);font-size:16px;">7.33</span> <span style="font-size:9.5px;color:var(--muted);">/ 10.0 · V Semesters completed</span></div>
-        <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Key Coursework</div>
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--b2);font-size:11px;color:var(--dim);margin-bottom:16px;">CGPA <span style="color:var(--acc);font-weight:800;font-family:var(--sans);font-size:16px;">7.33</span> <span style="font-size:9.5px;color:var(--dim);">/ 10.0 · V Semesters completed</span></div>
+        <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;">Key Coursework</div>
         <div class="chips"><span class="chip hi">DSA</span><span class="chip hi">Operating Systems</span><span class="chip hi">DBMS</span><span class="chip">Advanced Programming</span><span class="chip">Computer Organisation</span><span class="chip">Discrete Structures</span><span class="chip">Theory of Computation</span><span class="chip">ADA</span><span class="chip">Real Analysis</span><span class="chip">Probability & Statistics</span><span class="chip">Stochastic Processes</span><span class="chip">Scientific Computing</span><span class="chip">Collaborative Filtering</span><span class="chip">Convex Optimization</span></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
@@ -565,18 +565,18 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
   <div class="sec" style="padding-top:20px;">
     <div class="stag-line">Profile</div>
     <div class="g g2 bord">
-      <div class="card"><div style="font-size:8.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">Personal Details</div><div style="display:flex;flex-direction:column;gap:7px;">
+      <div class="card"><div style="font-size:8.5px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">Personal Details</div><div style="display:flex;flex-direction:column;gap:7px;">
         <div style="display:flex;justify-content:space-between;font-size:10.5px;border-bottom:1px solid var(--border);padding-bottom:7px;"><span style="color:var(--dim);">Full Name</span><span>Nishant Tomer</span></div>
         <div style="display:flex;justify-content:space-between;font-size:10.5px;border-bottom:1px solid var(--border);padding-bottom:7px;"><span style="color:var(--dim);">Roll Number</span><span>2023355</span></div>
         <div style="display:flex;justify-content:space-between;font-size:10.5px;border-bottom:1px solid var(--border);padding-bottom:7px;"><span style="color:var(--dim);">Date of Birth</span><span>June 25, 2005</span></div>
         <div style="display:flex;justify-content:space-between;font-size:10.5px;border-bottom:1px solid var(--border);padding-bottom:7px;"><span style="color:var(--dim);">Address</span><span>66 Madangir, New Delhi</span></div>
         <div style="display:flex;justify-content:space-between;font-size:10.5px;"><span style="color:var(--dim);">Email</span><span style="color:var(--acc);">nishant23355@iiitd.ac.in</span></div>
       </div></div>
-      <div class="card"><div style="font-size:8.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">Academic Stats</div><div class="g g2" style="gap:1px;background:var(--border);border:1px solid var(--border);">
-        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--acc);">7.33</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">CGPA</div></div>
-        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">VI</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Semester</div></div>
-        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">2027</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Graduation</div></div>
-        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">CSAM</div><div style="font-size:8.5px;color:var(--muted);margin-top:2px;">Branch</div></div>
+      <div class="card"><div style="font-size:8.5px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">Academic Stats</div><div class="g g2" style="gap:1px;background:var(--border);border:1px solid var(--border);">
+        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--acc);">7.33</div><div style="font-size:8.5px;color:var(--dim);margin-top:2px;">CGPA</div></div>
+        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">VI</div><div style="font-size:8.5px;color:var(--dim);margin-top:2px;">Semester</div></div>
+        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">2027</div><div style="font-size:8.5px;color:var(--dim);margin-top:2px;">Graduation</div></div>
+        <div style="background:var(--bg3);padding:12px;"><div style="font-size:20px;font-family:var(--sans);font-weight:800;color:var(--text);">CSAM</div><div style="font-size:8.5px;color:var(--dim);margin-top:2px;">Branch</div></div>
       </div></div>
     </div>
   </div>
@@ -648,18 +648,18 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
     <div class="g g2 bord">
       <div onclick="window.open('https://i.ibb.co/sdD27ksT/Experience-Letter-Nishant-Tomer.png','_blank')" style="cursor:none;background:var(--bg);transition:background .15s;" class="card">
         <div style="height:160px;overflow:hidden;margin:-20px -20px 14px;border-bottom:1px solid var(--border);position:relative;background:var(--bg3);">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);"><div style="text-align:center;"><div style="font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Experience Letter</div><div style="font-size:9px;color:var(--muted);margin-top:4px;">Click to view full document</div></div></div>
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);"><div style="text-align:center;"><div style="font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Experience Letter</div><div style="font-size:9px;color:var(--dim);margin-top:4px;">Click to view full document</div></div></div>
         </div>
-        <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;">ModularityLabs · Jan–Jun 2025</div>
+        <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:5px;">ModularityLabs · Jan–Jun 2025</div>
         <div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;">Letter of Experience</div>
         <div style="font-size:10px;color:var(--dim);">Official confirmation of iOS development internship completion.</div>
         <div style="margin-top:10px;font-size:9.5px;color:var(--acc);">→ Click to open document</div>
       </div>
       <div onclick="window.open('https://i.ibb.co/ZR4j2GMn/Letter-of-Recommendation-Nishant-Tomer.png','_blank')" style="cursor:none;background:var(--bg);transition:background .15s;" class="card">
         <div style="height:160px;overflow:hidden;margin:-20px -20px 14px;border-bottom:1px solid var(--border);position:relative;background:var(--bg3);">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);"><div style="text-align:center;"><div style="font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Recommendation</div><div style="font-size:9px;color:var(--muted);margin-top:4px;">Click to view full document</div></div></div>
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);"><div style="text-align:center;"><div style="font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;">ModularityLabs</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Recommendation</div><div style="font-size:9px;color:var(--dim);margin-top:4px;">Click to view full document</div></div></div>
         </div>
-        <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;">ModularityLabs · Jun 2025</div>
+        <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:5px;">ModularityLabs · Jun 2025</div>
         <div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;">Letter of Recommendation</div>
         <div style="font-size:10px;color:var(--dim);">Highlighting iOS expertise, teamwork, and engineering quality.</div>
         <div style="margin-top:10px;font-size:9.5px;color:var(--acc);">→ Click to open document</div>
@@ -708,7 +708,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
       <div class="cp-seg"><span class="cp-v">6</span><span class="cp-l">Certifications</span><div class="cp-prog"><div class="cp-prog-fill" style="width:60%;"></div></div></div>
     </div>
     <div style="margin-top:20px;padding:20px;border:1px solid var(--border);background:var(--bg2);">
-      <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Proficiency Map</div>
+      <div style="font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;">Proficiency Map</div>
       <div class="prof-row" id="profBars"></div>
     </div>
   </div>
@@ -754,7 +754,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
       <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:7px;">Jun 2025</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">AI Summer Camp Instructor</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">IIIT-Delhi · Certificate of Appreciation</div><div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:12px;">Taught 100+ students AI fundamentals using Python. Designed hands-on curriculum covering supervised learning, neural network basics, and practical exercises. Received official certificate of appreciation from IIIT-Delhi.</div><div class="chips"><span class="chip">100+ Students</span><span class="chip">AI / ML</span><span class="chip">Python</span><span class="chip">Curriculum Design</span></div><div style="margin-top:12px;"><a href="https://i.postimg.cc/90tfxqs8/2023355.jpg" target="_blank" class="btn btn-g bsm">View Certificate ↗</a></div></div>
       <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:7px;">Nov 2023</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Organiser — Odyssey Cultural Fest</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">IIIT-Delhi Annual Cultural Festival</div><div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:12px;">Managed logistics and technical infrastructure for the large-scale IIIT-Delhi cultural festival. Coordinated AV setup, scheduling, and coordination across 20+ events for 1000+ attendees.</div><div class="chips"><span class="chip">Event Management</span><span class="chip">Technical Support</span><span class="chip">Logistics</span></div></div>
       <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:7px;">Sep 2023 — Dec 2023</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Member — CyFuse Club</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">Robotics & Electronics Club · IIIT-Delhi</div><div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:12px;">Contributed to hardware-software integration projects for sensor-based communication modules. Worked on embedded systems and microcontroller programming for club robotics projects.</div><div class="chips"><span class="chip">Robotics</span><span class="chip">Embedded Systems</span><span class="chip">Hardware-Software</span></div></div>
-      <div class="card" style="background:var(--bg2);border:1px dashed var(--border);"><div style="font-size:9.5px;color:var(--muted);margin-bottom:7px;">Ongoing · Future</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--dim);margin-bottom:3px;">More Roles Incoming</div><div style="font-size:11px;color:var(--muted);line-height:1.7;">Designed to scale — student → engineer → senior → founder. Each role documents increasing scope and responsibility over time.</div></div>
+      <div class="card" style="background:var(--bg2);border:1px dashed var(--border);"><div style="font-size:9.5px;color:var(--dim);margin-bottom:7px;">Ongoing · Future</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--dim);margin-bottom:3px;">More Roles Incoming</div><div style="font-size:11px;color:var(--muted);line-height:1.7;">Designed to scale — student → engineer → senior → founder. Each role documents increasing scope and responsibility over time.</div></div>
     </div>
   </div>
 </div>
@@ -802,7 +802,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
   </div>
 </div>
 
-<footer style="padding:16px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:9.5px;color:var(--muted);">
+<footer style="padding:16px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:9.5px;color:var(--dim);">
   <span><em style="color:var(--acc);font-style:normal;">NT.</em> Nishant Tomer · Personal OS v3.0</span>
   <span>2023355 · IIIT-Delhi · CSAM · 2023–2027</span>
 </footer>
@@ -1266,7 +1266,7 @@ function buildKG() {
     const x1=na.x/100*W, y1=na.y/100*H, x2=nb.x/100*W, y2=nb.y/100*H;
     const isCore = na.cls==='core'||nb.cls==='core';
     const isDom = na.cls==='dom'||nb.cls==='dom';
-    const col = isCore ? 'rgba(0,255,136,0.18)' : isDom ? 'rgba(0,255,136,0.07)' : 'rgba(255,255,255,0.03)';
+    const col = isCore ? 'rgba(0,255,136,0.22)' : isDom ? 'rgba(0,255,136,0.09)' : 'rgba(255,255,255,0.06)';
     const w = isCore ? 1.5 : isDom ? 1 : 0.5;
     lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${w}"/>`;
   });
@@ -1361,7 +1361,7 @@ function openCertModal(i) {
   const mainImg = c.img ? `<img src="${c.img}" alt="${c.name}" style="width:100%;max-height:360px;object-fit:contain;background:var(--bg3);border:1px solid var(--border);display:block;margin-bottom:14px;" onerror="this.style.display='none'">` : `<div style="width:100%;height:120px;border:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><span style="font-size:9px;color:var(--muted);letter-spacing:.08em;">${c.fallback}</span></div>`;
   const subsHtml = c.subs&&c.subs.length ? `<div class="msect">Specialisation Modules (${c.subs.length})</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;">${c.subs.map(s=>`<div style="border:1px solid var(--border);overflow:hidden;cursor:none;" onclick="window.open('${s.img}','_blank')"><img src="${s.img}" style="width:100%;height:90px;object-fit:cover;display:block;" loading="lazy" onerror="this.style.display='none'"><div style="padding:6px 8px;font-size:8.5px;color:var(--dim);">${s.label}</div></div>`).join('')}</div>` : '';
   const extraHtml = c.extra ? `<div class="msect">Event Photo</div><img src="${c.extra}" style="width:100%;max-height:300px;object-fit:contain;background:var(--bg3);border:1px solid var(--border);display:block;" onerror="this.style.display='none'">` : '';
-  document.getElementById('cModalBody').innerHTML = `<div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">${c.issuer}</div><p style="font-size:11.5px;color:var(--dim);line-height:1.8;margin-bottom:14px;">${c.desc}</p>${mainImg}${extraHtml}${subsHtml}<div class="msect">Verification</div><div class="btns">${c.verify&&c.verify!='#'?`<a href="${c.verify}" target="_blank" class="btn btn-p bsm">→ Verify Certificate</a>`:'<span style="font-size:10px;color:var(--muted)">Verification link not available.</span>'}</div>`;
+  document.getElementById('cModalBody').innerHTML = `<div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">${c.issuer}</div><p style="font-size:11.5px;color:var(--dim);line-height:1.8;margin-bottom:14px;">${c.desc}</p>${mainImg}${extraHtml}${subsHtml}<div class="msect">Verification</div><div class="btns">${c.verify&&c.verify!='#'?`<a href="${c.verify}" target="_blank" class="btn btn-p bsm">→ Verify Certificate</a>`:'<span style="font-size:10px;color:var(--dim)">Verification link not available.</span>'}</div>`;
   document.getElementById('cModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1445,7 +1445,7 @@ function renderAchievements() {
 function renderThoughts() {
   const el = document.getElementById('thoughtsList');
   if(!el) return;
-  el.innerHTML = THOUGHTS.map(t=>`<div style="background:var(--bg);padding:18px 22px;cursor:default;transition:background .15s;display:grid;grid-template-columns:80px 1fr 110px;gap:14px;align-items:start;" onmouseenter="this.style.background='var(--bg3)'" onmouseleave="this.style.background='var(--bg)'"><div style="font-size:9.5px;color:var(--muted);padding-top:2px;">${t.date}</div><div><div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">${t.title}</div><div style="font-size:10.5px;color:var(--dim);line-height:1.65;">${t.excerpt}</div></div><div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:flex-end;">${t.tags.map(tg=>`<span style="font-size:8.5px;padding:2px 6px;border:1px solid var(--b2);color:var(--muted);">${tg}</span>`).join('')}</div></div>`).join('');
+  el.innerHTML = THOUGHTS.map(t=>`<div style="background:var(--bg);padding:18px 22px;cursor:default;transition:background .15s;display:grid;grid-template-columns:80px 1fr 110px;gap:14px;align-items:start;" onmouseenter="this.style.background='var(--bg3)'" onmouseleave="this.style.background='var(--bg)'"><div style="font-size:9.5px;color:var(--dim);padding-top:2px;">${t.date}</div><div><div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">${t.title}</div><div style="font-size:10.5px;color:var(--dim);line-height:1.65;">${t.excerpt}</div></div><div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:flex-end;">${t.tags.map(tg=>`<span style="font-size:8.5px;padding:2px 6px;border:1px solid var(--b2);color:var(--muted);">${tg}</span>`).join('')}</div></div>`).join('');
 }
 
 // =================== SKILLS PROFICIENCY ===================
