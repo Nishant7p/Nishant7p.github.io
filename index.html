@@ -311,6 +311,9 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
 .ccard-link{font-size:9px;color:var(--acc);text-decoration:none;transition:opacity .15s;}
 .ccard-link:hover{opacity:.7;}
 
+.pdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:background .3s;}
+.pdot.pdot-on{background:var(--acc);}
+
 /* SKILLS */
 .skills-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
 .sg{background:var(--bg);padding:20px;}
@@ -449,9 +452,15 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
   <div class="ov-hero">
     <!-- LEFT COLUMN: Photo + Links -->
     <div class="ov-left">
-      <div class="ov-photo-wrap">
-        <img src="https://i.postimg.cc/PHOTO-placeholder/nishant.jpg" alt="Nishant Tomer"
-          onerror="this.parentElement.innerHTML='<div class=ov-photo-ph><div class=ov-photo-ph-icon>◉</div><div class=ov-photo-ph-label>Photo</div></div>'">
+      <div class="ov-photo-wrap" id="photoWrap" style="position:relative;overflow:hidden;">
+        <img id="pSlide0" class="pslide pslide-active" src="https://image2url.com/r2/default/images/1771893629784-c00596dc-1bf6-4f9e-a287-7d3757f41a52.jpeg" alt="Nishant Tomer" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(15%);transition:opacity 1s ease;opacity:1;">
+        <img id="pSlide1" class="pslide" src="https://image2url.com/r2/default/images/1771893804506-8073dd51-6bb8-4c1e-91b7-a49632409ea8.jpeg" alt="Nishant Tomer" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(15%);transition:opacity 1s ease;opacity:0;">
+        <img id="pSlide2" class="pslide" src="https://image2url.com/r2/default/images/1771894088778-ef548bc9-dfae-4c3a-b78f-c237d09dcd60.jpeg" alt="Nishant Tomer" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(15%);transition:opacity 1s ease;opacity:0;">
+        <div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:2;" id="pDots">
+          <div class="pdot pdot-on" onclick="goSlide(0)"></div>
+          <div class="pdot" onclick="goSlide(1)"></div>
+          <div class="pdot" onclick="goSlide(2)"></div>
+        </div>
       </div>
       <div class="ov-left-info">
         <div class="ov-left-name">Nishant Tomer</div>
@@ -527,7 +536,7 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
       <span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">Knowledge Graph</span>
       <span style="font-size:8.5px;color:var(--muted);">Hover nodes to explore connections · <span style="color:var(--acc);">green</span>=core · <span style="color:var(--blue);">blue</span>=domain · <span style="color:var(--amber);">amber</span>=project · <span style="color:var(--purple);">purple</span>=course · <span style="color:var(--cyan);">cyan</span>=math</span>
     </div>
-    <div class="kg-canvas" id="kgCanvas">
+    <div class="kg-canvas" id="kgCanvas" style="height:420px;">
       <svg id="kgsvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></svg>
     </div>
   </div>
@@ -548,8 +557,8 @@ body.hov #cring{width:42px;height:42px;border-color:rgba(0,255,136,0.6);}
         <div class="chips"><span class="chip hi">DSA</span><span class="chip hi">Operating Systems</span><span class="chip hi">DBMS</span><span class="chip">Advanced Programming</span><span class="chip">Computer Organisation</span><span class="chip">Discrete Structures</span><span class="chip">Theory of Computation</span><span class="chip">ADA</span><span class="chip">Real Analysis</span><span class="chip">Probability & Statistics</span><span class="chip">Stochastic Processes</span><span class="chip">Scientific Computing</span><span class="chip">Collaborative Filtering</span><span class="chip">Convex Optimization</span></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
-        <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:6px;">2022 — 2023 · XII CBSE</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Sukriti World School, New Delhi</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">Central Board of Secondary Education</div><div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--b2);font-size:10px;color:var(--dim);">Percentage <span style="color:var(--acc);font-weight:700;font-family:var(--sans);">81%</span></div></div>
-        <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:6px;">2020 — 2021 · X CBSE</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Rockfield Public School, New Delhi</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">Central Board of Secondary Education</div><div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--b2);font-size:10px;color:var(--dim);">Percentage <span style="color:var(--acc);font-weight:700;font-family:var(--sans);">81%</span></div></div>
+        <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:6px;">2022 — 2023 · XII CBSE</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Sukriti World School, New Delhi</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">Central Board of Secondary Education</div><div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--b2);font-size:10px;color:var(--dim);">Percentage <span style="color:var(--acc);font-weight:700;font-family:var(--sans);">91%</span></div></div>
+        <div class="card"><div style="font-size:9.5px;color:var(--acc);margin-bottom:6px;">2020 — 2021 · X CBSE</div><div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;">Rockfield Public School, New Delhi</div><div style="font-size:10.5px;color:var(--dim);margin-bottom:10px;">Central Board of Secondary Education</div><div style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--b2);font-size:10px;color:var(--dim);">Percentage <span style="color:var(--acc);font-weight:700;font-family:var(--sans);">91%</span></div></div>
       </div>
     </div>
   </div>
@@ -1083,92 +1092,173 @@ const ACHIEVEMENTS = [
   {year:'2025',mon:'Jun',icon:'◉',title:'GPU Programming Specialisation — JHU Completed',detail:'Completed 4-course GPU Programming specialisation from Johns Hopkins University via Coursera. Covers CUDA, cuDNN, memory optimisation, and performance tuning.',chip:'Certification'},
 ];
 
-// =================== KNOWLEDGE GRAPH (Enriched) ===================
+// =================== KNOWLEDGE GRAPH (Dense) ===================
 const KG_NODES = [
   // Core
-  {id:'nt',label:'Nishant',cls:'core',x:50,y:46},
+  {id:'nt',label:'Nishant Tomer',cls:'core',x:50,y:48},
+
   // Domains
-  {id:'ai',label:'AI / NLP',cls:'dom',x:76,y:18},
-  {id:'ios',label:'iOS Dev',cls:'dom',x:18,y:18},
-  {id:'game',label:'Game Dev',cls:'dom',x:10,y:58},
-  {id:'web',label:'Full-Stack',cls:'dom',x:84,y:68},
-  {id:'cp',label:'Comp. Prog.',cls:'dom',x:48,y:88},
-  {id:'sys',label:'Systems',cls:'dom',x:24,y:76},
-  // Tech nodes
-  {id:'whisper',label:'Whisper',cls:'tech',x:92,y:10},
-  {id:'pyannote',label:'Pyannote',cls:'tech',x:80,y:7},
-  {id:'pytorch',label:'PyTorch',cls:'tech',x:65,y:10},
-  {id:'swift',label:'SwiftUI',cls:'tech',x:4,y:28},
-  {id:'firebase',label:'Firebase',cls:'tech',x:22,y:6},
-  {id:'combine',label:'Combine',cls:'tech',x:8,y:42},
-  {id:'libgdx',label:'libGDX',cls:'tech',x:4,y:68},
-  {id:'unreal',label:'Unreal Engine',cls:'tech',x:16,y:84},
-  {id:'react',label:'React',cls:'tech',x:96,y:58},
-  {id:'node',label:'Node.js',cls:'tech',x:90,y:80},
-  {id:'cuda',label:'CUDA',cls:'tech',x:64,y:80},
-  {id:'java',label:'Java',cls:'tech',x:34,y:66},
-  {id:'python',label:'Python',cls:'tech',x:56,y:62},
-  {id:'supabase',label:'Supabase',cls:'tech',x:78,y:84},
-  {id:'postgres',label:'PostgreSQL',cls:'tech',x:92,y:90},
+  {id:'ai',label:'AI / NLP',cls:'dom',x:76,y:14},
+  {id:'ios',label:'iOS Dev',cls:'dom',x:16,y:16},
+  {id:'game',label:'Game Dev',cls:'dom',x:8,y:58},
+  {id:'web',label:'Full-Stack',cls:'dom',x:86,y:66},
+  {id:'cp',label:'Comp. Prog.',cls:'dom',x:48,y:90},
+  {id:'sys',label:'Systems / OS',cls:'dom',x:22,y:76},
+  {id:'ml',label:'ML / Deep Learning',cls:'dom',x:60,y:16},
+  {id:'db',label:'Databases',cls:'dom',x:90,y:84},
+
+  // Languages
+  {id:'java',label:'Java',cls:'tech',x:30,y:64},
+  {id:'python',label:'Python',cls:'tech',x:55,y:60},
+  {id:'swift',label:'Swift',cls:'tech',x:4,y:24},
+  {id:'js',label:'JavaScript',cls:'tech',x:94,y:50},
+  {id:'cpp',label:'C++',cls:'tech',x:18,y:90},
+  {id:'sql',label:'SQL',cls:'tech',x:84,y:90},
+
+  // AI/ML tech
+  {id:'whisper',label:'OpenAI Whisper',cls:'tech',x:92,y:8},
+  {id:'pyannote',label:'Pyannote.audio',cls:'tech',x:80,y:5},
+  {id:'pytorch',label:'PyTorch',cls:'tech',x:66,y:6},
+  {id:'tensorflow',label:'TensorFlow',cls:'tech',x:72,y:24},
+  {id:'numpy',label:'NumPy',cls:'tech',x:58,y:28},
+  {id:'cuda',label:'CUDA',cls:'tech',x:62,y:80},
+  {id:'cudnn',label:'cuDNN',cls:'tech',x:70,y:74},
+  {id:'ner',label:'NER / spaCy',cls:'tech',x:88,y:18},
+  {id:'sklearn',label:'scikit-learn',cls:'tech',x:48,y:22},
+
+  // iOS tech
+  {id:'swiftui',label:'SwiftUI',cls:'tech',x:4,y:12},
+  {id:'combine',label:'Combine',cls:'tech',x:6,y:36},
+  {id:'coredata',label:'Core Data',cls:'tech',x:14,y:50},
+  {id:'firebase',label:'Firebase',cls:'tech',x:22,y:8},
+  {id:'firestore',label:'Firestore',cls:'tech',x:12,y:26},
+  {id:'mvvm',label:'MVVM',cls:'tech',x:4,y:42},
+
+  // Web tech
+  {id:'react',label:'React',cls:'tech',x:96,y:56},
+  {id:'node',label:'Node.js',cls:'tech',x:92,y:70},
+  {id:'express',label:'Express.js',cls:'tech',x:84,y:76},
+  {id:'supabase',label:'Supabase',cls:'tech',x:96,y:80},
+  {id:'postgres',label:'PostgreSQL',cls:'tech',x:88,y:88},
+  {id:'jwt',label:'JWT',cls:'tech',x:96,y:64},
+  {id:'tsq',label:'TanStack Query',cls:'tech',x:80,y:58},
+  {id:'fastapi',label:'FastAPI',cls:'tech',x:74,y:84},
+  {id:'rest',label:'REST APIs',cls:'tech',x:76,y:66},
+
+  // Game / Systems tools
+  {id:'libgdx',label:'libGDX',cls:'tech',x:4,y:64},
+  {id:'unreal',label:'Unreal Engine',cls:'tech',x:14,y:80},
+  {id:'tkinter',label:'Tkinter / PyQT5',cls:'tech',x:36,y:78},
+  {id:'xcode',label:'Xcode',cls:'tech',x:6,y:50},
+  {id:'git',label:'Git',cls:'tech',x:30,y:52},
+  {id:'docker',label:'Docker',cls:'tech',x:40,y:52},
+  {id:'intellij',label:'IntelliJ',cls:'tech',x:24,y:62},
+
   // Projects
-  {id:'clinical',label:'Clinical Scribe',cls:'proj',x:88,y:28},
-  {id:'ios_proj',label:'iOS App',cls:'proj',x:6,y:10},
-  {id:'agrilink',label:'AgriLink',cls:'proj',x:96,y:44},
-  {id:'asm',label:'Assembler',cls:'proj',x:34,y:90},
-  {id:'personalia',label:'Personalisation Eng.',cls:'proj',x:74,y:56},
-  {id:'leet',label:'LeetCode 1700+',cls:'proj',x:58,y:92},
-  // Courses (purple) — from transcript
-  {id:'cse102',label:'DSA (C)',cls:'course',x:36,y:78},
-  {id:'cse231',label:'OS (B-)',cls:'course',x:18,y:54},
-  {id:'cse202',label:'DBMS (B-)',cls:'course',x:82,y:92},
-  {id:'cse222',label:'ADA (B)',cls:'course',x:44,y:72},
-  {id:'cse640',label:'Collab. Filtering (Cur)',cls:'course',x:68,y:68},
-  {id:'btp499',label:'BTP499 (Cur)',cls:'course',x:80,y:40},
-  // Math nodes (cyan)
-  {id:'mth201',label:'Probability & Stats',cls:'math',x:46,y:22},
-  {id:'mth204',label:'Linear Algebra',cls:'math',x:60,y:30},
-  {id:'mth371',label:'Stochastic Proc.',cls:'math',x:56,y:20},
-  {id:'mth377',label:'Convex Optim.',cls:'math',x:72,y:38},
-  {id:'mth373',label:'Scientific Computing',cls:'math',x:40,y:32},
+  {id:'clinical',label:'Clinical Scribe',cls:'proj',x:88,y:26},
+  {id:'ios_proj',label:'iOS Productivity',cls:'proj',x:6,y:4},
+  {id:'agrilink',label:'AgriLink',cls:'proj',x:96,y:42},
+  {id:'asm',label:'Assembler & Sim',cls:'proj',x:32,y:90},
+  {id:'personalia',label:'Personalisation Eng.',cls:'proj',x:74,y:52},
+  {id:'leet',label:'LeetCode 1700+',cls:'proj',x:56,y:92},
+  {id:'angry',label:'Angry Birds Clone',cls:'proj',x:8,y:72},
+  {id:'geo',label:'GeoGuesser Game',cls:'proj',x:40,y:88},
+  {id:'escape',label:'3D Escape Room',cls:'proj',x:20,y:86},
+
+  // Courses
+  {id:'cse102',label:'DSA',cls:'course',x:38,y:68},
+  {id:'cse201',label:'OOP / Java',cls:'course',x:26,y:68},
+  {id:'cse231',label:'Operating Systems',cls:'course',x:20,y:58},
+  {id:'cse112',label:'Computer Org.',cls:'course',x:32,y:82},
+  {id:'cse202',label:'DBMS',cls:'course',x:82,y:94},
+  {id:'cse222',label:'Algorithms (ADA)',cls:'course',x:44,y:74},
+  {id:'cse322',label:'Theory of Computation',cls:'course',x:52,y:76},
+  {id:'cse640',label:'Collab. Filtering',cls:'course',x:68,y:64},
+  {id:'btp499',label:'BTP499 — SOAP AI',cls:'course',x:82,y:38},
+  {id:'eco111',label:'Digital Circuits',cls:'course',x:12,y:40},
+  {id:'des102',label:'HCI Design',cls:'course',x:14,y:30},
+
+  // Math
+  {id:'mth201',label:'Probability & Stats',cls:'math',x:46,y:20},
+  {id:'mth204',label:'Linear Algebra',cls:'math',x:60,y:34},
+  {id:'mth210',label:'Discrete Structures',cls:'math',x:40,y:36},
+  {id:'mth371',label:'Stochastic Processes',cls:'math',x:52,y:10},
+  {id:'mth373',label:'Scientific Computing',cls:'math',x:36,y:26},
+  {id:'mth377',label:'Convex Optimization',cls:'math',x:70,y:42},
+  {id:'mth240',label:'Real Analysis',cls:'math',x:30,y:36},
+  {id:'mth300',label:'Math Logic',cls:'math',x:48,y:38},
+  {id:'mth212',label:'Abstract Algebra',cls:'math',x:34,y:46},
 ];
 
 const KG_EDGES = [
-  // Core connections
-  ['nt','ai'],['nt','ios'],['nt','game'],['nt','web'],['nt','cp'],['nt','sys'],
-  // AI domain
-  ['ai','whisper'],['ai','pyannote'],['ai','pytorch'],['ai','cuda'],['ai','python'],['ai','mth204'],['ai','mth377'],
+  // Core to domains
+  ['nt','ai'],['nt','ios'],['nt','game'],['nt','web'],['nt','cp'],['nt','sys'],['nt','ml'],['nt','db'],
+
+  // AI/ML domain connectivity
+  ['ai','whisper'],['ai','pyannote'],['ai','pytorch'],['ai','ner'],['ai','tensorflow'],
+  ['ml','pytorch'],['ml','numpy'],['ml','sklearn'],['ml','cuda'],['ml','cudnn'],['ml','mth204'],['ml','mth377'],
+  ['ai','ml'],['ai','mth201'],['ai','mth371'],
+
   // iOS domain
-  ['ios','swift'],['ios','firebase'],['ios','combine'],['ios','ios_proj'],
+  ['ios','swiftui'],['ios','combine'],['ios','coredata'],['ios','firebase'],['ios','mvvm'],['ios','xcode'],
+  ['ios','ios_proj'],['ios','firestore'],['swiftui','combine'],['firebase','firestore'],
+
   // Game domain
-  ['game','libgdx'],['game','unreal'],['game','java'],
+  ['game','libgdx'],['game','unreal'],['game','java'],['game','cpp'],
+  ['game','angry'],['game','escape'],['game','geo'],
+
   // Web domain
-  ['web','react'],['web','node'],['web','firebase'],['web','supabase'],['web','postgres'],
+  ['web','react'],['web','node'],['web','express'],['web','supabase'],['web','jwt'],['web','rest'],['web','tsq'],
+  ['web','fastapi'],['node','express'],['web','agrilink'],
+
   // Systems
-  ['sys','cse231'],['sys','asm'],['sys','java'],['sys','python'],
-  // CP
-  ['cp','leet'],['cp','java'],['cp','python'],['cp','cse222'],['cp','cse102'],
-  // Projects
-  ['clinical','ai'],['clinical','whisper'],['clinical','pyannote'],['clinical','btp499'],
-  ['agrilink','web'],['agrilink','supabase'],['agrilink','postgres'],
-  ['ios_proj','ios'],['ios_proj','swift'],['ios_proj','firebase'],
-  ['asm','sys'],['asm','python'],
-  ['personalia','cse640'],['personalia','pytorch'],['personalia','mth204'],['personalia','mth377'],
-  // Courses
-  ['cse102','cp'],['cse231','sys'],['cse202','web'],['cse222','cp'],
-  ['cse640','ai'],['cse640','personalia'],
-  ['btp499','ai'],['btp499','clinical'],
-  // Math
-  ['mth201','ai'],['mth201','cp'],
-  ['mth204','ai'],['mth204','personalia'],
-  ['mth371','ai'],['mth373','sys'],
-  ['mth377','ai'],['mth377','personalia'],
+  ['sys','cse231'],['sys','asm'],['sys','cse112'],['sys','git'],['sys','docker'],
+  ['sys','cpp'],['sys','java'],
+
+  // DB domain
+  ['db','postgres'],['db','supabase'],['db','sql'],['db','cse202'],['db','firebase'],['db','firestore'],
+
+  // CP domain
+  ['cp','leet'],['cp','java'],['cp','python'],['cp','cse222'],['cp','cse102'],['cp','cse322'],['cp','mth210'],
+
+  // Languages bridge
+  ['python','ai'],['python','ml'],['python','tkinter'],['python','numpy'],['python','fastapi'],
+  ['java','cse201'],['java','libgdx'],['java','cse102'],
+  ['swift','swiftui'],['js','react'],['js','node'],
+  ['sql','postgres'],
+
+  // Projects to tech
+  ['clinical','whisper'],['clinical','pyannote'],['clinical','ner'],['clinical','python'],['clinical','btp499'],
+  ['ios_proj','swiftui'],['ios_proj','firebase'],['ios_proj','coredata'],['ios_proj','combine'],
+  ['agrilink','react'],['agrilink','node'],['agrilink','postgres'],['agrilink','supabase'],['agrilink','jwt'],
+  ['asm','cse112'],['asm','python'],['asm','sys'],
+  ['personalia','cse640'],['personalia','pytorch'],['personalia','mth204'],['personalia','numpy'],
+  ['leet','cse222'],['leet','cse102'],['leet','java'],['leet','python'],
+  ['angry','libgdx'],['angry','java'],['angry','cse201'],
+  ['geo','tkinter'],['geo','python'],
+  ['escape','unreal'],['escape','cpp'],
+
+  // Courses cross-links
+  ['cse102','cse222'],['cse201','cse102'],['cse231','cse112'],['cse202','db'],
+  ['cse640','ml'],['btp499','ai'],['des102','ios'],['eco111','sys'],
+
+  // Math links
+  ['mth201','ml'],['mth201','cp'],['mth204','ml'],['mth204','personalia'],
+  ['mth210','cp'],['mth210','cse322'],['mth371','ai'],['mth371','mth201'],
+  ['mth373','ml'],['mth373','numpy'],['mth377','ml'],['mth377','personalia'],
+  ['mth240','mth201'],['mth300','cse322'],['mth300','mth210'],
+  ['mth212','mth210'],['mth204','mth240'],['mth377','mth204'],
+
+  // Cross-domain connections
+  ['cuda','ml'],['cudnn','ml'],['cudnn','cuda'],['mvvm','ios'],
+  ['git','web'],['git','ios'],['docker','web'],['intellij','java'],
 ];
 
 function buildKG() {
   const canvas = document.getElementById('kgCanvas');
   const svg = document.getElementById('kgsvg');
   if(!canvas || !svg) return;
-  const W = canvas.offsetWidth, H = canvas.offsetHeight || 340;
+  const W = canvas.offsetWidth, H = canvas.offsetHeight || 420;
   let lines = '';
   KG_EDGES.forEach(([a,b]) => {
     const na = KG_NODES.find(n=>n.id===a), nb = KG_NODES.find(n=>n.id===b);
@@ -1188,6 +1278,7 @@ function buildKG() {
     div.textContent = node.label;
     div.style.left = node.x+'%';
     div.style.top = node.y+'%';
+    div.dataset.nid = node.id;
     div.title = node.label;
     div.onmouseenter = () => highlightNode(node.id);
     div.onmouseleave = () => resetHighlight();
@@ -1196,17 +1287,11 @@ function buildKG() {
 }
 
 function highlightNode(id) {
-  const allNodes = document.querySelectorAll('.kn');
-  allNodes.forEach(n=>n.style.opacity='0.15');
+  document.querySelectorAll('.kn').forEach(n=>n.style.opacity='0.12');
   const connected = new Set([id]);
   KG_EDGES.forEach(([a,b])=>{if(a===id)connected.add(b);if(b===id)connected.add(a);});
-  KG_NODES.forEach(n=>{
-    if(connected.has(n.id)){
-      const nodes = document.querySelectorAll('.kn');
-      nodes.forEach(el=>{
-        if(el.textContent===n.label) el.style.opacity='1';
-      });
-    }
+  document.querySelectorAll('.kn').forEach(el=>{
+    if(connected.has(el.dataset.nid)) el.style.opacity='1';
   });
 }
 function resetHighlight(){document.querySelectorAll('.kn').forEach(n=>n.style.opacity='');}
@@ -1305,8 +1390,7 @@ function renderSemesters() {
         <div class="course-head" onclick="toggleCourse(this)">
           <div class="course-head-l"><span class="course-code">${c.code}</span><span class="course-name">${c.name}</span></div>
           <div class="course-head-r">
-            <span class="course-grade ${gradeClass}">${c.grade}</span>
-            ${c.gp?`<span style="font-size:9px;color:var(--muted);">(${c.gp})</span>`:''}
+            ${(c.gp===null||c.gp>=7)?`<span class="course-grade ${gradeClass}">${c.gp===null?'●':c.grade}</span>`:''}
             <span class="course-toggle">▼</span>
           </div>
         </div>
@@ -1427,6 +1511,19 @@ renderAchievements();
 renderThoughts();
 renderSemesters();
 renderProficiency();
+// =================== PHOTO SLIDESHOW ===================
+let slideIdx = 0;
+const slideImgs = document.querySelectorAll('.pslide');
+const slideDots = document.querySelectorAll('.pdot');
+function goSlide(n) {
+  slideImgs[slideIdx].style.opacity='0';
+  slideDots[slideIdx].classList.remove('pdot-on');
+  slideIdx = n;
+  slideImgs[slideIdx].style.opacity='1';
+  slideDots[slideIdx].classList.add('pdot-on');
+}
+setInterval(()=>goSlide((slideIdx+1)%3), 7000);
+
 window.addEventListener('resize',buildKG);
 </script>
 </body>
