@@ -608,6 +608,88 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ic-cell{background:var(--bg);padding:14px 16px;text-align:center;}
 .ic-val{font-family:var(--sans);font-size:22px;font-weight:800;color:var(--acc);line-height:1;}
 .ic-label{font-size:8px;color:var(--dim);margin-top:3px;letter-spacing:.08em;text-transform:uppercase;}
+
+/* ========== LIGHT MODE ========== */
+body.light{
+  --bg:#f5f5f3;--bg2:#eeeeec;--bg3:#e6e6e4;--bg4:#dededc;
+  --border:#d0d0ce;--b2:#c0c0be;--b3:#b0b0ae;
+  --text:#111111;--dim:#555555;--muted:#888888;
+  --acc:#007a44;--acc-bg:rgba(0,122,68,0.06);--acc-b:rgba(0,122,68,0.25);
+}
+body.light #kgsvg line{ filter:none; }
+body.light .kn.core{background:rgba(0,122,68,.08);}
+body.light .kg-canvas{background:var(--bg2);}
+
+/* Topbar buttons */
+.tp-btn{background:none;border:1px solid var(--border);color:var(--dim);font-family:var(--mono);font-size:9px;padding:3px 9px;cursor:none;transition:var(--ease);letter-spacing:.05em;display:flex;align-items:center;gap:5px;}
+.tp-btn:hover{border-color:var(--acc);color:var(--acc);}
+.tp-btn-row{display:flex;gap:5px;align-items:center;}
+
+/* ========== CURRENTLY BUILDING ========== */
+.building-strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);padding:14px 36px;display:flex;align-items:flex-start;gap:32px;flex-wrap:wrap;}
+.bs-label{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);flex-shrink:0;padding-top:4px;white-space:nowrap;}
+.bs-items{display:flex;flex-wrap:wrap;gap:10px;flex:1;}
+.bs-item{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border);background:var(--bg);position:relative;overflow:hidden;transition:border-color .18s;}
+.bs-item:hover{border-color:var(--acc-b);}
+.bs-item::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:var(--acc);opacity:.7;}
+.bs-item-dot{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:pls 1.8s ease infinite;flex-shrink:0;}
+.bs-item-name{font-size:10px;color:var(--text);}
+.bs-item-sub{font-size:8.5px;color:var(--dim);margin-top:1px;}
+.bs-item-since{font-size:8px;color:var(--muted);margin-left:auto;padding-left:12px;white-space:nowrap;}
+
+/* ========== RADAR / SPIDER CHART ========== */
+.radar-wrap{padding:28px 36px 0;border-bottom:1px solid var(--border);}
+.radar-row{display:grid;grid-template-columns:340px 1fr;gap:32px;align-items:start;}
+.radar-svg-box{position:relative;}
+.radar-svg-box svg{display:block;}
+.radar-legend{display:flex;flex-direction:column;gap:10px;padding-top:8px;}
+.rl-item{display:flex;align-items:center;gap:10px;}
+.rl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.rl-name{font-size:10px;color:var(--dim);}
+.rl-bar{flex:1;height:3px;background:var(--border);border-radius:1px;overflow:hidden;max-width:120px;}
+.rl-fill{height:100%;border-radius:1px;transition:width 1.2s cubic-bezier(.22,1,.36,1);}
+.rl-val{font-size:9px;color:var(--muted);font-family:var(--mono);min-width:28px;text-align:right;}
+.radar-note{font-size:9px;color:var(--muted);margin-top:10px;line-height:1.6;}
+
+/* ========== PROJECT TIMELINE ========== */
+.proj-timeline-wrap{padding:0 36px 32px;border-bottom:1px solid var(--border);}
+.ptl-label{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);padding:20px 0 14px;display:flex;align-items:center;gap:8px;}
+.ptl-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.ptl-scroller{overflow-x:auto;padding-bottom:8px;}
+.ptl-scroller::-webkit-scrollbar{height:2px;}
+.ptl-scroller::-webkit-scrollbar-thumb{background:var(--b2);}
+.ptl-track{position:relative;height:180px;min-width:900px;}
+.ptl-axis{position:absolute;bottom:44px;left:0;right:0;height:1px;background:var(--b2);}
+.ptl-item{position:absolute;bottom:44px;transform:translateX(-50%);}
+.ptl-stem{position:absolute;bottom:0;left:50%;width:1px;background:var(--border);}
+.ptl-stem.up{bottom:0;top:auto;}
+.ptl-node{width:9px;height:9px;border:1px solid;transform:rotate(45deg) translateX(-50%);position:absolute;left:50%;cursor:none;transition:var(--ease);}
+.ptl-card{position:absolute;left:50%;transform:translateX(-50%);background:var(--bg2);border:1px solid var(--border);padding:8px 12px;width:150px;white-space:normal;transition:border-color .18s;pointer-events:none;}
+.ptl-item:hover .ptl-card{border-color:var(--acc-b);}
+.ptl-c-type{font-size:7px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
+.ptl-c-name{font-size:9.5px;color:var(--text);font-weight:600;line-height:1.3;margin-bottom:2px;}
+.ptl-c-date{font-size:8px;color:var(--muted);}
+.ptl-sem-label{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:7.5px;color:var(--muted);white-space:nowrap;}
+
+/* ========== KG MINIMAP ========== */
+.kg-minimap{position:absolute;bottom:10px;right:10px;width:110px;height:70px;background:rgba(7,7,7,.88);border:1px solid rgba(255,255,255,.08);z-index:50;pointer-events:none;overflow:hidden;}
+.kg-minimap canvas{position:absolute;inset:0;}
+.kg-minimap-label{position:absolute;top:3px;left:5px;font-size:6.5px;color:rgba(255,255,255,.25);letter-spacing:.06em;text-transform:uppercase;font-family:var(--mono);}
+
+/* ========== PRINT STYLES ========== */
+@media print{
+  body{background:#fff!important;color:#111!important;cursor:auto!important;}
+  body::before{display:none!important;}
+  .sb,.topbar,.tp-btn-row,#cur,#cring,.kg-filters,.kg-statusbar,.kf,.building-strip{display:none!important;}
+  .main{margin-left:0!important;}
+  .page{display:block!important;}
+  .page:not(#page-overview):not(#page-experience):not(#page-projects):not(#page-skills){display:none!important;}
+  .sec{padding:20px 24px!important;break-inside:avoid;}
+  .kn{color:#222!important;border-color:#aaa!important;background:#f8f8f8!important;}
+  #kgsvg line{stroke:rgba(0,0,0,0.15)!important;}
+  .kn.core{color:#007a44!important;border-color:#007a44!important;}
+  a{color:#007a44!important;}
+}
 </style>
 </head>
 <body>
@@ -664,7 +746,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="tp-path"><span>~/nishant/</span><span class="tp-seg" id="tpSeg">overview</span></div>
-  <div class="tp-r"><span class="tp-info">CGPA 7.33 · Sem VI</span><span class="tp-tag">OPEN TO WORK</span><span class="tp-time" id="tpTime"></span></div>
+  <div class="tp-r">
+    <div class="tp-btn-row">
+      <button class="tp-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">◐ Theme</button>
+      <button class="tp-btn" onclick="window.print()" title="Print / Save PDF">⎙ Print</button>
+    </div>
+    <span class="tp-info">CGPA 7.33 · Sem VI</span><span class="tp-tag">OPEN TO WORK</span><span class="tp-time" id="tpTime"></span>
+  </div>
 </div>
 
 <!-- ======================== PAGE: HOME / OVERVIEW ======================== -->
@@ -718,6 +806,37 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <button class="btn btn-g" onclick="go(document.querySelector('[data-p=projects]'))">Projects →</button>
           <a href="https://github.com/Nishant7p" target="_blank" class="btn btn-g">GitHub ↗</a>
           <a href="https://www.linkedin.com/in/nishant-tomer" target="_blank" class="btn btn-g">LinkedIn ↗</a>
+        </div>
+      </div>
+
+      <!-- CURRENTLY BUILDING -->
+      <div class="building-strip">
+        <span class="bs-label">▶ Currently Building</span>
+        <div class="bs-items">
+          <div class="bs-item">
+            <div class="bs-item-dot"></div>
+            <div>
+              <div class="bs-item-name">Clinical AI Scribe — BTP499</div>
+              <div class="bs-item-sub">ASR · Speaker Diarization · SOAP Generation · ICD-10 NER</div>
+            </div>
+            <div class="bs-item-since">Since Sep 2025</div>
+          </div>
+          <div class="bs-item">
+            <div class="bs-item-dot" style="animation-delay:.6s;background:var(--blue);"></div>
+            <div>
+              <div class="bs-item-name">Personalisation Engine</div>
+              <div class="bs-item-sub">SVD · Latent Factor Recommender · CSE640 project</div>
+            </div>
+            <div class="bs-item-since">Since Jan 2026</div>
+          </div>
+          <div class="bs-item">
+            <div class="bs-item-dot" style="animation-delay:1.2s;background:var(--purple);"></div>
+            <div>
+              <div class="bs-item-name">LeetCode Grind</div>
+              <div class="bs-item-sub">1700+ peak · Graphs · DP · Segment Trees</div>
+            </div>
+            <div class="bs-item-since">Daily</div>
+          </div>
         </div>
       </div>
 
@@ -855,6 +974,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <!-- Canvas -->
     <div class="kg-canvas" id="kgCanvas" style="height:640px;">
       <svg id="kgsvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></svg>
+      <div class="kg-minimap" id="kgMinimap">
+        <canvas id="kgMinimapCanvas" width="110" height="70"></canvas>
+        <div class="kg-minimap-label">overview</div>
+      </div>
       <div class="kg-tip" id="kgTip" style="display:none;"></div>
       <!-- Floating project/cert detail panel -->
       <div class="kg-panel" id="kgPanel">
@@ -1042,6 +1165,24 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 <!-- ======================== PAGE: SKILLS ======================== -->
 <div class="page" id="page-skills">
+  <!-- RADAR CHART -->
+  <div class="radar-wrap">
+    <div class="stag-line" style="margin-bottom:14px;">Domain Proficiency</div>
+    <div class="radar-row">
+      <div class="radar-svg-box">
+        <svg id="radarSvg" width="300" height="300" viewBox="0 0 300 300"></svg>
+      </div>
+      <div>
+        <div class="radar-legend" id="radarLegend"></div>
+        <p class="radar-note">Self-assessed relative to IIIT-Delhi coursework, internship output, and project complexity. Not a claim of expertise — a map of where energy has gone.</p>
+      </div>
+    </div>
+  </div>
+  <!-- PROJECT TIMELINE -->
+  <div class="proj-timeline-wrap">
+    <div class="ptl-label">Project Timeline — Growth Story</div>
+    <div class="ptl-scroller"><div class="ptl-track" id="ptlTrack"><div class="ptl-axis"></div></div></div>
+  </div>
   <div class="sec">
     <div class="stag-line">Technical Stack</div>
     <div class="srow"><div><div class="sh">Skills</div><div class="ss">Technologies, tools, languages, and domain expertise</div></div></div>
@@ -1930,7 +2071,13 @@ function buildKG() {
   });
   svg.innerHTML = edgesHTML;
 
-  const REST={core:1,dom:1,proj:.16,tech:.12,course:.12,math:.12,cert:.12};
+  // Pre-compute degree for each node (used for size scaling)
+  const DEGREE = {};
+  KG_NODES.forEach(n=>{ DEGREE[n.id]=0; });
+  KG_EDGES.forEach(([a,b])=>{ if(DEGREE[a]!==undefined) DEGREE[a]++; if(DEGREE[b]!==undefined) DEGREE[b]++; });
+  const maxDeg = Math.max(...Object.values(DEGREE));
+
+  const REST={core:1,dom:1,intern:1,proj:.16,tech:.12,course:.12,math:.12,cert:.12};
   canvas.querySelectorAll('.kn').forEach(n=>n.remove());
   KG_NODES.forEach((node,i)=>{
     const div=document.createElement('div');
@@ -1940,6 +2087,13 @@ function buildKG() {
     div.style.opacity='0';
     div.style.animation=`kgNodeIn .55s ease ${(i*0.012).toFixed(3)}s forwards`;
     div.dataset.nid=node.id; div.dataset.cls=node.cls;
+    div.dataset.degree=DEGREE[node.id]||0;
+    // Scale font/padding by degree (only for non-core/dom nodes so they don't get too large)
+    if(!['core','dom'].includes(node.cls)){
+      const deg = DEGREE[node.id]||0;
+      const scale = 0.9 + (deg/maxDeg)*0.35; // 0.9 → 1.25
+      if(scale>1.05) div.style.fontSize = (7*scale).toFixed(1)+'px';
+    }
     div.addEventListener('mouseenter', e=>kgOnEnter(node.id,div,e));
     div.addEventListener('mousemove',  e=>kgMoveTip(e));
     div.addEventListener('mouseleave', ()=>kgOnLeave());
@@ -1949,6 +2103,8 @@ function buildKG() {
   });
   const c=document.getElementById('kgNodeCount');
   if(c) c.textContent=`${KG_NODES.length} nodes · ${KG_EDGES.length} edges`;
+  // Refresh minimap after KG builds
+  setTimeout(buildKGMinimap, 100);
 }
 
 function kgShowTip(id,div){
@@ -2459,6 +2615,172 @@ function renderAcademicCharts() {
 buildKG();
 initKGFilters();
 renderProjects();
+renderCerts();
+renderAchievements();
+renderThoughts();
+renderSemesters();
+renderProficiency();
+renderAcademicCharts();
+renderRadarChart();
+renderProjectTimeline();
+buildKGMinimap();
+
+// =================== THEME TOGGLE ===================
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  const btn = document.getElementById('themeBtn');
+  if(btn) btn.textContent = document.body.classList.contains('light') ? '◑ Theme' : '◐ Theme';
+  buildKGMinimap();
+}
+
+// =================== RADAR / SPIDER CHART ===================
+const RADAR_DATA = [
+  {label:'AI / NLP',       val:82, color:'rgba(255,100,60,1)'},
+  {label:'iOS Dev',        val:78, color:'rgba(55,155,255,1)'},
+  {label:'ML / Deep Learning',val:72, color:'rgba(255,60,130,1)'},
+  {label:'Full-Stack Web', val:68, color:'rgba(60,210,110,1)'},
+  {label:'Systems / OS',   val:65, color:'rgba(150,150,150,1)'},
+  {label:'Game Dev',       val:70, color:'rgba(175,75,255,1)'},
+  {label:'Databases',      val:60, color:'rgba(35,185,185,1)'},
+  {label:'Comp. Prog.',    val:74, color:'rgba(235,185,35,1)'},
+];
+
+function renderRadarChart(){
+  const svg = document.getElementById('radarSvg');
+  const leg = document.getElementById('radarLegend');
+  if(!svg||!leg) return;
+
+  const N = RADAR_DATA.length, cx=150, cy=155, R=110, labelR=130;
+  const angle = i => (Math.PI*2*i/N) - Math.PI/2;
+  const pt = (r,i) => [cx + r*Math.cos(angle(i)), cy + r*Math.sin(angle(i))];
+
+  let html = '';
+  // Grid rings
+  [25,50,75,100].forEach(pct => {
+    const r = R*pct/100;
+    const pts = Array.from({length:N},(_,i)=>pt(r,i).join(',')).join(' ');
+    html += `<polygon points="${pts}" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>`;
+    if(pct===50) html += `<text x="${cx+r+3}" y="${cy+3}" font-size="7" fill="rgba(255,255,255,0.2)" font-family="JetBrains Mono,monospace">50</text>`;
+  });
+  // Axes
+  for(let i=0;i<N;i++){
+    const [x,y]=pt(R,i);
+    html+=`<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>`;
+  }
+  // Data polygon
+  const dataPts = RADAR_DATA.map((_,i)=>pt(R*RADAR_DATA[i].val/100,i).join(',')).join(' ');
+  html+=`<polygon points="${dataPts}" fill="rgba(0,255,136,0.08)" stroke="rgba(0,255,136,0.5)" stroke-width="1.5" style="stroke-dasharray:800;stroke-dashoffset:800;animation:lineDraw 1.8s cubic-bezier(.22,1,.36,1) .4s forwards;"/>`;
+  // Data dots
+  RADAR_DATA.forEach((d,i)=>{
+    const [x,y]=pt(R*d.val/100,i);
+    html+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="${d.color}" style="opacity:0;animation:dotPop .4s ease ${0.8+i*0.1}s forwards;"/>`;
+  });
+  // Labels
+  RADAR_DATA.forEach((d,i)=>{
+    const [x,y]=pt(labelR,i);
+    const ta = x<cx-5?'end':x>cx+5?'start':'middle';
+    html+=`<text x="${x.toFixed(1)}" y="${(y+3).toFixed(1)}" font-size="8.5" fill="rgba(200,200,200,0.7)" text-anchor="${ta}" font-family="JetBrains Mono,monospace">${d.label}</text>`;
+  });
+  svg.innerHTML = html;
+
+  // Legend bars
+  leg.innerHTML = RADAR_DATA.map(d=>`
+    <div class="rl-item">
+      <div class="rl-dot" style="background:${d.color};"></div>
+      <div class="rl-name">${d.label}</div>
+      <div class="rl-bar"><div class="rl-fill" data-w="${d.val}%" style="width:0;background:${d.color};opacity:.7;"></div></div>
+      <div class="rl-val">${d.val}</div>
+    </div>`).join('');
+  // Animate bars
+  setTimeout(()=>{
+    leg.querySelectorAll('.rl-fill').forEach(el=>{ el.style.width=el.dataset.w; });
+  }, 600);
+}
+
+// =================== PROJECT TIMELINE ===================
+const TIMELINE_PROJECTS = [
+  {name:'Assembler & Sim',  date:'Dec 2023', x:8,  above:false, type:'sys',   color:'rgba(150,150,150,1)'},
+  {name:'iOS Productivity', date:'Jan 2025', x:22, above:true,  type:'ios',   color:'rgba(55,155,255,1)'},
+  {name:'Angry Birds Clone',date:'Mar 2024', x:33, above:false, type:'game',  color:'rgba(175,75,255,1)'},
+  {name:'GeoGuesser Game',  date:'Jun 2024', x:45, above:true,  type:'game',  color:'rgba(175,75,255,1)'},
+  {name:'3D Escape Room',   date:'Aug 2024', x:56, above:false, type:'game',  color:'rgba(175,75,255,1)'},
+  {name:'AgriLink',         date:'Oct 2024', x:67, above:true,  type:'web',   color:'rgba(60,210,110,1)'},
+  {name:'Personalisation',  date:'Jan 2026', x:78, above:false, type:'ml',    color:'rgba(255,60,130,1)'},
+  {name:'Clinical Scribe',  date:'Sep 2025', x:88, above:true,  type:'ai',    color:'rgba(255,100,60,1)'},
+];
+
+function renderProjectTimeline(){
+  const track = document.getElementById('ptlTrack');
+  if(!track) return;
+  const axisY = 136; // bottom:44px from 180px track
+  TIMELINE_PROJECTS.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'ptl-item';
+    el.style.cssText = `left:${p.x}%;bottom:44px;`;
+    const stemH = 50, cardY = p.above ? -(stemH + 100) : 15;
+    const nodeTop = p.above ? -10 : 2;
+    el.innerHTML = `
+      <div class="ptl-stem" style="height:${stemH}px;${p.above?'bottom:9px;':'top:9px;'}"></div>
+      <div class="ptl-node" style="border-color:${p.color};background:rgba(7,7,7,.9);top:${nodeTop}px;"></div>
+      <div class="ptl-card" style="top:${cardY}px;border-color:rgba(255,255,255,.08);">
+        <div class="ptl-c-type" style="color:${p.color};">${p.type.toUpperCase()}</div>
+        <div class="ptl-c-name">${p.name}</div>
+        <div class="ptl-c-date">${p.date}</div>
+      </div>`;
+    track.appendChild(el);
+  });
+  // Semester markers
+  const sems = [{label:'Sem I',x:5},{label:'Sem II',x:20},{label:'Sem III',x:35},
+                 {label:'Sem IV',x:52},{label:'Sem V',x:68},{label:'Sem VI →',x:84}];
+  sems.forEach(s => {
+    const el = document.createElement('div');
+    el.style.cssText=`position:absolute;bottom:0;left:${s.x}%;font-size:7.5px;color:rgba(255,255,255,.15);transform:translateX(-50%);white-space:nowrap;font-family:var(--mono);`;
+    el.textContent = s.label;
+    track.appendChild(el);
+    const tick = document.createElement('div');
+    tick.style.cssText=`position:absolute;bottom:18px;left:${s.x}%;width:1px;height:26px;background:rgba(255,255,255,.06);transform:translateX(-50%);`;
+    track.appendChild(tick);
+  });
+}
+
+// =================== KG MINIMAP ===================
+function buildKGMinimap(){
+  const canvas = document.getElementById('kgMinimapCanvas');
+  const kgCanvas = document.getElementById('kgCanvas');
+  if(!canvas||!kgCanvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  const isLight = document.body.classList.contains('light');
+  const nodeCol = {
+    core:'rgba(0,255,136,0.9)', dom:'rgba(68,136,255,0.7)', intern:'rgba(0,200,160,0.6)',
+    proj:'rgba(255,200,50,0.5)', tech:'rgba(120,120,120,0.35)',
+    course:'rgba(150,80,255,0.4)', math:'rgba(0,180,220,0.4)', cert:'rgba(255,130,50,0.4)'
+  };
+
+  // Draw edges
+  KG_EDGES.forEach(([a,b])=>{
+    const na=KG_NODES.find(n=>n.id===a), nb=KG_NODES.find(n=>n.id===b);
+    if(!na||!nb) return;
+    ctx.beginPath();
+    ctx.moveTo(na.x/100*W, na.y/100*H);
+    ctx.lineTo(nb.x/100*W, nb.y/100*H);
+    ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)';
+    ctx.lineWidth = 0.3;
+    ctx.stroke();
+  });
+  // Draw nodes
+  KG_NODES.forEach(n=>{
+    ctx.beginPath();
+    const r = n.cls==='core'?3:n.cls==='dom'?2:1;
+    ctx.arc(n.x/100*W, n.y/100*H, r, 0, Math.PI*2);
+    ctx.fillStyle = nodeCol[n.cls]||'rgba(120,120,120,0.3)';
+    ctx.fill();
+  });
+}
+
+
 renderCerts();
 renderAchievements();
 renderThoughts();
