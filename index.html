@@ -1271,7 +1271,32 @@ const PROJECTS = [
    desc:'Two-pass assembler (CSE112 Computer Organisation project) converting custom ISA assembly language into binary machine code, paired with a simulator executing code and displaying system state.',
    points:['Designed custom Instruction Set Architecture (ISA) with arithmetic, logical, memory, and branch instruction categories.','Implemented two-pass assembler: Pass 1 builds symbol table and resolves labels; Pass 2 generates binary machine code.','Built simulator that executes generated machine code, displaying register values, memory state, and instruction pipeline.','Supported labels, directives (.data, .text), pseudo-instructions, and relative branch addressing.','Added debugging mode with step-by-step execution, breakpoints, and register/memory watchpoints.'],
    stack:['Python','Computer Architecture','ISA Design','Assembler Design','Systems Programming'],
-   type:'academic',typeLabel:'Academic',tags:'academic',links:[]}
+   type:'academic',typeLabel:'Academic',tags:'academic',links:[]},
+  {id:'P-009', year:'2026', title:'Enterprise AI Consulting Platform',
+   img:'https://i.ibb.co/tTfz5QwM/AI-Demo.png',
+   gallery:[
+     'https://i.ibb.co/dwK4PHTZ/Dark-Mode.png',
+     'https://i.ibb.co/Pv31Hywr/Dark-Mode-about.png',
+     'https://i.ibb.co/PvsRskjs/Light-About.png',
+     'https://i.ibb.co/d04h3NmX/Light-Home.png',
+     'https://i.ibb.co/qLPDbRFM/Sequential-UI.png',
+     'https://i.ibb.co/nMnKbdYM/UI-Inbox.png',
+     'https://i.ibb.co/LDYh63jF/UI-output.png',
+     'https://i.ibb.co/wFnC6gcb/Feature.png'
+   ],
+   desc:'An enterprise-grade AI platform that evaluates business operations to automatically generate tailored AI use cases, ROI metrics, and implementation roadmaps.',
+   points:[
+     'Engineered a secure Vercel Serverless backend to proxy the Gemini 2.5 Flash API, enforcing rigorous JSON schemas and enterprise guardrails against prompt injection.',
+     'Architected a zero-dependency Vanilla JS frontend for maximum performance, featuring a custom CSS-variable global Dark/Light mode and two complex input flows.',
+     'Implemented persistent session history using localStorage to instantly retrieve past AI analyses without redundant API calls.',
+     'Integrated a dynamic ROI calculator linked to the AI output and utilized the native Web Speech API for real-time executive audio briefings.'
+   ],
+   stack:['Vanilla JS', 'Node.js', 'Gemini AI', 'Serverless', 'UI/UX Design'],
+   type:'personal', typeLabel:'Personal', tags:'personal web ai design fullstack',
+   links:[
+     {l:'Live Site ↗', u:'https://your-new-vercel-link.vercel.app/'},
+     {l:'GitHub ↗', u:'https://github.com/Nishant7p/your-new-repo-name'}
+   ]}
 ];
 
 const CERTS = [
@@ -1309,6 +1334,7 @@ const CERTS = [
    img:'https://i.postimg.cc/rwTmtg0B/1stop.png',fallback:'1 Stop Internship',
    desc:'Certificate of participation confirming completion of an industry-oriented internship program focused on professional development.',
    verify:'#',subs:[]}
+  
 ];
 
 // =================== REAL SEMESTERS DATA (from Campus Labs transcript) ===================
@@ -1504,6 +1530,10 @@ const ACHIEVEMENTS = [
 ];
 // ── TECH META ──
 const TECH_META = {
+  'Gemini AI':{cat:'AI',col:'#bb77ff'},
+  'Vanilla JS':{cat:'Web',col:'#00ff88'},
+  'Serverless':{cat:'Web',col:'#00ff88'},
+  'UI/UX Design':{cat:'Tool',col:'#88ccff'},
   'OpenAI Whisper':{cat:'AI',col:'#bb77ff'},'Pyannote':{cat:'AI',col:'#bb77ff'},
   'NLP':{cat:'AI',col:'#bb77ff'},'NER':{cat:'AI',col:'#bb77ff'},
   'ICD-10':{cat:'AI',col:'#bb77ff'},'SOAP Notes':{cat:'AI',col:'#bb77ff'},
@@ -1604,6 +1634,7 @@ const KG_NODES = [
   {id:'audio_proc',  label:'Audio Processing',cls:'tech',x:81,y:26},
   {id:'opencv',      label:'OpenCV',          cls:'tech',x:77,y:16},
   {id:'lora',        label:'LoRA Fine-tuning',cls:'tech',x:71,y:16},
+  {id:'gemini', label:'Gemini API', cls:'tech', x:92, y:18},
 
   // ── ML / DATA SCIENCE ──
   {id:'cuda',       label:'CUDA',              cls:'tech',x:62,y:80},
@@ -1651,6 +1682,9 @@ const KG_NODES = [
   {id:'websocket',label:'WebSockets',     cls:'tech',x:97,y:85},
   {id:'cors',     label:'CORS / HTTP',    cls:'tech',x:93,y:93},
 
+  {id:'serverless', label:'Serverless / Vercel', cls:'tech', x:88, y:79},
+  {id:'vanillajs', label:'Vanilla JS', cls:'tech', x:98, y:48},
+
   // ── DESIGN TOOLS ──
   {id:'figma',    label:'Figma',          cls:'tech',x:5,  y:63},
   {id:'canva',    label:'Canva',          cls:'tech',x:14, y:58},
@@ -1694,7 +1728,8 @@ const KG_NODES = [
   {id:'angry',      label:'libGDX 2D Physics Engine',  cls:'proj',x:7,  y:73},
   {id:'geo',        label:'GeoGuesser Game',    cls:'proj',x:40,y:89},
   {id:'escape',     label:'3D Escape Room',     cls:'proj',x:21,y:88},
-
+  {id:'ai_platform', label:'Enterprise AI Platform', cls:'proj', x:88, y:52},
+ 
   // ── COURSES ──
   {id:'cse102',label:'DSA',              cls:'course',x:39,y:68},
   {id:'cse201',label:'OOP / Java',       cls:'course',x:25,y:68},
@@ -1747,6 +1782,16 @@ const KG_EDGES = [
 
   // ── Core → Internships ──
   ['nt','mod_intern'],['nt','onstop_intern'],
+  // ── Enterprise AI Platform Connections ──
+  ['ai_platform','web'],['ai_platform','ai'],['ai_platform','design'],
+  ['ai_platform','gemini'],['ai_platform','serverless'],['ai_platform','vanillajs'],
+  ['ai_platform','node'],['ai_platform','html_css'],['ai_platform','js'],
+  ['ai_platform','llm'],['ai_platform','proto'],['ai_platform','ux_res'],
+  
+  // ── Underlying Tech Connections ──
+  ['gemini','llm'],['gemini','node'],['gemini','ai'],
+  ['serverless','node'],['serverless','rest'],['serverless','web'],
+  ['vanillajs','js'],['vanillajs','html_css'],['vanillajs','web'],
 
   // ── Internships → Domains/Skills ──
   ['mod_intern','ios'],['mod_intern','ios_proj'],['mod_intern','swiftui'],['mod_intern','firebase'],
