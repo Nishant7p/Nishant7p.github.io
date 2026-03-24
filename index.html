@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -635,6 +637,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <div id="cring"></div>
 <div id="navProgress"></div>
 <button class="mob-toggle" id="mobBtn">☰</button>
+
 
 <!-- MODALS -->
 <div class="moverlay" id="pModal" onclick="closeModal('pModal',event)">
@@ -2883,5 +2886,55 @@ setTimeout(() => {
 }, 100);
 
 </script>
+<script>
+(function() {
+  const SUPA_URL = 'https://emyneffaszxygywyxbdc.supabase.co';
+  const SUPA_KEY = 'sb_publishable__aCro4WqabTIag71myT6nA_yt7qDyVc';
+
+  async function trackView() {
+    try {
+      await fetch(`${SUPA_URL}/rest/v1/rpc/increment_view`, {
+        method: 'POST',
+        headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json' },
+        body: '{}'
+      });
+    } catch(e) {}
+  }
+
+  async function getViews() {
+    const r = await fetch(`${SUPA_URL}/rest/v1/page_views?select=count,updated&id=eq.1`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } });
+    const data = await r.json();
+    return data[0] || { count: '?', updated: 'never' };
+  }
+
+  let keyBuf = '';
+  const SECRET = 'views';
+  document.addEventListener('keydown', async(e) => {
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+    keyBuf += e.key.toLowerCase();
+    if (keyBuf.length > SECRET.length) keyBuf = keyBuf.slice(-SECRET.length);
+    if (keyBuf === SECRET) {
+      keyBuf = '';
+      const existing = document.getElementById('__vc_panel');
+      if (existing) { existing.remove(); return; }
+      const { count, updated } = await getViews();
+      const panel = document.createElement('div');
+      panel.id = '__vc_panel';
+      panel.style.cssText = `position:fixed;bottom:20px;right:20px;z-index:999999;background:#0d0d0d;border:1px solid rgba(0,255,136,.4);padding:16px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#ececec;box-shadow:0 8px 32px rgba(0,0,0,.8);min-width:200px;animation:__vcIn .25s ease;`;
+      panel.innerHTML = `<div style="font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#00ff88;margin-bottom:10px;">📊 Portfolio Analytics</div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:#909090">Total Views</span><span style="color:#00ff88;font-weight:700;font-size:18px;">${count}</span></div><div style="font-size:9px;color:#5e5e5e;border-top:1px solid #1c1c1c;padding-top:7px;margin-top:4px;">Last visit: ${new Date(updated).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})}</div><div style="font-size:8.5px;color:#3c3c3c;margin-top:5px;">type "views" again to close</div>`;
+      document.body.appendChild(panel);
+      if (!document.getElementById('__vcKF')) {
+        const s = document.createElement('style');
+        s.id = '__vcKF';
+        s.textContent = '@keyframes __vcIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}';
+        document.head.appendChild(s);
+      }
+    }
+  });
+  trackView();
+})();
+</script>
+
 </body>
 </html>
