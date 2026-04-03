@@ -27,7 +27,7 @@
   --ease:all 0.18s ease;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{overflow-x:hidden;}
 body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:12.5px;line-height:1.6;overflow-x:hidden;cursor:none;}
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 4px);pointer-events:none;z-index:9999;}
 a,button{cursor:none;}
@@ -984,15 +984,15 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="srow"><div><div class="sh">Experience</div><div class="ss">Internships and ongoing research projects</div></div><div class="scount">3 positions · 2025–Present</div></div>
     <!-- Impact at a glance -->
     <div class="impact-callout">
+      <div class="ic-cell"><div class="ic-val">3</div><div class="ic-label">Internships</div></div>
       <div class="ic-cell"><div class="ic-val">90%+</div><div class="ic-label">SOAP Note Accuracy</div></div>
-      <div class="ic-cell"><div class="ic-val">30–40%</div><div class="ic-label">Physician Load Reduced</div></div>
       <div class="ic-cell"><div class="ic-val">LOR ✓</div><div class="ic-label">Letter of Recommendation</div></div>
     </div>
     <div class="tline">
       <div class="tli">
         <div class="tli-dot f"></div>
         <div class="tli-head"><div class="tli-role">Associate Consultant Intern — AI & Automation</div><div class="tli-period">Mar 2026 — Jun 2026</div></div>
-        <div class="tli-org">Chiacon Consulting India Pvt. Ltd. · Remote · ₹10K/month</div>
+        <div class="tli-org">Chiacon Consulting India Pvt. Ltd. · Remote</div>
         <ul class="tli-pts">
           <li>Building an <strong style="color:var(--text);">AI-powered HR Screening Agent</strong> integrated with Microsoft Teams — automated first-level candidate evaluation using resume parsing, JD matching, and conversational AI to reduce recruiter workload.</li>
           <li>Developing an <strong style="color:var(--text);">MCP Server</strong> connected to the company data warehouse, delivering automated summaries, conversational querying, and routine insight emails to leadership for data-driven decision making.</li>
@@ -1067,13 +1067,31 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       </div>
     </div>
   </div>
+  <div class="sec" style="padding-top:20px;">
+    <div class="stag-line">Official Documents</div>
+    <div class="sh" style="margin-bottom:20px;">Letters from Chiacon Consulting</div>
+    <div class="g g2 bord">
+      <div style="cursor:default;background:var(--bg);transition:background .15s;" class="card">
+        <div style="height:160px;overflow:hidden;margin:-20px -20px 14px;border-bottom:1px solid var(--border);position:relative;background:var(--bg3);">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);"><div style="text-align:center;"><div style="font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;">Chiacon Consulting</div><div style="font-family:var(--sans);font-size:16px;font-weight:800;color:var(--dim);margin-top:6px;">Internship Letter</div><div style="font-size:9px;color:var(--dim);margin-top:4px;">Ref: CC/HRD/INT LTR/2025-26/00026</div></div></div>
+        </div>
+        <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:5px;">Chiacon Consulting India Pvt. Ltd. · Mar 2026</div>
+        <div style="font-family:var(--sans);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;">Internship Offer Letter</div>
+        <div style="font-size:10px;color:var(--dim);">Associate Consultant Intern — AI & Automation. 3-month remote engagement, Mar–Jun 2026.</div>
+        <div style="margin-top:10px;font-size:9.5px;color:var(--muted);">→ Document URL to be added</div>
+      </div>
+      <div class="card" style="background:var(--bg);border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;min-height:220px;">
+        <div style="text-align:center;color:var(--dim);"><div style="font-size:20px;margin-bottom:8px;opacity:.3;">+</div><div style="font-size:9.5px;letter-spacing:.06em;">Experience letter / LOR<br>to be added on completion</div></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ======================== PAGE: PROJECTS ======================== -->
 <div class="page" id="page-projects">
   <div class="sec">
     <div class="stag-line">Engineering Work</div>
-    <div class="srow"><div><div class="sh">Projects</div><div class="ss">Click any card for full details, gallery & links</div></div><div class="scount">9 projects</div></div>
+    <div class="srow"><div><div class="sh">Projects</div><div class="ss">Click any card for full details, gallery & links</div></div><div class="scount">10 projects</div></div>
     <div class="filter-row" id="filterRow">
       <button class="fbtn on" data-f="all">All (10)</button>
       <button class="fbtn" data-f="internship">Internship</button>
@@ -1564,7 +1582,7 @@ const THOUGHTS = [
 ];
 
 const ACHIEVEMENTS = [
-  {year:'2026',mon:'Mar',icon:'⬟',title:'Chiacon Consulting — AI & Automation Internship',detail:'Joined Chiacon Consulting India Pvt. Ltd. as Associate Consultant Intern. Building AI agents for HR screening, MCP data servers, and corporate website — remote, ₹10K/month stipend, 3-month engagement.',chip:'Internship'},
+  {year:'2026',mon:'Mar',icon:'⬟',title:'Chiacon Consulting — AI & Automation Internship',detail:'Joined Chiacon Consulting India Pvt. Ltd. as Associate Consultant Intern. Building AI agents for HR screening, MCP data servers, and corporate website — remote internship, 3-month engagement.',chip:'Internship'},
   {year:'2026',mon:'Jan',icon:'★',title:'AI Clinical Research — 90%+ Accuracy Milestone',detail:'Architected production-quality multi-modal AI clinical scribe pipeline (BTP499). ASR + diarization + SOAP note generation + ICD-10 mapping achieved 90%+ accuracy target.',chip:'Research'},
   {year:'2025',mon:'Oct',icon:'★',title:'LeetCode Peak: 1800+ Rating',detail:'Crossed 1800 LeetCode peak rating while solving 500+ DSA problems. Consistent top-percentile performance in weekly and biweekly contests, especially in advanced tree and graph problems.',chip:'Competitive Prog.'},
   {year:'2025',mon:'Jun',icon:'▲',title:'ModularityLabs iOS Internship — Completed',detail:'Delivered production iOS modular productivity app over 6-month industrial internship. Received Letter of Experience and Letter of Recommendation. MVVM + Firebase + Core Data architecture.',chip:'Internship'},
@@ -1784,12 +1802,17 @@ const KG_NODES = [
   {id:'chiacon_intern', label:'Chiacon Consulting', cls:'intern', x:35, y:3},
 
   // ── NEW TECH (Chiacon) ──
-  {id:'ai_agents', label:'AI Agents', cls:'tech', x:86, y:5},
-  {id:'mcp_server', label:'MCP Server', cls:'tech', x:78, y:3},
-  {id:'teams_api', label:'MS Teams API', cls:'tech', x:96, y:18},
-  {id:'data_wh', label:'Data Warehouse', cls:'tech', x:80, y:91},
-  {id:'prompt_eng', label:'Prompt Engineering', cls:'tech', x:93, y:10},
-  {id:'web_design', label:'Web Design', cls:'tech', x:11, y:50},
+  {id:'ai_agents',  label:'AI Agents',          cls:'tech', x:86, y:5},
+  {id:'mcp_server', label:'MCP Server',          cls:'tech', x:78, y:3},
+  {id:'teams_api',  label:'MS Teams API',        cls:'tech', x:96, y:18},
+  {id:'data_wh',    label:'Data Warehouse',      cls:'tech', x:80, y:91},
+  {id:'prompt_eng', label:'Prompt Engineering',  cls:'tech', x:93, y:10},
+  {id:'web_design', label:'Web Design',          cls:'tech', x:11, y:50},
+
+  // ── CHIACON USE-CASES (sub-project nodes) ──
+  {id:'hr_agent',     label:'HR Screening Agent', cls:'proj', x:75, y:8},
+  {id:'insight_agent',label:'MCP Insight Server', cls:'proj', x:68, y:2},
+  {id:'corp_web',     label:'Corp. Website',      cls:'proj', x:43, y:5},
 
   // ── COURSES ──
   {id:'cse102',label:'DSA',              cls:'course',x:39,y:68},
@@ -2032,17 +2055,37 @@ const KG_EDGES = [
 
   // ── Chiacon Consulting ──
   ['nt','chiacon_intern'],
-  ['chiacon_intern','ai'],['chiacon_intern','web'],['chiacon_intern','db'],
-  ['chiacon_intern','chiacon_proj'],
+  // internship → domains
+  ['chiacon_intern','ai'],['chiacon_intern','web'],['chiacon_intern','db'],['chiacon_intern','design'],
+  // internship → use-case projects
+  ['chiacon_intern','hr_agent'],['chiacon_intern','insight_agent'],['chiacon_intern','corp_web'],
+  // umbrella project → use-cases
+  ['chiacon_proj','hr_agent'],['chiacon_proj','insight_agent'],['chiacon_proj','corp_web'],
+  // umbrella → tech
   ['chiacon_proj','ai_agents'],['chiacon_proj','mcp_server'],['chiacon_proj','teams_api'],
   ['chiacon_proj','data_wh'],['chiacon_proj','prompt_eng'],['chiacon_proj','web_design'],
   ['chiacon_proj','python'],['chiacon_proj','llm'],['chiacon_proj','ner'],
+  // HR Screening Agent connections
+  ['hr_agent','ai_agents'],['hr_agent','teams_api'],['hr_agent','prompt_eng'],
+  ['hr_agent','llm'],['hr_agent','ner'],['hr_agent','python'],
+  // MCP Insight Server connections
+  ['insight_agent','mcp_server'],['insight_agent','data_wh'],['insight_agent','llm'],
+  ['insight_agent','prompt_eng'],['insight_agent','postgres'],['insight_agent','sql'],
+  ['insight_agent','python'],
+  // Corporate Website connections
+  ['corp_web','web_design'],['corp_web','html_css'],['corp_web','web'],
+  ['corp_web','figma'],['corp_web','js'],
+  // tech → domain
   ['ai_agents','ai'],['ai_agents','llm'],['ai_agents','prompt_eng'],
   ['mcp_server','ai'],['mcp_server','data_wh'],['mcp_server','db'],
   ['teams_api','web'],['teams_api','ai_agents'],
   ['data_wh','postgres'],['data_wh','sql'],
   ['prompt_eng','ai'],['prompt_eng','llm'],
   ['web_design','design'],['web_design','html_css'],
+  // cross-link to existing tech / courses
+  ['ai_agents','gemini'],['ai_agents','langchain'],
+  ['prompt_eng','rag'],['mcp_server','rest'],
+  ['hr_agent','cse303'],['insight_agent','cse202'],
 ];
 
 const KG_META = {
@@ -2194,6 +2237,9 @@ const KG_META = {
   leet:     {type:'Project',     tag:'CP',   desc:'LeetCode 1800+ peak rating · 500+ problems solved'},
   ai_platform:{type:'Project',   tag:'Web',  desc:'Enterprise AI consulting · Gemini API + Vanilla JS + Vercel'},
   chiacon_proj:{type:'Project',  tag:'AI',   desc:'AI agent suite — HR screening bot, MCP data server, corporate website'},
+  hr_agent:   {type:'Project',  tag:'AI',   desc:'AI HR Screening Agent — MS Teams bot · resume parsing · conversational candidate eval'},
+  insight_agent:{type:'Project',tag:'AI',   desc:'MCP Insight Server — data warehouse → LLM → automated leadership summaries'},
+  corp_web:   {type:'Project',  tag:'Web',  desc:'Chiacon corporate website — service pages, brand positioning, responsive layout'},
   chiacon_intern:{type:'Internship',tag:'Intern',desc:'Chiacon Consulting · 3-month AI & automation internship · Remote'},
   ai_agents:{type:'Tech',        tag:'AI',   desc:'Autonomous AI agents — task execution, tool use, multi-step reasoning'},
   mcp_server:{type:'Tech',       tag:'AI',   desc:'Model Context Protocol server — data warehouse to LLM bridge'},
@@ -2789,7 +2835,8 @@ function go(el) {
   if(page) page.classList.add('on');
   el.classList.add('on');
   document.getElementById('tpSeg').textContent = p.replace('-',' ');
-  window.scrollTo(0,0);
+  if(window.__lenis) window.__lenis.scrollTo(0, {immediate: true});
+  else window.scrollTo(0, 0);
   if(window.innerWidth<=840) document.getElementById('sb').classList.remove('open');
   if(p==='home') setTimeout(buildKG, 50);
 }
@@ -3123,21 +3170,25 @@ setTimeout(() => {
   // Reveal observer
   initReveal();
 
-  // Lenis smooth scroll
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    touchMultiplier: 1.5,
-  });
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
-  window.__lenis = lenis;
 }, 100);
 
+</script>
+<script>
+// ── Lenis smooth scroll (must be top-level so go() can access window.__lenis) ──
+(function initLenis() {
+  if (typeof Lenis === 'undefined') return;
+  const lenis = new Lenis({
+    duration: 1.1,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    touchMultiplier: 1.5,
+    infinite: false,
+  });
+  window.__lenis = lenis;
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+})();
 </script>
 <script>
 (function() {
