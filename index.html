@@ -6,15 +6,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NT / Nishant Tomer — Personal OS</title>
-<meta name="description" content="Nishant Tomer — B.Tech CSAM at IIIT-Delhi. iOS Developer, AI/ML Engineer, Full-Stack Web. 9 projects, 2 internships, LeetCode 1800+. Open to SDE & ML roles.">
+<meta name="description" content="Nishant Tomer — B.Tech CSAM at IIIT-Delhi. iOS Developer, AI/ML Engineer, Full-Stack Web. 10 projects, 3 internships, LeetCode 1800+. Open to SDE & ML roles.">
 <meta property="og:title" content="Nishant Tomer — Portfolio">
-<meta property="og:description" content="iOS Developer · AI/ML Engineer · Full-Stack Web — IIIT-Delhi CSAM 2023–27. 9 projects, 2 internships, LeetCode 1800+.">
+<meta property="og:description" content="iOS Developer · AI/ML Engineer · Full-Stack Web — IIIT-Delhi CSAM 2023–27. 10 projects, 3 internships, LeetCode 1800+.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nishant7p.github.io/portfolio/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nishant Tomer — Portfolio">
-<meta name="twitter:description" content="iOS Developer · AI/ML Engineer · Full-Stack Web — IIIT-Delhi CSAM 2023–27. 9 projects, 2 internships, LeetCode 1800+.">
+<meta name="twitter:description" content="iOS Developer · AI/ML Engineer · Full-Stack Web — IIIT-Delhi CSAM 2023–27. 10 projects, 3 internships, LeetCode 1800+.">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <style>
 :root{
   --bg:#070707;--bg2:#0d0d0d;--bg3:#141414;--bg4:#1c1c1c;
@@ -668,10 +669,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <button class="na on" data-p="home" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>Overview</button>
       <button class="na" data-p="education" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-4 6 4-6 4-6-4z"/><path d="M14 9v4"/><path d="M4 9.5v3c0 1 1.8 2 4 2s4-1 4-2v-3"/></svg>Education</button>
       <button class="na" data-p="academic" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1" width="12" height="14" rx=".5"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="11" y2="8"/><line x1="5" y1="11" x2="9" y2="11"/></svg>Academic Log <span class="nb">6 Sem</span></button>
-      <button class="na" data-p="experience" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="12" height="9" rx=".5"/><path d="M5 5V4a2 2 0 0 1 6 0v1"/></svg>Experience <span class="nb">2</span></button>
+      <button class="na" data-p="experience" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="12" height="9" rx=".5"/><path d="M5 5V4a2 2 0 0 1 6 0v1"/></svg>Experience <span class="nb">3</span></button>
     </div>
     <div class="ng"><div class="ng-label">// Work</div>
-      <button class="na" data-p="projects" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15,2 9,8 15,14"/><polyline points="1,2 7,8 1,14"/></svg>Projects <span class="nb">9</span></button>
+      <button class="na" data-p="projects" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15,2 9,8 15,14"/><polyline points="1,2 7,8 1,14"/></svg>Projects <span class="nb">10</span></button>
       <button class="na" data-p="skills" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="4"/><line x1="8" y1="12" x2="8" y2="15"/><line x1="1" y1="8" x2="4" y2="8"/><line x1="12" y1="8" x2="15" y2="8"/></svg>Skills</button>
     </div>
     <div class="ng"><div class="ng-label">// Archive</div>
@@ -741,8 +742,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="ov-stat"><span class="ov-sv" data-count="7.33" data-float="2">7.33</span><span class="ov-sl">CGPA</span></div>
           <div class="ov-stat"><span class="ov-sv" data-count="500">500+</span><span class="ov-sl">DSA Solved</span></div>
           <div class="ov-stat"><span class="ov-sv" data-count="1800">1800+</span><span class="ov-sv" style="font-size:12px;color:var(--dim);font-family:var(--mono);font-weight:400;"> LeetCode Peak</span></div>
-          <div class="ov-stat"><span class="ov-sv" data-count="9">9</span><span class="ov-sl">Projects</span></div>
-          <div class="ov-stat"><span class="ov-sv" data-count="2">2</span><span class="ov-sl">Internships</span></div>
+          <div class="ov-stat"><span class="ov-sv" data-count="10">10</span><span class="ov-sl">Projects</span></div>
+          <div class="ov-stat"><span class="ov-sv" data-count="3">3</span><span class="ov-sl">Internships</span></div>
         </div>
         <div class="ov-btns">
           <a href="mailto:nishant23355@iiitd.ac.in" class="btn btn-p">↗ Hire Me</a>
@@ -771,10 +772,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
       <!-- PAGE CARDS -->
       <div class="ov-nav-cards">
-        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=projects]'))"><div class="onc-label">P-001 → P-009</div><div class="onc-title">Projects</div><div class="onc-sub">iOS apps, AI pipelines, game dev, full-stack marketplaces.</div><div class="onc-arr">↗</div></div>
+        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=projects]'))"><div class="onc-label">P-001 → P-010</div><div class="onc-title">Projects</div><div class="onc-sub">iOS apps, AI pipelines, game dev, full-stack marketplaces.</div><div class="onc-arr">↗</div></div>
         <div class="ov-ncard" onclick="go(document.querySelector('[data-p=academic]'))"><div class="onc-label">Sem I → VI · Courses</div><div class="onc-title">Academic Log</div><div class="onc-sub">Semester breakdown with course learnings and notes.</div><div class="onc-arr">↗</div></div>
         <div class="ov-ncard" onclick="go(document.querySelector('[data-p=certifications]'))"><div class="onc-label">6 verified certs</div><div class="onc-title">Certifications</div><div class="onc-sub">GPU Programming (JHU), Google DB, HackerRank, IIIT-D.</div><div class="onc-arr">↗</div></div>
-        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=experience]'))"><div class="onc-label">Jan 2025 – Present</div><div class="onc-title">Experience</div><div class="onc-sub">ModularityLabs iOS internship + clinical AI research.</div><div class="onc-arr">↗</div></div>
+        <div class="ov-ncard" onclick="go(document.querySelector('[data-p=experience]'))"><div class="onc-label">Jan 2025 – Present</div><div class="onc-title">Experience</div><div class="onc-sub">3 roles: Chiacon AI consulting, ModularityLabs iOS, clinical AI research.</div><div class="onc-arr">↗</div></div>
         <div class="ov-ncard" onclick="go(document.querySelector('[data-p=skills]'))"><div class="onc-label">6 domains</div><div class="onc-title">Skills</div><div class="onc-sub">Java, Python, Swift, CUDA, React, PyTorch, Firebase.</div><div class="onc-arr">↗</div></div>
         <div class="ov-ncard" onclick="go(document.querySelector('[data-p=contact]'))"><div class="onc-label">Response &lt;24h</div><div class="onc-title">Contact</div><div class="onc-sub">Open to internships, research, and open source projects.</div><div class="onc-arr">↗</div></div>
       </div>
@@ -786,7 +787,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div style="padding:14px 0 10px;display:flex;align-items:center;gap:10px;">
       <span style="font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:600;">★ Featured Work</span>
       <span style="flex:1;height:1px;background:var(--border);"></span>
-      <button onclick="go(document.querySelector('[data-p=projects]'))" style="font-size:8px;color:var(--dim);background:none;border:none;cursor:none;letter-spacing:.06em;">View all 9 →</button>
+      <button onclick="go(document.querySelector('[data-p=projects]'))" style="font-size:8px;color:var(--dim);background:none;border:none;cursor:none;letter-spacing:.06em;">View all 10 →</button>
     </div>
   </div>
   <div class="star-strip">
@@ -822,8 +823,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
     <div class="rec-cell">
       <div class="rec-label">Best Domain</div>
-      <div class="rec-val" style="font-size:14px;">iOS + AI/ML</div>
-      <div class="rec-sub">Swift · PyTorch · Production Ready</div>
+      <div class="rec-val" style="font-size:14px;">AI/ML + iOS</div>
+      <div class="rec-sub">AI Agents · Swift · PyTorch · Production</div>
     </div>
     <div class="rec-cell">
       <div class="rec-label">Preferred Roles</div>
@@ -980,7 +981,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <div class="page" id="page-experience">
   <div class="sec">
     <div class="stag-line">Work & Research</div>
-    <div class="srow"><div><div class="sh">Experience</div><div class="ss">Internships and ongoing research projects</div></div><div class="scount">2 positions · 2025–Present</div></div>
+    <div class="srow"><div><div class="sh">Experience</div><div class="ss">Internships and ongoing research projects</div></div><div class="scount">3 positions · 2025–Present</div></div>
     <!-- Impact at a glance -->
     <div class="impact-callout">
       <div class="ic-cell"><div class="ic-val">90%+</div><div class="ic-label">SOAP Note Accuracy</div></div>
@@ -990,6 +991,23 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="tline">
       <div class="tli">
         <div class="tli-dot f"></div>
+        <div class="tli-head"><div class="tli-role">Associate Consultant Intern — AI & Automation</div><div class="tli-period">Mar 2026 — Jun 2026</div></div>
+        <div class="tli-org">Chiacon Consulting India Pvt. Ltd. · Remote · ₹10K/month</div>
+        <ul class="tli-pts">
+          <li>Building an <strong style="color:var(--text);">AI-powered HR Screening Agent</strong> integrated with Microsoft Teams — automated first-level candidate evaluation using resume parsing, JD matching, and conversational AI to reduce recruiter workload.</li>
+          <li>Developing an <strong style="color:var(--text);">MCP Server</strong> connected to the company data warehouse, delivering automated summaries, conversational querying, and routine insight emails to leadership for data-driven decision making.</li>
+          <li>Designing and structuring the <strong style="color:var(--text);">Chiacon corporate website</strong> — defining service categories, brand positioning, and information architecture for the consulting firm's digital presence.</li>
+          <li>Engineering <strong style="color:var(--text);">AI agent pipelines</strong> for automation use cases — building intelligent agents for screening, data summarisation, and conversational interfaces using LLMs and prompt engineering.</li>
+          <li>Working remotely with cross-functional team, attending review calls, delivering milestones within sprint timelines, and maintaining professional communication with assigned mentor.</li>
+        </ul>
+        <div class="chips" style="margin-top:10px;"><span class="chip hi">AI Agents</span><span class="chip hi">MCP Server</span><span class="chip hi">Python</span><span class="chip">LLMs</span><span class="chip">Microsoft Teams API</span><span class="chip">NLP</span><span class="chip">Data Warehouse</span><span class="chip">Prompt Engineering</span><span class="chip">Web Design</span></div>
+        <div style="margin-top:14px;padding:12px;border:1px solid rgba(0,255,136,.2);background:rgba(0,255,136,.03);">
+          <div style="font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin-bottom:3px;">Status · Active Internship</div>
+          <div style="font-size:10.5px;color:var(--dim);">Remote internship in progress — focus on AI agents, HR automation, and MCP data pipelines. Mar–Jun 2026.</div>
+        </div>
+      </div>
+      <div class="tli">
+        <div class="tli-dot"></div>
         <div class="tli-head"><div class="tli-role">iOS App Developer — Industrial Intern</div><div class="tli-period">Jan 2025 — Jun 2025</div></div>
         <div class="tli-org">ModularityLabs · Team of 3</div>
         <ul class="tli-pts">
@@ -1057,7 +1075,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="stag-line">Engineering Work</div>
     <div class="srow"><div><div class="sh">Projects</div><div class="ss">Click any card for full details, gallery & links</div></div><div class="scount">9 projects</div></div>
     <div class="filter-row" id="filterRow">
-      <button class="fbtn on" data-f="all">All (9)</button>
+      <button class="fbtn on" data-f="all">All (10)</button>
       <button class="fbtn" data-f="internship">Internship</button>
       <button class="fbtn" data-f="research">Research</button>
       <button class="fbtn" data-f="academic">Academic</button>
@@ -1079,7 +1097,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="skills-wrap">
       <div class="sg"><div class="sg-label">Expertise Domains</div><div class="chips"><span class="chip hi">Generative AI & NLP</span><span class="chip hi">iOS Development</span><span class="chip hi">Full-Stack Web</span><span class="chip hi">Game Development</span><span class="chip">DSA & Competitive Prog.</span><span class="chip">Operating Systems</span><span class="chip">Database Management</span><span class="chip">OOP Design Patterns</span><span class="chip">Computer Architecture</span><span class="chip">Parallel Computing</span><span class="chip">Stochastic Processes</span><span class="chip">Convex Optimization</span></div></div>
       <div class="sg"><div class="sg-label">Programming Languages</div><div class="chips"><span class="chip hi">Java</span><span class="chip hi">Python</span><span class="chip hi">Swift</span><span class="chip hi">JavaScript</span><span class="chip">C++</span><span class="chip">SQL</span></div></div>
-      <div class="sg"><div class="sg-label">AI & Data Science</div><div class="chips"><span class="chip hi">PyTorch</span><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip">TensorFlow</span><span class="chip">NumPy</span><span class="chip">CUDA</span><span class="chip">Collaborative Filtering</span><span class="chip">Matrix Factorisation</span><span class="chip">Speaker Diarization</span><span class="chip">NER / NLP</span><span class="chip">Latent Factor Models</span></div></div>
+      <div class="sg"><div class="sg-label">AI & Data Science</div><div class="chips"><span class="chip hi">PyTorch</span><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip">TensorFlow</span><span class="chip">NumPy</span><span class="chip">CUDA</span><span class="chip">Collaborative Filtering</span><span class="chip">Matrix Factorisation</span><span class="chip">Speaker Diarization</span><span class="chip">NER / NLP</span><span class="chip">Latent Factor Models</span><span class="chip">AI Agents</span><span class="chip">Prompt Engineering</span><span class="chip">MCP Server</span></div></div>
       <div class="sg"><div class="sg-label">iOS / Mobile</div><div class="chips"><span class="chip hi">SwiftUI</span><span class="chip hi">Combine</span><span class="chip hi">Core Data</span><span class="chip">NSPersistentContainer</span><span class="chip">Firebase Auth</span><span class="chip">Firestore</span><span class="chip">MVVM</span><span class="chip">Offline-first</span></div></div>
       <div class="sg"><div class="sg-label">Web & Databases</div><div class="chips"><span class="chip hi">React</span><span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">PostgreSQL</span><span class="chip">Supabase</span><span class="chip">TanStack Query</span><span class="chip">JWT</span><span class="chip">FastAPI</span><span class="chip">REST APIs</span></div></div>
       <div class="sg"><div class="sg-label">Tools & Platforms</div><div class="chips"><span class="chip hi">Git</span><span class="chip">Docker</span><span class="chip">libGDX</span><span class="chip">Unreal Engine</span><span class="chip">PyQT5</span><span class="chip">Tkinter</span><span class="chip">Xcode</span><span class="chip">IntelliJ</span></div></div>
@@ -1307,7 +1325,21 @@ const PROJECTS = [
    links:[
      {l:'Live Site ↗', u:'https://chiacon-ai-demo-orpin.vercel.app/'},
      {l:'GitHub ↗', u:'https://github.com/Nishant7p/chiacon-ai-demo'}
-   ]}
+   ]},
+ {id:'P-010', year:'2026', title:'AI Agent Suite — Chiacon Consulting',
+   img:'',
+   gallery:[],
+   desc:'Suite of AI-powered agents for enterprise automation — HR screening bot with Teams integration, MCP data server for leadership insights, and corporate website redesign.',
+   points:[
+     'Building an AI HR Screening Agent integrated with Microsoft Teams — automated resume parsing, JD matching, and conversational candidate evaluation to reduce first-level recruiter workload.',
+     'Developing an MCP Server connected to the company data warehouse, providing automated summaries, conversational AI querying, and routine insight emails to leadership.',
+     'Designing the Chiacon corporate website — defining service categories, brand positioning, overview sections, and responsive information architecture.',
+     'Engineering AI agent pipelines using LLMs, prompt engineering, and NLP for intelligent automation across screening, data summarisation, and conversational interfaces.',
+     'Delivering across 3 parallel use cases in a remote, cross-functional team with weekly review calls and sprint-based milestone delivery.'
+   ],
+   stack:['AI Agents', 'Python', 'MCP Server', 'LLMs', 'Microsoft Teams API', 'NLP', 'Data Warehouse', 'Prompt Engineering', 'Web Design'],
+   type:'internship', typeLabel:'Internship', tags:'internship ai web fullstack',
+   links:[]}
 ];
 
 const CERTS = [
@@ -1532,7 +1564,8 @@ const THOUGHTS = [
 ];
 
 const ACHIEVEMENTS = [
-  {year:'2026',mon:'Jan',icon:'⬟',title:'AI Clinical Research — 90%+ Accuracy Milestone',detail:'Architected production-quality multi-modal AI clinical scribe pipeline (BTP499). ASR + diarization + SOAP note generation + ICD-10 mapping achieved 90%+ accuracy target.',chip:'Research'},
+  {year:'2026',mon:'Mar',icon:'⬟',title:'Chiacon Consulting — AI & Automation Internship',detail:'Joined Chiacon Consulting India Pvt. Ltd. as Associate Consultant Intern. Building AI agents for HR screening, MCP data servers, and corporate website — remote, ₹10K/month stipend, 3-month engagement.',chip:'Internship'},
+  {year:'2026',mon:'Jan',icon:'★',title:'AI Clinical Research — 90%+ Accuracy Milestone',detail:'Architected production-quality multi-modal AI clinical scribe pipeline (BTP499). ASR + diarization + SOAP note generation + ICD-10 mapping achieved 90%+ accuracy target.',chip:'Research'},
   {year:'2025',mon:'Oct',icon:'★',title:'LeetCode Peak: 1800+ Rating',detail:'Crossed 1800 LeetCode peak rating while solving 500+ DSA problems. Consistent top-percentile performance in weekly and biweekly contests, especially in advanced tree and graph problems.',chip:'Competitive Prog.'},
   {year:'2025',mon:'Jun',icon:'▲',title:'ModularityLabs iOS Internship — Completed',detail:'Delivered production iOS modular productivity app over 6-month industrial internship. Received Letter of Experience and Letter of Recommendation. MVVM + Firebase + Core Data architecture.',chip:'Internship'},
   {year:'2025',mon:'Jun',icon:'◈',title:'AI Summer Camp — 100+ Students Taught',detail:'Instructed 100+ students in AI fundamentals at IIIT-Delhi. Designed Python-based curriculum covering supervised learning, neural networks, and hands-on exercises. Received certificate of appreciation.',chip:'Teaching'},
@@ -1568,6 +1601,10 @@ const TECH_META = {
   'Serialisation':{cat:'Game',col:'#ffaa00'},'Game Design':{cat:'Game',col:'#ffaa00'},
   '3D Level Design':{cat:'Game',col:'#ffaa00'},'AI Logic':{cat:'Game',col:'#ffaa00'},'Audio Design':{cat:'Game',col:'#ffaa00'},
   'Assembler Design':{cat:'Sys',col:'#aaaaaa'},
+  'AI Agents':{cat:'AI',col:'#bb77ff'},'MCP Server':{cat:'AI',col:'#bb77ff'},
+  'Microsoft Teams API':{cat:'Tool',col:'#88ccff'},'Data Warehouse':{cat:'DB',col:'#00ccff'},
+  'Prompt Engineering':{cat:'AI',col:'#bb77ff'},'Web Design':{cat:'Web',col:'#00ff88'},
+  'LLMs':{cat:'AI',col:'#bb77ff'},
   'C++':{cat:'Sys',col:'#aaaaaa'},'ISA Design':{cat:'Sys',col:'#aaaaaa'},
   'Computer Architecture':{cat:'Sys',col:'#aaaaaa'},'Systems Programming':{cat:'Sys',col:'#aaaaaa'},
   'Python':{cat:'Lang',col:'#44ffcc'},'Java':{cat:'Lang',col:'#ffcc44'},
@@ -1741,7 +1778,19 @@ const KG_NODES = [
   {id:'geo',        label:'GeoGuesser Game',    cls:'proj',x:40,y:89},
   {id:'escape',     label:'3D Escape Room',     cls:'proj',x:21,y:88},
   {id:'ai_platform', label:'Enterprise AI Platform', cls:'proj', x:88, y:52},
- 
+  {id:'chiacon_proj', label:'AI Agent Suite', cls:'proj', x:82, y:14},
+
+  // ── INTERNSHIPS (Chiacon) ──
+  {id:'chiacon_intern', label:'Chiacon Consulting', cls:'intern', x:35, y:3},
+
+  // ── NEW TECH (Chiacon) ──
+  {id:'ai_agents', label:'AI Agents', cls:'tech', x:86, y:5},
+  {id:'mcp_server', label:'MCP Server', cls:'tech', x:78, y:3},
+  {id:'teams_api', label:'MS Teams API', cls:'tech', x:96, y:18},
+  {id:'data_wh', label:'Data Warehouse', cls:'tech', x:80, y:91},
+  {id:'prompt_eng', label:'Prompt Engineering', cls:'tech', x:93, y:10},
+  {id:'web_design', label:'Web Design', cls:'tech', x:11, y:50},
+
   // ── COURSES ──
   {id:'cse102',label:'DSA',              cls:'course',x:39,y:68},
   {id:'cse201',label:'OOP / Java',       cls:'course',x:25,y:68},
@@ -1980,6 +2029,20 @@ const KG_EDGES = [
   ['cicd','web'],['cicd','sys'],
   ['oop','java'],['oop','cpp'],['oop','python'],['oop','cse201'],
   ['concurrency','java'],['concurrency','python'],['concurrency','cpp'],
+
+  // ── Chiacon Consulting ──
+  ['nt','chiacon_intern'],
+  ['chiacon_intern','ai'],['chiacon_intern','web'],['chiacon_intern','db'],
+  ['chiacon_intern','chiacon_proj'],
+  ['chiacon_proj','ai_agents'],['chiacon_proj','mcp_server'],['chiacon_proj','teams_api'],
+  ['chiacon_proj','data_wh'],['chiacon_proj','prompt_eng'],['chiacon_proj','web_design'],
+  ['chiacon_proj','python'],['chiacon_proj','llm'],['chiacon_proj','ner'],
+  ['ai_agents','ai'],['ai_agents','llm'],['ai_agents','prompt_eng'],
+  ['mcp_server','ai'],['mcp_server','data_wh'],['mcp_server','db'],
+  ['teams_api','web'],['teams_api','ai_agents'],
+  ['data_wh','postgres'],['data_wh','sql'],
+  ['prompt_eng','ai'],['prompt_eng','llm'],
+  ['web_design','design'],['web_design','html_css'],
 ];
 
 const KG_META = {
@@ -2130,6 +2193,14 @@ const KG_META = {
   geo:      {type:'Project',     tag:'Game', desc:'Multi-mode geography quiz · Tkinter · 195 countries'},
   leet:     {type:'Project',     tag:'CP',   desc:'LeetCode 1800+ peak rating · 500+ problems solved'},
   ai_platform:{type:'Project',   tag:'Web',  desc:'Enterprise AI consulting · Gemini API + Vanilla JS + Vercel'},
+  chiacon_proj:{type:'Project',  tag:'AI',   desc:'AI agent suite — HR screening bot, MCP data server, corporate website'},
+  chiacon_intern:{type:'Internship',tag:'Intern',desc:'Chiacon Consulting · 3-month AI & automation internship · Remote'},
+  ai_agents:{type:'Tech',        tag:'AI',   desc:'Autonomous AI agents — task execution, tool use, multi-step reasoning'},
+  mcp_server:{type:'Tech',       tag:'AI',   desc:'Model Context Protocol server — data warehouse to LLM bridge'},
+  teams_api:{type:'Tech',        tag:'Tool', desc:'Microsoft Teams API — bot integration for HR screening agent'},
+  data_wh:{type:'Tech',          tag:'DB',   desc:'Data warehouse — centralised analytics store for leadership insights'},
+  prompt_eng:{type:'Tech',       tag:'AI',   desc:'Prompt engineering — structured prompting, guardrails, output schemas'},
+  web_design:{type:'Tech',       tag:'Web',  desc:'Corporate web design — service pages, brand positioning, responsive layout'},
 
   // ── COURSES ──
   cse102:   {type:'Course',      tag:'CS',   desc:'Data Structures & Algorithms — arrays, trees, graphs, sorting'},
@@ -3051,6 +3122,20 @@ setTimeout(() => {
 
   // Reveal observer
   initReveal();
+
+  // Lenis smooth scroll
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    touchMultiplier: 1.5,
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+  window.__lenis = lenis;
 }, 100);
 
 </script>
