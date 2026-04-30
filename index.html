@@ -811,7 +811,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <button class="na" data-p="skills" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="4"/><line x1="8" y1="12" x2="8" y2="15"/><line x1="1" y1="8" x2="4" y2="8"/><line x1="12" y1="8" x2="15" y2="8"/></svg>Skills</button>
     </div>
     <div class="ng"><div class="ng-label">// Archive</div>
-      <button class="na" data-p="certifications" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="11" rx=".5"/><polyline points="4,9 6,11 10,7"/></svg>Certifications <span class="nb">6</span></button>
+      <button class="na" data-p="certifications" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="11" rx=".5"/><polyline points="4,9 6,11 10,7"/></svg>Certifications <span class="nb">7</span></button>
       <button class="na" data-p="achievements" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="8,1 10,6 15,6 11,9 13,14 8,11 3,14 5,9 1,6 6,6"/></svg>Achievements</button>
       <button class="na" data-p="thoughts" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1H4a1 1 0 0 0-1 1v10l3-2h6a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/></svg>Thoughts</button>
       <button class="na" data-p="responsibility" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>Leadership</button>
@@ -1350,7 +1350,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="cp-seg"><span class="cp-v">1850+ <span style="color:#ffd700;font-size:14px;">♞</span></span><span class="cp-l">LeetCode Peak · Knight</span><div class="cp-prog"><div class="cp-prog-fill" data-w="93%" style="width:0%;"></div></div></div>
       <div class="cp-seg"><span class="cp-v">500+</span><span class="cp-l">Problems Solved</span><div class="cp-prog"><div class="cp-prog-fill" data-w="70%" style="width:0%;"></div></div></div>
       <div class="cp-seg"><span class="cp-v" style="font-size:20px;">5★ × 3</span><span class="cp-l">HackerRank</span><div class="cp-prog"><div class="cp-prog-fill" data-w="100%" style="width:0%;"></div></div></div>
-      <div class="cp-seg"><span class="cp-v">6</span><span class="cp-l">Certifications</span><div class="cp-prog"><div class="cp-prog-fill" data-w="60%" style="width:0%;"></div></div></div>
+      <div class="cp-seg"><span class="cp-v">7</span><span class="cp-l">Certifications</span><div class="cp-prog"><div class="cp-prog-fill" data-w="60%" style="width:0%;"></div></div></div>
     </div>
     <div style="margin-top:20px;padding:24px 28px;border:1px solid var(--border);background:var(--bg2);">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
@@ -1726,8 +1726,18 @@ const CERTS = [
   {name:'1 Stop Internship Certificate',issuer:'1 Stop',
    img:'https://i.postimg.cc/rwTmtg0B/1stop.png',fallback:'1 Stop Internship',
    desc:'Certificate of participation confirming completion of an industry-oriented internship program focused on professional development.',
-   verify:'#',subs:[]}
-  
+   verify:'#',subs:[]},
+  {name:'AI for Scientific Research',issuer:'LearnQuest · Coursera',
+   img:'',fallback:'AI for Scientific Research · LearnQuest',
+   desc:'4-course specialisation covering the complete ML pipeline in Python — classification, scikit-learn, random forests, neural networks, and a capstone applying genome sequencing to COVID-19 drug target discovery.',
+   verify:'https://coursera.org/verify/specialization/WW6AGJTJA66K',
+   subs:[
+    {img:'',label:'Module 1: Intro to Data Science & scikit-learn in Python'},
+    {img:'',label:'Module 2: Machine Learning Models in Science'},
+    {img:'',label:'Module 3: Neural Networks and Random Forests'},
+    {img:'',label:'Module 4: Capstone — Advanced AI for Drug Discovery'},
+   ],extra:''}
+
 ];
 
 // =================== REAL SEMESTERS DATA (from Campus Labs transcript) ===================
@@ -1934,7 +1944,9 @@ const TECH_META = {
   'ICD-10':{cat:'AI',col:'#bb77ff'},'SOAP Notes':{cat:'AI',col:'#bb77ff'},
   'Speaker Diarization':{cat:'AI',col:'#bb77ff'},'WER':{cat:'AI',col:'#bb77ff'},
   'PyTorch':{cat:'ML',col:'#ff6699'},'TensorFlow':{cat:'ML',col:'#ff6699'},
-  'NumPy':{cat:'ML',col:'#ff6699'},'Collaborative Filtering':{cat:'ML',col:'#ff6699'},
+  'NumPy':{cat:'ML',col:'#ff6699'},'scikit-learn':{cat:'ML',col:'#ff6699'},
+  'Random Forests':{cat:'ML',col:'#ff6699'},'Pandas':{cat:'ML',col:'#ff6699'},
+  'Collaborative Filtering':{cat:'ML',col:'#ff6699'},
   'Matrix Factorisation':{cat:'ML',col:'#ff6699'},'CUDA':{cat:'ML',col:'#ff6699'},
   'Hybrid Filtering':{cat:'ML',col:'#ff6699'},'Latent Factor Models':{cat:'ML',col:'#ff6699'},
   'SwiftUI':{cat:'iOS',col:'#5599ff'},'Swift':{cat:'iOS',col:'#5599ff'},
@@ -2204,6 +2216,7 @@ const KG_NODES = [
   {id:'cert_ai',   label:'AI Camp — IIITD',  cls:'cert',x:34,y:97},
   {id:'cert_1stop',label:'1Stop Internship', cls:'cert',x:22,y:97},
   {id:'cert_java', label:'Game Dev — Ninja', cls:'cert',x:10,y:83},
+  {id:'cert_aiscience',label:'AI for Science — LQ',cls:'cert',x:63,y:84},
 ];
 
 const KG_EDGES = [
@@ -2386,6 +2399,7 @@ const KG_EDGES = [
   ['cert_ai','ai'],['cert_ai','python'],['cert_ai','btp499'],
   ['cert_1stop','ios'],['cert_1stop','ios_proj'],['cert_1stop','swift'],
   ['cert_java','game'],['cert_java','java'],['cert_java','libgdx'],
+  ['cert_aiscience','ml'],['cert_aiscience','sklearn'],['cert_aiscience','python'],['cert_aiscience','ai'],
 
   // ── Cross-Domain Tools ──
   ['git','web'],['git','ios'],['git','sys'],['docker','web'],['docker','sys'],
@@ -2673,6 +2687,7 @@ const KG_META = {
   cert_ai:  {type:'Certification',tag:'AI',  desc:'IIIT-Delhi AI Summer Camp Instructor · 100+ students'},
   cert_1stop:{type:'Certification',tag:'iOS',desc:'1Stop Industrial Internship Certificate — iOS development'},
   cert_java:{type:'Certification',tag:'Game',desc:'Game Dev with Java · Coding Ninjas'},
+  cert_aiscience:{type:'Certification',tag:'ML', desc:'AI for Scientific Research · LearnQuest · 4-course Specialisation — scikit-learn, Random Forests, Neural Networks, Drug Discovery'},
 };
 
 const KG_FILTERS = {
@@ -3789,7 +3804,7 @@ function renderDomainDonut() {
   ctx.scale(dpr, dpr);
 
   const segments = [
-    { label: 'AI / ML / NLP',  count: 17, col: '#bb77ff' },
+    { label: 'AI / ML / NLP',  count: 19, col: '#bb77ff' },
     { label: 'iOS / Mobile',   count: 8,  col: '#5599ff' },
     { label: 'Web & Databases',count: 9,  col: '#00ff88' },
     { label: 'Systems & GPU',  count: 5,  col: '#ffcc44' },
