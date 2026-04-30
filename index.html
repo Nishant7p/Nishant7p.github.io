@@ -1728,14 +1728,15 @@ const CERTS = [
    desc:'Certificate of participation confirming completion of an industry-oriented internship program focused on professional development.',
    verify:'#',subs:[]},
   {name:'AI for Scientific Research',issuer:'LearnQuest · Coursera',
-   img:'',fallback:'AI for Scientific Research · LearnQuest',
+   img:'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/certs/learnquest-ai-science/specialization.png',
+   fallback:'AI for Scientific Research · LearnQuest',
    desc:'4-course specialisation covering the complete ML pipeline in Python — classification, scikit-learn, random forests, neural networks, and a capstone applying genome sequencing to COVID-19 drug target discovery.',
    verify:'https://coursera.org/verify/specialization/WW6AGJTJA66K',
    subs:[
-    {img:'',label:'Module 1: Intro to Data Science & scikit-learn in Python'},
-    {img:'',label:'Module 2: Machine Learning Models in Science'},
-    {img:'',label:'Module 3: Neural Networks and Random Forests'},
-    {img:'',label:'Module 4: Capstone — Advanced AI for Drug Discovery'},
+    {img:'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/certs/learnquest-ai-science/mod1-datascience-sklearn.png',label:'Module 1: Intro to Data Science & scikit-learn in Python'},
+    {img:'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/certs/learnquest-ai-science/mod2-ml-models-science.png',label:'Module 2: Machine Learning Models in Science'},
+    {img:'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/certs/learnquest-ai-science/mod3-neural-networks-rf.png',label:'Module 3: Neural Networks and Random Forests'},
+    {img:'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/certs/learnquest-ai-science/mod4-drug-discovery.png',label:'Module 4: Capstone — Advanced AI for Drug Discovery'},
    ],extra:''}
 
 ];
@@ -2033,6 +2034,8 @@ const KG_NODES = [
   {id:'numpy',       label:'NumPy',           cls:'tech',x:58,y:26},
   {id:'pandas',      label:'Pandas',          cls:'tech',x:52,y:33},
   {id:'sklearn',     label:'scikit-learn',    cls:'tech',x:44,y:21},
+  {id:'random_forest',label:'Random Forests',  cls:'tech',x:50,y:14},
+  {id:'bioinformatics',label:'Bioinformatics', cls:'tech',x:86,y:18},
   {id:'ner',         label:'NER / spaCy',     cls:'tech',x:90,y:18},
   {id:'transformers',label:'HuggingFace',     cls:'tech',x:84,y:10},
   {id:'langchain',   label:'LangChain',       cls:'tech',x:95,y:13},
@@ -2400,6 +2403,10 @@ const KG_EDGES = [
   ['cert_1stop','ios'],['cert_1stop','ios_proj'],['cert_1stop','swift'],
   ['cert_java','game'],['cert_java','java'],['cert_java','libgdx'],
   ['cert_aiscience','ml'],['cert_aiscience','sklearn'],['cert_aiscience','python'],['cert_aiscience','ai'],
+  ['cert_aiscience','random_forest'],['cert_aiscience','backprop'],['cert_aiscience','numpy'],
+  ['cert_aiscience','pandas'],['cert_aiscience','tensorflow'],['cert_aiscience','bioinformatics'],
+  ['random_forest','sklearn'],['random_forest','ml'],['random_forest','python'],['random_forest','numpy'],
+  ['bioinformatics','ai'],['bioinformatics','python'],['bioinformatics','ml'],
 
   // ── Cross-Domain Tools ──
   ['git','web'],['git','ios'],['git','sys'],['docker','web'],['docker','sys'],
@@ -2688,6 +2695,8 @@ const KG_META = {
   cert_1stop:{type:'Certification',tag:'iOS',desc:'1Stop Industrial Internship Certificate — iOS development'},
   cert_java:{type:'Certification',tag:'Game',desc:'Game Dev with Java · Coding Ninjas'},
   cert_aiscience:{type:'Certification',tag:'ML', desc:'AI for Scientific Research · LearnQuest · 4-course Specialisation — scikit-learn, Random Forests, Neural Networks, Drug Discovery'},
+  random_forest:{type:'Tech',tag:'ML', desc:'Random Forests — ensemble of decision trees; bagging + feature sampling for robust classification & regression'},
+  bioinformatics:{type:'Tech',tag:'AI', desc:'Bioinformatics — genome sequencing, COVID-19 mutation analysis, drug target identification via ML'},
 };
 
 const KG_FILTERS = {
