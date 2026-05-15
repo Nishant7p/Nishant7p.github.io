@@ -1250,8 +1250,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </ul>
         <div class="chips" style="margin-top:10px;"><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip hi">NLP</span><span class="chip">ICD-10</span><span class="chip">SOAP Notes</span><span class="chip">Python</span><span class="chip">Speaker Diarization</span><span class="chip">NER</span></div>
         <div style="margin-top:14px;padding:12px;border:1px solid rgba(68,136,255,.2);background:rgba(68,136,255,.03);">
-          <div style="font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin-bottom:3px;">Completed · A Grade · BTP499</div>
-          <div style="font-size:10.5px;color:var(--dim);">Completed Sem VI B.Tech Project with A grade (10/10). End-to-end pipeline complete — ASR, diarization, SOAP generation, ICD-10 NER. 90%+ accuracy achieved.</div>
+          <div style="font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:3px;">Ongoing · Full-Year BTP · BTP499</div>
+          <div style="font-size:10.5px;color:var(--dim);">Full-year B.Tech Project spanning Sem VI–VII. Sem VI evaluation: A grade (10/10). Architecture and pipeline complete — clinical validation and publication ongoing.</div>
         </div>
       </div>
     </div>
@@ -1743,7 +1743,7 @@ const CERTS = [
 
 // =================== REAL SEMESTERS DATA (from Campus Labs transcript) ===================
 const SEMESTERS = [
-  {n:1,period:'Aug 2023 – Dec 2023',sgpa:'6.00',cgpa:'6.00',credits:20,courses:[
+  {n:1,period:'Aug 2023 – Dec 2023',sgpa:'7.00',cgpa:'7.00',credits:20,courses:[
     {code:'COM101',name:'Communication Skills',grade:'B-',gp:7,
      desc:'Technical and professional communication — the first course at IIIT-D. Covered report writing, presentation design, email etiquette, and professional documentation skills.',
      topics:['Technical report writing','Presentation design and delivery','Professional email and communication','Documentation best practices','Abstract writing','Peer feedback and critique'],
@@ -1890,7 +1890,7 @@ const SEMESTERS = [
      topics:['Automatic Speech Recognition (ASR) with Whisper','Speaker Diarization with Pyannote.audio','Clinical NLP and medical entity extraction','SOAP note template generation','ICD-10 medical coding with NER','Audio preprocessing and noise reduction','Evaluation: WER, BLEU, clinical accuracy metrics'],
      learnings:['Speaker diarization in real clinical environments is hard — overlapping speech, accents, medical jargon all challenge the pipeline','ICD-10 code space is vast (70,000+ codes) — hierarchical classification needed for practical mapping','Building production AI systems requires much more engineering than prototypes — data pipelines, evaluation harnesses, error analysis'],
      outcomes:['90%+ SOAP note generation accuracy achieved in controlled clinical dialogue tests','ICD-10 NER module operational with multi-class classification','Targeting academic publication and clinical pilot'],
-     starNote:'BTP completed — A grade · AI Clinical Scribe project (P-002)'},
+     starNote:'Ongoing BTP (full-year) — Sem VI grade A · AI Clinical Scribe project (P-002)'},
     {code:'BIO999A',name:'Distance Course in CSB (Open Elective)',grade:'S',gp:null,
      desc:'Open elective from the CSB (Computational and Systems Biology) department, taken as a distance course outside IIIT-Delhi.',
      topics:['Computational biology fundamentals','Systems biology overview','Bioinformatics methods'],
@@ -3287,7 +3287,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('pModal'
 // =================== ACADEMIC CHARTS ===================
 function renderAcademicCharts() {
   const sgpaData = [
-    {sem:'I',   sgpa:6.00, cgpa:6.00},
+    {sem:'I',   sgpa:7.00, cgpa:7.00},
     {sem:'II',  sgpa:6.80, cgpa:6.89},
     {sem:'III', sgpa:7.60, cgpa:7.14},
     {sem:'IV',  sgpa:7.40, cgpa:7.21},
