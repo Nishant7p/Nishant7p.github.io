@@ -15,6 +15,13 @@
 <meta name="twitter:title" content="Nishant Tomer — Portfolio">
 <meta name="twitter:description" content="iOS Developer · AI/ML Engineer · Full-Stack Web — IIIT-Delhi CSAM 2023–27. 12 projects, 4 internships, LeetCode Knight · 2000+.">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- 3D scroll-journey libs (home overview). Gated/lazy at runtime; page degrades gracefully if any fail to load. -->
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <style>
 :root{
   --bg:#070707;--bg2:#0d0d0d;--bg3:#141414;--bg4:#1c1c1c;
@@ -773,9 +780,63 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .star-card{overflow:hidden;}
 .star-card::after{content:'';position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,255,136,.06),transparent);transform:translateX(-100%) skewX(-12deg);pointer-events:none;z-index:2;}
 .star-card:hover::after{animation:scSweep .65s ease forwards;}
+
+/* ========================================================== */
+/* ===== 3D SCROLL JOURNEY — home overview (additive) ======= */
+/* ========================================================== */
+/* Fixed WebGL backdrop — z-index:-1 sits behind transparent .main/.page, above body bg */
+#bgGL{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.2s ease;}
+body.gl-on #bgGL{opacity:1;}
+/* legibility veil over the GL, still behind content */
+body.gl-on #page-home::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 100% 80% at 62% 38%,transparent 40%,rgba(7,7,7,.62) 100%);}
+/* the 2D hero particles are redundant once the 3D scene is live */
+body.gl-on #heroParticles{display:none;}
+
+/* Act reveal — only animates when the journey actually runs */
+body.journey-on #page-home [data-act]{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);will-change:opacity,transform;}
+body.journey-on #page-home [data-act].act-in{opacity:1;transform:none;}
+
+/* Magnetic CTA easing */
+.btn.magnetic{transition:transform .3s cubic-bezier(.22,1,.36,1),background .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease;}
+
+/* Boot overlay */
+#bootSeq{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);animation:bootFailsafe 1s ease 3.4s forwards;}
+#bootSeq.boot-done{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .6s ease,visibility .6s ease;}
+@keyframes bootFailsafe{to{opacity:0;visibility:hidden;pointer-events:none;}}
+.boot-logo{font-family:var(--sans);font-weight:800;font-size:30px;letter-spacing:-.5px;color:var(--text);margin-bottom:18px;}
+.boot-logo em{color:var(--acc);font-style:normal;}
+.boot-line{font-size:11.5px;color:var(--dim);letter-spacing:.03em;line-height:1.9;opacity:0;transform:translateY(4px);transition:opacity .3s ease,transform .3s ease;}
+.boot-line.show{opacity:1;transform:none;}
+.boot-line b{color:var(--acc);font-weight:500;}
+.boot-bar{margin-top:18px;width:210px;height:2px;background:var(--bg4);overflow:hidden;}
+.boot-bar i{display:block;height:100%;width:0;background:var(--acc);box-shadow:0 0 10px var(--acc);transition:width 1s ease;}
+.boot-skip{position:absolute;bottom:26px;font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
+
+@media (prefers-reduced-motion: reduce){
+  #bgGL{display:none!important;}
+  #bootSeq{display:none!important;}
+  body.journey-on #page-home [data-act]{opacity:1!important;transform:none!important;transition:none!important;}
+}
 </style>
 </head>
 <body>
+
+<!-- 3D scroll-journey backdrop + boot overlay (home overview only) -->
+<canvas id="bgGL" aria-hidden="true"></canvas>
+<div id="bootSeq" aria-hidden="true">
+  <div class="boot-logo">NT<em>.</em></div>
+  <div class="boot-line" data-i="0">&gt; booting <b>personal_os</b> v3.0</div>
+  <div class="boot-line" data-i="1">&gt; mounting <b>knowledge_graph</b></div>
+  <div class="boot-line" data-i="2">&gt; rendering <b>3d_lattice</b></div>
+  <div class="boot-bar"><i id="bootBar"></i></div>
+  <div class="boot-skip">click to skip</div>
+</div>
+<script>
+/* hide boot instantly on repeat-visits / reduced-motion / mobile (prevents flash) */
+(function(){try{var b=document.getElementById('bootSeq');if(!b)return;
+  if(sessionStorage.getItem('nt_booted')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches||matchMedia('(max-width:840px)').matches){b.style.display='none';}
+}catch(e){}})();
+</script>
 
 <div id="cur"></div>
 <div id="cring"></div>
@@ -841,7 +902,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <div class="page on" id="page-home">
 
   <!-- ABOUT SPLIT -->
-  <div class="ov-hero">
+  <div class="ov-hero" data-act="0" data-cluster="core">
     <!-- LEFT COLUMN: Photo + Links -->
     <div class="ov-left">
       <div class="ov-photo-wrap" id="photoWrap" style="position:relative;overflow:hidden;">
@@ -940,7 +1001,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 
   <!-- RECRUITER QUICK STATS -->
-  <div class="rec-panel">
+  <div class="rec-panel" data-act="1" data-cluster="dom">
     <div class="rec-cell">
       <div class="rec-label">Current Status</div>
       <div class="rec-val" style="color:var(--acc);font-size:14px;">Open to Work</div>
@@ -964,7 +1025,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 
   <!-- CAREER TIMELINE STRIP -->
-  <div class="career-strip">
+  <div class="career-strip" data-act="2" data-cluster="intern">
     <div class="cs-label">Timeline</div>
     <div class="cs-track">
       <div class="cs-node past"><div class="cs-dot"></div><div class="cs-yr">2023</div><div class="cs-ev">IIIT-Delhi<br><span>B.Tech CSAM begins</span></div></div>
@@ -989,7 +1050,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <span style="flex:1;height:1px;background:linear-gradient(90deg,rgba(0,255,136,.4),transparent);"></span>
     <button onclick="go(document.querySelector('[data-p=projects]'))" style="font-size:8.5px;color:var(--acc);background:none;border:1px solid rgba(0,255,136,.25);padding:3px 10px;cursor:none;letter-spacing:.06em;transition:background .15s;" onmouseover="this.style.background='rgba(0,255,136,.07)'" onmouseout="this.style.background='none'">View all 12 →</button>
   </div>
-  <div class="star-strip">
+  <div class="star-strip" data-act="3" data-cluster="proj">
     <div class="star-card" onclick="go(document.querySelector('[data-p=projects]'))">
       <div class="sc-badge">★ Research · 2026</div>
       <div class="sc-title">OrbitGuard</div>
@@ -1000,8 +1061,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="star-card" onclick="go(document.querySelector('[data-p=experience]'))">
       <div class="sc-badge">★ BTP Research · 2026</div>
       <div class="sc-title">AI Clinical Scribe</div>
-      <div class="sc-impact" style="font-size:10.5px;">Multi-modal ASR + Speaker Diarization → structured SOAP notes with <strong>90%+ accuracy</strong>. Reduces physician admin load by <strong>30–40%</strong>.</div>
-      <div class="sc-tags"><span class="sc-tag">Whisper</span><span class="sc-tag">Pyannote</span><span class="sc-tag">NLP / NER</span><span class="sc-tag">ICD-10</span><span class="sc-tag">Python</span></div>
+      <div class="sc-impact" style="font-size:10.5px;">Multi-modal ASR + diarization → structured SOAP notes with <strong>100% clinical-keyword coverage</strong> and <strong>zero drug hallucinations</strong>. Now fine-tuned, benchmarked, and extending to <strong>Hinglish</strong> speech — toward a paper + product.</div>
+      <div class="sc-tags"><span class="sc-tag">Whisper</span><span class="sc-tag">Pyannote</span><span class="sc-tag">LLaMA 3.1</span><span class="sc-tag">NER / ICD-10</span><span class="sc-tag">Hinglish</span></div>
       <div class="sc-arr">↗ View Details</div>
     </div>
     <div class="star-card" onclick="go(document.querySelector('[data-p=experience]'))">
@@ -1014,7 +1075,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 
   <!-- KNOWLEDGE GRAPH -->
-  <div class="ov-kg">
+  <div class="ov-kg" data-act="4" data-cluster="course">
     <!-- Top bar: title + live stats -->
     <div class="kg-topbar">
       <div class="kg-title-row">
@@ -1243,13 +1304,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="tli-head"><div class="tli-role">AI Clinical Scribe — BTP Research</div><div class="tli-period">Jan 2026 — Present</div></div>
         <div class="tli-org">B.Tech Project (BTP499) · IIIT-Delhi · Multi-modal Speech & NLP</div>
         <ul class="tli-pts">
-          <li>Architected a multi-modal AI pipeline using <strong style="color:var(--text);">OpenAI Whisper</strong> and <strong style="color:var(--text);">Pyannote.audio</strong> for automatic speech recognition and speaker diarization, transforming clinical dialogue into structured SOAP notes with <strong style="color:var(--acc);">90%+ accuracy</strong>.</li>
+          <li>Architected an end-to-end multi-modal AI pipeline using <strong style="color:var(--text);">OpenAI Whisper</strong> and <strong style="color:var(--text);">Pyannote.audio</strong> for automatic speech recognition and speaker diarization, transforming noisy multi-speaker clinical dialogue into structured SOAP notes with <strong style="color:var(--acc);">100% clinical-keyword coverage</strong> and <strong style="color:var(--acc);">zero drug hallucinations</strong>.</li>
+          <li>Benchmarking and fine-tuning competing ASR and LLM models (<strong style="color:var(--text);">Whisper</strong> variants, <strong style="color:var(--text);">LLaMA 3.1</strong>, <strong style="color:var(--text);">SapBERT</strong> biomedical entity linking) on domain audio, and extending the system to <strong style="color:var(--acc);">Hinglish</strong> — code-switched Hindi–English clinical speech — en route to a research paper and a deployable product.</li>
           <li>Engineered an automated <strong style="color:var(--text);">ICD-10 mapping module</strong> using NLP-based named entity recognition and classification to assign standardised diagnostic codes, ensuring regulatory medical compliance.</li>
           <li>Built preprocessing pipeline for noisy clinical audio — noise reduction, speaker separation, and transcription formatting — handling multi-speaker conversations in real clinical environments.</li>
           <li>Estimated physician administrative load reduction of <strong style="color:var(--acc);">30–40%</strong> through automated note generation and structured documentation workflows.</li>
           <li>Designed evaluation framework using word error rate (WER), SOAP note completeness scoring, and ICD-10 mapping accuracy as primary metrics.</li>
         </ul>
-        <div class="chips" style="margin-top:10px;"><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip hi">NLP</span><span class="chip">ICD-10</span><span class="chip">SOAP Notes</span><span class="chip">Python</span><span class="chip">Speaker Diarization</span><span class="chip">NER</span></div>
+        <div class="chips" style="margin-top:10px;"><span class="chip hi">OpenAI Whisper</span><span class="chip hi">Pyannote</span><span class="chip hi">LLaMA 3.1</span><span class="chip hi">SapBERT</span><span class="chip hi">NLP</span><span class="chip">Hinglish</span><span class="chip">ICD-10</span><span class="chip">SOAP Notes</span><span class="chip">Python</span><span class="chip">Speaker Diarization</span><span class="chip">NER</span></div>
         <div style="margin-top:14px;padding:12px;border:1px solid rgba(68,136,255,.2);background:rgba(68,136,255,.03);">
           <div style="font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:3px;">Ongoing · Full-Year BTP · BTP499</div>
           <div style="font-size:10.5px;color:var(--dim);">Full-year B.Tech Project spanning Sem VI–VII. Sem VI evaluation: A grade (10/10). Architecture and pipeline complete — clinical validation and publication ongoing.</div>
@@ -1590,10 +1652,10 @@ const PROJECTS = [
    links:[{l:'Live Site ↗',u:'https://chiacon-website.vercel.app'},{l:'GitHub ↗',u:'https://github.com/Nishant7p/chiacon-website-showcase'}]},
   {id:'P-002',inProgress:true,year:'2026',title:'AI Clinical Scribe',
    img:'',gallery:[],
-   desc:'Multi-modal AI pipeline (BTP499) using OpenAI Whisper + Pyannote for Speaker Diarization — converts clinical dialogue to structured SOAP notes with 90%+ accuracy.',
-   points:['Architected multi-modal ASR + speaker diarization pipeline achieving 90%+ SOAP note generation accuracy.','Engineered automated ICD-10 mapping module via NLP-based Named Entity Recognition for regulatory compliance.','Built audio preprocessing pipeline: noise reduction, speaker separation, and multi-speaker transcription formatting.','Designed SOAP note template engine mapping clinical conversation segments to appropriate note sections.','Evaluated system using WER, SOAP completeness score, and ICD-10 mapping accuracy metrics.','Estimated 30–40% reduction in physician administrative workload through automated documentation.'],
-   stack:['OpenAI Whisper','Pyannote','NLP','ICD-10','Python','SOAP Notes','Speaker Diarization','NER'],
-   type:'research',typeLabel:'Research',tags:'research ai',links:[]},
+   desc:'Multi-modal clinical speech-to-documentation system (B.Tech research project): OpenAI Whisper ASR + Pyannote diarization turn noisy, multi-speaker doctor–patient dialogue into structured SOAP notes with automated ICD-10 coding — 100% clinical-keyword coverage and zero drug hallucinations. Now being fine-tuned, benchmarked across models, and extended to Hinglish (code-switched Hindi–English) speech, en route to a research paper and a deployable product.',
+   points:['Architected an end-to-end multi-modal pipeline (Whisper ASR + Pyannote diarization + NER-based ICD-10 coding) turning multi-speaker clinical audio into structured SOAP notes — 100% clinical-keyword coverage with zero drug hallucinations.','Benchmarking and fine-tuning competing ASR and LLM models head-to-head (Whisper variants, LLaMA 3.1, SapBERT for biomedical entity linking) to push transcription and coding accuracy on domain audio.','Extending the system to Hinglish — code-switched Hindi–English clinical speech — to match how Indian consultations are actually spoken, where off-the-shelf ASR degrades sharply.','Built an audio-preprocessing front-end (noise reduction, multi-speaker separation) and a SOAP template engine routing each conversation segment into the correct note section.','Designed an evaluation harness scoring the system on Word Error Rate, SOAP completeness, and ICD-10 mapping accuracy — an estimated 30–40% reduction in physician documentation load.','Formalising the work into a research paper and a deployable product — taking it from a working pipeline toward a clinically usable tool.'],
+   stack:['OpenAI Whisper','Pyannote','LLaMA 3.1','SapBERT','PyTorch','Hugging Face','NLP','NER','ICD-10','SOAP Notes','Speaker Diarization','Code-Switching (Hinglish)','Python'],
+   type:'research',typeLabel:'Research',tags:'research ai ml',links:[]},
   {id:'P-001',year:'2025',title:'iOS Productivity System',
    img:'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/thumb.png',
    gallery:['https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/g1.png','https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/g2.png','https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/g3.png','https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/g4.png','https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/g5.png','https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/g6.png','https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/g7.png','https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/g8.png','https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p001/g9.png'],
@@ -1638,7 +1700,7 @@ const PROJECTS = [
    ],
    stack:['Python','NumPy','SciPy','SGP4','Skyfield','FastAPI','Pydantic','Next.js','TypeScript','CesiumJS','Groq','GitHub Actions','Vercel'],
    type:'research',typeLabel:'Research',tags:'research ai ml fullstack web systems',
-   links:[{l:'GitHub ↗',u:'https://github.com/Nishant7p/OrbitGuard'},{l:'Live Demo ↗',u:'https://orbit-guard-six.vercel.app'}]},
+   links:[{l:'GitHub ↗',u:'https://github.com/Nishant7p/OrbitGuard'},{l:'Demo ↗',u:'https://www.youtube.com/watch?v=fEIqrPD10v0'},{l:'Live ↗',u:'https://orbit-guard-six.vercel.app'}]},
   {id:'P-010',inProgress:true,year:'2026', title:'AI Agent Suite — Chiacon Consulting',
    img:'',
    gallery:[],
@@ -1944,9 +2006,9 @@ const SEMESTERS = [
   {n:6,period:'Jan 2026 – May 2026',sgpa:'8.00',cgpa:'7.50',credits:20,courses:[
     {code:'BTP499',name:'B.Tech Project — SOAP Note Generation',grade:'A',gp:10,
      desc:'Primary B.Tech Project (4 credits). Building an end-to-end voice assistance system for digital SOAP note generation — the AI Clinical Scribe research project formalised as the BTP.',
-     topics:['Automatic Speech Recognition (ASR) with Whisper','Speaker Diarization with Pyannote.audio','Clinical NLP and medical entity extraction','SOAP note template generation','ICD-10 medical coding with NER','Audio preprocessing and noise reduction','Evaluation: WER, BLEU, clinical accuracy metrics'],
+     topics:['Automatic Speech Recognition (ASR) with Whisper','Speaker Diarization with Pyannote.audio','Model fine-tuning & head-to-head benchmarking (Whisper, LLaMA 3.1, SapBERT)','Hinglish (code-switched Hindi–English) clinical ASR','Clinical NLP and medical entity extraction','SOAP note template generation','ICD-10 medical coding with NER','Audio preprocessing and noise reduction','Evaluation: WER, BLEU, clinical accuracy metrics'],
      learnings:['Speaker diarization in real clinical environments is hard — overlapping speech, accents, medical jargon all challenge the pipeline','ICD-10 code space is vast (70,000+ codes) — hierarchical classification needed for practical mapping','Building production AI systems requires much more engineering than prototypes — data pipelines, evaluation harnesses, error analysis'],
-     outcomes:['90%+ SOAP note generation accuracy achieved in controlled clinical dialogue tests','ICD-10 NER module operational with multi-class classification','Targeting academic publication and clinical pilot'],
+     outcomes:['100% clinical-keyword coverage with zero drug hallucinations on controlled clinical dialogue tests','ICD-10 NER module operational with multi-class classification','Now fine-tuning and benchmarking models and extending to Hinglish (code-switched) speech — targeting academic publication and a deployable product'],
      starNote:'Ongoing BTP (full-year) — Sem VI grade A · AI Clinical Scribe project (P-002)'},
     {code:'BIO999A',name:'Distance Course in CSB (Open Elective)',grade:'S',gp:null,
      desc:'Open elective from the CSB (Computational and Systems Biology) department, taken as a distance course outside IIIT-Delhi.',
@@ -1989,7 +2051,7 @@ const THOUGHTS = [
 const ACHIEVEMENTS = [
   {year:'2026',mon:'Jun',icon:'♞',title:'LeetCode Knight — 2000+ Rating',detail:'Crossed 2000+ LeetCode rating, firmly in Knight tier. Consistent contest performance across weekly and biweekly rounds — specialising in advanced tree, graph, and DP problems. Peak improvement from 1900 → 2000+ through Sem VI.',chip:'Competitive Prog.'},
   {year:'2026',mon:'Mar',icon:'⬟',title:'Chiacon Consulting — AI & Automation Internship',detail:'Joined Chiacon Consulting India Pvt. Ltd. as Associate Consultant Intern. Building AI agents for HR screening, MCP data servers, and corporate website — remote internship, 3-month engagement.',chip:'Internship'},
-  {year:'2026',mon:'Jan',icon:'★',title:'AI Clinical Research — 90%+ Accuracy Milestone',detail:'Architected production-quality multi-modal AI clinical scribe pipeline (BTP499). ASR + diarization + SOAP note generation + ICD-10 mapping achieved 90%+ accuracy target.',chip:'Research'},
+  {year:'2026',mon:'Jan',icon:'★',title:'AI Clinical Scribe — SOAP Pipeline Milestone',detail:'Architected a production-quality multi-modal AI clinical scribe (B.Tech project): ASR + speaker diarization + SOAP generation + ICD-10 mapping reaching 100% clinical-keyword coverage with zero drug hallucinations. Now fine-tuning, benchmarking models, and extending to Hinglish.',chip:'Research'},
   {year:'2025',mon:'Oct',icon:'★',title:'LeetCode Peak: 1800+ Rating',detail:'Crossed 1800 LeetCode peak rating while solving 500+ DSA problems. Consistent top-percentile performance in weekly and biweekly contests, especially in advanced tree and graph problems.',chip:'Competitive Prog.'},
   {year:'2025',mon:'Jun',icon:'▲',title:'ModularityLabs iOS Internship — Completed',detail:'Delivered production iOS modular productivity app over 6-month industrial internship. Received Letter of Experience and Letter of Recommendation. MVVM + Firebase + Core Data architecture.',chip:'Internship'},
   {year:'2025',mon:'Jun',icon:'◈',title:'AI Summer Camp — 100+ Students Taught',detail:'Instructed 100+ students in AI fundamentals at IIIT-Delhi. Designed Python-based curriculum covering supervised learning, neural networks, and hands-on exercises. Received certificate of appreciation.',chip:'Teaching'},
@@ -2006,6 +2068,8 @@ const TECH_META = {
   'NLP':{cat:'AI',col:'#bb77ff'},'NER':{cat:'AI',col:'#bb77ff'},
   'ICD-10':{cat:'AI',col:'#bb77ff'},'SOAP Notes':{cat:'AI',col:'#bb77ff'},
   'Speaker Diarization':{cat:'AI',col:'#bb77ff'},'WER':{cat:'AI',col:'#bb77ff'},
+  'LLaMA 3.1':{cat:'AI',col:'#bb77ff'},'SapBERT':{cat:'AI',col:'#bb77ff'},
+  'Code-Switching (Hinglish)':{cat:'AI',col:'#bb77ff'},'Hugging Face':{cat:'ML',col:'#ff6699'},
   'PyTorch':{cat:'ML',col:'#ff6699'},'TensorFlow':{cat:'ML',col:'#ff6699'},
   'NumPy':{cat:'ML',col:'#ff6699'},'scikit-learn':{cat:'ML',col:'#ff6699'},
   'Random Forests':{cat:'ML',col:'#ff6699'},'Pandas':{cat:'ML',col:'#ff6699'},
@@ -2768,7 +2832,7 @@ const KG_META = {
   cicd:     {type:'Concept',     tag:'Tool', desc:'CI/CD pipelines — automated testing, build, deploy workflows'},
 
   // ── PROJECTS ──
-  clinical: {type:'Project',     tag:'BTP',  desc:'Multi-modal clinical AI · 90%+ SOAP accuracy · BTP499'},
+  clinical: {type:'Project',     tag:'BTP',  desc:'Multi-modal clinical AI · Whisper+Pyannote → SOAP · 100% keyword coverage, zero drug hallucinations · fine-tuning + Hinglish extension'},
   ios_proj: {type:'Project',     tag:'iOS',  desc:'Modular productivity iOS app · MVVM + Firebase + Core Data'},
   agrilink: {type:'Project',     tag:'Web',  desc:'Farmer-to-buyer marketplace · React + Node + Supabase'},
   personalia:{type:'Project',    tag:'ML',   desc:'Latent factor recommender · SVD + matrix factorisation'},
@@ -2803,7 +2867,7 @@ const KG_META = {
   cse222:   {type:'Course',      tag:'CS',   desc:'Algorithm Design & Analysis — dynamic programming, graph algorithms'},
   cse322:   {type:'Course',      tag:'CS',   desc:'Theory of Computation — automata, Turing machines, decidability'},
   cse640:   {type:'Course',      tag:'CS',   desc:'Collaborative Filtering — recommender systems, matrix factorisation'},
-  btp499:   {type:'Course',      tag:'CS',   desc:'B.Tech Project — AI Clinical Scribe with Whisper + Pyannote'},
+  btp499:   {type:'Course',      tag:'CS',   desc:'B.Tech Project — AI Clinical Scribe: Whisper + Pyannote → SOAP, extending to Hinglish + research paper'},
   eco111:   {type:'Course',      tag:'CS',   desc:'Digital Circuits — Boolean algebra, combinational/sequential logic'},
   des102:   {type:'Course',      tag:'UX',   desc:'Intro to HCI — user-centred design, usability, interaction models'},
   com301:   {type:'Course',      tag:'CS',   desc:'Technical Writing — research papers, documentation, communication'},
@@ -3423,7 +3487,24 @@ function go(el) {
   if(page) page.classList.add('on');
   el.classList.add('on');
   document.getElementById('tpSeg').textContent = p.replace('-',' ');
-  window.scrollTo(0, 0);
+
+  // reset scroll (Lenis-aware)
+  if(window.__lenis){ window.__lenis.scrollTo(0,{immediate:true}); } else { window.scrollTo(0, 0); }
+
+  // 3D scroll journey: tear down when leaving home, rebuild when returning
+  if(p === 'home'){
+    document.body.classList.add('home-active');
+    if(journeyStarted){
+      document.body.classList.add('gl-on');
+      if(window.HeroGL) HeroGL.start();
+      rebuildHomeCtx();
+    }
+  } else {
+    document.body.classList.remove('home-active','gl-on');
+    if(window.HeroGL) HeroGL.stop();
+    if(homeCtx){ homeCtx.revert(); homeCtx = null; }
+  }
+
   if(window.innerWidth<=840) document.getElementById('sb').classList.remove('open');
   if(p==='home') setTimeout(buildKG, 50);
 }
@@ -4568,8 +4649,126 @@ function resetShAnimations(page) {
   });
 }
 
+// ===================== 3D SCROLL JOURNEY ENGINE =====================
+let homeCtx = null;
+let journeyStarted = false;
+
+function reducedOrMobile(){
+  try{
+    return matchMedia('(prefers-reduced-motion: reduce)').matches
+        || matchMedia('(max-width:840px)').matches
+        || ((navigator.hardwareConcurrency || 8) < 4);
+  }catch(e){ return false; }
+}
+
+function setupAct(el){
+  const cluster = el.getAttribute('data-cluster');
+  const reveal = () => { el.classList.add('act-in'); if(cluster && window.HeroGL) HeroGL.focusCluster(cluster); };
+  ScrollTrigger.create({ trigger: el, start: 'top 82%', end: 'bottom 18%', onEnter: reveal, onEnterBack: reveal });
+}
+
+function rebuildHomeCtx(){
+  if(!window.gsap || !window.ScrollTrigger) return;
+  if(homeCtx){ homeCtx.revert(); homeCtx = null; }
+  const home = document.getElementById('page-home');
+  homeCtx = gsap.context(() => {
+    ScrollTrigger.create({
+      trigger: '#page-home', start: 'top top', end: 'bottom bottom', scrub: true,
+      onUpdate: s => { if(window.HeroGL) HeroGL.setScroll(s.progress); }
+    });
+    home.querySelectorAll('[data-act]').forEach(setupAct);
+  }, home);
+  // force-reveal whatever is already on screen (esp. Act 0) so the hero is never blank
+  home.querySelectorAll('[data-act]').forEach(el => {
+    if(el.getBoundingClientRect().top < innerHeight * 0.9) el.classList.add('act-in');
+  });
+  ScrollTrigger.refresh();
+}
+
+function initJourney(){
+  if(journeyStarted || reducedOrMobile()) return;
+  if(!window.gsap || !window.ScrollTrigger || !window.Lenis || !window.HeroGL) return; // CDN missing -> static page
+  try{
+    gsap.registerPlugin(ScrollTrigger);
+    const lenis = new Lenis({ smoothWheel: true, smoothTouch: false, lerp: 0.1 });
+    window.__lenis = lenis;
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    document.body.classList.add('journey-on');
+    HeroGL.init('#bgGL');
+    document.body.classList.add('gl-on');
+    rebuildHomeCtx();
+    HeroGL.start();
+    journeyStarted = true;
+    console.info('[journey] started ✓');
+  }catch(e){
+    // any failure: guarantee content is visible, never trapped
+    console.warn('[journey] init failed — static fallback', e);
+    document.body.classList.remove('journey-on','gl-on');
+    document.querySelectorAll('#page-home [data-act]').forEach(el => el.classList.add('act-in'));
+  }
+}
+
+// Libraries load async (the THREE module import especially). Wait until all are present, then start.
+function startJourneyWhenReady(){
+  if(reducedOrMobile()){ console.info('[journey] skipped: reduced-motion / mobile / low-core'); return; }
+  const ready = () => window.HeroGL && window.gsap && window.ScrollTrigger && window.Lenis;
+  const tryStart = () => { if(!journeyStarted && ready()) initJourney(); };
+  window.addEventListener('herogl-ready', tryStart);
+  let tries = 0;
+  (function wait(){
+    if(journeyStarted) return;
+    tryStart();
+    if(journeyStarted) return;
+    if(tries++ < 80){ setTimeout(wait, 100); }      // poll up to ~8s
+    else console.warn('[journey] libraries never became ready — static fallback',
+      {HeroGL:!!window.HeroGL, gsap:!!window.gsap, ScrollTrigger:!!window.ScrollTrigger, Lenis:!!window.Lenis});
+  })();
+}
+
+function initMagnetic(){
+  if(reducedOrMobile()) return;
+  document.querySelectorAll('.ov-btns .btn, .kg-expand-btn').forEach(btn => {
+    btn.classList.add('magnetic');
+    btn.addEventListener('pointermove', e => {
+      const r = btn.getBoundingClientRect();
+      btn.style.transform = `translate(${(e.clientX-(r.left+r.width/2))*0.25}px, ${(e.clientY-(r.top+r.height/2))*0.35}px)`;
+    });
+    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+  });
+}
+
+function runBootSequence(){
+  const boot = document.getElementById('bootSeq');
+  if(!boot || boot.style.display === 'none') return;        // already dismissed by the early inline guard
+  if(reducedOrMobile()){ boot.style.display = 'none'; return; }
+  const lines = boot.querySelectorAll('.boot-line');
+  const bar = document.getElementById('bootBar');
+  let i = 0;
+  (function step(){ if(i < lines.length){ lines[i++].classList.add('show'); setTimeout(step, 230); } })();
+  if(bar) setTimeout(() => { bar.style.width = '100%'; }, 120);
+  let done = false;
+  function dismiss(){
+    if(done) return; done = true;
+    boot.classList.add('boot-done');
+    try{ sessionStorage.setItem('nt_booted','1'); }catch(e){}
+    setTimeout(() => { boot.style.display = 'none'; }, 650);
+    boot.removeEventListener('click', dismiss); document.removeEventListener('keydown', dismiss);
+  }
+  boot.addEventListener('click', dismiss); document.addEventListener('keydown', dismiss);
+  setTimeout(dismiss, 1150);
+}
+
 // -- INITIAL BOOT SEQUENCE --
 setTimeout(() => {
+  // 3D scroll journey (home overview) — runs before initHeroParticles so gl-on suppresses the 2D canvas
+  window.__KG = { nodes: KG_NODES, edges: KG_EDGES, meta: KG_META };
+  document.body.classList.add('home-active');
+  runBootSequence();
+  startJourneyWhenReady();
+  initMagnetic();
+
   // Typewriter on tagline
   const taglineEl = document.getElementById('taglineEl');
   if(taglineEl) typeWriter(taglineEl, 'B.Tech student at IIIT-Delhi (CSAM) building at the intersection of iOS development, AI/ML research, and systems programming. Currently researching clinical NLP pipelines, shipped a production iOS app at ModularityLabs, and reached LeetCode Knight tier (2000+) in competitive programming.', 14, 400);
@@ -4662,5 +4861,131 @@ setTimeout(() => {
     <div class="cmd-results" id="cmdResults"></div>
   </div>
 </div>
+
+<!-- ============ HeroGL — 3D knowledge-lattice backdrop (home overview) ============ -->
+<script type="module">
+import * as THREE from 'three';
+
+const HeroGL = (() => {
+  let renderer, scene, camera, group, nodesPts, edgesLines, canvas;
+  let raf = null, running = false, initialized = false;
+  let scrollP = 0, targetScrollP = 0;
+  let mouseX = 0, mouseY = 0;
+  const clusters = {};
+  const _look = new THREE.Vector3(0, 0, 0);
+  const camTarget = new THREE.Vector3(0, 0, 0);
+
+  // palette mirrors the KG legend / :root accents
+  const COL = { core:0x00ff88, dom:0x5599ff, intern:0x00ccaa, proj:0xffcc44,
+                course:0xaa77ff, math:0x33bbff, tech:0x6f8aa8, cert:0xff8844, design:0xff66cc, _:0x8198ad };
+  const colorFor = c => (COL[c] != null ? COL[c] : COL._);
+  // depth band per class (kept shallow so nothing clips the camera)
+  const ZBAND = { core:0, dom:-4, intern:-7, proj:-9, cert:-11, design:3, tech:5, course:8, math:10 };
+  const SX = 0.5, SY = 0.30;            // scene scale from KG percent coords
+  const hash = i => { const s = Math.sin(i*127.1 + 0.7) * 43758.5453; return s - Math.floor(s); };
+
+  function makeGlow(){
+    const s = 64, c = document.createElement('canvas'); c.width = c.height = s;
+    const x = c.getContext('2d');
+    const g = x.createRadialGradient(s/2,s/2,0, s/2,s/2,s/2);
+    g.addColorStop(0,'rgba(255,255,255,1)'); g.addColorStop(0.25,'rgba(255,255,255,0.55)'); g.addColorStop(1,'rgba(255,255,255,0)');
+    x.fillStyle = g; x.fillRect(0,0,s,s);
+    const t = new THREE.CanvasTexture(c); t.needsUpdate = true; return t;
+  }
+
+  function build(){
+    const KG = window.__KG || { nodes:[], edges:[], meta:{} };
+    const nodes = KG.nodes || [], edges = KG.edges || [];
+    group = new THREE.Group();
+    const idx = {}, pos = [], col = [], siz = [], acc = {};
+
+    nodes.forEach((n, i) => {
+      const x = (n.x - 50) * SX;
+      const y = (50 - n.y) * SY;                       // invert: screen-down -> scene-up
+      const z = (ZBAND[n.cls] != null ? ZBAND[n.cls] : 0) + (hash(i) - 0.5) * 4;
+      idx[n.id] = new THREE.Vector3(x, y, z);
+      pos.push(x, y, z);
+      const c = new THREE.Color(colorFor(n.cls)); col.push(c.r, c.g, c.b);
+      siz.push(n.cls==='core' ? 7.5 : n.cls==='dom' ? 4.4 : 2.5);
+      const a = acc[n.cls] || (acc[n.cls] = {x:0,y:0,z:0,n:0}); a.x+=x; a.y+=y; a.z+=z; a.n++;
+    });
+    Object.keys(acc).forEach(k => { const a = acc[k]; clusters[k] = new THREE.Vector3(a.x/a.n, a.y/a.n, a.z/a.n); });
+
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    g.setAttribute('aSize', new THREE.Float32BufferAttribute(siz, 1));
+    const mat = new THREE.ShaderMaterial({
+      uniforms: { uTex: { value: makeGlow() } },
+      vertexShader: `attribute float aSize; attribute vec3 color; varying vec3 vColor;
+        void main(){ vColor = color; vec4 mv = modelViewMatrix * vec4(position,1.0);
+          gl_PointSize = aSize * (220.0 / -mv.z); gl_Position = projectionMatrix * mv; }`,
+      fragmentShader: `uniform sampler2D uTex; varying vec3 vColor;
+        void main(){ vec4 t = texture2D(uTex, gl_PointCoord); gl_FragColor = vec4(vColor, 1.0) * t; }`,
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false
+    });
+    nodesPts = new THREE.Points(g, mat); group.add(nodesPts);
+
+    const ep = [];
+    edges.forEach(e => { const a = idx[e[0]], b = idx[e[1]]; if (a && b) ep.push(a.x,a.y,a.z, b.x,b.y,b.z); });
+    const eg = new THREE.BufferGeometry();
+    eg.setAttribute('position', new THREE.Float32BufferAttribute(ep, 3));
+    edgesLines = new THREE.LineSegments(eg, new THREE.LineBasicMaterial({
+      color: 0x00ff88, transparent: true, opacity: 0.05, blending: THREE.AdditiveBlending, depthWrite: false }));
+    group.add(edgesLines);
+    scene.add(group);
+  }
+
+  function init(sel){
+    if (initialized) return;
+    canvas = document.querySelector(sel || '#bgGL'); if (!canvas) return;
+    try { renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false, powerPreference:'high-performance' }); }
+    catch (e) { return; }
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    renderer.setSize(innerWidth, innerHeight, false);
+    renderer.setClearColor(0x070707, 1);
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x070707, 0.013);
+    camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.1, 600);
+    camera.position.set(0, 4, 34);
+    build();
+    addEventListener('resize', resize, { passive:true });
+    addEventListener('pointermove', e => { mouseX = e.clientX/innerWidth - 0.5; mouseY = e.clientY/innerHeight - 0.5; }, { passive:true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop(); else if (document.body.classList.contains('home-active')) start();
+    });
+    initialized = true;
+  }
+
+  function resize(){ if (!renderer) return; renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); }
+  function setScroll(p){ targetScrollP = Math.max(0, Math.min(1, p)); }
+  function focusCluster(name){ if (clusters[name]) camTarget.copy(clusters[name]); }
+
+  function frame(){
+    raf = requestAnimationFrame(frame);
+    scrollP += (targetScrollP - scrollP) * 0.06;
+    const t = performance.now() * 0.0001;
+    const dist = 30 + scrollP * 40;          // pull back as you descend
+    const ang  = -0.5 + scrollP * 0.9;       // slow orbit
+    const dx = Math.sin(ang) * dist * 0.25 + mouseX * 6;
+    const dz = Math.cos(ang) * dist;
+    const dy = (6 - scrollP * 26) - mouseY * 4;
+    camera.position.x += (dx - camera.position.x) * 0.05;
+    camera.position.y += (dy - camera.position.y) * 0.05;
+    camera.position.z += (dz - camera.position.z) * 0.05;
+    _look.lerp(camTarget, 0.05); camera.lookAt(_look);
+    if (group){ group.rotation.y = Math.sin(t) * 0.14 + scrollP * 0.28; group.rotation.x = Math.cos(t*0.8) * 0.04; }
+    renderer.render(scene, camera);
+  }
+
+  function start(){ if (running || !renderer) return; running = true; frame(); }
+  function stop(){ running = false; if (raf) cancelAnimationFrame(raf); raf = null; }
+  function dispose(){ stop(); }
+
+  return { init, start, stop, setScroll, focusCluster, resize, dispose };
+})();
+window.HeroGL = HeroGL;
+try { window.dispatchEvent(new Event('herogl-ready')); } catch(e){}
+</script>
 </body>
 </html>
