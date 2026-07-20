@@ -869,7 +869,7 @@ body.journey-on #page-home [data-act].act-in{opacity:1;transform:none;}
       <button class="na" data-p="experience" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="12" height="9" rx=".5"/><path d="M5 5V4a2 2 0 0 1 6 0v1"/></svg>Experience <span class="nb">4</span></button>
     </div>
     <div class="ng"><div class="ng-label">// Work</div>
-      <button class="na" data-p="projects" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15,2 9,8 15,14"/><polyline points="1,2 7,8 1,14"/></svg>Projects <span class="nb">12</span></button>
+      <button class="na" data-p="projects" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15,2 9,8 15,14"/><polyline points="1,2 7,8 1,14"/></svg>Projects <span class="nb">13</span></button>
       <button class="na" data-p="skills" onclick="go(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="4"/><line x1="8" y1="12" x2="8" y2="15"/><line x1="1" y1="8" x2="4" y2="8"/><line x1="12" y1="8" x2="15" y2="8"/></svg>Skills</button>
     </div>
     <div class="ng"><div class="ng-label">// Archive</div>
@@ -946,7 +946,7 @@ body.journey-on #page-home [data-act].act-in{opacity:1;transform:none;}
           <div class="ov-stat"><span class="ov-sv" data-count="7.50" data-float="2">7.50</span><span class="ov-sl">CGPA</span></div>
           <div class="ov-stat"><span class="ov-sv" data-count="500">500+</span><span class="ov-sl">DSA Solved</span></div>
           <div class="ov-stat" style="background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.15);"><span class="ov-sv" data-count="2000">2000+</span><span class="ov-sl">LC Rating · <span style="color:#ffd700;font-weight:700;">♞ Knight</span></span></div>
-          <div class="ov-stat"><span class="ov-sv" data-count="12">12</span><span class="ov-sl">Projects</span></div>
+          <div class="ov-stat"><span class="ov-sv" data-count="13">13</span><span class="ov-sl">Projects</span></div>
           <div class="ov-stat"><span class="ov-sv" data-count="4">4</span><span class="ov-sl">Internships</span></div>
         </div>
         <div class="ov-btns">
@@ -1051,7 +1051,7 @@ body.journey-on #page-home [data-act].act-in{opacity:1;transform:none;}
   <div style="padding:20px 36px 12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;">
     <span style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:600;">★ Featured Work</span>
     <span style="flex:1;height:1px;background:linear-gradient(90deg,rgba(0,255,136,.4),transparent);"></span>
-    <button onclick="go(document.querySelector('[data-p=projects]'))" style="font-size:8.5px;color:var(--acc);background:none;border:1px solid rgba(0,255,136,.25);padding:3px 10px;cursor:none;letter-spacing:.06em;transition:background .15s;" onmouseover="this.style.background='rgba(0,255,136,.07)'" onmouseout="this.style.background='none'">View all 12 →</button>
+    <button onclick="go(document.querySelector('[data-p=projects]'))" style="font-size:8.5px;color:var(--acc);background:none;border:1px solid rgba(0,255,136,.25);padding:3px 10px;cursor:none;letter-spacing:.06em;transition:background .15s;" onmouseover="this.style.background='rgba(0,255,136,.07)'" onmouseout="this.style.background='none'">View all 13 →</button>
   </div>
   <div class="star-strip" data-act="3" data-cluster="proj">
     <div class="star-card" onclick="go(document.querySelector('[data-p=projects]'))">
@@ -1382,7 +1382,7 @@ body.journey-on #page-home [data-act].act-in{opacity:1;transform:none;}
     <div class="stag-line">Engineering Work</div>
     <div class="srow"><div><div class="sh">Projects</div><div class="ss">Click any card for full details, gallery & links</div></div><div class="scount">12 projects</div></div>
     <div class="filter-row" id="filterRow">
-      <button class="fbtn on" data-f="all">All (12)</button>
+      <button class="fbtn on" data-f="all">All (13)</button>
       <button class="fbtn" data-f="internship">Internship</button>
       <button class="fbtn" data-f="research">Research</button>
       <button class="fbtn" data-f="academic">Academic</button>
@@ -1642,6 +1642,20 @@ const revealObserver = new IntersectionObserver((entries) => {
 // =================== DATA ===================
 const PROJECTS = [
   // ── PROJECTS · curated display order ──
+  {id:'P-013', year:'2026', title:'Network Root-Cause Assistant — TechM CODE Finale',
+   img:'',gallery:[],
+   desc:'<b class="star-lbl">Problem:</b> A network operations centre gets thousands of alerts an hour, and most are symptoms, not causes. When a database saturates its connection pool, the web tier looks worst and correlation tools blame the web tier, which is the victim. <br><b class="star-lbl">Built:</b> Built at the Tech Mahindra CODE Grand Finale in a team of five, one layer owned end to end each. I owned the frozen data contract and the causal engine: topology-constrained candidate filtering, DoWhy attribution, counterfactual replay, a three-tier evidence ledger, and the weighted ranker. <br><b class="star-lbl">Result:</b> 100% root-cause accuracy@1 on injected incidents across all fault types, deterministic across runs, with every verdict traceable to cited evidence.',
+   points:[
+     'Owned the causal engine (the core differentiator): a component can only be proposed as a root cause if a real dependency path exists from it to the symptom, which separates genuine causation from time-correlation and rejects decoys no matter how bad they look.',
+     'Built the NetworkX topology twin (impact paths, blast radius) plus the candidate filter, temporal precedence and config-proximity checks, and a "rootness" measure of how many downstream failures a suspect explains.',
+     'Implemented causal attribution with DoWhy constrained to the dependency subgraph, seeded for reproducibility with a deterministic topology fallback, and counterfactual replay answering whether undoing a config change removes the symptom.',
+     'Designed the weighted ranker (0.30 causal, 0.25 config proximity, 0.20 evidence, 0.10 precedence, 0.10 rootness, 0.05 severity) deliberately down-weighting severity, since the loudest victim usually looks the worst.',
+     'Froze the shared Pydantic v2 data contract first (Layer 0), which let all six layers be built and tested in parallel against identical object shapes.',
+     'Produced a three-tier evidence ledger (confirmed / correlated / missing) so every ranking is explainable from cited records rather than hidden in a model, with the missing bucket doubling as recommended next steps.'
+   ],
+   stack:['Python','NetworkX','DoWhy','Pydantic','NumPy','SciPy','Causal Inference','FastAPI'],
+   type:'personal',typeLabel:'Hackathon',tags:'personal ai fullstack',
+   links:[{l:'GitHub ↗',u:'https://github.com/Shruthi091204/TechMcode-Team5'}]},
   {id:'P-011', year:'2026', title:'Chiacon — Enterprise Website Redesign',
    img:'https://i.ibb.co/mrr8Wwtt/Screenshot-2026-06-05-at-4-34-38-AM.png',
    gallery:[
@@ -2073,7 +2087,7 @@ const THOUGHTS = [
 ];
 
 const ACHIEVEMENTS = [
-  {year:'2026',mon:'Jul',icon:'✦',title:'TechM CODE Grand Finalist: Top 80 of 30,000+',detail:'Selected for the Grand Finale of TechM CODE: The Ultimate Hack League, Tech Mahindra\'s national coding championship. Advanced through three elimination rounds against 30,000+ students from campuses across India to reach the final 80. On-site finale in Hyderabad, 13 to 17 July 2026.',chip:'Competitive Prog.'},
+  {year:'2026',mon:'Jul',icon:'✦',title:'TechM CODE Grand Finalist: Top 80 of 30,000+',detail:'Advanced through three elimination rounds against 30,000+ students nationally to reach the Grand Finale of TechM CODE: The Ultimate Hack League, finishing in the top 80. Competed on-site at the Tech Mahindra campus in Hyderabad (July 2026) in a team of five, where I owned the data contract and causal engine of a network root-cause assistant that reached 100% root-cause accuracy@1.',chip:'Competitive Prog.'},
   {year:'2026',mon:'Jun',icon:'♞',title:'LeetCode Knight — 2000+ Rating',detail:'Crossed 2000+ LeetCode rating, firmly in Knight tier. Consistent contest performance across weekly and biweekly rounds — specialising in advanced tree, graph, and DP problems. Peak improvement from 1900 → 2000+ through Sem VI.',chip:'Competitive Prog.'},
   {year:'2026',mon:'Jun',icon:'⬟',title:'Chiacon Consulting — AI & Automation Internship Completed',detail:'Completed a 3-month remote internship (Mar 23 – Jun 23, 2026) as Associate Consultant Intern at Chiacon Consulting India Pvt. Ltd. Shipped a Next.js corporate website, an AI HR screening agent, and an MCP data server. Received an official internship completion certificate.',chip:'Internship'},
   {year:'2026',mon:'Jan',icon:'★',title:'AI Clinical Scribe — SOAP Pipeline Milestone',detail:'Architected a production-quality multi-modal AI clinical scribe (B.Tech project): ASR + speaker diarization + SOAP generation + ICD-10 mapping reaching 100% clinical-keyword coverage with zero drug hallucinations. Now fine-tuning, benchmarking models, and extending to Hinglish.',chip:'Research'},
@@ -2141,6 +2155,7 @@ const TECH_META = {
   'SciPy':{cat:'ML',col:'#ff6699'},'SGP4':{cat:'ML',col:'#ff6699'},
   'Skyfield':{cat:'ML',col:'#ff6699'},'Monte Carlo':{cat:'ML',col:'#ff6699'},
   'Pydantic':{cat:'Web',col:'#00ff88'},'CesiumJS':{cat:'Web',col:'#00ff88'},
+  'NetworkX':{cat:'ML',col:'#ff6699'},'DoWhy':{cat:'ML',col:'#ff6699'},'Causal Inference':{cat:'ML',col:'#ff6699'},
   'Groq':{cat:'AI',col:'#bb77ff'},
   'GitHub Actions':{cat:'Tool',col:'#88ccff'},'Vercel':{cat:'Tool',col:'#88ccff'},
 };
@@ -2171,6 +2186,7 @@ const KG_NODES = [
   {id:'web',  label:'Full-Stack Web',    cls:'dom',x:89,y:65},
   {id:'cp',   label:'Competitive Prog.', cls:'dom',x:48,y:93},
   {id:'techm_code', label:'TechM CODE · Top 80', cls:'cert',x:57,y:97},
+  {id:'proj_rca', label:'Network RCA Assistant', cls:'proj',x:50,y:99},
   {id:'sys',  label:'Systems / OS',      cls:'dom',x:18,y:77},
   {id:'ml',   label:'ML / Deep Learning',cls:'dom',x:62,y:12},
   {id:'db',   label:'Databases',         cls:'dom',x:92,y:81},
@@ -2539,6 +2555,8 @@ const KG_EDGES = [
   // ── Competitive Programming ──
   ['cp','leet'],['cp','java'],['cp','python'],['cp','cse222'],['cp','cse102'],
   ['cp','cse322'],['cp','mth210'],
+  ['proj_rca','techm_code'],['proj_rca','python'],['proj_rca','ai'],['proj_rca','nt'],
+  ['proj_rca','fastapi'],['proj_rca','cp'],
   ['techm_code','cp'],['techm_code','leet'],['techm_code','cpp'],['techm_code','java'],
   ['techm_code','python'],['techm_code','cse222'],['techm_code','nt'],
   ['leet','cse222'],['leet','cse102'],['cse102','cse222'],
@@ -2982,6 +3000,7 @@ const KG_META = {
   pc_bound:    {type:'Concept', tag:'Aero', desc:'Collision probability (Pc) — Foster-1992 method + worst-case PcMax theorem bound'},
 
   // ── Competition / participation certs ──
+  proj_rca:    {type:'Project', tag:'AI', desc:'Network Anomaly Root-Cause Assistant · built at the TechM CODE Grand Finale · owned the data contract and topology-constrained causal engine · 100% root-cause accuracy@1'},
   techm_code:  {type:'Achievement', tag:'CP', desc:'TechM CODE: The Ultimate Hack League · Grand Finalist · Top 80 of 30,000+ students nationally · On-site finale, Hyderabad, Jul 2026'},
   cert_adobe:  {type:'Certification', tag:'CP', desc:'Adobe India Hackathon — cleared Round 1 (MCQ + Coding) · Team Setitirum · IIIT-Delhi'},
   cert_loreal: {type:'Certification', tag:'CP', desc:"L'Oréal Sustainability Challenge 2025 — Online Aptitude Assessment · Team 5-star · IIIT-Delhi"},
