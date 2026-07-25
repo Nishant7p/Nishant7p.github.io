@@ -1642,9 +1642,14 @@ const revealObserver = new IntersectionObserver((entries) => {
 // =================== DATA ===================
 const PROJECTS = [
   // ── PROJECTS · curated display order ──
-  {id:'P-013', year:'2026', title:'Network Root-Cause Assistant — TechM CODE Finale',
-   img:'',gallery:[],
-   desc:'<b class="star-lbl">Problem:</b> A network operations centre gets thousands of alerts an hour, and most are symptoms, not causes. When a database saturates its connection pool, the web tier looks worst and correlation tools blame the web tier, which is the victim. <br><b class="star-lbl">Built:</b> Built at the Tech Mahindra CODE Grand Finale in a team of five, one layer owned end to end each. I owned the frozen data contract and the causal engine: topology-constrained candidate filtering, DoWhy attribution, counterfactual replay, a three-tier evidence ledger, and the weighted ranker. <br><b class="star-lbl">Result:</b> 100% root-cause accuracy@1 on injected incidents across all fault types, deterministic across runs, with every verdict traceable to cited evidence.',
+  {id:'P-013', year:'2026', title:'Network Root-Cause Assistant · TechM CODE Finale',
+   img:'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p013/thumb.png',
+   gallery:[
+     'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p013/g1.png',
+     'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p013/g2.png',
+     'https://raw.githubusercontent.com/Nishant7p/Nishant7p.github.io/main/assets/projects/p013/g3.png'
+   ],
+   desc:'<b class="star-lbl">Problem:</b> A network operations centre gets thousands of alerts an hour, and most are symptoms, not causes. When a database saturates its connection pool, the web tier looks worst and correlation tools blame the web tier, which is the victim. <br><b class="star-lbl">Built:</b> Built at the Tech Mahindra CODE Grand Finale in a team of five, one layer owned end to end each. I owned the frozen data contract and the causal engine: topology-constrained candidate filtering, DoWhy attribution, counterfactual replay, a three-tier evidence ledger, and the weighted ranker. On top sits a live NOC dashboard with topology-constrained causal analysis, an Investigator-vs-Skeptic AI review, and agentic-RAG remediation grounded in runbooks. <br><b class="star-lbl">Result:</b> 100% root-cause accuracy@1 on injected incidents across all fault types, deterministic across runs, with every verdict traceable to a cryptographically verified evidence ledger.',
    points:[
      'Owned the causal engine (the core differentiator): a component can only be proposed as a root cause if a real dependency path exists from it to the symptom, which separates genuine causation from time-correlation and rejects decoys no matter how bad they look.',
      'Built the NetworkX topology twin (impact paths, blast radius) plus the candidate filter, temporal precedence and config-proximity checks, and a "rootness" measure of how many downstream failures a suspect explains.',
@@ -1653,9 +1658,9 @@ const PROJECTS = [
      'Froze the shared Pydantic v2 data contract first (Layer 0), which let all six layers be built and tested in parallel against identical object shapes.',
      'Produced a three-tier evidence ledger (confirmed / correlated / missing) so every ranking is explainable from cited records rather than hidden in a model, with the missing bucket doubling as recommended next steps.'
    ],
-   stack:['Python','NetworkX','DoWhy','Pydantic','NumPy','SciPy','Causal Inference','FastAPI'],
+   stack:['Python','NetworkX','DoWhy','Pydantic','FastAPI','Next.js','ChromaDB','Agentic RAG','LLM Agents','Causal Inference','NumPy','SciPy'],
    type:'personal',typeLabel:'Hackathon',tags:'personal ai fullstack',
-   links:[{l:'GitHub ↗',u:'https://github.com/Shruthi091204/TechMcode-Team5'}]},
+   links:[{l:'Live ↗',u:'https://tech-mcode-team5.vercel.app/'},{l:'GitHub ↗',u:'https://github.com/Nishant7p/TechMcode-Team5'}]},
   {id:'P-011', year:'2026', title:'Chiacon — Enterprise Website Redesign',
    img:'https://i.ibb.co/mrr8Wwtt/Screenshot-2026-06-05-at-4-34-38-AM.png',
    gallery:[
@@ -2156,6 +2161,7 @@ const TECH_META = {
   'Skyfield':{cat:'ML',col:'#ff6699'},'Monte Carlo':{cat:'ML',col:'#ff6699'},
   'Pydantic':{cat:'Web',col:'#00ff88'},'CesiumJS':{cat:'Web',col:'#00ff88'},
   'NetworkX':{cat:'ML',col:'#ff6699'},'DoWhy':{cat:'ML',col:'#ff6699'},'Causal Inference':{cat:'ML',col:'#ff6699'},
+  'ChromaDB':{cat:'DB',col:'#00ccff'},'Agentic RAG':{cat:'AI',col:'#bb77ff'},'LLM Agents':{cat:'AI',col:'#bb77ff'},
   'Groq':{cat:'AI',col:'#bb77ff'},
   'GitHub Actions':{cat:'Tool',col:'#88ccff'},'Vercel':{cat:'Tool',col:'#88ccff'},
 };
