@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Life OS</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { --bg:#0b0f0d; --fg:#d8e0da; --mut:#8a978f; --acc:#00ff88; --line:#1e2a24; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:48px 16px 80px;
+    background:var(--bg); color:var(--fg);
+    font:15px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  main { max-width:720px; margin:0 auto; }
+  h1 { font-size:22px; margin:0 0 4px; color:var(--acc); letter-spacing:.3px; }
+  h2 { font-size:15px; margin:34px 0 8px; color:var(--fg); border-bottom:1px solid var(--line); padding-bottom:6px; }
+  p, li { color:var(--fg); }
+  .meta { color:var(--mut); font-size:13px; margin:0 0 28px; }
+  ul { padding-left:20px; }
+  li { margin:5px 0; }
+  a { color:var(--acc); }
+  code { color:var(--acc); }
+  footer { margin-top:44px; padding-top:14px; border-top:1px solid var(--line); color:var(--mut); font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="meta">Life OS &middot; personal automation tooling &middot; last updated 30 October 2026</p>
+
+  <h2>What this covers</h2>
+  <p>
+    Life OS is a private command-line tool that Nishant Tomer runs on his own computer to
+    organise his coursework, calendar, tasks and email. It is not a product, not a service,
+    and is not offered to anyone else. This policy describes what it does with Google account
+    data, because Google requires a published policy for any application that requests
+    OAuth access.
+  </p>
+
+  <h2>Who uses it</h2>
+  <p>
+    One person: the developer, Nishant Tomer. The application has no other users, no sign-up,
+    no accounts and no shared backend. There is no server. Everything runs locally.
+  </p>
+
+  <h2>What data it accesses</h2>
+  <p>With the developer's own explicit Google authorisation, the tool may read:</p>
+  <ul>
+    <li>Google Classroom coursework, submission states and announcements</li>
+    <li>Google Calendar events, to show upcoming deadlines</li>
+    <li>Gmail message headers and bodies, to summarise unread mail</li>
+    <li>Google Drive and Sheets files, to read documents the developer points it at</li>
+    <li>Google Tasks items</li>
+  </ul>
+
+  <h2>What it does with that data</h2>
+  <ul>
+    <li>It is read, summarised, and written to plain text files on the developer's own machine.</li>
+    <li>It is not transmitted to any third party.</li>
+    <li>It is not sold, rented, shared, published or used for advertising.</li>
+    <li>It is not used to train any model.</li>
+    <li>There is no analytics, telemetry or tracking of any kind on this data.</li>
+  </ul>
+
+  <h2>Where credentials live</h2>
+  <p>
+    OAuth tokens are stored locally under the developer's home directory
+    (<code>~/.config/gws/</code>), protected by the operating system user account.
+    They are never uploaded anywhere.
+  </p>
+
+  <h2>Retention and deletion</h2>
+  <p>
+    Generated summaries live in local files and are overwritten on each run. Access can be
+    revoked at any time from
+    <a href="https://myaccount.google.com/permissions">Google Account permissions</a>,
+    which immediately and permanently ends the application's access.
+  </p>
+
+  <h2>Limited Use</h2>
+  <p>
+    Use of information received from Google APIs adheres to the
+    <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
+    including the Limited Use requirements.
+  </p>
+
+  <h2>Contact</h2>
+  <p>Nishant Tomer &middot; <a href="mailto:tomernishant43@gmail.com">tomernishant43@gmail.com</a></p>
+
+  <footer>
+    <a href="https://nishant7p.github.io/">Back to portfolio</a>
+  </footer>
+</main>
+</body>
+</html>

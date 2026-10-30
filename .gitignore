@@ -1,0 +1,20 @@
+# Private resume management folder — kept local-only, never pushed to GitHub Pages.
+Resume/
+
+# macOS
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# LaTeX build artefacts (in case any .tex files get added to repo root)
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
